@@ -5,7 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="shortcut icon" type="image/png" href="resources/image/logo/logo2.png" />
+<link rel="shortcut icon" type="image/png" href="resources/images/logo/logo2.png" />
+<link rel="shortcut icon" type="image/png" href="resources/images/logos/favicon.png" />
 <link rel="stylesheet" href="resources/css/styles.min.css" />
     <script src="resources/js/jquery.min.js"></script>
     <script src="resources/js/bootstrap.bundle.min.js"></script>
@@ -57,7 +58,7 @@
                     aria-expanded="false"
                   >
                     <img
-                      src="../assets/images/profile/user-1.jpg"
+                      src="resources/images/profile/user-1.jpg"
                       alt=""
                       width="35"
                       height="35"
