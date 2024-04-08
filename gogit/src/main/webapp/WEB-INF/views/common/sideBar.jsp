@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
 <style>
 .repo-hover {
-  border-radius: 5px;
+  border-radius: 7px;
   height: 45px;
   cursor: pointer;
 }
@@ -123,8 +123,10 @@
               --%>
                
               <li class="nav-small-cap repo-hover">
-                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu" style="line-height: 40px;">REPOSITORY</span>
+              	<a href="repoList">
+	                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+	                <span class="hide-menu" style="line-height: 40px;">REPOSITORY</span>
+                </a>
               </li>
               
               <%--
