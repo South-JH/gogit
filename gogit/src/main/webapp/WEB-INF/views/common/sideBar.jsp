@@ -5,6 +5,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css" />
+<style>
+.repo-hover {
+  border-radius: 5px;
+  height: 45px;
+  cursor: pointer;
+}
+</style>
 </head>
 <body>
       <!-- Sidebar Start -->
@@ -49,7 +57,7 @@
               </li>
               <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">UI COMPONENTS</span>
+                <span class="hide-menu">PROJECT</span>
               </li>
               <li class="sidebar-item">
                 <a
@@ -58,9 +66,9 @@
                   aria-expanded="false"
                 >
                   <span>
-                    <i class="ti ti-article"></i>
+                    <i class="ti ti-brand-github"></i>
                   </span>
-                  <span class="hide-menu">Buttons</span>
+                  <span class="hide-menu">Recruit</span>
                 </a>
               </li>
               <li class="sidebar-item">
@@ -70,11 +78,12 @@
                   aria-expanded="false"
                 >
                   <span>
-                    <i class="ti ti-alert-circle"></i>
+                    <i class="ti ti-calendar-month"></i>
                   </span>
-                  <span class="hide-menu">Alerts</span>
+                  <span class="hide-menu">Calendar</span>
                 </a>
               </li>
+              <%-- 
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
@@ -84,7 +93,7 @@
                   <span>
                     <i class="ti ti-cards"></i>
                   </span>
-                  <span class="hide-menu">Card</span>
+                  <span class="hide-menu">추가할거있으면 여기에</span>
                 </a>
               </li>
               <li class="sidebar-item">
@@ -96,7 +105,7 @@
                   <span>
                     <i class="ti ti-file-description"></i>
                   </span>
-                  <span class="hide-menu">Forms</span>
+                  <span class="hide-menu">추가할거있으면 여기에</span>
                 </a>
               </li>
               <li class="sidebar-item">
@@ -108,25 +117,17 @@
                   <span>
                     <i class="ti ti-typography"></i>
                   </span>
-                  <span class="hide-menu">Typography</span>
+                  <span class="hide-menu">추가할거있으면 여기에</span>
                 </a>
               </li>
-              <li class="nav-small-cap">
+              --%>
+               
+              <li class="nav-small-cap repo-hover">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">AUTH</span>
+                <span class="hide-menu" style="line-height: 40px;">REPOSITORY</span>
               </li>
-              <li class="sidebar-item">
-                <a
-                  class="sidebar-link"
-                  href="./authentication-login.html"
-                  aria-expanded="false"
-                >
-                  <span>
-                    <i class="ti ti-login"></i>
-                  </span>
-                  <span class="hide-menu">Login</span>
-                </a>
-              </li>
+              
+              <%--
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
@@ -139,9 +140,10 @@
                   <span class="hide-menu">Register</span>
                 </a>
               </li>
+              --%>
               <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
-                <span class="hide-menu">EXTRA</span>
+                <span class="hide-menu">COMMUNITY</span>
               </li>
               <li class="sidebar-item">
                 <a
@@ -152,7 +154,7 @@
                   <span>
                     <i class="ti ti-mood-happy"></i>
                   </span>
-                  <span class="hide-menu">Icons</span>
+                  <span class="hide-menu">Personal &nbsp; PR</span>
                 </a>
               </li>
               <li class="sidebar-item">
@@ -162,12 +164,13 @@
                   aria-expanded="false"
                 >
                   <span>
-                    <i class="ti ti-aperture"></i>
+                    <i class="ti ti-brand-finder"></i>
                   </span>
-                  <span class="hide-menu">Sample Page</span>
+                  <span class="hide-menu">Friend</span>
                 </a>
               </li>
             </ul>
+            <%-- 
             <div
               class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded"
             >
@@ -192,6 +195,7 @@
                 </div>
               </div>
             </div>
+            --%>
           </nav>
           <!-- End Sidebar navigation -->
         </div>

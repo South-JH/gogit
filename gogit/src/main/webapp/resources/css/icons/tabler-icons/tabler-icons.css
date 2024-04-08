@@ -12029,3 +12029,7 @@
 .ti-zzz-off:before {
   content: "\f440";
 }
+
+.ti-calendar-month:before {
+  content: "\fd2f";
+}
