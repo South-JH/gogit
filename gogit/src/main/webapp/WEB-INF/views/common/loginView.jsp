@@ -72,7 +72,7 @@ pageEncoding="UTF-8"%>
                       로그인
                     </button>
                     <a
-                      href="http://github.com/login/oauth/authorize?client_id=Iv1.1fed629645bd621d"
+                      href="http://github.com/login/oauth/authorize?client_id=Iv1.20f756302a177d78"
                       >Click here</a
                     >
                   </form>

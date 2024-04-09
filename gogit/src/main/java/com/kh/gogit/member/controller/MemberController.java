@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -18,8 +19,7 @@ public class MemberController {
 	
 
 	@RequestMapping("/callback")
-	public String loginMember(String code,HttpSession session) {
-		
+	public String loginMember(@RequestParam String code,HttpSession session) {
 		
 		session.setAttribute("code", code);
 	

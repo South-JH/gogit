@@ -27,7 +27,7 @@
 	<interceptors>
 		<interceptor>
 			<mapping path="" />
-			<mapping path="" />
+			<mapping path="" /> 
 			<mapping path="" />
 			<beans:bean class="com.kh.gogit.common.interceptor.LoginInterceptor" id="loginInterceptor" />
 		</interceptor>
