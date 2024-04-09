@@ -25,25 +25,29 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         <jsp:include page="common/header.jsp" />
 
         <jsp:include page="common/content.jsp" />
+        
+        <div>${ userInfo }</div>
       </div>
     </div>
 
     <script>
-      $.ajax({
-        url: "http://github.com/login/oauth/access_token",
-        method: "post",
-        headers: {
-          accept: "application/json",
-        },
-        data: {
-          client_id: "79ccc7bc43d1216fdca3",
-          client_secret: "8dee4fa126042ac903f794275d8ec1d5cc78aeaf",
-          code: "${code}",
-        },
-        success: function (result) {
-          console.log(result);
-        },
-      });
+		$(function() {
+			$.ajax({
+			  url: "http://github.com/login/oauth/access_token",
+			  method: "post",
+			  headers: {
+			    accept: "application/json",
+			  },
+			  data: {
+			    client_id: "71855b2ce527504bb9cf",
+			    client_secret: "6156f1b3157995ef400a9f3442104e92908d6d5d",
+			    code: "${code}",
+			  },
+			  success: function (result) {
+			    console.log(result);
+			  },
+			});
+		})
     </script>
   </body>
 </html>
