@@ -15,6 +15,17 @@
 </style>
 </head>
 <body>
+
+    <!--  Body Wrapper -->
+    <div
+      class="page-wrapper"
+      id="main-wrapper"
+      data-layout="vertical"
+      data-navbarbg="skin6"
+      data-sidebartype="full"
+      data-sidebar-position="fixed"
+      data-header-position="fixed">
+
       <!-- Sidebar Start -->
       <aside class="left-sidebar">
         <!-- Sidebar scroll-->
@@ -62,7 +73,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
-                  href="./ui-buttons.html"
+                  href="list.pr"
                   aria-expanded="false"
                 >
                   <span>
@@ -83,6 +94,7 @@
                   <span class="hide-menu">Calendar</span>
                 </a>
               </li>
+              
               <%-- 
               <li class="sidebar-item">
                 <a
@@ -123,7 +135,7 @@
               --%>
                
               <li class="nav-small-cap repo-hover">
-              	<a href="repoList" style="color: inherit;">
+              	<a href="List.rp" style="color: inherit;">
 	                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
 	                <span class="hide-menu" style="line-height: 40px;">REPOSITORY</span>
                 </a>
