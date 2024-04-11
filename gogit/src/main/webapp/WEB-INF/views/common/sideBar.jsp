@@ -62,7 +62,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
-                  href="./ui-buttons.html"
+                  href="list.pr"
                   aria-expanded="false"
                 >
                   <span>
@@ -83,6 +83,7 @@
                   <span class="hide-menu">Calendar</span>
                 </a>
               </li>
+              
               <%-- 
               <li class="sidebar-item">
                 <a
