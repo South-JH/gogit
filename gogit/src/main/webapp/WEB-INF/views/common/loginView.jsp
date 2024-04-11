@@ -44,8 +44,15 @@ pageEncoding="UTF-8"%>
                 <div class="card-body">
                   <form action="main">
                     <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">아이디</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >아이디</label
+                      >
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                      />
                       <!-- <div id="emailHelp" class="form-text">하이하이</div> -->
                     </div>
                     <div class="mb-3">
