@@ -1,0 +1,15 @@
+@CHARSET "UTF-8";
+
+.repo-wrap {
+	display: flex;
+}
+
+.bottom-area {
+	border:1px solid #e6e6e6;
+	height: 500px;
+	border-radius: 10px;
+}
+
+h2 {
+	color: red;
+}
