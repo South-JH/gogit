@@ -21,7 +21,7 @@ public class GitHubLoginController {
         if (accessToken != null) {
             String userInfo = gitHubAuthService.getGitHubUserInfo(accessToken);
             model.addAttribute("userInfo", userInfo);
-            return "main"; // 사용자 정보를 표시할 뷰 이름
+            return "redirect:/main"; // 사용자 정보를 표시할 뷰 이름
         } else {
             return "error"; // 오류 페이지로 리다이렉트
         }
