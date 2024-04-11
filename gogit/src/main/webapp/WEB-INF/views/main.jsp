@@ -36,8 +36,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           accept: "application/json",
         },
         data: {
-          client_id: "79ccc7bc43d1216fdca3",
-          client_secret: "8dee4fa126042ac903f794275d8ec1d5cc78aeaf",
+          client_id: "b04c2346160ad65c626a",
+          client_secret: "72f93a74dd1b6b2506351c18cd04c03d4896617d",
           code: "${code}",
         },
         success: function (result) {
