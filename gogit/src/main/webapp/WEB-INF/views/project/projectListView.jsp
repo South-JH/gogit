@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+	
+
+</style>
 </head>
 <body>
 
@@ -27,14 +31,31 @@
 	
 			<div class="container-fluid">
 	          <!--  Row 1 -->
-	          <div class="row">
-	          
-	          	<div class="repo-wrap"></div>
-	          
-	          
-	          
-	          
-	          
+	          <div class="row">	          	
+	          		<div class="header">
+						
+
+					</div>
+
+					<div class="content1">
+
+					</div>
+
+					<div class="content2">
+
+					</div>
+
+					<div class="content3">
+
+					</div>
+
+					<div class="content4">
+
+					</div>
+	          	
+					<div class="content5">
+
+					</div>
 	          </div>
 	        </div>
 	     </div>
