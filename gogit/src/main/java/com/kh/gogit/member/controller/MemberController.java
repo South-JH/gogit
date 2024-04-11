@@ -14,10 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class MemberController {
 	
-
-
-	
-
 	@RequestMapping("/callback")
 	public String loginMember(@RequestParam String code,HttpSession session) {
 		
