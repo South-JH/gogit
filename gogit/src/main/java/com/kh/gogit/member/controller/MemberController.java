@@ -22,8 +22,8 @@ public class MemberController {
 	public String loginMember(@RequestParam String code,HttpSession session) {
 		
 		session.setAttribute("code", code);
-	
-		return "main";
+		
+		return "/github/callback";
 	}
 
 }

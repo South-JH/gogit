@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <link rel="shortcut icon" type="image/png" href="resources/images/logo/logo2.png" />
 <link rel="shortcut icon" type="image/png" href="resources/images/logos/favicon.png" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="resources/css/styles.min.css" />
     <script src="resources/js/jquery.min.js"></script>
     <script src="resources/js/bootstrap.bundle.min.js"></script>
