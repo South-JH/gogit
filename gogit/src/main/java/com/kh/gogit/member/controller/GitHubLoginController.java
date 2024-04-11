@@ -18,8 +18,6 @@ public class GitHubLoginController {
     public String githubCallback(@RequestParam("code") String code, Model model) {
         String accessToken = gitHubAuthService.getGitHubAccessToken(code);
         
-        System.out.println(accessToken);
-        
         if (accessToken != null) {
             String userInfo = gitHubAuthService.getGitHubUserInfo(accessToken);
             model.addAttribute("userInfo", userInfo);

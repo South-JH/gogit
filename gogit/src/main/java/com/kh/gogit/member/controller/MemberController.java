@@ -23,8 +23,6 @@ public class MemberController {
 		
 		session.setAttribute("code", code);
 		
-		System.out.println("memberController");
-	
 		return "/github/callback";
 	}
 
