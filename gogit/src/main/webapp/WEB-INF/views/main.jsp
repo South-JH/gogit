@@ -28,22 +28,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       </div>
     </div>
 
-    <script>
-      $.ajax({
-        url: "http://github.com/login/oauth/access_token",
-        method: "post",
-        headers: {
-          accept: "application/json",
-        },
-        data: {
-          client_id: "79ccc7bc43d1216fdca3",
-          client_secret: "8dee4fa126042ac903f794275d8ec1d5cc78aeaf",
-          code: "${code}",
-        },
-        success: function (result) {
-          console.log(result);
-        },
-      });
-    </script>
+    
   </body>
 </html>
