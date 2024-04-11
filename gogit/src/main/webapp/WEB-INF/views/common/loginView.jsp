@@ -44,8 +44,15 @@ pageEncoding="UTF-8"%>
                 <div class="card-body">
                   <form action="main">
                     <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">아이디</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >아이디</label
+                      >
+                      <input
+                        type="email"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                      />
                       <!-- <div id="emailHelp" class="form-text">하이하이</div> -->
                     </div>
                     <div class="mb-3">
@@ -72,7 +79,7 @@ pageEncoding="UTF-8"%>
                       로그인
                     </button>
                     <a
-                      href="http://github.com/login/oauth/authorize?client_id=Iv1.8b5c20a8510d2f2a"
+                      href="http://github.com/login/oauth/authorize?client_id=bafc4109aa5941b24ce1"
                       >Click here</a
                     >
                   </form>
