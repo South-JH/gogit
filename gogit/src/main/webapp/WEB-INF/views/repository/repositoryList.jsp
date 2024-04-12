@@ -66,7 +66,7 @@
 											<img src="resources/images/repo-img.png" width="80px" height="80px">
 										</div>
 										<div class="repo-title-area">
-											<a href="">
+											<a href="detail.rp">
 												<div>
 													<h3>01_repository</h3>
 												</div>

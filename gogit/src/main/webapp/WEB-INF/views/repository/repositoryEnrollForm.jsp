@@ -6,23 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-/* 전체 레파지토리 wrap */
-.repo-wrap {
-	display: flex;
-	flex-direction: column;
-	height: auto;
-}
-
-.repo-wrap>div {
-	padding: 25px 0px;
-	/* width: 900px; */
-}
-
-h2 {
-	margin: 0;
-}
-</style>
 </head>
 <body>
 
@@ -47,15 +30,91 @@ h2 {
 	          <div class="row">
 	          
 				<div class="repo-wrap">
-					<div>
+					<div class="repo-wrap-title">
 						<div>
 							<h2>New &nbsp; Repository</h2>
 						</div>
 					</div>
 	          
+					<div>
+						<div class="bottom-area">
+							<div class="repo-name-desc">
+								<div class="create-repo-name-area">
+									<div class="create-repo-name">
+										<div><h5>Repository name</h5></div>
+										<span><h5>*</h5></span>
+									</div>
+									<div class="create-repo-name-input">
+										<input type="text">
+									</div>
+								</div>
+								<div class="create-repo-name-area">
+									<div class="create-repo-desc"><h5>Description</h5></div>
+									<div class="create-repo-name-input">
+										<input type="text">
+									</div>
+								</div>
+							</div>
+
+							<div class="create-repo-select-public-area">
+								<div class="create-repo-select-public">
+									<div class="select-radio-input-div">
+										<input type="radio" name="public">
+									</div>
+									<div>
+										<img src="resources/images/book-open.png" width="20" height="20">
+									</div>
+									<div>
+										Public
+									</div>
+								</div>
+								<div class="create-repo-select-public">
+									<div class="select-radio-input-div">
+										<input type="radio" name="public">
+									</div>
+									<div>
+										<img src="resources/images/lock.png" width="20" height="20">
+									</div>
+									<div>
+										Private
+									</div>
+								</div>
+							</div>
+
+							<div class="create-repo-checkbox-area">
+								<div>
+									<input type="checkbox">
+								</div>
+								<div>
+									Add a README file
+								</div>
+							</div>
+
+							<div class="create-repo-select-ignore">
+								<div>
+									Add .gitignore
+								</div>
+								<div>
+									<select name="" id="">
+										<option value="">Java</option>
+										<option value="">Spring</option>
+										<option value="">JavaScript</option>
+										<option value="">JQuery</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="create-repo-btn-area">
+								<div>
+									<button>CREATE</button>
+								</div>
+							</div>
+						</div>
+					</div>
 	          </div>
 	        </div>
 	     </div>
 	 </div>
+<link href="resources/repository/repositoryEnrollForm.css" rel="stylesheet">
 </body>
 </html>

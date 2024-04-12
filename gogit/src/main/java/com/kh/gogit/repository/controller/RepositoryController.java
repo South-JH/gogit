@@ -21,4 +21,9 @@ public class RepositoryController {
 		return "repository/pullRequestList";
 	}
 	
+	@RequestMapping("detail.rp")
+	public String repoDetailView() {
+		return "repository/repositoryDetailView";
+	}
+	
 }
