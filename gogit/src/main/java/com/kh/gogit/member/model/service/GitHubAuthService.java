@@ -1,4 +1,4 @@
-package com.kh.gogit.service;
+package com.kh.gogit.member.model.service;
 
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;

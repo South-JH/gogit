@@ -1,0 +1,32 @@
+/* 전체 레파지토리 wrap */
+.repo-wrap {
+	display: flex;
+	flex-direction: column;
+}
+
+.repo-wrap>div {
+	padding: 25px 0px;
+}
+
+/* 레파지토리 목록 부분 */
+.bottom-area {
+	border:1px solid #e6e6e6;
+	height: 500px;
+	border-radius: 10px;
+	padding: 20px;
+}
+
+.repo-search {
+	display: flex;
+}
+
+.repo-search input {
+	width: 250px;
+	height: 20px;
+}
+
+h2 {
+	margin: 0;
+}
+
+

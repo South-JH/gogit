@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.gogit.member.model.service.MemberServiceImpl;
 import com.kh.gogit.member.model.vo.Member;
-import com.kh.gogit.service.GitHubAuthService;
+import com.kh.gogit.member.model.service.GitHubAuthService;
 
 @Controller
 public class GitHubLoginController {
