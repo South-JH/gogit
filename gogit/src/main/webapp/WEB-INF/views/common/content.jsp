@@ -7,7 +7,21 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div class="container-fluid">
+
+<!--  Body Wrapper -->
+<div
+  class="page-wrapper"
+  id="main-wrapper"
+  data-layout="vertical"
+  data-navbarbg="skin6"
+  data-sidebartype="full"
+  data-sidebar-position="fixed"
+  data-header-position="fixed">
+	
+	<!--  Main wrapper -->
+	<div class="body-wrapper">
+
+		<div class="container-fluid">
 
           <!--  Row 1 -->
           <div class="row">
@@ -553,5 +567,7 @@
             </p>
           </div>
         </div>
+    </div>  
+</div>
 </body>
 </html>
