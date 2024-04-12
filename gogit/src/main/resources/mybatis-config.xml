@@ -8,10 +8,12 @@
 	
 	<typeAliases>
 		<typeAlias type="com.kh.gogit.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.gogit.friend.model.vo.Friend" alias="friend" />
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/friend-mapper.xml"/>
 	</mappers>
 
 </configuration>

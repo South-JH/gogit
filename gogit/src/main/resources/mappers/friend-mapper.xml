@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="friendMapper">
+ <resultMap type="Friend" id="friendResultSet">
+	<result column="mem_id" property="memId"/>
+	<result column="git_nick" property="gitNick"/>
+	<result column="mem_token" property="memToken"/>
+	<result column="mem_intro" property="memIntro"/>
+	<result column="create_date" property="createDate"/>
+	<result column="status" property="status"/>
+	<result column="team" property="team"/>
+	<result column="team_status" property="teamStatus"/>
+    <result column="bf_giver"  property="bfGiver"/>
+    <result column="bf_taker"  property="bfTaker"/>
+   <!--   <result column="fStatus"  property="fStatus"/>-->
+    <result column="request_date"  property="requestDate"/>
+	<result column="profile" property="profile"/>
+ 
+ </resultMap>
+ 
+ <select id="listCount" resultType="_int">
+ 	select 
+ 	       count(*)
+ 	  from friend
+ 	 where bf_taker = #{memId} 
+ 	    or bf_taker= #{memId}  
+ </select>
+  <select id="selectFriendList">
+  
+  </select>
+  
+  <insert id="addFriend">
+  insert
+  		 into friend
+  		 (
+  		   bf_giver
+  		 , bf_taker
+  		 , status
+  		 , request_date
+  		 )
+  	values
+  		 (
+  		   #{bfGiver}
+  		 , #{bfTaker}
+  		 , 'Y'
+  		 , default
+  		 )
+  </insert>
+  
+  
+  
+  
+</mapper>
