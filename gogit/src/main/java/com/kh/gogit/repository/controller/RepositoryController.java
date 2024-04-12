@@ -8,16 +8,17 @@ public class RepositoryController {
 
 	@RequestMapping("List.rp")
 	public String repositoryList() {
-		
 		return "repository/repositoryList";
-		
 	}
 	
 	@RequestMapping("enrollForm.rp")
 	public String repoEnrollForm() {
-		
 		return "repository/repositoryEnrollForm";
+	}
 		
+	@RequestMapping("pullRequest")
+	public String pullRequestList() {
+		return "repository/pullRequestList";
 	}
 	
 }
