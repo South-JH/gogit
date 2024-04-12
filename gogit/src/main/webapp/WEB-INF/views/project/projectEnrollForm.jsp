@@ -56,9 +56,9 @@
 							<div class="top-div">
 								<div style="display:flex;">
 									<div>1</div>
-									<div>프로젝트 기본 정보를 입력해주세요</div>
-									<div><hr></div>
+									<div>프로젝트 기본 정보를 입력해주세요</div>								
 								</div>
+								<hr>
 
 								<div style="display:flex;">
 									<div class="left-div">
@@ -172,9 +172,9 @@
 							<div class="bottom-div">
 								<div style="display: flex;">
 									<div>2</div>
-									<div>프로젝트</div>
-									<div><hr></div>
+									<div>프로젝트에 대한 소개해주세요</div>
 								</div>
+								<hr>
 
 								<div class="form-group" style="width: 1000px;">
 									<div>제목</div>
@@ -195,31 +195,7 @@
 
 						</div>
 
-						<div class="sideright-div">
-							<div>
-								<div style="border: 1px solid red; width: 300px; height: 300px;">
-									<div>TeamMates</div>
-									<div>
-										팀원목록 보여질 자리
-									</div>
-								</div>
-
-								<div style="border: 1px solid red; width: 300px; height: 300px;">
-									<div>팀원추가</div>
-									<div>
-										프로젝트에 추가할 팀원을 선택한 후에 하단에 '팀원 추가 하기' 버튼을 눌러주세요!
-										(체크: 팀원추가/체크해제: 팀원해제)
-									</div>
-
-									<div>
-										<input type="text">
-									</div>
-
-									<div><button>팀원추가하기</button></div>
-								</div>
-
-							</div>
-						</div>
+						<jsp:include page="../common/rightBar.jsp"/>
 
 						
 					</div>
