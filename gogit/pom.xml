@@ -223,7 +223,22 @@
 	        <artifactId>httpclient</artifactId>
 	        <version>4.5.13</version>
 	    </dependency>
-		       
+	    
+		
+		
+		<dependency>
+		    <groupId>com.microsoft.graph</groupId>
+		    <artifactId>microsoft-graph-auth</artifactId>
+		    <version>0.3.0</version>
+		</dependency>
+		
+		<dependency>
+    <groupId>com.microsoft.graph</groupId>
+    <artifactId>microsoft-graph</artifactId>
+    <version>5.80.0</version>
+</dependency>
+		
+
 	</dependencies>
     <build>
         <plugins>

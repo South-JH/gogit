@@ -73,7 +73,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
-                  href="list.pr"
+                  href="list.pj"
                   aria-expanded="false"
                 >
                   <span>
@@ -162,7 +162,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
-                  href="./icon-tabler.html"
+                  href="mypr.pr"
                   aria-expanded="false"
                 >
                   <span>

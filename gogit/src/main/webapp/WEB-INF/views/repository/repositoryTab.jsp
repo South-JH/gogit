@@ -30,7 +30,7 @@
 	<div id="repository-tab">
 		<a href="#" id="code">code</a>
 		<a href="#" id="issue">issue</a>
-		<a href="pullRequest" id="pull-request">Pull request</a>
+		<a href="list.pullrq" id="pull-request">Pull request</a>
 	</div>
 </body>
 </html>
