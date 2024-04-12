@@ -14,17 +14,28 @@
 	gap: 15px;
 	}
 	#content2_3>div:hover {
-    /* transition: all 0.5s ease;
+    transition: all 0.5s ease;
 	-webkit-transform: scale(1.1);
-	transform: scale(1.1); */
+	transform: scale(1.1);
 
-	transition: all 3s;
-  	transform: rotate(360deg);
-
-
+	/* transition: all 3s;
+  	transform: rotate(360deg); */
 	}
 	.teamMates, .rightBar-div>div{text-align: center;}
 	.topmenu-div{font-weight: 900; font-size: 25px;}
+	.repo-create-btn {
+	background-color: rgb(36, 87, 228);
+	border: 1px solid #e6e6e6;
+	border-radius: 6px;
+	height: 35px;
+	width: 100px;
+	font-weight: 600;
+	cursor: pointer;
+	}
+
+	.repo-create-btn-color {
+		color: white;
+	}
 </style>
 </head>
 <body>
@@ -62,30 +73,20 @@
 
 							<div style="display:flex;">
 								
-									<div class="form-group">										
-										
+									<div class="form-group">																				
 										<div>
 											<select class="form-control" id="sel1" name="sellist1">
 												<option>기술스택</option>
-												<option>2명</option>
-												<option>3명</option>
-												<option>4명</option>
-												<option>5명</option>
+												<option>자바</option>
+												<option>자바스크립트</option>
+												<option>파이썬</option>
+												<option>Go</option>
 											</select>
 										</div>										
 									</div>
-
-									<div>
-										<div>
-											<select class="form-control" id="sel1" name="sellist1">
-												<option>조회수순</option>
-												<option>최신순</option>
-											  </select>
-										</div>
-									</div>
-
-									<div>
-										<div><a href="enrollForm.pj">프로젝트 작성하기</a></button></div>											
+									
+									<div class="repo-create-btn" style="width: 120px; margin-left: 5px;">
+										<div><a class="repo-create-btn-color" href="enrollForm.pj">프로젝트 작성하기</a></div>											
 									</div>								
 							</div>
 						</div>

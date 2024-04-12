@@ -9,13 +9,14 @@
 
 <style>
 .body-wrapper > .container-fluid{max-width:1600px}
+
+.li-style {
+  border-radius: 15px;
+  background: black;
+  color: white;
+  font-weight: 600;
+}
 </style>
-
-<!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
-
-
-
 </head>
 <body>
 
@@ -61,7 +62,7 @@
 								<hr>
 
 								<div style="display:flex;">
-									<div class="left-div">
+									<div class="left-div" style="margin-right: 15px;">
 
 										<div class="form-group">										
 											<div>
@@ -102,10 +103,9 @@
 											width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
 											placeholder: $( this ).data( 'placeholder' ),
 											closeOnSelect: false,
-											});									
+											});	
 										</script>
-
-
+								
 										<div>
 											<div>기술 스택</div>
 											<div>
