@@ -14,7 +14,7 @@ public class ProjectController {
 	@Autowired
 	private ProjectServiceImpl pService;
 	
-	@RequestMapping("list.pr")
+	@RequestMapping("list.pj")
 	/*
 	public ModelAndView selectList(@RequestParam (value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		int listCount = pService.selectListCount();
@@ -22,8 +22,18 @@ public class ProjectController {
 		mv.setViewName("project/projectListView");
 	}
 	*/
-	public String enrollForm() {
+	public String projectList() {
 		return "project/projectListView";
+	}
+	
+	@RequestMapping("enrollForm.pj")
+	public String enrollForm() {
+		return "project/projectEnrollForm";
+	}
+	
+	@RequestMapping("detail.pr")
+	public String detailView() {
+		return "project/projectDetailView";
 	}
 	
 	
