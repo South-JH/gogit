@@ -10,6 +10,7 @@
 <style type="text/css">
 	#calendar{
 		background-color: white;
+		margin-top: 50px;
 	}
 </style>
 <script>
