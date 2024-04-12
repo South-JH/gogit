@@ -15,6 +15,7 @@
 
 .repo-wrap>div {
 	padding: 25px 0px;
+	/* width: 900px; */
 }
 
 /* 레파지토리 목록 부분 */
@@ -23,11 +24,12 @@
 	height: 500px;
 	border-radius: 10px;
 	padding: 20px;
+	background-color: white;
 }
 
 .bottom-area-wrap {
 	display: flex;
-	justify-content: space-between;
+	justify-content: flex-end;
 }
 
 .repo-search input {
@@ -77,14 +79,23 @@ h2 {
 .repo-list-one {
 	border: 1px solid #e6e6e6;
 	border-radius: 6px;
-	height: 70px;
-	width: 500px;
+	height: 100px;
+	width: 100%;
 	display: flex;
+	align-items: center;
 	padding: 15px;
 }
 
 .repo-list-area {
 	padding-top: 30px;
+}
+
+.repo-search {
+	padding-right: 7px;
+}
+
+.body-wrapper {
+	background-color: #f9f9ff;
 }
 
 </style>
@@ -142,11 +153,13 @@ h2 {
 							<div class="repo-list-area">
 								<div class="repo-list-one">
 									<div>
-										레파지토리 사진 넣는곳
+										<img src="resources/images/repo-img.png" width="80px" height="80px">
 									</div>
 									<div>
-										<div>01_repository</div>
-										<div>개발 첫걸음</div>
+										<a href="">
+											<div>01_repository</div>
+											<div>개발 첫걸음</div>
+										</a>
 										<div>Java &nbsp; JavaScript</div>
 									</div>
 								</div>
