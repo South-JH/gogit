@@ -38,10 +38,20 @@ public class GitHubLoginController {
             m.setGitNick(userInfoObj.get("login").toString().replace("\"", ""));
             m.setProfile(userInfoObj.get("avatar_url").toString().replace("\"", ""));
             
-            int result = mService.insertMember(m);
+            int checkResult = mService.checkMemberId(m.getMemId());
+
+            int result = 0;
+            if(checkResult > 0) {
+            	result = mService.updateMember(m);
+            	
+            } else {
+            	result = mService.insertMember(m);
+            }
             
             if(result > 0) {
-            	session.setAttribute("loginUser", m);
+            	Member loginUser = mService.loginMember(m.getMemId());
+            	
+            	session.setAttribute("loginUser", loginUser);
             	return "redirect:/main";
             	
             } else {
