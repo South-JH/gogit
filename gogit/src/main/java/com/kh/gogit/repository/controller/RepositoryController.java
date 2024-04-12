@@ -13,4 +13,9 @@ public class RepositoryController {
 		
 	}
 	
+	@RequestMapping("pullRequest")
+	public String pullRequestList() {
+		return "repository/pullRequestList";
+	}
+	
 }
