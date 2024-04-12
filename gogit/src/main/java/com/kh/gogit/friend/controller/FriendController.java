@@ -10,7 +10,7 @@ import com.kh.gogit.friend.model.service.FriendServiceImpl;
 public class FriendController {
 
 	@Autowired // DI(Dependency Injection);
-	private FriendServiceImpl fService;
+	
 	
 	
 	@RequestMapping("form.fr")

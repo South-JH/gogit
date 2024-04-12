@@ -162,22 +162,18 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
-                  href="./sample-page.html"
+                  href="form.fr"
                   aria-expanded="false"
                 >
                   <span>
                     <i class="ti ti-brand-finder"></i>
                   </span>
-                  <span class="hide-menu" onclick="goFriend();">Friend</span>
+                  <span class="hide-menu" >Friend</span>
                 </a>
               </li>
             </ul>
             
-            <script>
-            	function goFriend(){
-            		location.href = "form.fr";
-            	}
-            </script>
+           
             <%-- 
             <div
               class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded"
