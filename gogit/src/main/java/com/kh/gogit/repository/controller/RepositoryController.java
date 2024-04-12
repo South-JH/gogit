@@ -13,4 +13,11 @@ public class RepositoryController {
 		
 	}
 	
+	@RequestMapping("enrollForm.rp")
+	public String repoEnrollForm() {
+		
+		return "repository/repositoryEnrollForm";
+		
+	}
+	
 }

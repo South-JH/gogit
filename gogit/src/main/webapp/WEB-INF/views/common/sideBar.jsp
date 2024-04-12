@@ -33,9 +33,9 @@
           <div
             class="brand-logo d-flex align-items-center justify-content-between"
           >
-            <a href="./index.html" class="text-nowrap logo-img">
+            <a href="main" class="text-nowrap logo-img">
               <img
-                src="resources/images/logos/dark-logo.svg"
+                src="resources/images/gogit-logo.png"
                 width="180"
                 alt=""
               />
