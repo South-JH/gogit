@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="memberMapper">
+	<resultMap id="memberResult" type="Member">
+		<result column="mem_Id" property="memId"/>
+		<result column="mem_token" property="memToken"/>
+		<result column="mem_intro" property="memIntro"/>
+		<result column="create_date" property="createDate"/>
+		<result column="status" property="status"/>
+		<result column="stack_name" property="stackName"/>
+		<result column="team" property="team"/>
+		<result column="team_status" property="teamStatus"/>
+		<result column="git_nick" property="gitNick"/>
+		<result column="profile" property="profile"/>
+		<result column="file_no" property="fileNo"/>
+	</resultMap>
 	<insert id="insertMember">
 		insert
 		  into member
@@ -18,4 +31,35 @@
 		  , #{profile}
 		  )
 	</insert>
+	
+	<select id="checkMemberId" resultType="_int">
+		select
+			   count(*)
+		  from member
+		 where mem_id = #{memId}
+	</select>
+	
+	<update id="updateMember">
+		update member
+		   set mem_token = #{memToken}
+		     , git_nick = #{gitNick}
+		 where mem_id = #{memId}
+	</update>
+	
+	<select id="loginMember" resultMap="memberResult">
+		select
+			   mem_id
+			 , mem_token
+			 , mem_intro
+			 , create_date
+			 , status
+			 , stack_name
+			 , team
+			 , team_status
+			 , git_nick
+			 , profile
+			 , file_no
+		  from member
+		 where mem_id = #{memId}
+	</select>
 </mapper>

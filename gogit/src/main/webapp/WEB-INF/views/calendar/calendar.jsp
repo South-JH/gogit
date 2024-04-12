@@ -7,18 +7,24 @@
 <title>Insert title here</title>
 <script src="resources/js/jquery.min.js"></script>
 
-<style type="text/css"></style>
+<style type="text/css">
+	#calendar{
+		background-color: white;
+	}
+</style>
 <script>
-	let cd = document.addEventListener('DOMContentLoaded', function() {
+	document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth',
-      height:'500px',
+      height:'700px',
+      slotMinTime: '08:00',// Day 캘린더에서 시작 시간 
+      slotMaxTime: '20:00',
       navLinks: true, 
       headerToolbar: {
     	  left: 'prev,next today',
     	  center: 'title',
-    	  right: 'addEventButton,dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    	  right: 'dayGridMonth timeGridDay'
       },
       locale:'ko',
       buttonText:{
@@ -29,55 +35,95 @@
     	  list:'리스트',
       },
       eventAdd:function(e){
+    	  /* $.ajax({
+    		  url:"insert.cal",
+    		  data:{
+    			  
+    		  },
+    		  success:function(){
+    			  
+    		  },
+    		  error:function(){
+    			  
+    		  }
+    	  }) */
+    	  
     	  console.log(e)
       },
       eventChange:function(e){
-    	  console.log(e)
+    	  /* $.ajax({
+		  url:"update.cal",
+		  data:{
+			  
+		  },
+		  success:function(){
+			  
+		  },
+		  error:function(){
+			  
+		  }
+	  }) */
       },
       eventRemove:function(e){
-    	  console.log(e)
+    	  /* $.ajax({
+		  url:"delete.cal",
+		  data:{
+			  
+		  },
+		  success:function(){
+			  
+		  },
+		  error:function(){
+			  
+		  }
+	  }) */
       },
-      events:[
-    	  {
-    		  title:'sdfsdf',
-    		  start:'2024-04-11',
-    		  end:'2024-04-13',
-    	  }
-      ],
-      customButtons:{
-    	  addEventButton:{
-    		  text:"일정추가",
-    		  click:function(){
-    			  let addEv;
-    			  $("#calendarModal").modal("show");
-    			 
-				  $("#addEvent").on("click",function(){
-					 addEv={
-						 content : $("#content").val(),
-						 start : $("#startDate").val(),
-						 end : $("#endDate").val(),
-					  }
-					 $("#calendarModal").modal("hide");
-					 console.log(addEv);
-					 $("#content").val("");
-					 $("#startDate").val("");
-					 $("#endDate").val("");
-					 
-				  })
-
-				$("#close").on("click",function(){
-					$("#calendarModal").modal("hide");
-				})
+      
+      select: function(selectDay) {
+    	  $("#startDate").val(selectDay.startStr)
+    	  $("#calendarModal").modal("show");
+    	   $("#addEvent").on("click",function(){
+    		   
+         		
+    		  	calendar.addEvent({
+         			title: $("#content").val(),
+         			start: $("#startDate").val()+"T"+$("#startTime").val()+":00",
+         			end: $("#endDate").val()+"T"+$("#endTime").val()+":00",
+         			backgroundColor:$("#eventColor").val(),
+    		  	})
+    		  	
+    		  	
+    		  	$("#calendarModal").modal("hide");
+    		  	$("#content").val("");
+				$("#startDate").val("");
+				$("#endDate").val("");
 				
-    		  }
+    	  })
+    	  
+    	  $("#close").on("click",function(){
+				$("#calendarModal").modal("hide");
+			}) 
+         	
+      },
+      eventClick:function(e){
+    	  let con = confirm("이벤트 삭제 하시겠습니까?");
+    	  if(con){
+    		  e.event.remove();
     	  }
-      }
+      },
+      
+     
+      editable:true,
+      dayMaxEvents: true,
+      selectable: true,
+      
       
     });
     calendar.render();
+   
   });
 	
-	//console.log(cd);
+	
 </script>
 
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
@@ -100,10 +146,19 @@
                     <div class="form-group">
                         <label for="content" class="col-form-label">일정 내용</label>
                         <input type="text" class="form-control" id="content" name="content">
+                        
                         <label for="startDate" class="col-form-label">시작 날짜</label>
                         <input type="date" class="form-control" id="startDate" name="startDate">
+                        <input type="time" class="form-control" id="startTime" name="startTime">
+                        
                         <label for="endDate" class="col-form-label">종료 날짜</label>
                         <input type="date" class="form-control" id="endDate" name="endDate">
+                        <input type="time" class="form-control" id="endTime" name="endTime">
+                        
+                        
+                        <label for="eventColor" class="col-form-label">이벤트 바 색상</label>
+                        <input type="color" class="form-control" id="eventColor" name="eventColor" style="width: 50px">
+                       
                     </div>
                 </div>
                 <div class="modal-footer">
