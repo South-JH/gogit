@@ -18,7 +18,20 @@
     <script src="resources/js/dashboard.js"></script>
 </head>
 <body>
-    
+
+<!--  Body Wrapper -->
+<div
+  class="page-wrapper"
+  id="main-wrapper"
+  data-layout="vertical"
+  data-navbarbg="skin6"
+  data-sidebartype="full"
+  data-sidebar-position="fixed"
+  data-header-position="fixed">
+	
+	<!--  Main wrapper -->
+	<div class="body-wrapper">
+
         <!--  Header Start -->
         <header class="app-header">
           <nav class="navbar navbar-expand-lg navbar-light">
@@ -93,7 +106,7 @@
                         <p class="mb-0 fs-3">My Task</p>
                       </a>
                       <a
-                        href="./authentication-login.html"
+                        href="logout"
                         class="btn btn-outline-primary mx-3 mt-2 d-block"
                         >Logout</a
                       >
@@ -105,5 +118,7 @@
           </nav>
         </header>
         <!--  Header End -->
+   </div>
+</div>
 </body>
 </html>

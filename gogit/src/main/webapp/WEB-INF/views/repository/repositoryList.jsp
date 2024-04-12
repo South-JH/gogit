@@ -8,10 +8,33 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<jsp:include page="../common/header.jsp" />
+	
 	<jsp:include page="../common/sideBar.jsp" />
+	
+	<jsp:include page="../common/header.jsp" />
+		
+	<div
+	  class="page-wrapper"
+	  id="main-wrapper"
+	  data-layout="vertical"
+	  data-navbarbg="skin6"
+	  data-sidebartype="full"
+	  data-sidebar-position="fixed"
+	  data-header-position="fixed">
+		
+		<!--  Main wrapper -->
+		<div class="body-wrapper">
+	
+			<div class="container-fluid">
+	          <!--  Row 1 -->
+	          <div class="row">
+	          
+	          </div>
+	        </div>
+	     </div>
+	 </div>
+	
+			
 
-	여기어디?
 </body>
 </html>
