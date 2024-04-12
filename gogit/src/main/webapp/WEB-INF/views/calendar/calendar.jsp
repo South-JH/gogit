@@ -7,7 +7,11 @@
 <title>Insert title here</title>
 <script src="resources/js/jquery.min.js"></script>
 
-<style type="text/css"></style>
+<style type="text/css">
+	#calendar{
+		background-color: white;
+	}
+</style>
 <script>
 	document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
@@ -43,6 +47,8 @@
     			  
     		  }
     	  }) */
+    	  
+    	  console.log(e)
       },
       eventChange:function(e){
     	  /* $.ajax({
@@ -83,6 +89,7 @@
          			title: $("#content").val(),
          			start: $("#startDate").val()+"T"+$("#startTime").val()+":00",
          			end: $("#endDate").val()+"T"+$("#endTime").val()+":00",
+         			backgroundColor:$("#eventColor").val(),
     		  	})
     		  	
     		  	
@@ -113,9 +120,10 @@
       
     });
     calendar.render();
+   
   });
 	
-	//console.log(cd);
+	
 </script>
 
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
@@ -146,6 +154,11 @@
                         <label for="endDate" class="col-form-label">종료 날짜</label>
                         <input type="date" class="form-control" id="endDate" name="endDate">
                         <input type="time" class="form-control" id="endTime" name="endTime">
+                        
+                        
+                        <label for="eventColor" class="col-form-label">이벤트 바 색상</label>
+                        <input type="color" class="form-control" id="eventColor" name="eventColor" style="width: 50px">
+                       
                     </div>
                 </div>
                 <div class="modal-footer">
