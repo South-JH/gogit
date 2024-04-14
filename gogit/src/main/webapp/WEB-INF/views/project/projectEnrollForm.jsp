@@ -84,12 +84,12 @@
 											<div>모집포지션</div>
 											<div>										
 												<select class="form-select" id="multiple-select-field" data-placeholder="" multiple>
+													<option>전체</option>
 													<option>기획자</option>
 													<option>데브옵스</option>
 													<option>디자이너</option>
 													<option>백엔드</option>
 													<option>안드로이드</option>
-													<option>전체</option>
 													<option>프론트엔드</option>
 													<option>IOS</option>
 													<option>PM</option>
@@ -110,13 +110,13 @@
 											<div>기술 스택</div>
 											<div>
 												<select class="form-select" id="multiple-select-field1" data-placeholder="" multiple>
-													<option>aws</option>
-													<option>docker</option>
-													<option>figma</option>
-													<option>firebase</option>
-													<option>flutter</option>
-													<option>git</option>
-													<option>go</option>
+													<option>JavaScript</option>
+													<option>TypeScript</option>
+													<option>React</option>
+													<option>Vue</option>
+													<option>Nodejs</option>
+													<option>Spring</option>
+													<option>Java</option>
 												  </select>
 											</div>
 										</div>
