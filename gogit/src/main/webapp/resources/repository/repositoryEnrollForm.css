@@ -66,6 +66,16 @@ h2, h5 {
 	padding: 5px 10px;
 }
 
+.create-repo-name+div {
+	display: flex;
+	align-items: center;
+}
+
+.create-repo-name-input+div {
+	padding-left: 15px;
+	display: none;
+}
+
 h5 {
 	margin: 0;
 }
@@ -102,10 +112,14 @@ h5 {
 
 .create-repo-btn-area button {
 	border: 1px solid #e6e6e6;
-	border-radius: 15px;
+	border-radius: 9px;
 	height: 40px;
 	width: 100px;
 	background-color: rgb(36, 87, 228);
 	color: white;
 	font-weight: 600;
+}
+
+.select-radio-input-div>input, .create-repo-checkbox-area input {
+	vertical-align: middle;
 }

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class RepositoryController {
 
-	@RequestMapping("List.rp")
+	@RequestMapping("list.rp")
 	public String repositoryList() {
 		return "repository/repositoryList";
 	}
@@ -29,6 +29,21 @@ public class RepositoryController {
 	@RequestMapping("create.pullrq")
 	public String createPullRequestForm() {
 		return "repository/pullRequestEnroll";
+	}
+	
+	@RequestMapping("list.cm")
+	public String commitList() {
+		return "repository/commitList";
+	}
+	
+	@RequestMapping("list.is")
+	public String issueList() {
+		return "repository/issueList";
+	}
+	
+	@RequestMapping("create.is")
+	public String createIssue() {
+		return "repository/issueEnroll";
 	}
 	
 }

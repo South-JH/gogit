@@ -5,17 +5,20 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- jquery -->
+<script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+
 <link rel="shortcut icon" type="image/png" href="resources/images/logo/logo2.png" />
 <link rel="shortcut icon" type="image/png" href="resources/images/logos/favicon.png" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="resources/css/styles.min.css" />
-    <script src="resources/js/jquery.min.js"></script>
-    <script src="resources/js/bootstrap.bundle.min.js"></script>
-    <script src="resources/js/sidebarmenu.js"></script>
-    <script src="resources/js/app.min.js"></script>
-    <script src="resources/js/apexcharts.min.js"></script>
-    <script src="resources/js/simplebar.js"></script>
-    <script src="resources/js/dashboard.js"></script>
+<script src="resources/js/jquery.min.js"></script>
+<script src="resources/js/bootstrap.bundle.min.js"></script>
+<script src="resources/js/sidebarmenu.js"></script>
+<script src="resources/js/app.min.js"></script>
+<script src="resources/js/apexcharts.min.js"></script>
+<script src="resources/js/simplebar.js"></script>
+<script src="resources/js/dashboard.js"></script>
 </head>
 <body>
 

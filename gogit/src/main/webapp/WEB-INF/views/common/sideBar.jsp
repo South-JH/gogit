@@ -135,7 +135,7 @@
               --%>
                
               <li class="nav-small-cap repo-hover">
-              	<a href="List.rp" style="color: inherit;">
+              	<a href="list.rp" style="color: inherit;">
 	                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
 	                <span class="hide-menu" style="line-height: 40px;">REPOSITORY</span>
                 </a>
