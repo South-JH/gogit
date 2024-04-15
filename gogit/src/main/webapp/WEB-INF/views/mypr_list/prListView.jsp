@@ -21,11 +21,16 @@
 		}
 		.table>tbody>tr {
 			text-align: center;
+			cursor: pointer;
+		}
+		.table>tbody>tr:hover{
+			background-color: rgb(13, 110, 253);
 		}
 		
 		.pagination>li{
 			cursor: pointer;
 		}
+		
 		
 		
 	</style>
@@ -56,6 +61,7 @@
              
              	<div>
              		<h3 class="display-5" align="center">PR</h3>
+             		<button class="btn btn-sm btn-primary" style="float: right;" onclick="location.href='insertForm.mp'">나의 PR 등록</button>
 	             	<table class="table">
 	             		<thead>
 		             		<tr>
@@ -99,7 +105,7 @@
     			
     				
     				for(let i in data.list){
-    					list+="<tr>"
+    					list+="<tr onclick='detail(this);'>"
     							+"<td>"+data.list[i].prNo+"</td>"
     							+"<td>"+data.list[i].prTitle+"</td>"
     							+"<td>"+data.list[i].memId+"</td>"
@@ -138,9 +144,13 @@
     				
     			},
     			error:function(){
-    				
+    				console.log("실패")
     			}
     		})
+    	}
+    	
+    	function detail(data){
+    		location.href="detail.mp?bno="+$(data).children().eq(0).text();
     	}
     
     </script>

@@ -9,6 +9,7 @@
 	<typeAliases>
 		<typeAlias type="com.kh.gogit.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.gogit.pr.model.vo.Pr" alias="Pr"/>
+		<typeAlias type="com.kh.gogit.pr.model.vo.Reply" alias="Reply"/>
 	</typeAliases>
 	
 	<mappers>
