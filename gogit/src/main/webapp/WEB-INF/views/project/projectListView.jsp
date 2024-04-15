@@ -14,17 +14,78 @@
 	gap: 15px;
 	}
 	#content2_3>div:hover {
-    /* transition: all 0.5s ease;
+    transition: all 0.5s ease;
 	-webkit-transform: scale(1.1);
-	transform: scale(1.1); */
+	transform: scale(1.1);
 
-	transition: all 3s;
-  	transform: rotate(360deg);
-
-
+	/* transition: all 3s;
+  	transform: rotate(360deg); */
 	}
+
+	#content2_3>div{
+		padding: 7px;
+	}
+
+
 	.teamMates, .rightBar-div>div{text-align: center;}
 	.topmenu-div{font-weight: 900; font-size: 25px;}
+	.repo-create-btn {
+	background-color: rgb(2 56 75);
+	border: 1px solid #e6e6e6;
+	border-radius: 6px;
+	height: 35px;
+	width: 100px;
+	font-weight: 570;
+	cursor: pointer;
+	text-align: center;
+	padding: 5px;
+	}
+
+	.repo-create-btn-color {
+		color: white;
+	}
+	.bottom-div{
+		display: flex;
+		justify-content : center
+	}
+	.plist-div{
+		box-shadow: 5px 5px 10px gray;
+		cursor: pointer;
+	}
+	.testtest>a{
+		cursor: pointer;
+	}
+	.pro-public {
+	border: 1px solid #d9d9d9;
+	border-radius: 30px;
+	width: 80px;
+	height: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	/* font-weight: 600; */
+    text-align: center;
+	background-color: rgb(2 56 75);
+	color: white;
+    }
+	.pro-public1>div {
+	border: 1px solid #d9d9d9;
+	border-radius: 30px;
+	width: 80px;
+	height: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-weight: 600;
+    text-align: center;
+    }
+
+	/* 기술스택 이미지 */
+	.stackimg>img{
+		width: 45px;
+		height: 45px;
+	}
+	
 </style>
 </head>
 <body>
@@ -53,39 +114,29 @@
 
 						<div class="top-div">
 							<div class="topmenu-div" style="display:flex;">
-								<div style="width: 90px;"><a>전체</a></div>					
-								<div style="width: 100px;"><a>모집 중</a></div>
-								<div style="width: 120px;"><a>모집 완료</a></div>
+								<div style="width: 90px;" class="testtest"><a href="#" style="color: rgb(2 56 75);">전체</a></div>					
+								<div style="width: 100px;"><a href="#" style="color: lightgray;">모집 중</a></div>
+								<div style="width: 120px;"><a href="#" style="color: lightgray;">모집 완료</a></div>
 							</div>
 							<br>
 							<br>
 
 							<div style="display:flex;">
 								
-									<div class="form-group">										
-										
+									<div class="form-group">																				
 										<div>
-											<select class="form-control" id="sel1" name="sellist1">
-												<option>기술스택</option>
-												<option>2명</option>
-												<option>3명</option>
-												<option>4명</option>
-												<option>5명</option>
+											<select style="background-color: #ffffff;" class="form-control" id="sel1" name="sellist1">
+												<option>기술스택↓</option>
+												<option>자바</option>
+												<option>자바스크립트</option>
+												<option>파이썬</option>
+												<option>Go</option>
 											</select>
 										</div>										
 									</div>
-
-									<div>
-										<div>
-											<select class="form-control" id="sel1" name="sellist1">
-												<option>조회수순</option>
-												<option>최신순</option>
-											  </select>
-										</div>
-									</div>
-
-									<div>
-										<div><a href="enrollForm.pj">프로젝트 작성하기</a></button></div>											
+									
+									<div class="repo-create-btn" style="width: 120px; margin-left: 5px;">
+										<div><a class="repo-create-btn-color" href="enrollForm.pj">프로젝트 작성</a></div>											
 									</div>								
 							</div>
 						</div>
@@ -95,60 +146,152 @@
 						<div class="middle-div">
 							<div id="content2_3">
 								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
-									<div>모집중</div>
+									<div class="pro-public">모집중</div>
+									<br>
 									<div>마감일:2024-10-10</div>
+									<br>
 									<div>백엔드 개발자 구합니다!</div>
-									<div>백엔드</div>
-									<div>js,파이썬 그림</div>
+									<br>
+
+									<div style="display: flex; margin-bottom: 10px;" class="pro-public1">
+										<div>디자이너</div>
+										<div>백엔드</div>
+										<div>프론트엔트</div>						
+									</div>								
+
+									<div style="display: flex;">
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
+									</div>
+
 									<div><hr></div>
 									<div>조회수:0</div>
 									<div>작성자:박지민</div>
 								</div>
 
-								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;">
-									<div>모집중</div>
+
+								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
+									<div class="pro-public">모집중</div>
+									<br>
 									<div>마감일:2024-10-10</div>
+									<br>
 									<div>백엔드 개발자 구합니다!</div>
-									<div>백엔드</div>
-									<div>js,파이썬 그림</div>
+									<br>
+
+									<div style="display: flex; margin-bottom: 10px;" class="pro-public1">
+										<div>디자이너</div>
+										<div>백엔드</div>
+										<div>프론트엔트</div>									
+									</div>								
+
+									<div style="display: flex;">
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
+									</div>
+
 									<div><hr></div>
 									<div>조회수:0</div>
 									<div>작성자:박지민</div>
 								</div>
 
-								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;">
-									<div>모집중</div>
+								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
+									<div class="pro-public">모집중</div>
+									<br>
 									<div>마감일:2024-10-10</div>
+									<br>
 									<div>백엔드 개발자 구합니다!</div>
-									<div>백엔드</div>
-									<div>js,파이썬 그림</div>
+									<br>
+
+									<div style="display: flex; margin-bottom: 10px;" class="pro-public1">
+										<div>디자이너</div>
+										<div>백엔드</div>
+										<div>프론트엔트</div>									
+									</div>								
+
+									<div style="display: flex;">
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
+									</div>
+
 									<div><hr></div>
 									<div>조회수:0</div>
 									<div>작성자:박지민</div>
 								</div>
 
-								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;">
-									<div>모집중</div>
+								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
+									<div class="pro-public">모집중</div>
+									<br>
 									<div>마감일:2024-10-10</div>
+									<br>
 									<div>백엔드 개발자 구합니다!</div>
-									<div>백엔드</div>
-									<div>js,파이썬 그림</div>
+									<br>
+
+									<div style="display: flex; margin-bottom: 10px;" class="pro-public1">
+										<div>디자이너</div>
+										<div>백엔드</div>
+										<div>프론트엔트</div>									
+									</div>								
+
+									<div style="display: flex;">
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
+									</div>
+
 									<div><hr></div>
 									<div>조회수:0</div>
 									<div>작성자:박지민</div>
 								</div>
 
-								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;">
-									<div>모집중</div>
+								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
+									<div class="pro-public">모집중</div>
+									<br>
 									<div>마감일:2024-10-10</div>
+									<br>
 									<div>백엔드 개발자 구합니다!</div>
-									<div>백엔드</div>
-									<div>js,파이썬 그림</div>
+									<br>
+
+									<div style="display: flex; margin-bottom: 10px;" class="pro-public1">
+										<div>디자이너</div>
+										<div>백엔드</div>
+										<div>프론트엔트</div>									
+									</div>								
+
+									<div style="display: flex;">
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
+										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
+									</div>
+
 									<div><hr></div>
 									<div>조회수:0</div>
 									<div>작성자:박지민</div>
 								</div>
+
+								
+
+								
+								
+
+								
 							</div>
+						</div>
+						<br>
+						<br>
+
+						<div class="bottom-div">
+							<div class="bottondivdiv">
+								<ul class="pagination">
+									<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+									<li class="page-item"><a class="page-link" href="#">1</a></li>
+									<li class="page-item active"><a class="page-link" href="#">2</a></li>
+									<li class="page-item"><a class="page-link" href="#">3</a></li>
+									<li class="page-item"><a class="page-link" href="#">Next</a></li>
+								  </ul>						
+							</div>	
 						</div>
 					</div>
 					

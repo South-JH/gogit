@@ -9,13 +9,14 @@
 
 <style>
 .body-wrapper > .container-fluid{max-width:1600px}
+
+.li-style {
+  border-radius: 15px;
+  background: black;
+  color: white;
+  font-weight: 600;
+}
 </style>
-
-<!-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
-
-
-
 </head>
 <body>
 
@@ -61,7 +62,7 @@
 								<hr>
 
 								<div style="display:flex;">
-									<div class="left-div">
+									<div class="left-div" style="margin-right: 15px;">
 
 										<div class="form-group">										
 											<div>
@@ -83,12 +84,12 @@
 											<div>모집포지션</div>
 											<div>										
 												<select class="form-select" id="multiple-select-field" data-placeholder="" multiple>
+													<option>전체</option>
 													<option>기획자</option>
 													<option>데브옵스</option>
 													<option>디자이너</option>
 													<option>백엔드</option>
 													<option>안드로이드</option>
-													<option>전체</option>
 													<option>프론트엔드</option>
 													<option>IOS</option>
 													<option>PM</option>
@@ -102,21 +103,20 @@
 											width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
 											placeholder: $( this ).data( 'placeholder' ),
 											closeOnSelect: false,
-											});									
+											});	
 										</script>
-
-
+								
 										<div>
 											<div>기술 스택</div>
 											<div>
 												<select class="form-select" id="multiple-select-field1" data-placeholder="" multiple>
-													<option>aws</option>
-													<option>docker</option>
-													<option>figma</option>
-													<option>firebase</option>
-													<option>flutter</option>
-													<option>git</option>
-													<option>go</option>
+													<option>JavaScript</option>
+													<option>TypeScript</option>
+													<option>React</option>
+													<option>Vue</option>
+													<option>Nodejs</option>
+													<option>Spring</option>
+													<option>Java</option>
 												  </select>
 											</div>
 										</div>
@@ -187,7 +187,7 @@
 									<textarea style="width: 1200px; height: 500px;"></textarea>
 								</div>
 								<div style="float: right;">
-									<button>작성하기</button><button>초기화</button><button>이전으로</button>
+									<button class="btn btn-primary" style="background-color: rgb(2 56 75);">작성하기</button><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">초기화</button><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">이전으로</button>
 								</div>
 							
 
