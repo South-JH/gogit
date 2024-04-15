@@ -187,7 +187,7 @@
 									<textarea style="width: 1200px; height: 500px;"></textarea>
 								</div>
 								<div style="float: right;">
-									<button>작성하기</button><button>초기화</button><button>이전으로</button>
+									<button class="btn btn-primary" style="background-color: rgb(2 56 75);">작성하기</button><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">초기화</button><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">이전으로</button>
 								</div>
 							
 
