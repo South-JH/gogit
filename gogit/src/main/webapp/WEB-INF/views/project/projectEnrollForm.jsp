@@ -10,12 +10,7 @@
 <style>
 .body-wrapper > .container-fluid{max-width:1600px}
 
-.li-style {
-  border-radius: 15px;
-  background: black;
-  color: white;
-  font-weight: 600;
-}
+/*숫자 1번 스타일*/
 .top-div button, #cssbtn{
         border: 0;
         border-radius: 100px;
@@ -25,6 +20,7 @@
         width: 30px;
         height: 30px;
 }
+
 .sideleft-div{
 	border-radius: 10px;
 }
@@ -81,7 +77,7 @@
 											<div>
 												<label for="sel1">모집인원</label>
 											</div>
-											<div>
+											<div style="margin-bottom: 10px;">
 												<select class="form-control" id="sel1" name="sellist1">
 													<option>인원 미정</option>
 													<option>2명</option>
@@ -95,7 +91,7 @@
 
 										<div style="width: 600px;">
 											<div>모집포지션</div>
-											<div>										
+											<div style="margin-bottom: 10px;">										
 												<select class="form-select" id="multiple-select-field" data-placeholder="" multiple>
 													<option>전체</option>
 													<option>기획자</option>
@@ -153,7 +149,7 @@
 												<label for="sel1">진행기간</label>
 											</div>
 
-											<div>
+											<div style="margin-bottom: 10px;">
 												<select class="form-control" id="sel1" name="sellist1">
 													<option>기간 미정</option>
 													<option>2개월</option>
@@ -167,7 +163,7 @@
 
 										<div class="form-group">
 											<div>모집 마감일</div>
-											<div>
+											<div style="margin-bottom: 10px;">
 												<input type="date" class="form-control" id="endDate" name="endDate">
 											</div>
 										</div>
@@ -197,8 +193,8 @@
 								</div>
 								<br>
 
-								<div id="content1">
-									<textarea style="width: 1200px; height: 500px;"></textarea>
+								<div id="content1" style="margin-bottom: 15px;">
+									
 								</div>
 
 								<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
