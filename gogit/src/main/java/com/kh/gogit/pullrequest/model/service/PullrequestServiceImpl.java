@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.pullrequest.model.dao.PullrequestDao;
 
@@ -23,25 +25,31 @@ public class PullrequestServiceImpl implements PullrequestService {
 	private SqlSessionTemplate sqlSession;
 	
 	public void getGitHubRepositoryList(Member loginUser) {
-		String url = "https://api.github.com/users/" + loginUser.getGitNick() + "/repos";
-//		https://api.github.com/users/[username]/repos
+		// ================================= repository 조회 =================================
+		String url = "https://api.github.com/user/repos";
         
         RestTemplate restTemplate = new RestTemplate();
         
         HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(loginUser.getMemToken());
-//        headers.set("Authorization", "Bearer " + loginUser.getMemToken());
-        headers.set("Accept", "application/vnd.github.v3+json");
+        headers.set("Authorization", "Bearer " + loginUser.getMemToken());
+        headers.set("Accept", "application/vnd.github+json");
         
         HttpEntity<String> request = new HttpEntity<String>(headers);
         
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
         
         if(response.getStatusCode() == HttpStatus.OK) {
-        	System.out.println(response.getBody());
+        	System.out.println("가져왔다 repository");
         } else {
         	System.out.println("실패~");
+        	return;
         }
+        // ===============================================================================================
+        
+        // pull request 생성
+        JsonObject repoObj = (JsonObject)new JsonParser().parse(response.getBody());
+        System.out.println(repoObj);
+//        url = "https://api.github.com/repos/" + response.getBody(). + "/" + REPO + "/pulls";
 	}
 
 }

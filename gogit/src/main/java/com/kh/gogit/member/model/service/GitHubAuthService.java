@@ -22,7 +22,7 @@ public class GitHubAuthService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        MultiValueMap<String, String> body = new LinkedMultiValueMap();
+        MultiValueMap<String, String> body = new LinkedMultiValueMap<String, String>();
         body.add("client_id", clientId);
         body.add("client_secret", clientSecret);
         body.add("code", code);
