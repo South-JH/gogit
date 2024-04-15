@@ -1,5 +1,7 @@
 package com.kh.gogit.member.model.service;
 
+import java.net.URLDecoder;
+
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -24,7 +26,6 @@ public class GitHubAuthService {
         body.add("client_id", clientId);
         body.add("client_secret", clientSecret);
         body.add("code", code);
-        
 
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(body, headers);
 
@@ -32,7 +33,10 @@ public class GitHubAuthService {
 
 		if (response.getStatusCode() == HttpStatus.OK) {
 		    String responseBody = response.getBody();
+		    System.out.println(responseBody);
+//		    String accessToken = URLDecoder.decode(responseBody.split("&token_type=")[0].split("access_token=")[1]);
 		    String accessToken = responseBody.split("&")[0].split("=")[1];
+		    System.out.println(accessToken);
 		    
 		    return accessToken;
 		} else {
