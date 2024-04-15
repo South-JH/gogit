@@ -7,36 +7,90 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    .teamMates, .rightBar-div>div{text-align: center;}
+    .teamMates{text-align: center;}
+    .teamlist>div{justify-content : center}
+    .proimg-div>img{
+        width: 45px;
+		height: 45px;
+    }
+    /*div 가운데 정렬*/
+    .addbtn-div{
+		display: flex;
+		justify-content : center	
+    }
+    .sliderhight-div, .rightBar-div{
+        border-radius: 10px;
+        border: 1px solid #d4d2d2;
+    }
+    
 </style>
 </head>
 <body>
 
-    <div class="sideright-div">
-        <div style="background-color:#ffffff;">
-            <div style="border: 1px solid red; width: 300px; height: 300px;">
-                <div class="teamMates"><b>TeamMates</b></div>
-                <div>
-                    팀원목록 보여질 자리
+    <div class="slideright-div">
+        <div class="sliderhight-div" style="background-color:#ffffff;">
+            <div style="width: 300px; height: 300px;" class="teamlist">
+                <div class="teamMates" style="margin-bottom: 10px;"><b style="color: rgb(2 56 75);">TeamMates</b></div>
+                <div style="display: flex;">
+                    <div class="proimg-div" style="width: 60px;"><img src="https://holaworld.io/images/languages/javascript.svg"></div>
+                    <div>
+                        <b>hijimin</b>
+                        <div>@hijimin</div>
+                    </div>
+                </div>   
+                
+                <div style="display: flex;">
+                    <div class="proimg-div" style="width: 60px;"><img src="https://holaworld.io/images/languages/javascript.svg"></div>
+                    <div>
+                        <b>hijimin</b>
+                        <div>@hijimin</div>
+                    </div>
                 </div>
+
+                <div style="display: flex;">
+                    <div class="proimg-div" style="width: 60px;"><img src="https://holaworld.io/images/languages/javascript.svg"></div>
+                    <div>
+                        <b>hijimin</b>
+                        <div>@hijimin</div>
+                    </div>
+                </div>  
             </div>
-
-            <div class="rightBar-div" style="border: 1px solid red; width: 300px; height: 300px;">
-                <div><b>팀원추가</b></div>
+            <!--
+            <div class="rightBar-div" style="border: 1px solid red; width: 300px; height: 275px;">
+                <div><p style="text-align: center;"><b>팀원추가</b></p></div>
                 <div>
-                    프로젝트에 추가할 팀원을 선택한 후에 하단에 '팀원 추가 하기' 버튼을 눌러주세요!<br>
-                    (체크: 팀원추가/체크해제: 팀원해제)
-                </div>
-
-                <div style="border: 1px solid red; height: 30px;">
-                    <input type="checkbox" id="vehicle1" name="nickName" value="hijimin">
-                      <label for="vehicle1"> hijimin </label><br>
+                    <p style="text-align: left;">프로젝트에 추가할 팀원을 선택한 후에 하단에 '팀원 추가 하기' 버튼을 눌러주세요!</p>
+                    <p style="text-align: left;">(체크: 팀원추가/체크해제: 팀원해제)</p>
                 </div>
                 <br>
 
-                <div><button>팀원추가하기</button></div>
+                <div style="border: 1px solid gray; height: 30px;">
+                    <input type="checkbox" id="vehicle1" name="nickName" value="hijimin">
+                      <label for="vehicle1"> hijimin </label><br>
+                </div>
+                
+                <div class="addbtn-div" style="margin-top: 5px;"><button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">팀원추가하기</button></div>
             </div>
+            -->
         </div>
+        <!-- 복사해보기 -->
+        <div class="rightBar-div" style="width: 300px; height: 275px; margin-top: 15px; background-color: #ffffff;">
+            <div><p style="text-align: center;"><b>팀원추가</b></p></div>
+            <div>
+                <p style="text-align: left;">프로젝트에 추가할 팀원을 선택한 후에 하단에 '팀원 추가 하기' 버튼을 눌러주세요!</p>
+                <p style="text-align: left;">(체크: 팀원추가/체크해제: 팀원해제)</p>
+            </div>
+            <br>
+
+            <div style="border: 1px solid gray; height: 30px;">
+                <input type="checkbox" id="vehicle1" name="nickName" value="hijimin">
+                  <label for="vehicle1"> hijimin </label><br>
+            </div>
+            
+            <div class="addbtn-div" style="margin-top: 5px;"><button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">팀원추가하기</button></div>
+        </div>
+            
+
     </div>
 
 
