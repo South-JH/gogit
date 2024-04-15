@@ -15,20 +15,10 @@ public class RepositoryController {
 	public String repoEnrollForm() {
 		return "repository/repositoryEnrollForm";
 	}
-		
-	@RequestMapping("list.pullrq")
-	public String pullRequestList() {
-		return "repository/pullRequestList";
-	}
 	
 	@RequestMapping("detail.rp")
 	public String repoDetailView() {
 		return "repository/repositoryDetailView";
-	}
-
-	@RequestMapping("create.pullrq")
-	public String createPullRequestForm() {
-		return "repository/pullRequestEnroll";
 	}
 	
 	@RequestMapping("list.cm")
