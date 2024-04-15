@@ -17,14 +17,14 @@
 </head>
 <body>
 
-   <jsp:include page="../common/sideBar.jsp" />
+   	<jsp:include page="../common/sideBar.jsp" />
    
-   <jsp:include page="../common/header.jsp" />
+   	<jsp:include page="../common/header.jsp" />
    
-   <!-- summer note -->
-	<script src="resources/summernote/summernote-lite.js"></script>
-	<script src="resources/summernote/summernote-ko-KR.js"></script>
-	<link rel="stylesheet" href="resources/summernote/summernote-lite.css">
+   	<!-- toast -->
+	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+	<!-- Editor's Style -->
+  	<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
    
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -53,7 +53,7 @@
 								<div>
 									<div>Add a description</div>
 									<div>
-										<div id="summernote"></div>
+										<div id="content"></div>
 									</div>
 								</div>
 							</div>
@@ -66,17 +66,13 @@
 	</div>
 
 <script>
-	$(document).ready(function() {
-		//여기 아래 부분
-		$('#summernote').summernote({
-			  height: 300,                 // 에디터 높이
-			  minHeight: null,             // 최소 높이
-			  maxHeight: null,             // 최대 높이
-			  focus: true,                  // 에디터 로딩후 포커스를 맞출지 여부
-			  lang: "ko-KR",					// 한글 설정
-			  placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
-	          
-		});
+	const editor = new toastui.Editor({
+	    el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
+	    height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+	    initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+	    initialValue: '내용을 입력해 주세요.',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+	    //previewStyle: 'vertical',                // 마크다운 프리뷰 스타일 (tab || vertical)
+    	breaks: true
 	});
 </script>
 </body>
