@@ -51,13 +51,13 @@ public class FriendServiceImpl implements FriendService{
    }
 
 
-@Override
+	@Override
    public int deleteMyFriend(Friend f) {
       
       return fDao.deleteMyFriend(f, sqlSession);
    }
 
-@Override
+	@Override
    public int refuseFriend(Friend f){
       return fDao.refuseFriend(f, sqlSession);
 
@@ -76,42 +76,11 @@ public class FriendServiceImpl implements FriendService{
    }
 
 
-public ArrayList<Member> selectFriendList(String memId) {
-	// TODO Auto-generated method stub
-	return null;
-}
+
 
 
    }
 
 
-   
 
-   
-      
-   
-
-
-   
-
-   
-
-   
-   
-
-
-
-	
-
-	
-		
-	
-
-
-	
-
-	
-
-	
-	
 

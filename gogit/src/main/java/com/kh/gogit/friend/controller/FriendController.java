@@ -46,7 +46,8 @@ private FriendServiceImpl fService;
       PageInfo pi1 = new Pagination().getPageInfo(listCount, currentPage, 5, 5);
       ArrayList<Member> myBfList1 = fService.selectFriendList(memId, pi1);
       
-      
+     
+		 
       
    }
    
@@ -61,7 +62,7 @@ private FriendServiceImpl fService;
       if(result > 0){
          session.setAttribute("alert", "dff");
       }
-      return "";
+      return result > 0 ? "success" : "fail";
       
    }
 
@@ -79,7 +80,7 @@ private FriendServiceImpl fService;
          result2 = fService.acceptMyFriend(f);
       }
 
-         return "";
+  	return result * result2 > 0 ? "success" : "fail";
 
          }
    @ResponseBody
@@ -96,7 +97,7 @@ private FriendServiceImpl fService;
          result2 = fService.deleteMyFriend(f);
       }
 
-      return "";
+      return result * result2 > 0 ? "success" : "fail";
    }
 
    /*
@@ -121,7 +122,7 @@ private FriendServiceImpl fService;
 
       int result = fService.refuseFriend(f);
 
-      return "";
+      return result > 0 ? "success" : "fail";
    }
 
    @ResponseBody
@@ -148,7 +149,6 @@ private FriendServiceImpl fService;
       ArrayList<Member> list  = fService.searchMember(search, memId);
   
       return new Gson().toJson(list);
-
 
    }
 
