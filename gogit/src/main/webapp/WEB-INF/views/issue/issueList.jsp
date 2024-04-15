@@ -108,7 +108,7 @@
              <!--  Row 1 -->
              <div class="row">
              
-             <jsp:include page="repositoryTab.jsp" />
+             <jsp:include page="../repository/repositoryTab.jsp" />
              
 	             <div class="issue-wrap">
 	             	<div>
@@ -153,7 +153,7 @@
 	             						<tbody>
 	             							<tr>
 	             								<td>3</td>
-	             								<td><a href="#">회원가입이 안돼요</a></td>
+	             								<td><a href="detail.is">회원가입이 안돼요</a></td>
 	             								<td>crong9105</td>
 	             								<td>crong9105</td>
 	             								<td>bug good first issue</td>

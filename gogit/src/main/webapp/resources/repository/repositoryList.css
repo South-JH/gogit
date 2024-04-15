@@ -68,6 +68,11 @@ h2 {
 
 .repo-create-btn-color {
 	color: white;
+	width: 100%;
+	height: 100%;
+	display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .repo-create {
