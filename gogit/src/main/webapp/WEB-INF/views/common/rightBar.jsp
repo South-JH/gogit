@@ -27,7 +27,7 @@
 </head>
 <body>
 
-    <div class="slideright-div">
+    <div class="slideright-div" style="margin-left: 10px;">
         <div class="sliderhight-div" style="background-color:#ffffff;">
             <div style="width: 300px; height: 300px;" class="teamlist">
                 <div class="teamMates" style="margin-bottom: 10px;"><b style="color: rgb(2 56 75);">TeamMates</b></div>
@@ -74,7 +74,7 @@
             -->
         </div>
         <!-- 복사해보기 -->
-        <div class="rightBar-div" style="width: 300px; height: 275px; margin-top: 15px; background-color: #ffffff;">
+        <div class="rightBar-div" style="width: 300px; height: 275px; margin-top: 15px; padding: 5px; background-color: #ffffff;">
             <div><p style="text-align: center;"><b>팀원추가</b></p></div>
             <div>
                 <p style="text-align: left;">프로젝트에 추가할 팀원을 선택한 후에 하단에 '팀원 추가 하기' 버튼을 눌러주세요!</p>

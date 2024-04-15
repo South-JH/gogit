@@ -16,7 +16,20 @@
   color: white;
   font-weight: 600;
 }
+.top-div button, #cssbtn{
+        border: 0;
+        border-radius: 100px;
+       
+        color: darkslategray;
+        font-weight: 900;
+        width: 30px;
+        height: 30px;
+}
+.sideleft-div{
+	border-radius: 10px;
+}
 </style>
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 </head>
 <body>
 
@@ -25,7 +38,7 @@
 	<jsp:include page="../common/header.jsp"/>
 
 	<!-- Styles -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" /> -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" />
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
 	<!-- Or for RTL support -->
@@ -52,19 +65,19 @@
 	          <!--  Row 1 -->
 	          <div class="row" style="display: flex;">	          	          		
 					<div class="pj-wrap" style="display: flex;">
-						<div style="border:1px solid red; width: 100%;" class="sideleft-div">
+						<div style="width: 100%; background-color: #ffffff;" class="sideleft-div">
 
-							<div class="top-div">
+							<div class="top-div" style="padding: 10px;">
 								<div style="display:flex;">
-									<div>1</div>
-									<div>프로젝트 기본 정보를 입력해주세요</div>								
+									<div style="width: 35px;"><button>1</button></div>
+									<div style="margin-top: 5px;"><p>프로젝트 기본 정보를 입력해주세요</p></div>								
 								</div>
 								<hr>
 
 								<div style="display:flex;">
 									<div class="left-div" style="margin-right: 15px;">
 
-										<div class="form-group">										
+										<div class="form-group" style="margin-top: 10px;">										
 											<div>
 												<label for="sel1">모집인원</label>
 											</div>
@@ -136,7 +149,7 @@
 									<div class="right-div">
 
 										<div class="form-group">
-											<div style="width: 600px;">
+											<div style="width: 600px; margin-top: 10px;">
 												<label for="sel1">진행기간</label>
 											</div>
 
@@ -169,10 +182,10 @@
 								</div>
 							</div>
 
-							<div class="bottom-div">
-								<div style="display: flex;">
-									<div>2</div>
-									<div>프로젝트에 대한 소개해주세요</div>
+							<div class="bottom-div" style="padding: 10px;">
+								<div style="display: flex; margin-top: 50px;">
+									<div style="width: 35px;"><button id="cssbtn">2</button></div>
+									<div style="margin-top: 5px;"><p>프로젝트에 대한 소개해주세요</p></div>
 								</div>
 								<hr>
 
@@ -182,10 +195,24 @@
 										<input type="text" class="form-control" id="content" name="content" placeholder="프로젝트 제목을 입력해주세요.">
 									</div>
 								</div>
+								<br>
 
-								<div>
+								<div id="content1">
 									<textarea style="width: 1200px; height: 500px;"></textarea>
 								</div>
+
+								<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+								<script>
+									const editor = new toastui.Editor({
+										el: document.querySelector('#content1'), // 에디터를 적용할 요소 (컨테이너)
+										height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+										initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+										initialValue: '내용을 입력해 주세요.',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+										// previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
+									});
+								</script>
+
+
 								<div style="float: right;">
 									<button class="btn btn-primary" style="background-color: rgb(2 56 75);">작성하기</button><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">초기화</button><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">이전으로</button>
 								</div>
