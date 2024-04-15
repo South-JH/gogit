@@ -14,12 +14,12 @@ public class PullrequestController {
 	
 	@RequestMapping("list.pullrq")
 	public String pullRequestList() {
-		return "repository/pullRequestList";
+		return "pullrequest/pullRequestList";
 	}
 	
 	@RequestMapping("create.pullrq")
 	public String createPullRequestForm() {
-		return "repository/pullRequestEnroll";
+		return "pullrequest/pullRequestEnroll";
 	}
 
 }

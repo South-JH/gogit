@@ -18,11 +18,12 @@
 		}
 
 		#pullRequest-list{
-			border: 1px solid gray;
+			border: 1px solid #e6e6e6;
 			background-color: white;
 			margin-top: 20px;
 			margin-bottom: 20px;
-			border-radius: 10px;
+			border-radius: 7px;
+			padding: 10px 30px;
 		}
 
 		#choose-status{
@@ -51,6 +52,27 @@
 			background-color: lightgray;
 			cursor: pointer;
 		}
+		
+		.repo-detail-public-area {
+			display: flex;
+			align-items: center;
+			border-bottom: 2px solid #e6e6e6;
+			height: 70px;
+		}
+		
+		.repo-detail-public-area>div {
+			padding: 0px 10px;
+		}
+		
+		.repo-detail-public {
+			border: 1px solid #e6e6e6;
+			border-radius: 30px;
+			width: 100px;
+			height: 30px;
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+		}
 	</style>
 </head>
 <body>
@@ -68,7 +90,7 @@
 				<!--  Row 1 -->
 				<div class="row">
 					<div id="repository-area">
-						<jsp:include page="repositoryTab.jsp"/>
+						<jsp:include page="../repository/repositoryTab.jsp"/>
 						
 						<div id="pullRequest-area">
 							<div id="pullRequest-create">
@@ -76,6 +98,14 @@
 							</div>
 
 							<div id="pullRequest-list">
+								<div class="repo-detail-public-area">
+				          			<div>
+				          				<h4>01_repository</h4>
+				          			</div>
+				          			<div class="repo-detail-public">
+				          				<div>Private</div>
+				          			</div>
+				          		</div>
 								<div id="choose-status">
 									<input type="radio" id="status-open" name="status" value="open" checked>
 									<label for="status-open">Open</label>

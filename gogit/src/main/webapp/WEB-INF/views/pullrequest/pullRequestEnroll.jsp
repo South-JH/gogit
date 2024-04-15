@@ -18,7 +18,7 @@
 		}
 
 		#select-branch>div{
-			border: 1px solid gray;
+			border: 1px solid #e6e6e6;
 			border-radius: 5px;
 			padding: 5px;
 		}
@@ -29,7 +29,7 @@
 		}
 
 		#pull-request-input-area{
-			border: 1px solid gray;
+			border: 1px solid #e6e6e6;
 			border-radius: 10px;
 			margin-top: 50px;
 			margin-bottom: 20px;
