@@ -9,11 +9,13 @@
 	<typeAliases>
 		<typeAlias type="com.kh.gogit.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.gogit.friend.model.vo.Friend" alias="friend" />
+		<typeAlias type="com.kh.gogit.pr.model.vo.Pr" alias="Pr"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/friend-mapper.xml"/>
+		<mapper resource="/mappers/pr-mapper.xml"/>
 	</mappers>
 
 </configuration>

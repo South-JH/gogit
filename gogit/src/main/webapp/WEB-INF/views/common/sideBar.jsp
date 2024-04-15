@@ -33,9 +33,9 @@
           <div
             class="brand-logo d-flex align-items-center justify-content-between"
           >
-            <a href="./index.html" class="text-nowrap logo-img">
+            <a href="main" class="text-nowrap logo-img">
               <img
-                src="resources/images/logos/dark-logo.svg"
+                src="resources/images/gogit-logo.png"
                 width="180"
                 alt=""
               />
@@ -73,7 +73,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
-                  href="list.pr"
+                  href="list.pj"
                   aria-expanded="false"
                 >
                   <span>
@@ -135,7 +135,7 @@
               --%>
                
               <li class="nav-small-cap repo-hover">
-              	<a href="List.rp" style="color: inherit;">
+              	<a href="list.rp" style="color: inherit;">
 	                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
 	                <span class="hide-menu" style="line-height: 40px;">REPOSITORY</span>
                 </a>
@@ -162,7 +162,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
-                  href="./icon-tabler.html"
+                  href="mypr.pr"
                   aria-expanded="false"
                 >
                   <span>

@@ -6,99 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-/* 전체 레파지토리 wrap */
-.repo-wrap {
-	display: flex;
-	flex-direction: column;
-}
-
-.repo-wrap>div {
-	padding: 25px 0px;
-	/* width: 900px; */
-}
-
-/* 레파지토리 목록 부분 */
-.bottom-area {
-	border:1px solid #e6e6e6;
-	height: 500px;
-	border-radius: 10px;
-	padding: 20px;
-	background-color: white;
-}
-
-.bottom-area-wrap {
-	display: flex;
-	justify-content: flex-end;
-}
-
-.repo-search input {
-	outline: none;
-	border: none;
-}
-
-h2 {
-	margin: 0;
-}
-
-.repo-search-div {
-	border: 1px solid #e6e6e6;
-	width: 450px;
-	height: 35px;
-	border-radius: 6px;
-	padding: 6px 10px;
-}
-
-/* 검색바 부분 버튼 스타일 변경 */
-.repo-btn {
-	background-color: rgb(249, 250, 255);
-	border: 1px solid #e6e6e6;
-	border-radius: 6px;
-	height: 35px;
-	width: 100px;
-	font-weight: 600;
-}
-
-.repo-create-btn {
-	background-color: rgb(36, 87, 228);
-	color: white;
-	border: 1px solid #e6e6e6;
-	border-radius: 6px;
-	height: 35px;
-	width: 100px;
-	font-weight: 600;
-}
-
-.repo-create {
-	display: flex;
-	justify-content: space-between;
-	width: 28%;
-}
-
-/* 레포지토리 리스트 목록 스타일 */
-.repo-list-one {
-	border: 1px solid #e6e6e6;
-	border-radius: 6px;
-	height: 100px;
-	width: 100%;
-	display: flex;
-	align-items: center;
-	padding: 15px;
-}
-
-.repo-list-area {
-	padding-top: 30px;
-}
-
-.repo-search {
-	padding-right: 7px;
-}
-
-.body-wrapper {
-	background-color: #f9f9ff;
-}
-
-</style>
 </head>
 <body>
 	
@@ -138,33 +45,194 @@ h2 {
 	          					</div>
 							</div>
 							<div class="repo-create">
-								  <div>
-									  <button type="button" class="repo-btn">Language</button>
-								  </div>
-								<div>
-									<button type="button" class="repo-btn">Sort</button>
+								<div class="repo-btn">
+									<a>Language</a>
 								</div>
-								<div>
-									<button type="button" class="repo-create-btn">New</button>
+								<div class="repo-btn">
+									<a>Sort</a>
+								</div>
+								<div class="repo-create-btn">
+									<a class="repo-create-btn-color" href="enrollForm.rp">New</a>
 								</div>
 							</div>
 	          			</div>
+
+						<!-- 목록 시작 -->
 	          			<div class="repo-list-wrap">
 							<div class="repo-list-area">
 								<div class="repo-list-one">
-									<div>
-										<img src="resources/images/repo-img.png" width="80px" height="80px">
+									<div class="repo-list-one-area">
+										<div>
+											<img src="resources/images/repo-img.png" width="80px" height="80px">
+										</div>
+										<div class="repo-title-area">
+											<a href="detail.rp">
+												<div>
+													<h3>01_repository</h3>
+												</div>
+											</a>
+											<div>에휴</div>
+											<div>Java &nbsp; JavaScript</div>
+										</div>
+										<div>
+											<div class="repo-public">
+												<div>Private</div>
+											</div>
+										</div>
 									</div>
-									<div>
-										<a href="">
-											<div>01_repository</div>
-											<div>개발 첫걸음</div>
-										</a>
-										<div>Java &nbsp; JavaScript</div>
+									<div class="repo-other-area">
+										<div class="repo-other-img" onclick="openBtn(this);">
+											<img src="resources/images/menu-dots.png" width="20px" height="20px">
+										</div>
+										<div class="repo-other">
+											<div>
+												<a id="repo-other-a">수정</a>
+											</div>
+											<div>
+												<button type="button">초대</button>
+											</div>
+											<div>
+												<button type="button">삭제</button>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
 						</div>
+						<!-- 목록 끝 -->
+
+						<!-- 목록 시작 -->
+						<div class="repo-list-wrap">
+							<div class="repo-list-area">
+								<div class="repo-list-one">
+									<div class="repo-list-one-area">
+										<div>
+											<img src="resources/images/repo-img.png" width="80px" height="80px">
+										</div>
+										<div class="repo-title-area">
+											<a href="">
+												<div>
+													<h3>01_repository</h3>
+												</div>
+											</a>
+											<div>에휴</div>
+											<div>Java &nbsp; JavaScript</div>
+										</div>
+										<div>
+											<div class="repo-public">
+												<div>Private</div>
+											</div>
+										</div>
+									</div>
+									<div class="repo-other-area">
+										<div class="repo-other-img" onclick="openBtn(this);">
+											<img src="resources/images/menu-dots.png" width="20px" height="20px">
+										</div>
+										<div class="repo-other">
+											<div>
+												<a id="repo-other-a">수정</a>
+											</div>
+											<div>
+												<button type="button">초대</button>
+											</div>
+											<div>
+												<button type="button">삭제</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 목록 끝 -->
+
+						<!-- 목록 시작 -->
+						<div class="repo-list-wrap">
+							<div class="repo-list-area">
+								<div class="repo-list-one">
+									<div class="repo-list-one-area">
+										<div>
+											<img src="resources/images/repo-img.png" width="80px" height="80px">
+										</div>
+										<div class="repo-title-area">
+											<a href="">
+												<div>
+													<h3>01_repository</h3>
+												</div>
+											</a>
+											<div>에휴</div>
+											<div>Java &nbsp; JavaScript</div>
+										</div>
+										<div>
+											<div class="repo-public">
+												<div>Private</div>
+											</div>
+										</div>
+									</div>
+									<div class="repo-other-area">
+										<div class="repo-other-img" onclick="openBtn(this);">
+											<img src="resources/images/menu-dots.png" width="20px" height="20px">
+										</div>
+										<div class="repo-other">
+											<div>
+												<a id="repo-other-a">수정</a>
+											</div>
+											<div>
+												<button type="button">초대</button>
+											</div>
+											<div>
+												<button type="button">삭제</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 목록 끝 -->
+
+						<!-- 목록 시작 -->
+						<div class="repo-list-wrap">
+							<div class="repo-list-area">
+								<div class="repo-list-one">
+									<div class="repo-list-one-area">
+										<div>
+											<img src="resources/images/repo-img.png" width="80px" height="80px">
+										</div>
+										<div class="repo-title-area">
+											<a href="">
+												<div>
+													<h3>01_repository</h3>
+												</div>
+											</a>
+											<div>에휴</div>
+											<div>Java &nbsp; JavaScript</div>
+										</div>
+										<div>
+											<div class="repo-public">
+												<div>Private</div>
+											</div>
+										</div>
+									</div>
+									<div class="repo-other-area">
+										<div class="repo-other-img" onclick="openBtn(this);">
+											<img src="resources/images/menu-dots.png" width="20px" height="20px">
+										</div>
+										<div class="repo-other">
+											<div>
+												<a id="repo-other-a">수정</a>
+											</div>
+											<div>
+												<button type="button">초대</button>
+											</div>
+											<div>
+												<button type="button">삭제</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 목록 끝 -->
+
 	          		</div>
 	          	</div>
 	          </div>
@@ -174,6 +242,25 @@ h2 {
 	        </div>
 	     </div>
 	 </div>
+
+<script>
+
+	/* 점점점 누르면 div 보이게 */
+
+	function openBtn(e){
+		//console.log($(e).siblings());
+
+		const other = $(e).siblings();
+
+		if(other.css("display") === 'none'){
+			other.css("display", "block");
+		}else{
+			other.css("display", "none");
+		}
+
+	}
+
+</script>
 	
 			
 <link href="resources/repository/repositoryList.css" rel="stylesheet">
