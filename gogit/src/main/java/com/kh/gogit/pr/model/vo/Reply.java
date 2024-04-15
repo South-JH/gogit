@@ -7,23 +7,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 @ToString
-@Getter
 @Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Pr {
+public class Reply {
 
-	private int prNo;
-	private String prTitle;
-	private String prContent;
-	private String createDate;
-	private String prTime;
-	private String status;
-	private String stackName;
+	private int replyNo;
 	private String memId;
-	private int count;
+	private String repContent;
+	private String refPrNo;
+	private String repDate;
+	private String status;
 	private String gitNick;
-	
 
-	
 }

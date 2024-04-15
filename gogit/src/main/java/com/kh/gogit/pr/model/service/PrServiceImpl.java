@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.gogit.common.model.vo.PageInfo;
 import com.kh.gogit.pr.model.dao.PrDao;
 import com.kh.gogit.pr.model.vo.Pr;
+import com.kh.gogit.pr.model.vo.Reply;
 
 @Service
 public class PrServiceImpl implements PrService{
@@ -29,6 +30,42 @@ public class PrServiceImpl implements PrService{
 	public ArrayList<Pr> selectPrList(PageInfo pi) {
 		
 		return pDao.selectPrList(sqlSession,pi);
+	}
+
+	@Override
+	public int increaseCount(int bno) {
+		// TODO Auto-generated method stub
+		return pDao.increaseCount(sqlSession,bno);
+	}
+
+	@Override
+	public Pr prdetailView(int bno) {
+		// TODO Auto-generated method stub
+		return pDao.prdetailView(sqlSession,bno);
+	}
+
+	@Override
+	public String memberProfile(String memId) {
+		// TODO Auto-generated method stub
+		return pDao.memberProfile(sqlSession,memId);
+	}
+
+	@Override
+	public int insertReply(Reply r) {
+		// TODO Auto-generated method stub
+		return pDao.insertReply(sqlSession,r);
+	}
+
+	@Override
+	public ArrayList<Reply> selectReply(int bno) {
+		// TODO Auto-generated method stub
+		return pDao.selectReply(sqlSession, bno);
+	}
+
+	@Override
+	public int deleteReply(int rno) {
+		// TODO Auto-generated method stub
+		return pDao.deleteReply(sqlSession, rno);
 	}
 
 }

@@ -7,12 +7,15 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+	/* 모집 div 몇개씩 배치할껀지*/
 	#content2_3 {
 	height: auto;
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
-	gap: 15px;
+	gap: 10px;
 	}
+
+	/* div 호버시 앞으로 튀어나오는 효과 */
 	#content2_3>div:hover {
     transition: all 0.5s ease;
 	-webkit-transform: scale(1.1);
@@ -22,13 +25,21 @@
   	transform: rotate(360deg); */
 	}
 
+	/* div 그림자 효과 */
+	.plist-div{
+		box-shadow: 5px 5px 10px gray;
+		cursor: pointer;
+	}
+
 	#content2_3>div{
 		padding: 7px;
 	}
 
-
-	.teamMates, .rightBar-div>div{text-align: center;}
+	/* 모집중 모집완료 폰트 스타일*/
 	.topmenu-div{font-weight: 900; font-size: 25px;}
+
+
+	/* 프로젝트 작성 버튼 css*/
 	.repo-create-btn {
 	background-color: rgb(2 56 75);
 	border: 1px solid #e6e6e6;
@@ -44,17 +55,21 @@
 	.repo-create-btn-color {
 		color: white;
 	}
+
+
+	/* 페이징바 가운데로 */
 	.bottom-div{
 		display: flex;
 		justify-content : center
 	}
-	.plist-div{
-		box-shadow: 5px 5px 10px gray;
-		cursor: pointer;
-	}
+
+
+	
 	.testtest>a{
 		cursor: pointer;
 	}
+
+	/* 모집중 div 스타일*/
 	.pro-public {
 	border: 1px solid #d9d9d9;
 	border-radius: 30px;
@@ -68,7 +83,9 @@
 	background-color: rgb(2 56 75);
 	color: white;
     }
-	.pro-public1>div {
+
+	/* 디자이너 프론트엔드 백엔드 div 스타일 */
+	.pro-public1>div{
 	border: 1px solid #d9d9d9;
 	border-radius: 30px;
 	width: 80px;
@@ -79,12 +96,25 @@
 	font-weight: 600;
     text-align: center;
     }
+	/* .pro-public1>button{
+		background-color: #ffffff;
+		color: #5a6a85;
+	} */
 
-	/* 기술스택 이미지 */
-	.stackimg>img{
-		width: 45px;
-		height: 45px;
+	/* 디자이너 프론트엔드 백엔드 div 정렬 */
+	#content2_31{
+	height: auto;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 1px;
 	}
+
+	/* 기술스택 이미지 크기 */
+	.stackimg>img{
+		width: 38px;
+		height: 38px;
+	}
+	.stackimg{margin: 2px;}
 	
 </style>
 </head>
@@ -110,7 +140,7 @@
              <!--  Row 1 -->
              <div class="row" style="display: flex;">	          	          		
 				<div class="pj-wrap" style="display: flex;">
-					<div style="border:1px solid red; width: 100%;" class="sideleft-div">
+					<div style="width: 100%;" class="sideleft-div"><!-- border red 지움-->
 
 						<div class="top-div">
 							<div class="topmenu-div" style="display:flex;">
@@ -145,7 +175,7 @@
 
 						<div class="middle-div">
 							<div id="content2_3">
-								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
+								<div class="plist-div" style="width: 270px; height: 320px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
 									<div class="pro-public">모집중</div>
 									<br>
 									<div>마감일:2024-10-10</div>
@@ -153,13 +183,14 @@
 									<div>백엔드 개발자 구합니다!</div>
 									<br>
 
-									<div style="display: flex; margin-bottom: 10px;" class="pro-public1">
-										<div>디자이너</div>
-										<div>백엔드</div>
-										<div>프론트엔트</div>						
+									<div class="pro-public1" id="content2_31"> <!--style="display: flex; margin-bottom: 10px;"-->									
+											<div>디자이너</div>
+											<div>백엔드</div>
+											<div>프론트엔트</div>																		
+											<div>프론트엔트</div>																																								
 									</div>								
 
-									<div style="display: flex;">
+									<div style="display: flex; margin-top: 5px;">
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
@@ -171,7 +202,7 @@
 								</div>
 
 
-								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
+								<div class="plist-div" style="width: 270px; height: 320px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
 									<div class="pro-public">모집중</div>
 									<br>
 									<div>마감일:2024-10-10</div>
@@ -185,7 +216,7 @@
 										<div>프론트엔트</div>									
 									</div>								
 
-									<div style="display: flex;">
+									<div style="display: flex; margin-top: 5px;">
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
@@ -196,7 +227,7 @@
 									<div>작성자:박지민</div>
 								</div>
 
-								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
+								<div class="plist-div" style="width: 270px; height: 320px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
 									<div class="pro-public">모집중</div>
 									<br>
 									<div>마감일:2024-10-10</div>
@@ -204,13 +235,13 @@
 									<div>백엔드 개발자 구합니다!</div>
 									<br>
 
-									<div style="display: flex; margin-bottom: 10px;" class="pro-public1">
+									<div id="content2_31" class="pro-public1">
 										<div>디자이너</div>
 										<div>백엔드</div>
 										<div>프론트엔트</div>									
 									</div>								
 
-									<div style="display: flex;">
+									<div style="display: flex; margin-top: 5px;">
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
@@ -221,7 +252,7 @@
 									<div>작성자:박지민</div>
 								</div>
 
-								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
+								<div class="plist-div" style="width: 270px; height: 320px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
 									<div class="pro-public">모집중</div>
 									<br>
 									<div>마감일:2024-10-10</div>
@@ -229,13 +260,13 @@
 									<div>백엔드 개발자 구합니다!</div>
 									<br>
 
-									<div style="display: flex; margin-bottom: 10px;" class="pro-public1">
+									<div id="content2_31" class="pro-public1">
 										<div>디자이너</div>
 										<div>백엔드</div>
 										<div>프론트엔트</div>									
 									</div>								
 
-									<div style="display: flex;">
+									<div style="display: flex; margin-top: 5px;">
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
@@ -246,7 +277,7 @@
 									<div>작성자:박지민</div>
 								</div>
 
-								<div class="plist-div" style="width: 250px; height: 300px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
+								<div class="plist-div" style="width: 270px; height: 320px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
 									<div class="pro-public">모집중</div>
 									<br>
 									<div>마감일:2024-10-10</div>
@@ -254,13 +285,13 @@
 									<div>백엔드 개발자 구합니다!</div>
 									<br>
 
-									<div style="display: flex; margin-bottom: 10px;" class="pro-public1">
+									<div id="content2_31" class="pro-public1">
 										<div>디자이너</div>
 										<div>백엔드</div>
 										<div>프론트엔트</div>									
 									</div>								
 
-									<div style="display: flex;">
+									<div style="display: flex; margin-top: 5px;">
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
 										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								

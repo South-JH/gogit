@@ -8,8 +8,11 @@
 <title>Insert title here</title>
 <style>
     .posi-div>div{display: inline-block;}
+
     .bottom-div{margin-top: 100px;}
     .headerment-div{margin-bottom: 30px;}
+
+    /*모집포지션 div 스타일*/
     .pro-public {
 	border: 1px solid #d9d9d9;
 	border-radius: 30px;
@@ -21,8 +24,10 @@
 	font-weight: 600;
     text-align: center;
     }
-    .pro-public1 {
-	border: 1px solid #d9d9d9;
+
+    /*일단 안쓰는 스타일임 나중에 필요하면 쓸지도*/
+    /* .pro-public1 {
+	border: 1px solid red;
 	border-radius: 30px;
 	width: 120px;
 	height: 40px;
@@ -31,17 +36,20 @@
 	justify-content: center;
 	font-weight: 600;
     text-align: center;
-    }
-    .sideleft-div{padding: 20px;}
+    } */
 
 
+    /*전체 div 스타일*/
+    .sideleft-div{padding: 20px;
+    border-radius: 10px;}
+
+    /* 사용언어 div 몇개씩 배치할껀지*/
     #content2_3{
 	height: auto;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	gap: 5px;
 	}
-
 </style>
 </head>
 <body>
@@ -71,7 +79,7 @@
                     </div>
                 </div>	          	          		
                 <div class="pj-wrap" style="display: flex;">                                   
-                    <div style="border:1px solid red; width: 100%; background-color: #ffffff;" class="sideleft-div">
+                    <div style="border:1px solid #d9d9d9; width: 100%; background-color: #ffffff;" class="sideleft-div">
 
                         <div class="top-div">
                             <div style="display:flex;">
@@ -91,7 +99,7 @@
 
                                 <div class="right-div" style="float: right;">                                                          
                                         <div>
-                                            ❤
+                                            <img src="resources/images/gogit-logo.png" style="width: 95px; height: 70px; margin-left: 40px;">
                                         </div>
 
                                         <div>
