@@ -24,6 +24,13 @@
 .sideleft-div{
 	border-radius: 10px;
 }
+
+.select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__choice {
+    background-color: rgb(2 56 75);
+    color: white !important; 
+    border: 1px solid white !important; 
+	border-radius: 45px !important;
+}
 </style>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 </head>
@@ -93,7 +100,7 @@
 											<div>모집포지션</div>
 											<div style="margin-bottom: 10px;">										
 												<select class="form-select" id="multiple-select-field" data-placeholder="" multiple>
-													<option>전체</option>
+													<option id="">전체</option>
 													<option>기획자</option>
 													<option>데브옵스</option>
 													<option>디자이너</option>
@@ -112,20 +119,20 @@
 											width: $( this ).data( 'width' ) ? $( this ).data( 'width' ) : $( this ).hasClass( 'w-100' ) ? '100%' : 'style',
 											placeholder: $( this ).data( 'placeholder' ),
 											closeOnSelect: false,
-											});	
+											});												
 										</script>
 								
 										<div>
 											<div>기술 스택</div>
 											<div>
 												<select class="form-select" id="multiple-select-field1" data-placeholder="" multiple>
-													<option>JavaScript</option>
-													<option>TypeScript</option>
-													<option>React</option>
-													<option>Vue</option>
-													<option>Nodejs</option>
-													<option>Spring</option>
-													<option>Java</option>
+													<option value="JavaScript">JavaScript</option>
+													<option value="TypeScript">TypeScript</option>
+													<option value="React">React</option>
+													<option value="Vue">Vue</option>
+													<option value="Nodejs">Nodejs</option>
+													<option value="Spring">Spring</option>
+													<option value="Java">Java</option>
 												  </select>
 											</div>
 										</div>
@@ -151,11 +158,11 @@
 
 											<div style="margin-bottom: 10px;">
 												<select class="form-control" id="sel1" name="sellist1">
-													<option>기간 미정</option>
-													<option>2개월</option>
-													<option>3개월</option>
-													<option>4개월</option>
-													<option>5개월</option>
+													<option value="기간미정">기간 미정</option>
+													<option value="2개월">2개월</option>
+													<option value="3개월">3개월</option>
+													<option value="4개월">4개월</option>
+													<option value="5개월">5개월</option>
 												</select>
 											</div>
 
@@ -203,7 +210,7 @@
 										el: document.querySelector('#content1'), // 에디터를 적용할 요소 (컨테이너)
 										height: '500px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
 										initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
-										initialValue: '내용을 입력해 주세요.',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
+										// initialValue: '내용을 입력해 주세요.',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
 										// previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
 									});
 								</script>
@@ -218,15 +225,11 @@
 
 						</div>
 
-						<jsp:include page="../common/rightBar.jsp"/>
-
-						
+						<jsp:include page="../common/rightBar.jsp"/>						
 					</div>
 	          </div>
 	        </div>
 	     </div>
 	 </div>
-
-
 </body>
 </html>

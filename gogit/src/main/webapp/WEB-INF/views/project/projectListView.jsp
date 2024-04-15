@@ -57,10 +57,19 @@
 	}
 
 
-	/* 페이징바 가운데로 */
+	/* 페이징바 가운데로, 페이징바 스타일 */
 	.bottom-div{
 		display: flex;
 		justify-content : center
+	}
+	.pagination a{
+		color: rgb(2 56 75);
+	}
+
+	.active > .page-link, .page-link.active {
+    color: var(--bs-pagination-active-color);
+    background-color: rgb(2 56 75) !important;
+    border-color: white !important;
 	}
 
 
@@ -301,11 +310,6 @@
 									<div>조회수:0</div>
 									<div>작성자:박지민</div>
 								</div>
-
-								
-
-								
-								
 
 								
 							</div>
