@@ -153,7 +153,7 @@
 
 						<div class="top-div">
 							<div class="topmenu-div" style="display:flex;">
-								<div style="width: 90px;" class="testtest"><a href="#" style="color: rgb(2 56 75);">전체</a></div>					
+								<div style="width: 90px;" class="testtest"><a href="test.pr" style="color: rgb(2 56 75);">전체</a></div>					
 								<div style="width: 100px;"><a href="#" style="color: lightgray;">모집 중</a></div>
 								<div style="width: 120px;"><a href="#" style="color: lightgray;">모집 완료</a></div>
 							</div>

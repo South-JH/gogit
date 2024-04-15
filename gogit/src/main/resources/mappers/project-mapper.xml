@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="projectMapper">
+	<resultMap id="projectResult" type="Project">
+		<result column="pro_no" property="proNo"/>
+		<result column="pro_writer" property="proWriter"/>
+		<result column="pro_stack" property="proStack"/>
+		<result column="pro_title" property="proTitle"/>
+		<result column="pro_content" property="proContent"/>
+		<result column="pro_member" property="proMember"/>
+		<result column="pro_period" property="proPeriod"/>
+		<result column="pro_deadline" property="deadLine"/>
+		<result column="pro_start_date" property="startDate"/>
+		<result column="pro_position" property="positoin"/>
+		<result column="pro_status" property="proStatus"/>
+		<result column="count" property="count"/>
+		<result column="create_date" property="createDate"/>
+	</resultMap>
+
+	<select id="selectListCount" resultType="_int">
+	select
+	       count(*)
+	  from project
+	 where status = 'Y'
+	</select>
+	
+	<select id="selectList" resultMap="projectResult">
+	select
+	       pro_no
+	     , pro_writer
+	     , pro_stack
+	     , pro_title
+	     , pro_content
+	     , pro_member
+	     , pro_period
+	     , to_char(pro_deadline, 'YYYY-MM-DD') as "pro_deadline"
+	     , to_char(pro_start_date, 'YYYY-MM-DD') as "pro_start_date"
+	     , pro_position
+	     , pro_status
+	     , count
+	     , create_date
+	  from project
+	 where status = 'Y'
+	 order
+	    by pro_no desc
+	</select>
+
+
+
+
+</mapper>
