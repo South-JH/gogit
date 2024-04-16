@@ -16,6 +16,13 @@
 		<result column="count" property="count"/>
 		<result column="create_date" property="createDate"/>
 	</resultMap>
+	
+	<resultMap id="StackResult" type="Stack">
+		<result column="stack_no" property="stackNo"/>
+		<result column="stack_type" property="stackType"/>
+		<result column="stack_name" property="stackName"/>
+		<result column="stack_img" property="stackImg"/>
+	</resultMap>
 
 	<select id="selectListCount" resultType="_int">
 	select
@@ -74,6 +81,15 @@
 		      , #{positoin}
 		      )
 	</insert>
+	
+	<select id="selectStackList" resultMap="StackResult">
+		select
+		       stack_no
+		     , stack_type
+		     , stack_name
+		     , stack_img
+		  from stack	
+	</select>
 
 
 

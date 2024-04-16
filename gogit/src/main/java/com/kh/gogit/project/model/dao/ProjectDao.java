@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.gogit.common.model.vo.PageInfo;
 import com.kh.gogit.project.model.vo.Project;
+import com.kh.gogit.project.model.vo.Stack;
 
 @Repository
 public class ProjectDao {
@@ -27,6 +28,10 @@ public class ProjectDao {
 	
 	public int insertProject(SqlSessionTemplate sqlSession, Project p) {
 		return sqlSession.insert("projectMapper.insertProject", p);
+	}
+	
+	public ArrayList<Stack> selectStackList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("projectMapper.selectStackList");
 	}
 
 }

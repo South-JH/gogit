@@ -18,6 +18,7 @@ import com.kh.gogit.common.model.vo.PageInfo;
 import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.project.model.dao.ProjectDao;
 import com.kh.gogit.project.model.vo.Project;
+import com.kh.gogit.project.model.vo.Stack;
 
 @Service
 public class ProjectServiceImpl implements ProjectService{
@@ -70,6 +71,11 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public int insertProject(Project p) {
 		return pDao.insertProject(sqlSession, p);
+	}
+
+	@Override
+	public ArrayList<Stack> selectStackList() {
+		return pDao.selectStackList(sqlSession);
 	}
 	
 }

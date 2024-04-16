@@ -10,6 +10,7 @@
 		<typeAlias type="com.kh.gogit.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.kh.gogit.pr.model.vo.Pr" alias="Pr"/>
 		<typeAlias type="com.kh.gogit.project.model.vo.Project" alias="Project"/>
+		<typeAlias type="com.kh.gogit.project.model.vo.Stack" alias="Stack"/>
 	</typeAliases>
 	
 	<mappers>

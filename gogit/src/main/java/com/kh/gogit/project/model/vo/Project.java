@@ -18,7 +18,7 @@ public class Project {
     private String proStack; // 사용기술스택
     private String proTitle; // 프로젝트 이름
     private String proContent; // 프로젝트 모집내용
-    private String proMember; // 모집인원
+    private int proMember; // 모집인원
     private String proPeriod; // 프로젝트 진행기간
     private String deadLine; // 모집 마감일
     private String startDate; // 시작 예정일

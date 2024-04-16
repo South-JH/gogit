@@ -131,13 +131,13 @@
 											<div>기술 스택</div>
 											<div>
 												<select class="form-select" id="multiple-select-field1" name="proStack" data-placeholder="" multiple>
-													<option value="JavaScript">JavaScript</option>
-													<option value="TypeScript">TypeScript</option>
-													<option value="React">React</option>
-													<option value="Vue">Vue</option>
-													<option value="Nodejs">Nodejs</option>
-													<option value="Spring">Spring</option>
-													<option value="Java">Java</option>
+													<option value="javascript">JavaScript</option>
+													<option value="typescript">TypeScript</option>
+													<option value="react">React</option>
+													<option value="vue">Vue</option>
+													<option value="nodejs">Nodejs</option>
+													<option value="spring">Spring</option>
+													<option value="java">Java</option>
 												  </select>
 											</div>
 										</div>

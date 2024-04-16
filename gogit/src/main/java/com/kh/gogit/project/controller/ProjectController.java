@@ -16,6 +16,7 @@ import com.kh.gogit.common.template.Pagination;
 import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.project.model.service.ProjectServiceImpl;
 import com.kh.gogit.project.model.vo.Project;
+import com.kh.gogit.project.model.vo.Stack;
 
 @Controller
 public class ProjectController {
@@ -27,12 +28,14 @@ public class ProjectController {
 	public ModelAndView selectList(@RequestParam (value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		int listCount = pService.selectListCount();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 3, 6);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 3, 8);
 		
 		ArrayList<Project> list = pService.selectList(pi);
+		ArrayList<Stack> stackList = pService.selectStackList();
 		
 		mv.addObject("pi",pi)
 		  .addObject("list", list)
+		  .addObject("stackList", stackList)
 		  .setViewName("project/projectListView");
 		
 		return mv;
@@ -59,15 +62,17 @@ public class ProjectController {
 	public String insertProject(Project p, Model model, HttpSession session) {
 		p.setProWriter(((Member)session.getAttribute("loginUser")).getMemId());
 		
-		int result = pService.insertProject(p);
+		// System.out.println(p);
 		
+		int result = pService.insertProject(p);
+				
 		if(result > 0) {
 			session.setAttribute("alertMsg", "성공적으로 프로젝트 작성이 완료되었습니다!");
 			return "project/projectListView";
 		}else {
 			model.addAttribute("errorMsg", "프로젝트 작성 실패!");
 			return "common/errorPage";
-		}
+		}	
 	}
 	
 	

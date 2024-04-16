@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -206,133 +207,38 @@
 
 						<div class="middle-div">
 							<div id="content2_3">
-								<div class="plist-div" style="width: 270px; height: 320px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
-									<div class="pro-public">모집중</div>
-									<br>
-									<div>마감일:2024-10-10</div>
-									<br>
-									<div>백엔드 개발자 구합니다!</div>
-									<br>
-
-									<div class="pro-public1" id="content2_31"> <!--style="display: flex; margin-bottom: 10px;"-->									
-											<div>디자이너</div>
-											<div>백엔드</div>
-											<div>프론트엔트</div>																		
-											<div>프론트엔트</div>																																								
-									</div>								
-
-									<div style="display: flex; margin-top: 5px;">
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
+								<c:forEach var="p" items="${ list }">
+									<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
+										<div class="pro-public">모집중</div>
+										<br>
+										<div>마감일:${ p.deadLine }</div>
+										<br>
+										<div>${ p.proContent }</div>
+										<br>
+	
+										<div class="pro-public1" id="content2_31"> <!--style="display: flex; margin-bottom: 10px;"-->
+										<c:set var="testu" value="${fn:split(p.positoin, ',')}"></c:set>
+												<c:forEach var="textValue" items="${testu}">																														
+													<div>${ textValue }</div>
+												</c:forEach>																																								
+										</div>					
+	
+										<div style="display: flex; margin-top: 5px;">
+											<c:forEach var="s" items="${ stackList }">
+											<c:set var="testt" value="${fn:split(p.proStack, ',')}"></c:set>
+												<c:forEach var="testValue" items="${ testt }">
+												<c:if test="${ testValue eq s.stackName }">
+													<div class="stackimg"><img src="${ s.stackImg }"></div>
+												</c:if>
+												</c:forEach>
+											</c:forEach>								
+										</div>
+	
+										<div><hr></div>
+										<div>조회수:0</div>
+										<div>작성자:${ loginUser.gitNick }</div>
 									</div>
-
-									<div><hr></div>
-									<div>조회수:0</div>
-									<div>작성자:박지민</div>
-								</div>
-
-
-								<div class="plist-div" style="width: 270px; height: 320px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
-									<div class="pro-public">모집중</div>
-									<br>
-									<div>마감일:2024-10-10</div>
-									<br>
-									<div>백엔드 개발자 구합니다!</div>
-									<br>
-
-									<div style="display: flex; margin-bottom: 10px;" class="pro-public1">
-										<div>디자이너</div>
-										<div>백엔드</div>
-										<div>프론트엔트</div>									
-									</div>								
-
-									<div style="display: flex; margin-top: 5px;">
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
-									</div>
-
-									<div><hr></div>
-									<div>조회수:0</div>
-									<div>작성자:박지민</div>
-								</div>
-
-								<div class="plist-div" style="width: 270px; height: 320px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
-									<div class="pro-public">모집중</div>
-									<br>
-									<div>마감일:2024-10-10</div>
-									<br>
-									<div>백엔드 개발자 구합니다!</div>
-									<br>
-
-									<div id="content2_31" class="pro-public1">
-										<div>디자이너</div>
-										<div>백엔드</div>
-										<div>프론트엔트</div>									
-									</div>								
-
-									<div style="display: flex; margin-top: 5px;">
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
-									</div>
-
-									<div><hr></div>
-									<div>조회수:0</div>
-									<div>작성자:박지민</div>
-								</div>
-
-								<div class="plist-div" style="width: 270px; height: 320px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
-									<div class="pro-public">모집중</div>
-									<br>
-									<div>마감일:2024-10-10</div>
-									<br>
-									<div>백엔드 개발자 구합니다!</div>
-									<br>
-
-									<div id="content2_31" class="pro-public1">
-										<div>디자이너</div>
-										<div>백엔드</div>
-										<div>프론트엔트</div>									
-									</div>								
-
-									<div style="display: flex; margin-top: 5px;">
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
-									</div>
-
-									<div><hr></div>
-									<div>조회수:0</div>
-									<div>작성자:박지민</div>
-								</div>
-
-								<div class="plist-div" style="width: 270px; height: 320px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
-									<div class="pro-public">모집중</div>
-									<br>
-									<div>마감일:2024-10-10</div>
-									<br>
-									<div>백엔드 개발자 구합니다!</div>
-									<br>
-
-									<div id="content2_31" class="pro-public1">
-										<div>디자이너</div>
-										<div>백엔드</div>
-										<div>프론트엔트</div>									
-									</div>								
-
-									<div style="display: flex; margin-top: 5px;">
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/reactnative.svg"></div>
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/typescript.svg"></div>
-										<div class="stackimg"><img src="https://holaworld.io/images/languages/java.svg"></div>								
-									</div>
-
-									<div><hr></div>
-									<div>조회수:0</div>
-									<div>작성자:박지민</div>
-								</div>
-
+								</c:forEach>							
 								
 							</div>
 						</div>
@@ -342,11 +248,26 @@
 						<div class="bottom-div">
 							<div class="bottondivdiv">
 								<ul class="pagination">
-									<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-									<li class="page-item"><a class="page-link" href="#">1</a></li>
-									<li class="page-item active"><a class="page-link" href="#">2</a></li>
-									<li class="page-item"><a class="page-link" href="#">3</a></li>
-									<li class="page-item"><a class="page-link" href="#">Next</a></li>
+									<c:choose>
+										<c:when test="${pi.currentPage eq 1 }">
+											<li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link" href="list.pj?cpage=${ pi.currentPage - 1 }">Previous</a></li>
+										</c:otherwise>
+									</c:choose>
+									<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+										<li class="page-item"><a class="page-link" href="list.pj?cpage=${ p }">${ p }</a></li>
+									</c:forEach>
+									
+									<c:choose>
+										<c:when test="${ pi.currentPage eq pi.maxPage }">
+											<li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item"><a class="page-link" href="list.pj?cpage=${ pi.currentPage + 1 }">Next</a></li>
+										</c:otherwise>
+									</c:choose>
 								  </ul>						
 							</div>	
 						</div>
