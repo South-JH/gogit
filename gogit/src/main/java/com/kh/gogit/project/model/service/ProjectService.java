@@ -7,7 +7,13 @@ import com.kh.gogit.project.model.vo.Project;
 
 public interface ProjectService {
 	
+	// 프로젝트 게시글 갯수구하기
 	int selectListCount();
+	
+	// 프로젝트 게시글 페이징 처리해서 가져오기
 	ArrayList<Project> selectList(PageInfo pi);
+	
+	// 프로젝트 작성하기
+	int insertProject(Project p);
 
 }

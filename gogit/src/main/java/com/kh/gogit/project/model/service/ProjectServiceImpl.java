@@ -64,9 +64,12 @@ public class ProjectServiceImpl implements ProjectService{
 		
 		if(response.getStatusCode() == HttpStatus.OK) {
 			System.out.println(response.getBody());
-		}
-		
-		
+		}	
+	}
+
+	@Override
+	public int insertProject(Project p) {
+		return pDao.insertProject(sqlSession, p);
 	}
 	
 }

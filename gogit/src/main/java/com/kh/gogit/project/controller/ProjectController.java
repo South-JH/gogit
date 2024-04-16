@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,6 +53,21 @@ public class ProjectController {
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		pService.test1(m);
+	}
+	
+	@RequestMapping("insert.pr")
+	public String insertProject(Project p, Model model, HttpSession session) {
+		p.setProWriter(((Member)session.getAttribute("loginUser")).getMemId());
+		
+		int result = pService.insertProject(p);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 프로젝트 작성이 완료되었습니다!");
+			return "project/projectListView";
+		}else {
+			model.addAttribute("errorMsg", "프로젝트 작성 실패!");
+			return "common/errorPage";
+		}
 	}
 	
 	

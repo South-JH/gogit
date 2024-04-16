@@ -44,6 +44,36 @@
 	 order
 	    by pro_no desc
 	</select>
+	
+	<insert id="insertProject">
+		insert
+		      into project
+		      (
+		        pro_no
+		      , pro_writer
+		      , pro_stack
+		      , pro_title
+		      , pro_content
+		      , pro_member
+		      , pro_period
+		      , pro_deadline
+		      , pro_start_date
+		      , pro_position
+		      )
+		      values
+		      (
+		        seq_pno.nextval
+		      , #{proWriter}
+		      , #{proStack}
+		      , #{proTitle}
+		      , #{proContent}
+		      , #{proMember}
+		      , #{proPeriod}
+		      , #{deadLine}
+		      , #{startDate}
+		      , #{positoin}
+		      )
+	</insert>
 
 
 

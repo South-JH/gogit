@@ -24,5 +24,9 @@ public class ProjectDao {
 		
 		return (ArrayList)sqlSession.selectList("projectMapper.selectList", null, rowBounds);
 	}
+	
+	public int insertProject(SqlSessionTemplate sqlSession, Project p) {
+		return sqlSession.insert("projectMapper.insertProject", p);
+	}
 
 }

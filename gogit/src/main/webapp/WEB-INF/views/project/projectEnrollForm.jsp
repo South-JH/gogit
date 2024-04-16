@@ -33,6 +33,8 @@
 }
 </style>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<!-- JavaScript -->
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 </head>
 <body>
 
@@ -52,6 +54,8 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
 	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+
 	<div
 	  class="page-wrapper"
 	  id="main-wrapper"
@@ -79,18 +83,19 @@
 
 								<div style="display:flex;">
 									<div class="left-div" style="margin-right: 15px;">
-
+										<form action="insert.pr" method="post" id="myForm">	
+											<input type="hidden" id="proContent" name="proContent">
 										<div class="form-group" style="margin-top: 10px;">										
 											<div>
 												<label for="sel1">모집인원</label>
 											</div>
 											<div style="margin-bottom: 10px;">
-												<select class="form-control" id="sel1" name="sellist1">
-													<option>인원 미정</option>
-													<option>2명</option>
-													<option>3명</option>
-													<option>4명</option>
-													<option>5명</option>
+												<select class="form-control" id="sel1" name="proMember">
+													<option value="인원미정">인원 미정</option>
+													<option value="2">2명</option>
+													<option value="3">3명</option>
+													<option value="4">4명</option>
+													<option value="5">5명</option>
 												</select>
 											</div>										
 										</div>
@@ -99,16 +104,16 @@
 										<div style="width: 600px;">
 											<div>모집포지션</div>
 											<div style="margin-bottom: 10px;">										
-												<select class="form-select" id="multiple-select-field" data-placeholder="" multiple>
-													<option id="">전체</option>
-													<option>기획자</option>
-													<option>데브옵스</option>
-													<option>디자이너</option>
-													<option>백엔드</option>
-													<option>안드로이드</option>
-													<option>프론트엔드</option>
-													<option>IOS</option>
-													<option>PM</option>
+												<select class="form-select" id="multiple-select-field" name="positoin" data-placeholder="" multiple>
+													<option value="전체">전체</option>
+													<option value="기획자">기획자</option>
+													<option value="데브옵스">데브옵스</option>
+													<option value="디자이너">디자이너</option>
+													<option value="백엔드">백엔드</option>
+													<option value="안드로이드">안드로이드</option>
+													<option value="프론트엔드">프론트엔드</option>
+													<option value="IOS">IOS</option>
+													<option value="PM">PM</option>
 												  </select>
 											</div>
 										</div>
@@ -125,7 +130,7 @@
 										<div>
 											<div>기술 스택</div>
 											<div>
-												<select class="form-select" id="multiple-select-field1" data-placeholder="" multiple>
+												<select class="form-select" id="multiple-select-field1" name="proStack" data-placeholder="" multiple>
 													<option value="JavaScript">JavaScript</option>
 													<option value="TypeScript">TypeScript</option>
 													<option value="React">React</option>
@@ -157,7 +162,7 @@
 											</div>
 
 											<div style="margin-bottom: 10px;">
-												<select class="form-control" id="sel1" name="sellist1">
+												<select class="form-control" id="sel1" name="proPeriod">
 													<option value="기간미정">기간 미정</option>
 													<option value="2개월">2개월</option>
 													<option value="3개월">3개월</option>
@@ -171,7 +176,7 @@
 										<div class="form-group">
 											<div>모집 마감일</div>
 											<div style="margin-bottom: 10px;">
-												<input type="date" class="form-control" id="endDate" name="endDate">
+												<input type="date" class="form-control" id="endDate" name="deadLine">
 											</div>
 										</div>
 
@@ -195,13 +200,17 @@
 								<div class="form-group" style="width: 1000px;">
 									<div>제목</div>
 									<div>
-										<input type="text" class="form-control" id="content" name="content" placeholder="프로젝트 제목을 입력해주세요.">
+										<input type="text" class="form-control" id="content" name="proTitle" placeholder="프로젝트 제목을 입력해주세요.">
 									</div>
 								</div>
 								<br>
 
 								<div id="content1" style="margin-bottom: 15px;">
 									
+								</div>
+
+								<div id="contents">
+
 								</div>
 
 								<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
@@ -212,18 +221,41 @@
 										initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
 										// initialValue: '내용을 입력해 주세요.',     // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
 										// previewStyle: 'vertical'                // 마크다운 프리뷰 스타일 (tab || vertical)
+									});					
+									
+									editor.on('change', function() {
+										const contents = editor.getMarkdown(); // 에디터 내용 가져오기
+										document.querySelector('#contents').innerText = contents; // 화면에 보이는 div에 내용 업데이트
+										console.log(contents); // 콘솔에 내용 출력
 									});
+									
+									// 폼 제출 버튼 클릭 시 실행되는 함수
+									function submitForm() {
+										const contents = editor.getMarkdown(); // 에디터 내용 가져오기
+										document.getElementById('proContent').value = contents; // 폼의 숨은 필드에 내용 설정
+										document.getElementById('myForm').submit(); // 폼 제출
+									}
 								</script>
 
 
 								<div style="float: right;">
-									<button class="btn btn-primary" style="background-color: rgb(2 56 75);">작성하기</button><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">초기화</button><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">이전으로</button>
-								</div>
+									<button type="submit" class="btn btn-primary" style="background-color: rgb(2 56 75);" onclick="submitForm()">작성하기</button><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">초기화</button><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">이전으로</button>
+								</div>							
+							</div>
+						</form>	
+						</div>
+
+						<script>
 							
 
-							</div>
 
-						</div>
+
+
+						</script>
+
+
+
+
 
 						<jsp:include page="../common/rightBar.jsp"/>						
 					</div>
