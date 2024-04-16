@@ -1,26 +1,26 @@
------------------»èÁ¦------------------
---Á¢¼ÓÀ¯ÀúÀÇ ¸ðµçÅ×ÀÌºí ¹× Á¦¾àÁ¶°Ç »èÁ¦
+-----------------ì‚­ì œ------------------
+--ì ‘ì†ìœ ì €ì˜ ëª¨ë“ í…Œì´ë¸” ë° ì œì•½ì¡°ê±´ ì‚­ì œ
 BEGIN
     FOR C IN (SELECT TABLE_NAME FROM USER_TABLES) LOOP
     EXECUTE IMMEDIATE ('DROP TABLE '||C.TABLE_NAME||' CASCADE CONSTRAINTS');
     END LOOP;
 END;
 /
---Á¢¼ÓÀ¯ÀúÀÇ ¸ðµç ½ÃÄö½º »èÁ¦
+--ì ‘ì†ìœ ì €ì˜ ëª¨ë“  ì‹œí€€ìŠ¤ ì‚­ì œ
 BEGIN
 FOR C IN (SELECT * FROM USER_SEQUENCES) LOOP
   EXECUTE IMMEDIATE 'DROP SEQUENCE '||C.SEQUENCE_NAME;
 END LOOP;
 END;
 /
---Á¢¼ÓÀ¯ÀúÀÇ ¸ðµç ºä »èÁ¦
+--ì ‘ì†ìœ ì €ì˜ ëª¨ë“  ë·° ì‚­ì œ
 BEGIN
 FOR C IN (SELECT * FROM USER_VIEWS) LOOP
   EXECUTE IMMEDIATE 'DROP VIEW '||C.VIEW_NAME;
 END LOOP;
 END;
 /
---Á¢¼ÓÀ¯ÀúÀÇ ¸ðµç Æ®¸®°Å »èÁ¦
+--ì ‘ì†ìœ ì €ì˜ ëª¨ë“  íŠ¸ë¦¬ê±° ì‚­ì œ
 BEGIN
 FOR C IN (SELECT * FROM USER_TRIGGERS) LOOP
   EXECUTE IMMEDIATE 'DROP TRIGGER '||C.TRIGGER_NAME;
@@ -29,7 +29,7 @@ END;
 /
 
 --------------------------------------------------
---------------     SEQUENCE »ý¼º	------------------	
+--------------     SEQUENCE ìƒì„±	------------------	
 --------------------------------------------------
 
 -- ATTACHMENT SEQUENCE
@@ -110,44 +110,44 @@ CREATE TABLE STACK(
     STACK_IMG VARCHAR2(100)
 );
 
--- ±â¼ú ½ºÅÃ ÄÚ¸àÆ® ´Þ±â 
-COMMENT ON COLUMN STACK.STACK_NO IS '±â¼ú½ºÅÃ ¹øÈ£';
-COMMENT ON COLUMN STACK.STACK_NAME IS '±â¼ú½ºÅÃ ÀÌ¸§';
-COMMENT ON COLUMN STACK.STACK_TYPE IS '±â¼ú ½ºÅÃ ºÐ·ù';
-COMMENT ON COLUMN STACK.STACK_IMG IS '±â¼ú ½ºÅÃ ÀÌ¹ÌÁö';
+-- ê¸°ìˆ  ìŠ¤íƒ ì½”ë©˜íŠ¸ ë‹¬ê¸° 
+COMMENT ON COLUMN STACK.STACK_NO IS 'ê¸°ìˆ ìŠ¤íƒ ë²ˆí˜¸';
+COMMENT ON COLUMN STACK.STACK_NAME IS 'ê¸°ìˆ ìŠ¤íƒ ì´ë¦„';
+COMMENT ON COLUMN STACK.STACK_TYPE IS 'ê¸°ìˆ  ìŠ¤íƒ ë¶„ë¥˜';
+COMMENT ON COLUMN STACK.STACK_IMG IS 'ê¸°ìˆ  ìŠ¤íƒ ì´ë¯¸ì§€';
 
--- ±â¼ú ½ºÅÃ »ùÇÃ µ¥ÀÌÅÍ
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ÇÁ·ÐÆ®¿£µå','javascript','https://holaworld.io/images/languages/javascript.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ÇÁ·ÐÆ®¿£µå','typescript','https://holaworld.io/images/languages/typescript.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ÇÁ·ÐÆ®¿£µå','react','https://holaworld.io/images/languages/react.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ÇÁ·ÐÆ®¿£µå','vue','https://holaworld.io/images/languages/vue.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ÇÁ·ÐÆ®¿£µå','svelte','https://holaworld.io/images/languages/svelte.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ÇÁ·ÐÆ®¿£µå','nextjs','https://holaworld.io/images/languages/nextjs.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','java','https://holaworld.io/images/languages/java.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','spring','https://holaworld.io/images/languages/spring.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','nodejs','https://holaworld.io/images/languages/nodejs.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','nestjs','https://holaworld.io/images/languages/nestjs.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','go','https://holaworld.io/images/languages/go.svg');
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','kotlin','https://holaworld.io/images/languages/kotlin.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','express','https://holaworld.io/images/languages/express.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','mysql','https://holaworld.io/images/languages/mysql.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','mongodb','https://holaworld.io/images/languages/mongodb.svg');
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','python','https://holaworld.io/images/languages/python.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','django','https://holaworld.io/images/languages/django.svg');
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','php','https://holaworld.io/images/languages/php.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','graphql','https://holaworld.io/images/languages/graphql.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¹é¿£µå','firebase','https://holaworld.io/images/languages/firebase.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¸ð¹ÙÀÏ','flutter','https://holaworld.io/images/languages/flutter.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¸ð¹ÙÀÏ','swift','https://holaworld.io/images/languages/swift.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¸ð¹ÙÀÏ','reactnative','https://holaworld.io/images/languages/reactnative.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '¸ð¹ÙÀÏ','unity','https://holaworld.io/images/languages/unity.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '±âÅ¸','aws','https://holaworld.io/images/languages/aws.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '±âÅ¸','kubernetes','https://holaworld.io/images/languages/kubernetes.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '±âÅ¸','docker','https://holaworld.io/images/languages/docker.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '±âÅ¸','git','https://holaworld.io/images/languages/git.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '±âÅ¸','figma','https://holaworld.io/images/languages/figma.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '±âÅ¸','zeplin','https://holaworld.io/images/languages/zeplin.svg'); 
-INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, '±âÅ¸','jest','https://holaworld.io/images/languages/jest.svg');
+-- ê¸°ìˆ  ìŠ¤íƒ ìƒ˜í”Œ ë°ì´í„°
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'í”„ë¡ íŠ¸ì—”ë“œ','javascript','https://holaworld.io/images/languages/javascript.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'í”„ë¡ íŠ¸ì—”ë“œ','typescript','https://holaworld.io/images/languages/typescript.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'í”„ë¡ íŠ¸ì—”ë“œ','react','https://holaworld.io/images/languages/react.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'í”„ë¡ íŠ¸ì—”ë“œ','vue','https://holaworld.io/images/languages/vue.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'í”„ë¡ íŠ¸ì—”ë“œ','svelte','https://holaworld.io/images/languages/svelte.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'í”„ë¡ íŠ¸ì—”ë“œ','nextjs','https://holaworld.io/images/languages/nextjs.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','java','https://holaworld.io/images/languages/java.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','spring','https://holaworld.io/images/languages/spring.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','nodejs','https://holaworld.io/images/languages/nodejs.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','nestjs','https://holaworld.io/images/languages/nestjs.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','go','https://holaworld.io/images/languages/go.svg');
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','kotlin','https://holaworld.io/images/languages/kotlin.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','express','https://holaworld.io/images/languages/express.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','mysql','https://holaworld.io/images/languages/mysql.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','mongodb','https://holaworld.io/images/languages/mongodb.svg');
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','python','https://holaworld.io/images/languages/python.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','django','https://holaworld.io/images/languages/django.svg');
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','php','https://holaworld.io/images/languages/php.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','graphql','https://holaworld.io/images/languages/graphql.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ë°±ì—”ë“œ','firebase','https://holaworld.io/images/languages/firebase.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ëª¨ë°”ì¼','flutter','https://holaworld.io/images/languages/flutter.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ëª¨ë°”ì¼','swift','https://holaworld.io/images/languages/swift.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ëª¨ë°”ì¼','reactnative','https://holaworld.io/images/languages/reactnative.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ëª¨ë°”ì¼','unity','https://holaworld.io/images/languages/unity.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ê¸°íƒ€','aws','https://holaworld.io/images/languages/aws.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ê¸°íƒ€','kubernetes','https://holaworld.io/images/languages/kubernetes.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ê¸°íƒ€','docker','https://holaworld.io/images/languages/docker.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ê¸°íƒ€','git','https://holaworld.io/images/languages/git.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ê¸°íƒ€','figma','https://holaworld.io/images/languages/figma.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ê¸°íƒ€','zeplin','https://holaworld.io/images/languages/zeplin.svg'); 
+INSERT INTO STACK VALUES (SEQ_SNO.NEXTVAL, 'ê¸°íƒ€','jest','https://holaworld.io/images/languages/jest.svg');
 
 --------------------------------------------------
 --------------     CATEGORY	------------------	
@@ -157,8 +157,8 @@ CREATE TABLE CATEGORY (
     CATE_NAME VARCHAR2(400) NOT NULL
 );
 
-COMMENT ON COLUMN CATEGORY.CATE_NO IS 'Ä«Å×°í¸® ¹øÈ£';
-COMMENT ON COLUMN CATEGORY.CATE_NAME IS 'Ä«Å×°í¸®¸í';
+COMMENT ON COLUMN CATEGORY.CATE_NO IS 'ì¹´í…Œê³ ë¦¬ ë²ˆí˜¸';
+COMMENT ON COLUMN CATEGORY.CATE_NAME IS 'ì¹´í…Œê³ ë¦¬ëª…';
 
 --------------------------------------------------
 --------------     LABELS	------------------	
@@ -168,11 +168,11 @@ CREATE TABLE LABELS (
    LAB_NAME VARCHAR2(20)
 );
 
--- ¶óº§ Å×ÀÌºí ÄÚ¸àÆ®
-COMMENT ON COLUMN LABELS.LAB_NO IS '¶óº§¹øÈ£';
-COMMENT ON COLUMN LABELS.LAB_NAME IS '¶óº§ÀÌ¸§';
+-- ë¼ë²¨ í…Œì´ë¸” ì½”ë©˜íŠ¸
+COMMENT ON COLUMN LABELS.LAB_NO IS 'ë¼ë²¨ë²ˆí˜¸';
+COMMENT ON COLUMN LABELS.LAB_NAME IS 'ë¼ë²¨ì´ë¦„';
 
--- ¶óº§ INSERT¹®
+-- ë¼ë²¨ INSERTë¬¸
 INSERT 
   INTO LABELS
      (
@@ -221,18 +221,18 @@ CREATE TABLE ATTACHMENT(
     CATEGORY VARCHAR2(1) CHECK(CATEGORY IN('C','M','P')) NOT NULL
  );
     
--- »çÁø Å×ÀÌºí ÄÚ¸àÆ®    
-COMMENT ON COLUMN ATTACHMENT.FILE_NO IS 'ÆÄÀÏ¹øÈ£';   
-COMMENT ON COLUMN ATTACHMENT.REF_BNO IS 'ÂüÁ¶°Ô½ÃÆÇ ¹øÈ£';
-COMMENT ON COLUMN ATTACHMENT.ORIGIN_NAME IS 'ÆÄÀÏ¿øº»¸í'; 
-COMMENT ON COLUMN ATTACHMENT.CHANGE_NAME IS 'ÆÄÀÏ¼öÁ¤¸í'; 
-COMMENT ON COLUMN ATTACHMENT.FILE_PATH IS 'ÀúÀå°æ·Î'; 
-COMMENT ON COLUMN ATTACHMENT.UPLOAD_DATE IS '¾÷·ÎµåÀÏ'; 
-COMMENT ON COLUMN ATTACHMENT.STATUS IS '»óÅÂ'; 
-COMMENT ON COLUMN ATTACHMENT.CATEGORY IS '°Ô½ÃÆÇ±¸ºÐ(C:Ã¤ÆÃ, P: ¿Ï·áµÈ ÇÁ·ÎÁ§Æ®, M:È¸¿ø )';
+-- ì‚¬ì§„ í…Œì´ë¸” ì½”ë©˜íŠ¸    
+COMMENT ON COLUMN ATTACHMENT.FILE_NO IS 'íŒŒì¼ë²ˆí˜¸';   
+COMMENT ON COLUMN ATTACHMENT.REF_BNO IS 'ì°¸ì¡°ê²Œì‹œíŒ ë²ˆí˜¸';
+COMMENT ON COLUMN ATTACHMENT.ORIGIN_NAME IS 'íŒŒì¼ì›ë³¸ëª…'; 
+COMMENT ON COLUMN ATTACHMENT.CHANGE_NAME IS 'íŒŒì¼ìˆ˜ì •ëª…'; 
+COMMENT ON COLUMN ATTACHMENT.FILE_PATH IS 'ì €ìž¥ê²½ë¡œ'; 
+COMMENT ON COLUMN ATTACHMENT.UPLOAD_DATE IS 'ì—…ë¡œë“œì¼'; 
+COMMENT ON COLUMN ATTACHMENT.STATUS IS 'ìƒíƒœ'; 
+COMMENT ON COLUMN ATTACHMENT.CATEGORY IS 'ê²Œì‹œíŒêµ¬ë¶„(C:ì±„íŒ…, P: ì™„ë£Œëœ í”„ë¡œì íŠ¸, M:íšŒì› )';
 
--- »çÁø Å×ÀÌºí »ùÇÃµ¥ÀÌÅÍ
-INSERT INTO ATTACHMENT (FILE_NO, REF_BNO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH, UPLOAD_DATE, STATUS, CATEGORY) VALUES (SEQ_ANO.NEXTVAL, 1, 'È£»§.jpg', '2023101610204578.jpg', 'resources/upfiles/', DEFAULT, DEFAULT, 'M');
+-- ì‚¬ì§„ í…Œì´ë¸” ìƒ˜í”Œë°ì´í„°
+INSERT INTO ATTACHMENT (FILE_NO, REF_BNO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH, UPLOAD_DATE, STATUS, CATEGORY) VALUES (SEQ_ANO.NEXTVAL, 1, 'í˜¸ë¹µ.jpg', '2023101610204578.jpg', 'resources/upfiles/', DEFAULT, DEFAULT, 'M');
 
 --------------------------------------------------
 --------------     MEMBER   ------------------	
@@ -251,26 +251,26 @@ CREATE TABLE MEMBER(
     FILE_NO NUMBER
 );
 
--- ¸â¹ö Å×ÀÌºí ÄÚ¸àÆ®
-COMMENT ON COLUMN MEMBER.MEM_ID IS 'È¸¿ø¾ÆÀÌµð';
-COMMENT ON COLUMN MEMBER.MEM_TOKEN IS 'È¸¿øÅäÅ«';
-COMMENT ON COLUMN MEMBER.MEM_INTRO IS 'ÀÚ±â¼Ò°³';
-COMMENT ON COLUMN MEMBER.CREATE_DATE IS 'È¸¿ø°¡ÀÔÀÏ';
-COMMENT ON COLUMN MEMBER.STATUS IS 'È¸¿ø»óÅÂ(Y/N)';
-COMMENT ON COLUMN MEMBER.STACK_NAME IS '±â¼ú½ºÅÃ';
-COMMENT ON COLUMN MEMBER.TEAM IS 'Âü¿© ÇÁ·ÎÁ§Æ® ÆÀ';
-COMMENT ON COLUMN MEMBER.TEAM_STATUS IS 'Âü¿©»óÅÂ(Y:È®Á¤, N:ÀÓ½Ã)';
-COMMENT ON COLUMN MEMBER.GIT_NICK IS '±ê ´Ð³×ÀÓ';
-COMMENT ON COLUMN MEMBER.PROFILE IS 'ÇÁ·ÎÇÊ';
-COMMENT ON COLUMN MEMBER.FILE_NO IS 'ÆÄÀÏ¹øÈ£';
+-- ë©¤ë²„ í…Œì´ë¸” ì½”ë©˜íŠ¸
+COMMENT ON COLUMN MEMBER.MEM_ID IS 'íšŒì›ì•„ì´ë””';
+COMMENT ON COLUMN MEMBER.MEM_TOKEN IS 'íšŒì›í† í°';
+COMMENT ON COLUMN MEMBER.MEM_INTRO IS 'ìžê¸°ì†Œê°œ';
+COMMENT ON COLUMN MEMBER.CREATE_DATE IS 'íšŒì›ê°€ìž…ì¼';
+COMMENT ON COLUMN MEMBER.STATUS IS 'íšŒì›ìƒíƒœ(Y/N)';
+COMMENT ON COLUMN MEMBER.STACK_NAME IS 'ê¸°ìˆ ìŠ¤íƒ';
+COMMENT ON COLUMN MEMBER.TEAM IS 'ì°¸ì—¬ í”„ë¡œì íŠ¸ íŒ€';
+COMMENT ON COLUMN MEMBER.TEAM_STATUS IS 'ì°¸ì—¬ìƒíƒœ(Y:í™•ì •, N:ìž„ì‹œ)';
+COMMENT ON COLUMN MEMBER.GIT_NICK IS 'ê¹ƒ ë‹‰ë„¤ìž„';
+COMMENT ON COLUMN MEMBER.PROFILE IS 'í”„ë¡œí•„';
+COMMENT ON COLUMN MEMBER.FILE_NO IS 'íŒŒì¼ë²ˆí˜¸';
 
--- ¸â¹ö Å×ÀÌºí »ùÇÃµ¥ÀÌÅÍ 5°³
-INSERT INTO MEMBER (MEM_ID, MEM_TOKEN, MEM_INTRO, CREATE_DATE, STATUS, STACK_NAME, TEAM, TEAM_STATUS,GIT_NICK) VALUES ('0000', '00000', 'ÀÚ±â¼Ò°³1', DEFAULT, DEFAULT, 'JAVA, AWS', 1, 'Y','È£»§Ãµ»çÄ£±¸');
-INSERT INTO MEMBER (MEM_ID, MEM_TOKEN, MEM_INTRO, CREATE_DATE, STATUS, STACK_NAME, TEAM, TEAM_STATUS,GIT_NICK) VALUES ('11111', '21451', 'ÀÚ±â¼Ò°³1', DEFAULT, DEFAULT, 'JAVA, AWS', 1, 'Y','È£»§Ãµ»ç');
-INSERT INTO MEMBER (MEM_ID, MEM_TOKEN, MEM_INTRO, CREATE_DATE, STATUS, STACK_NAME, TEAM, TEAM_STATUS,GIT_NICK) VALUES ('22222', '46747', 'ÀÚ±â¼Ò°³2', DEFAULT, DEFAULT, 'JAVA, AWS', 1, 'Y','Âð»§Ãµ»ç');
-INSERT INTO MEMBER (MEM_ID, MEM_TOKEN, MEM_INTRO, CREATE_DATE, STATUS, STACK_NAME, TEAM, TEAM_STATUS,GIT_NICK) VALUES ('33333', '21125', 'ÀÚ±â¼Ò°³3', DEFAULT, DEFAULT, 'JAVA, AWS', 1, 'Y','ÇÇÀÚ»§Ãµ»ç');
-INSERT INTO MEMBER (MEM_ID, MEM_TOKEN, MEM_INTRO, CREATE_DATE, STATUS, STACK_NAME, TEAM, TEAM_STATUS,GIT_NICK) VALUES ('44444', '84849', 'ÀÚ±â¼Ò°³4', DEFAULT, DEFAULT, 'JAVA, AWS', 1, 'Y','¸¶´Ã»§Ãµ»ç');
-INSERT INTO MEMBER (MEM_ID, MEM_TOKEN, MEM_INTRO, CREATE_DATE, STATUS, STACK_NAME, TEAM, TEAM_STATUS,GIT_NICK) VALUES ('55555', '28922', 'ÀÚ±â¼Ò°³5', DEFAULT, DEFAULT, 'JAVA, AWS', 1, 'Y','ºØ¾î»§Ãµ»ç');
+-- ë©¤ë²„ í…Œì´ë¸” ìƒ˜í”Œë°ì´í„° 5ê°œ
+INSERT INTO MEMBER (MEM_ID, MEM_TOKEN, MEM_INTRO, CREATE_DATE, STATUS, STACK_NAME, TEAM, TEAM_STATUS,GIT_NICK) VALUES ('0000', '00000', 'ìžê¸°ì†Œê°œ1', DEFAULT, DEFAULT, 'JAVA, AWS', 1, 'Y','í˜¸ë¹µì²œì‚¬ì¹œêµ¬');
+INSERT INTO MEMBER (MEM_ID, MEM_TOKEN, MEM_INTRO, CREATE_DATE, STATUS, STACK_NAME, TEAM, TEAM_STATUS,GIT_NICK) VALUES ('11111', '21451', 'ìžê¸°ì†Œê°œ1', DEFAULT, DEFAULT, 'JAVA, AWS', 1, 'Y','í˜¸ë¹µì²œì‚¬');
+INSERT INTO MEMBER (MEM_ID, MEM_TOKEN, MEM_INTRO, CREATE_DATE, STATUS, STACK_NAME, TEAM, TEAM_STATUS,GIT_NICK) VALUES ('22222', '46747', 'ìžê¸°ì†Œê°œ2', DEFAULT, DEFAULT, 'JAVA, AWS', 1, 'Y','ì°ë¹µì²œì‚¬');
+INSERT INTO MEMBER (MEM_ID, MEM_TOKEN, MEM_INTRO, CREATE_DATE, STATUS, STACK_NAME, TEAM, TEAM_STATUS,GIT_NICK) VALUES ('33333', '21125', 'ìžê¸°ì†Œê°œ3', DEFAULT, DEFAULT, 'JAVA, AWS', 1, 'Y','í”¼ìžë¹µì²œì‚¬');
+INSERT INTO MEMBER (MEM_ID, MEM_TOKEN, MEM_INTRO, CREATE_DATE, STATUS, STACK_NAME, TEAM, TEAM_STATUS,GIT_NICK) VALUES ('44444', '84849', 'ìžê¸°ì†Œê°œ4', DEFAULT, DEFAULT, 'JAVA, AWS', 1, 'Y','ë§ˆëŠ˜ë¹µì²œì‚¬');
+INSERT INTO MEMBER (MEM_ID, MEM_TOKEN, MEM_INTRO, CREATE_DATE, STATUS, STACK_NAME, TEAM, TEAM_STATUS,GIT_NICK) VALUES ('55555', '28922', 'ìžê¸°ì†Œê°œ5', DEFAULT, DEFAULT, 'JAVA, AWS', 1, 'Y','ë¶•ì–´ë¹µì²œì‚¬');
 
 --------------------------------------------------
 --------------     FRIEND	------------------	
@@ -283,13 +283,13 @@ CREATE TABLE FRIEND(
     PRIMARY KEY(BF_GIVER,BF_TAKER)
 );
 
--- Ä£±¸ Å×ÀÌºí ÄÚ¸àÆ®
-COMMENT ON COLUMN FRIEND.BF_GIVER IS 'Ä£±¸ ¿äÃ»ÀÚ';
-COMMENT ON COLUMN FRIEND.BF_TAKER IS 'Ä£±¸ ¿äÃ»¹Þ´ÂÀÚ';
-COMMENT ON COLUMN FRIEND.STATUS IS 'Ä£±¸»óÅÂ(Y:Ä£±¸,A:Ä£±¸¿äÃ»,B:Ä£±¸°ÅÀý,D:Â÷´Ü)';
-COMMENT ON COLUMN FRIEND.REQUEST_DATE IS 'Ä£±¸ ¿äÃ»ÀÏ';
+-- ì¹œêµ¬ í…Œì´ë¸” ì½”ë©˜íŠ¸
+COMMENT ON COLUMN FRIEND.BF_GIVER IS 'ì¹œêµ¬ ìš”ì²­ìž';
+COMMENT ON COLUMN FRIEND.BF_TAKER IS 'ì¹œêµ¬ ìš”ì²­ë°›ëŠ”ìž';
+COMMENT ON COLUMN FRIEND.STATUS IS 'ì¹œêµ¬ìƒíƒœ(Y:ì¹œêµ¬,A:ì¹œêµ¬ìš”ì²­,B:ì¹œêµ¬ê±°ì ˆ,D:ì°¨ë‹¨)';
+COMMENT ON COLUMN FRIEND.REQUEST_DATE IS 'ì¹œêµ¬ ìš”ì²­ì¼';
 
--- Ä£±¸ Å×ÀÌºí »ùÇÃ µ¥ÀÌÅÍ
+-- ì¹œêµ¬ í…Œì´ë¸” ìƒ˜í”Œ ë°ì´í„°
 INSERT INTO 
             FRIEND
      VALUES      
@@ -332,10 +332,10 @@ CREATE TABLE MEETING(
     MEETING_PW VARCHAR2(100)
 );
 
-COMMENT ON COLUMN MEETING.MEETING_NO IS 'È¸ÀÇ¹øÈ£';
-COMMENT ON COLUMN MEETING.MEETING_CREATER IS 'È¸ÀÇ°³ÃÖÀÚ';
-COMMENT ON COLUMN MEETING.MEETING_NM IS 'È¸ÀÇ¸í';
-COMMENT ON COLUMN MEETING.MEETING_PW IS 'È¸ÀÇºñ¹Ð¹øÈ£';
+COMMENT ON COLUMN MEETING.MEETING_NO IS 'íšŒì˜ë²ˆí˜¸';
+COMMENT ON COLUMN MEETING.MEETING_CREATER IS 'íšŒì˜ê°œìµœìž';
+COMMENT ON COLUMN MEETING.MEETING_NM IS 'íšŒì˜ëª…';
+COMMENT ON COLUMN MEETING.MEETING_PW IS 'íšŒì˜ë¹„ë°€ë²ˆí˜¸';
 
 --------------------------------------------------
 --------------     MEETING_MEMBER	------------------	
@@ -345,8 +345,8 @@ CREATE TABLE MEETING_MEMBER(
     MEM_ID VARCHAR2(50) REFERENCES MEMBER ON DELETE CASCADE NOT NULL
 );
 
-COMMENT ON COLUMN MEETING_MEMBER.MEETING_NO IS 'È¸ÀÇ¹øÈ£';
-COMMENT ON COLUMN MEETING_MEMBER.MEM_ID IS 'È¸¿ø¾ÆÀÌµð';
+COMMENT ON COLUMN MEETING_MEMBER.MEETING_NO IS 'íšŒì˜ë²ˆí˜¸';
+COMMENT ON COLUMN MEETING_MEMBER.MEM_ID IS 'íšŒì›ì•„ì´ë””';
 
 --------------------------------------------------
 --------------     FOLLOW	------------------	
@@ -358,9 +358,9 @@ CREATE TABLE FOLLOW(
     PRIMARY KEY(FOLLOWING_MEM,FOLLOW_MEM)
 );
 
-COMMENT ON COLUMN FOLLOW.FOLLOWING_MEM IS 'ÆÈ·Î¿ìÇÑ È¸¿ø¹øÈ£';
-COMMENT ON COLUMN FOLLOW.FOLLOW_MEM IS 'ÆÈ·Î¿ì ¹ÞÀº È¸¿ø¹øÈ£';
-COMMENT ON COLUMN FOLLOW.FOLLOW_DATE IS 'ÆÈ·Î¿ì ³¯Â¥';
+COMMENT ON COLUMN FOLLOW.FOLLOWING_MEM IS 'íŒ”ë¡œìš°í•œ íšŒì›ë²ˆí˜¸';
+COMMENT ON COLUMN FOLLOW.FOLLOW_MEM IS 'íŒ”ë¡œìš° ë°›ì€ íšŒì›ë²ˆí˜¸';
+COMMENT ON COLUMN FOLLOW.FOLLOW_DATE IS 'íŒ”ë¡œìš° ë‚ ì§œ';
 
 --------------------------------------------------
 --------------     PROJECT	------------------	
@@ -371,7 +371,7 @@ CREATE TABLE PROJECT(
     PRO_STACK VARCHAR2(4000) NOT NULL,
     PRO_TITLE VARCHAR2(1000) NOT NULL,
     PRO_CONTENT VARCHAR2(4000) NOT NULL,  
-    PRO_MEMBER NUMBER NOT NULL,
+    PRO_MEMBER VARCHAR2(50) NOT NULL,
     PRO_PERIOD VARCHAR2(30) NOT NULL,
     PRO_DEADLINE DATE NOT NULL,
     PRO_START_DATE DATE NOT NULL,
@@ -382,24 +382,24 @@ CREATE TABLE PROJECT(
     CREATE_DATE DATE DEFAULT SYSDATE
 );
 
--- ÇÁ·ÎÁ§Æ® ¸ðÁý Å×ÀÌºí ÄÚ¸àÆ®
-COMMENT ON COLUMN PROJECT.PRO_NO IS 'ÇÁ·ÎÁ§Æ® ¸ðÁý¹øÈ£';
-COMMENT ON COLUMN PROJECT.PRO_WRITER IS 'ÇÁ·ÎÁ§Æ® ÀÛ¼ºÀÚ';
-COMMENT ON COLUMN PROJECT.PRO_STACK IS 'ÇÁ·ÎÁ§Æ® »ç¿ë ±â¼ú½ºÅÃ';
-COMMENT ON COLUMN PROJECT.PRO_TITLE IS 'ÇÁ·ÎÁ§Æ® ¸ðÁýÁ¦¸ñ';
-COMMENT ON COLUMN PROJECT.PRO_CONTENT IS 'ÇÁ·ÎÁ§Æ® ¸ðÁý³»¿ë';
-COMMENT ON COLUMN PROJECT.PRO_MEMBER IS 'ÇÁ·ÎÁ§Æ® ¸ðÁýÀÎ¿ø';
-COMMENT ON COLUMN PROJECT.PRO_PERIOD IS 'ÇÁ·ÎÁ§Æ® ÁøÇà±â°£';
-COMMENT ON COLUMN PROJECT.PRO_DEADLINE IS 'ÇÁ·ÎÁ§Æ® ¸ðÁý¸¶°¨ÀÏ';
-COMMENT ON COLUMN PROJECT.PRO_START_DATE IS 'ÇÁ·ÎÁ§Æ® ½ÃÀÛ¿¹Á¤ÀÏ';
-COMMENT ON COLUMN PROJECT.PRO_POSITION IS 'ÇÁ·ÎÁ§Æ® ¸ðÁýÆ÷Áö¼Ç';
-COMMENT ON COLUMN PROJECT.PRO_STATUS IS 'ÇÁ·ÎÁ§Æ® ¸ðÁý»óÅÂ';
-COMMENT ON COLUMN PROJECT.STATUS IS 'ÇÁ·ÎÁ§Æ® °Ô½Ã±Û »óÅÂ';
-COMMENT ON COLUMN PROJECT.COUNT IS 'Á¶È¸¼ö';
-COMMENT ON COLUMN PROJECT.CREATE_DATE IS 'ÇÁ·ÎÁ§Æ® ¸ðÁý »ý¼ºÀÏ';
+-- í”„ë¡œì íŠ¸ ëª¨ì§‘ í…Œì´ë¸” ì½”ë©˜íŠ¸
+COMMENT ON COLUMN PROJECT.PRO_NO IS 'í”„ë¡œì íŠ¸ ëª¨ì§‘ë²ˆí˜¸';
+COMMENT ON COLUMN PROJECT.PRO_WRITER IS 'í”„ë¡œì íŠ¸ ìž‘ì„±ìž';
+COMMENT ON COLUMN PROJECT.PRO_STACK IS 'í”„ë¡œì íŠ¸ ì‚¬ìš© ê¸°ìˆ ìŠ¤íƒ';
+COMMENT ON COLUMN PROJECT.PRO_TITLE IS 'í”„ë¡œì íŠ¸ ëª¨ì§‘ì œëª©';
+COMMENT ON COLUMN PROJECT.PRO_CONTENT IS 'í”„ë¡œì íŠ¸ ëª¨ì§‘ë‚´ìš©';
+COMMENT ON COLUMN PROJECT.PRO_MEMBER IS 'í”„ë¡œì íŠ¸ ëª¨ì§‘ì¸ì›';
+COMMENT ON COLUMN PROJECT.PRO_PERIOD IS 'í”„ë¡œì íŠ¸ ì§„í–‰ê¸°ê°„';
+COMMENT ON COLUMN PROJECT.PRO_DEADLINE IS 'í”„ë¡œì íŠ¸ ëª¨ì§‘ë§ˆê°ì¼';
+COMMENT ON COLUMN PROJECT.PRO_START_DATE IS 'í”„ë¡œì íŠ¸ ì‹œìž‘ì˜ˆì •ì¼';
+COMMENT ON COLUMN PROJECT.PRO_POSITION IS 'í”„ë¡œì íŠ¸ ëª¨ì§‘í¬ì§€ì…˜';
+COMMENT ON COLUMN PROJECT.PRO_STATUS IS 'í”„ë¡œì íŠ¸ ëª¨ì§‘ìƒíƒœ';
+COMMENT ON COLUMN PROJECT.STATUS IS 'í”„ë¡œì íŠ¸ ê²Œì‹œê¸€ ìƒíƒœ';
+COMMENT ON COLUMN PROJECT.COUNT IS 'ì¡°íšŒìˆ˜';
+COMMENT ON COLUMN PROJECT.CREATE_DATE IS 'í”„ë¡œì íŠ¸ ëª¨ì§‘ ìƒì„±ì¼';
 
 
--- ÇÁ·ÎÁ§Æ® ¸ðÁý Å×ÀÌºí »ùÇÃµ¥ÀÌÅÍ
+-- í”„ë¡œì íŠ¸ ëª¨ì§‘ í…Œì´ë¸” ìƒ˜í”Œë°ì´í„°
 INSERT INTO
 PROJECT
 VALUES
@@ -407,13 +407,13 @@ VALUES
 SEQ_PNO.NEXTVAL
 , '0000'
 , 'java,javascript,mysql'
-, '¹é¿£µå °³¹ßÀÚ ±¸ÇÕ´Ï´Ù'
-, '³»°¡ ¹é¿£µå Á» ÇÑ´Ù? ¸ð½Ê´Ï´Ù'
+, 'ë°±ì—”ë“œ ê°œë°œìž êµ¬í•©ë‹ˆë‹¤'
+, 'ë‚´ê°€ ë°±ì—”ë“œ ì¢€ í•œë‹¤? ëª¨ì‹­ë‹ˆë‹¤'
 , 1
-, '3°³¿ù'
+, '3ê°œì›”'
 , '2023-10-20'
 , '2023-10-22'
-, '¹é¿£µå'
+, 'ë°±ì—”ë“œ'
 , 'Y'
 , 'Y'
 , DEFAULT
@@ -428,13 +428,13 @@ VALUES
 SEQ_PNO.NEXTVAL
 , '11111'
 , 'java,javascript,spring'
-, '¾Æ~ È­¸é Àß ¸¸µå´Â ÇÁ·ÐÆ® °³¹ßÀÚ ¾îµð ¾øÀ»±î~?'
-, 'È­¸éÀ» ±â±ò³ª°Ô ¸¸µé ¼ö ÀÖ´Â ÇÁ·ÐÆ® °³¹ßÀÚ ºÐ ±Þ±¸ÇÕ´Ï´Ù!!!!!'
+, 'ì•„~ í™”ë©´ ìž˜ ë§Œë“œëŠ” í”„ë¡ íŠ¸ ê°œë°œìž ì–´ë”” ì—†ì„ê¹Œ~?'
+, 'í™”ë©´ì„ ê¸°ê¹”ë‚˜ê²Œ ë§Œë“¤ ìˆ˜ ìžˆëŠ” í”„ë¡ íŠ¸ ê°œë°œìž ë¶„ ê¸‰êµ¬í•©ë‹ˆë‹¤!!!!!'
 , 1
-, '4°³¿ù'
+, '4ê°œì›”'
 , '2023-10-28'
 , '2023-10-30'
-, 'ÇÁ·ÐÆ®¿£µå'
+, 'í”„ë¡ íŠ¸ì—”ë“œ'
 , 'Y'
 , 'Y'
 , DEFAULT
@@ -450,13 +450,13 @@ SEQ_PNO.NEXTVAL
 , '22222'
 , 'java,javascript,mysql,go,kotlin'
 
-, '¾ß! ³Ê µé¾î¿Í!!'
-, '°°ÀÌ ÇÁ·ÎÁ§Æ® ÇÏÀÚ?'
+, 'ì•¼! ë„ˆ ë“¤ì–´ì™€!!'
+, 'ê°™ì´ í”„ë¡œì íŠ¸ í•˜ìž?'
 , 1
-, '5°³¿ù'
+, '5ê°œì›”'
 , '2023-10-18'
 , '2023-10-20'
-, '¹é¿£µå'
+, 'ë°±ì—”ë“œ'
 , 'Y'
 , 'Y'
 , DEFAULT
@@ -476,25 +476,25 @@ CREATE TABLE FINPROJECT(
     STATUS VARCHAR2(1) DEFAULT 'Y' CHECK(STATUS IN ('Y','N')) NOT NULL
 );
 
--- ¿Ï·áµÈ ÇÁ·ÎÁ§Æ® ÄÚ¸àÆ®
-COMMENT ON COLUMN FINPROJECT.PRO_NO IS '¿Ï·áµÈ ÇÁ·ÎÁ§Æ® ¹øÈ£';
-COMMENT ON COLUMN FINPROJECT.REF_PNO IS 'ÂüÁ¶ ÇÁ·ÎÁ§Æ® ¹øÈ£';  -- È¤½Ã ¸ô¶ó ¸¸µç ÄÃ·³
-COMMENT ON COLUMN FINPROJECT.PRO_TITLE IS '¿Ï·áµÈ ÇÁ·ÎÁ§Æ® Á¦¸ñ';
-COMMENT ON COLUMN FINPROJECT.PRO_CONTENT IS '¿Ï·áµÈ ÇÁ·ÎÁ§Æ® ³»¿ë';
-COMMENT ON COLUMN FINPROJECT.PRO_README IS '¸®µå¹ÌÆÄÀÏ';
-COMMENT ON COLUMN FINPROJECT.CREATE_DATE IS 'ÀÛ¼ºÀÏ';
-COMMENT ON COLUMN FINPROJECT.STATUS IS '»óÅÂ';
+-- ì™„ë£Œëœ í”„ë¡œì íŠ¸ ì½”ë©˜íŠ¸
+COMMENT ON COLUMN FINPROJECT.PRO_NO IS 'ì™„ë£Œëœ í”„ë¡œì íŠ¸ ë²ˆí˜¸';
+COMMENT ON COLUMN FINPROJECT.REF_PNO IS 'ì°¸ì¡° í”„ë¡œì íŠ¸ ë²ˆí˜¸';  -- í˜¹ì‹œ ëª°ë¼ ë§Œë“  ì»¬ëŸ¼
+COMMENT ON COLUMN FINPROJECT.PRO_TITLE IS 'ì™„ë£Œëœ í”„ë¡œì íŠ¸ ì œëª©';
+COMMENT ON COLUMN FINPROJECT.PRO_CONTENT IS 'ì™„ë£Œëœ í”„ë¡œì íŠ¸ ë‚´ìš©';
+COMMENT ON COLUMN FINPROJECT.PRO_README IS 'ë¦¬ë“œë¯¸íŒŒì¼';
+COMMENT ON COLUMN FINPROJECT.CREATE_DATE IS 'ìž‘ì„±ì¼';
+COMMENT ON COLUMN FINPROJECT.STATUS IS 'ìƒíƒœ';
 
--- ¿Ï·áµÈ ÇÁ·ÎÁ§Æ® »ùÇÃ µ¥ÀÌÅÍ
+-- ì™„ë£Œëœ í”„ë¡œì íŠ¸ ìƒ˜í”Œ ë°ì´í„°
 INSERT INTO 
             FINPROJECT 
      VALUES     
      (
        SEQ_FPNO.NEXTVAL
      , 1
-     , '¿Ï·áÁ¦¸ñ1'
-     , '¿Ï·á ³»¿ë1'
-     , '¸®µå¹Ì'
+     , 'ì™„ë£Œì œëª©1'
+     , 'ì™„ë£Œ ë‚´ìš©1'
+     , 'ë¦¬ë“œë¯¸'
      , SYSDATE
      , 'Y'
      );
@@ -506,9 +506,9 @@ INSERT INTO
      (
        SEQ_FPNO.NEXTVAL
      , 2
-     , '¿Ï·áÁ¦¸ñ2'
-     , '¿Ï·á ³»¿ë2'
-     , '¸®µå¹Ì'
+     , 'ì™„ë£Œì œëª©2'
+     , 'ì™„ë£Œ ë‚´ìš©2'
+     , 'ë¦¬ë“œë¯¸'
      , SYSDATE
      , 'Y'
      );
@@ -519,9 +519,9 @@ INSERT INTO
      (
        SEQ_FPNO.NEXTVAL
      , 2
-     , '¿Ï·áÁ¦¸ñ3'
-     , '¿Ï·á ³»¿ë3'
-     , '¸®µå¹Ì'
+     , 'ì™„ë£Œì œëª©3'
+     , 'ì™„ë£Œ ë‚´ìš©3'
+     , 'ë¦¬ë“œë¯¸'
      , SYSDATE
      , 'Y'
      );
@@ -532,9 +532,9 @@ INSERT INTO
      (
        SEQ_FPNO.NEXTVAL
      , 1
-     , '¿Ï·áÁ¦¸ñ4'
-     , '¿Ï·á ³»¿ë4'
-     , '¸®µå¹Ì'
+     , 'ì™„ë£Œì œëª©4'
+     , 'ì™„ë£Œ ë‚´ìš©4'
+     , 'ë¦¬ë“œë¯¸'
      , SYSDATE
      , 'Y'
      );
@@ -551,18 +551,18 @@ CREATE TABLE NOTICE(
     MEM_ID VARCHAR2(50) REFERENCES MEMBER
 );
 
--- ¾Ë¸² Å×ÀÌºí ÄÚ¸àÆ®
-COMMENT ON COLUMN NOTICE.NOTI_NO IS '¾Ë¸²¹øÈ£';
-COMMENT ON COLUMN NOTICE.CATEGORY_NAME IS 'Ä«Å×°í¸®¸í';
-COMMENT ON COLUMN NOTICE.NOTI_CONTENT IS '¾Ë¸²³»¿ë';
-COMMENT ON COLUMN NOTICE.OCU_TIME IS '¾Ë¸²¹ß»ý½Ã°£';
-COMMENT ON COLUMN NOTICE.STATUS IS '¾Ë¸²»óÅÂ';
-COMMENT ON COLUMN NOTICE.MEM_ID IS 'È¸¿ø¾ÆÀÌµð';
+-- ì•Œë¦¼ í…Œì´ë¸” ì½”ë©˜íŠ¸
+COMMENT ON COLUMN NOTICE.NOTI_NO IS 'ì•Œë¦¼ë²ˆí˜¸';
+COMMENT ON COLUMN NOTICE.CATEGORY_NAME IS 'ì¹´í…Œê³ ë¦¬ëª…';
+COMMENT ON COLUMN NOTICE.NOTI_CONTENT IS 'ì•Œë¦¼ë‚´ìš©';
+COMMENT ON COLUMN NOTICE.OCU_TIME IS 'ì•Œë¦¼ë°œìƒì‹œê°„';
+COMMENT ON COLUMN NOTICE.STATUS IS 'ì•Œë¦¼ìƒíƒœ';
+COMMENT ON COLUMN NOTICE.MEM_ID IS 'íšŒì›ì•„ì´ë””';
 
--- ¾Ë¸² Å×ÀÌºí »ùÇÃµ¥ÀÌÅÍ
-INSERT INTO NOTICE (NOTI_NO, CATEGORY_NAME, NOTI_CONTENT, OCU_TIME, STATUS, MEM_ID) VALUES (SEQ_NNO.NEXTVAL, 'ÀÌ½´', '00_java-workspace¿¡ »õ·Î¿î ÀÌ½´°¡ ¹ß»ýÇß½À´Ï´Ù.', DEFAULT, DEFAULT, '11111');
-INSERT INTO NOTICE (NOTI_NO, CATEGORY_NAME, NOTI_CONTENT, OCU_TIME, STATUS, MEM_ID) VALUES (SEQ_NNO.NEXTVAL, 'Ä£±¸', 'USER03 ´ÔÀÌ Ä£±¸¿äÃ»À» ¼ö¶ôÇÏ¼Ì½À´Ï´Ù.', DEFAULT, DEFAULT, '22222');
-INSERT INTO NOTICE (NOTI_NO, CATEGORY_NAME, NOTI_CONTENT, OCU_TIME, STATUS, MEM_ID) VALUES (SEQ_NNO.NEXTVAL, '°³ÀÎÈ«º¸', 'USER02 ´ÔÀÌ °í°´´ÔÀÇ ÀÚ±âPR¿¡ ÁÁ¾Æ¿ä¸¦ ´­·¶½À´Ï´Ù.', DEFAULT, DEFAULT, '0000');
+-- ì•Œë¦¼ í…Œì´ë¸” ìƒ˜í”Œë°ì´í„°
+INSERT INTO NOTICE (NOTI_NO, CATEGORY_NAME, NOTI_CONTENT, OCU_TIME, STATUS, MEM_ID) VALUES (SEQ_NNO.NEXTVAL, 'ì´ìŠˆ', '00_java-workspaceì— ìƒˆë¡œìš´ ì´ìŠˆê°€ ë°œìƒí–ˆìŠµë‹ˆë‹¤.', DEFAULT, DEFAULT, '11111');
+INSERT INTO NOTICE (NOTI_NO, CATEGORY_NAME, NOTI_CONTENT, OCU_TIME, STATUS, MEM_ID) VALUES (SEQ_NNO.NEXTVAL, 'ì¹œêµ¬', 'USER03 ë‹˜ì´ ì¹œêµ¬ìš”ì²­ì„ ìˆ˜ë½í•˜ì…¨ìŠµë‹ˆë‹¤.', DEFAULT, DEFAULT, '22222');
+INSERT INTO NOTICE (NOTI_NO, CATEGORY_NAME, NOTI_CONTENT, OCU_TIME, STATUS, MEM_ID) VALUES (SEQ_NNO.NEXTVAL, 'ê°œì¸í™ë³´', 'USER02 ë‹˜ì´ ê³ ê°ë‹˜ì˜ ìžê¸°PRì— ì¢‹ì•„ìš”ë¥¼ ëˆŒë €ìŠµë‹ˆë‹¤.', DEFAULT, DEFAULT, '0000');
 
 --------------------------------------------------
 --------------     REPLY	------------------	
@@ -576,12 +576,12 @@ CREATE TABLE REPLY(
     STATUS VARCHAR2(1) DEFAULT 'Y' CHECK (STATUS IN ('Y', 'N'))
 );
 
-COMMENT ON COLUMN REPLY.REPLY_NO IS '´ñ±Û ¹øÈ£';
-COMMENT ON COLUMN REPLY.MEM_ID IS '´ñ±Û ÀÛ¼ºÀÚ';           
-COMMENT ON COLUMN REPLY.REP_CONTENT IS '´ñ±Û ³»¿ë';
-COMMENT ON COLUMN REPLY.REF_PRO IS 'ÂüÁ¶ °Ô½Ã¹°';   
-COMMENT ON COLUMN REPLY.REP_DATE IS '´ñ±Û ÀÛ¼ºÀÏ';     
-COMMENT ON COLUMN REPLY.STATUS IS '´ñ±Û »èÁ¦¿©ºÎ';     
+COMMENT ON COLUMN REPLY.REPLY_NO IS 'ëŒ“ê¸€ ë²ˆí˜¸';
+COMMENT ON COLUMN REPLY.MEM_ID IS 'ëŒ“ê¸€ ìž‘ì„±ìž';           
+COMMENT ON COLUMN REPLY.REP_CONTENT IS 'ëŒ“ê¸€ ë‚´ìš©';
+COMMENT ON COLUMN REPLY.REF_PRO IS 'ì°¸ì¡° ê²Œì‹œë¬¼';   
+COMMENT ON COLUMN REPLY.REP_DATE IS 'ëŒ“ê¸€ ìž‘ì„±ì¼';     
+COMMENT ON COLUMN REPLY.STATUS IS 'ëŒ“ê¸€ ì‚­ì œì—¬ë¶€';     
 
 INSERT INTO 
             REPLY
@@ -589,7 +589,7 @@ INSERT INTO
      (
        SEQ_RENO.NEXTVAL
      , '0000'
-     , 'Àúµµ Âü¿©ÇÏ°í ½Í¾î¿ä'
+     , 'ì €ë„ ì°¸ì—¬í•˜ê³  ì‹¶ì–´ìš”'
      , 1
      , SYSDATE
      , DEFAULT
@@ -602,7 +602,7 @@ INSERT INTO
      (
        SEQ_RENO.NEXTVAL
      , '11111'
-     , '´ëÇÑÀÇ °Ç¾Æ!! ¼º½ÇÇÑ Á¦°¡ ÇÑ¹ø Âü¿©ÇØº¸°ÚÀ¾´Ï´Ù.'
+     , 'ëŒ€í•œì˜ ê±´ì•„!! ì„±ì‹¤í•œ ì œê°€ í•œë²ˆ ì°¸ì—¬í•´ë³´ê² ìë‹ˆë‹¤.'
      , 1
      , SYSDATE
      , DEFAULT
@@ -623,24 +623,24 @@ CREATE TABLE MY_PR(
     COUNT NUMBER DEFAULT 0
 );
 
--- ÀÚ±âPR ÄÚ¸àÆ®
-COMMENT ON COLUMN MY_PR.PR_NO IS 'PR ¹øÈ£';
-COMMENT ON COLUMN MY_PR.PR_TITLE IS 'PR Á¦¸ñ';
-COMMENT ON COLUMN MY_PR.PR_CONTENT IS 'PR ³»¿ë';
-COMMENT ON COLUMN MY_PR.CREATE_DATE IS 'PR ÀÛ¼ºÀÏ';
-COMMENT ON COLUMN MY_PR.STATUS IS '»óÅÂ';
-COMMENT ON COLUMN MY_PR.STACK_NAME IS '±â¼ú½ºÅÃ';
-COMMENT ON COLUMN MY_PR.MEM_ID IS 'È¸¿ø¾ÆÀÌµð';
-COMMENT ON COLUMN MY_PR.COUNT IS 'Á¶È¸¼ö';
-COMMENT ON COLUMN MY_PR.PR_TIME IS 'ÇÁ·ÎÁ§Æ® °¡´É½Ã°£';
+-- ìžê¸°PR ì½”ë©˜íŠ¸
+COMMENT ON COLUMN MY_PR.PR_NO IS 'PR ë²ˆí˜¸';
+COMMENT ON COLUMN MY_PR.PR_TITLE IS 'PR ì œëª©';
+COMMENT ON COLUMN MY_PR.PR_CONTENT IS 'PR ë‚´ìš©';
+COMMENT ON COLUMN MY_PR.CREATE_DATE IS 'PR ìž‘ì„±ì¼';
+COMMENT ON COLUMN MY_PR.STATUS IS 'ìƒíƒœ';
+COMMENT ON COLUMN MY_PR.STACK_NAME IS 'ê¸°ìˆ ìŠ¤íƒ';
+COMMENT ON COLUMN MY_PR.MEM_ID IS 'íšŒì›ì•„ì´ë””';
+COMMENT ON COLUMN MY_PR.COUNT IS 'ì¡°íšŒìˆ˜';
+COMMENT ON COLUMN MY_PR.PR_TIME IS 'í”„ë¡œì íŠ¸ ê°€ëŠ¥ì‹œê°„';
 
 
 INSERT INTO MY_PR 
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , '¼º½ÇÇÑ °³¹ßÀÚÀÔ´Ï´Ù'  
-     , 'Àú¸¦ »ÌÀ¸¸é Àý´ë ÈÄÈ¸ÇÏÁö ¾Ê½À´Ï´Ù.'
+     , 'ì„±ì‹¤í•œ ê°œë°œìžìž…ë‹ˆë‹¤'  
+     , 'ì €ë¥¼ ë½‘ìœ¼ë©´ ì ˆëŒ€ í›„íšŒí•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -654,8 +654,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , '¾Æ... ÇÁ·ÎÁ§Æ® ÇÏ°í½Í´Ù'  
-     , 'ÇÁ·ÎÁ§Æ® ÇÏ°í ½Í¾î ¹ÌÄ¡°ÚÀ¾´Ï´Ù. µ¥·Á°¡ÁÖ½Ê½Ã¿À'
+     , 'ì•„... í”„ë¡œì íŠ¸ í•˜ê³ ì‹¶ë‹¤'  
+     , 'í”„ë¡œì íŠ¸ í•˜ê³  ì‹¶ì–´ ë¯¸ì¹˜ê² ìë‹ˆë‹¤. ë°ë ¤ê°€ì£¼ì‹­ì‹œì˜¤'
      , '2023-09-28'
      , DEFAULT
      , 'Y'
@@ -669,8 +669,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , 'Ãë¾÷ÇÏ°í½Í´Ù¸é?'  
-     , 'Àú¿Í ÇÔ²² ³×Ä«¶óÄí¹è·Î Ãë¾÷ÇÏ½Ç·¡¿ä?'
+     , 'ì·¨ì—…í•˜ê³ ì‹¶ë‹¤ë©´?'  
+     , 'ì €ì™€ í•¨ê»˜ ë„¤ì¹´ë¼ì¿ ë°°ë¡œ ì·¨ì—…í•˜ì‹¤ëž˜ìš”?'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -685,8 +685,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , 'Ãë¾÷ÇÏ°í½Í´Ù¸é?'  
-     , 'Àú¿Í ÇÔ²² ³×Ä«¶óÄí¹è·Î Ãë¾÷ÇÏ½Ç·¡¿ä?'
+     , 'ì·¨ì—…í•˜ê³ ì‹¶ë‹¤ë©´?'  
+     , 'ì €ì™€ í•¨ê»˜ ë„¤ì¹´ë¼ì¿ ë°°ë¡œ ì·¨ì—…í•˜ì‹¤ëž˜ìš”?'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -700,8 +700,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , 'Ãë¾÷ÇÏ°í½Í´Ù¸é?'  
-     , 'Àú¿Í ÇÔ²² ³×Ä«¶óÄí¹è·Î Ãë¾÷ÇÏ½Ç·¡¿ä?'
+     , 'ì·¨ì—…í•˜ê³ ì‹¶ë‹¤ë©´?'  
+     , 'ì €ì™€ í•¨ê»˜ ë„¤ì¹´ë¼ì¿ ë°°ë¡œ ì·¨ì—…í•˜ì‹¤ëž˜ìš”?'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -715,8 +715,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , 'Ãë¾÷ÇÏ°í½Í´Ù¸é?'  
-     , 'Àú¿Í ÇÔ²² ³×Ä«¶óÄí¹è·Î Ãë¾÷ÇÏ½Ç·¡¿ä?'
+     , 'ì·¨ì—…í•˜ê³ ì‹¶ë‹¤ë©´?'  
+     , 'ì €ì™€ í•¨ê»˜ ë„¤ì¹´ë¼ì¿ ë°°ë¡œ ì·¨ì—…í•˜ì‹¤ëž˜ìš”?'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -729,8 +729,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , 'Ãë¾÷ÇÏ°í½Í´Ù¸é?'  
-     , 'Àú¿Í ÇÔ²² ³×Ä«¶óÄí¹è·Î Ãë¾÷ÇÏ½Ç·¡¿ä?'
+     , 'ì·¨ì—…í•˜ê³ ì‹¶ë‹¤ë©´?'  
+     , 'ì €ì™€ í•¨ê»˜ ë„¤ì¹´ë¼ì¿ ë°°ë¡œ ì·¨ì—…í•˜ì‹¤ëž˜ìš”?'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -743,8 +743,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , 'Ãë¾÷ÇÏ°í½Í´Ù¸é?'  
-     , 'Àú¿Í ÇÔ²² ³×Ä«¶óÄí¹è·Î Ãë¾÷ÇÏ½Ç·¡¿ä?'
+     , 'ì·¨ì—…í•˜ê³ ì‹¶ë‹¤ë©´?'  
+     , 'ì €ì™€ í•¨ê»˜ ë„¤ì¹´ë¼ì¿ ë°°ë¡œ ì·¨ì—…í•˜ì‹¤ëž˜ìš”?'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -757,8 +757,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , 'Ãë¾÷ÇÏ°í½Í´Ù¸é?'  
-     , 'Àú¿Í ÇÔ²² ³×Ä«¶óÄí¹è·Î Ãë¾÷ÇÏ½Ç·¡¿ä?'
+     , 'ì·¨ì—…í•˜ê³ ì‹¶ë‹¤ë©´?'  
+     , 'ì €ì™€ í•¨ê»˜ ë„¤ì¹´ë¼ì¿ ë°°ë¡œ ì·¨ì—…í•˜ì‹¤ëž˜ìš”?'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -771,8 +771,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , 'Ãë¾÷ÇÏ°í½Í´Ù¸é?'  
-     , 'Àú¿Í ÇÔ²² ³×Ä«¶óÄí¹è·Î Ãë¾÷ÇÏ½Ç·¡¿ä?'
+     , 'ì·¨ì—…í•˜ê³ ì‹¶ë‹¤ë©´?'  
+     , 'ì €ì™€ í•¨ê»˜ ë„¤ì¹´ë¼ì¿ ë°°ë¡œ ì·¨ì—…í•˜ì‹¤ëž˜ìš”?'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -785,8 +785,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , 'Ãë¾÷ÇÏ°í½Í´Ù¸é?'  
-     , 'Àú¿Í ÇÔ²² ³×Ä«¶óÄí¹è·Î Ãë¾÷ÇÏ½Ç·¡¿ä?'
+     , 'ì·¨ì—…í•˜ê³ ì‹¶ë‹¤ë©´?'  
+     , 'ì €ì™€ í•¨ê»˜ ë„¤ì¹´ë¼ì¿ ë°°ë¡œ ì·¨ì—…í•˜ì‹¤ëž˜ìš”?'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -799,8 +799,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , 'Ãë¾÷ÇÏ°í½Í´Ù¸é?'  
-     , 'Àú¿Í ÇÔ²² ³×Ä«¶óÄí¹è·Î Ãë¾÷ÇÏ½Ç·¡¿ä?'
+     , 'ì·¨ì—…í•˜ê³ ì‹¶ë‹¤ë©´?'  
+     , 'ì €ì™€ í•¨ê»˜ ë„¤ì¹´ë¼ì¿ ë°°ë¡œ ì·¨ì—…í•˜ì‹¤ëž˜ìš”?'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -813,8 +813,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , 'Ãë¾÷ÇÏ°í½Í´Ù¸é?'  
-     , 'Àú¿Í ÇÔ²² ³×Ä«¶óÄí¹è·Î Ãë¾÷ÇÏ½Ç·¡¿ä?'
+     , 'ì·¨ì—…í•˜ê³ ì‹¶ë‹¤ë©´?'  
+     , 'ì €ì™€ í•¨ê»˜ ë„¤ì¹´ë¼ì¿ ë°°ë¡œ ì·¨ì—…í•˜ì‹¤ëž˜ìš”?'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -827,8 +827,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , 'Ãë¾÷ÇÏ°í½Í´Ù¸é?'  
-     , 'Àú¿Í ÇÔ²² ³×Ä«¶óÄí¹è·Î Ãë¾÷ÇÏ½Ç·¡¿ä?'
+     , 'ì·¨ì—…í•˜ê³ ì‹¶ë‹¤ë©´?'  
+     , 'ì €ì™€ í•¨ê»˜ ë„¤ì¹´ë¼ì¿ ë°°ë¡œ ì·¨ì—…í•˜ì‹¤ëž˜ìš”?'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -841,8 +841,8 @@ INSERT INTO MY_PR
      VALUES
      (
        SEQ_MPNO.NEXTVAL
-     , 'Ãë¾÷ÇÏ°í½Í´Ù¸é?'  
-     , 'Àú¿Í ÇÔ²² ³×Ä«¶óÄí¹è·Î Ãë¾÷ÇÏ½Ç·¡¿ä?'
+     , 'ì·¨ì—…í•˜ê³ ì‹¶ë‹¤ë©´?'  
+     , 'ì €ì™€ í•¨ê»˜ ë„¤ì¹´ë¼ì¿ ë°°ë¡œ ì·¨ì—…í•˜ì‹¤ëž˜ìš”?'
      , '2023-09-25'
      , DEFAULT
      , 'Y'
@@ -866,22 +866,22 @@ CREATE TABLE CALENDAR(
     STATUS VARCHAR2(1) DEFAULT 'Y' CHECK (STATUS IN ('Y', 'N'))
 );
 
--- Ä¶¸°´õ ÄÚ¸àÆ® ÀÛ¼º
-COMMENT ON COLUMN CALENDAR.CAL_NO IS 'ÀÏÁ¤ ¹øÈ£';
-COMMENT ON COLUMN CALENDAR.CAL_TITLE IS 'ÀÏÁ¤ Á¦¸ñ';
-COMMENT ON COLUMN CALENDAR.CAL_CONTENT IS 'ÀÏÁ¤ ³»¿ë';
-COMMENT ON COLUMN CALENDAR.START_DATE IS 'ÀÏÁ¤ ½ÃÀÛÀÏ';
-COMMENT ON COLUMN CALENDAR.END_DATE IS 'ÀÏÁ¤ Á¾·áÀÏ';
-COMMENT ON COLUMN CALENDAR.CAL_CATEGORY IS 'ÀÏÁ¤ Ä«Å×°í¸®';
-COMMENT ON COLUMN CALENDAR.CAL_STATUS IS 'ÀÏÁ¤ ÁøÇà¿©ºÎ(ÃÊ·Ï»ö, È¸»ö)';
-COMMENT ON COLUMN CALENDAR.STATUS IS 'ÀÏÁ¤ »èÁ¦¿©ºÎ';
+-- ìº˜ë¦°ë” ì½”ë©˜íŠ¸ ìž‘ì„±
+COMMENT ON COLUMN CALENDAR.CAL_NO IS 'ì¼ì • ë²ˆí˜¸';
+COMMENT ON COLUMN CALENDAR.CAL_TITLE IS 'ì¼ì • ì œëª©';
+COMMENT ON COLUMN CALENDAR.CAL_CONTENT IS 'ì¼ì • ë‚´ìš©';
+COMMENT ON COLUMN CALENDAR.START_DATE IS 'ì¼ì • ì‹œìž‘ì¼';
+COMMENT ON COLUMN CALENDAR.END_DATE IS 'ì¼ì • ì¢…ë£Œì¼';
+COMMENT ON COLUMN CALENDAR.CAL_CATEGORY IS 'ì¼ì • ì¹´í…Œê³ ë¦¬';
+COMMENT ON COLUMN CALENDAR.CAL_STATUS IS 'ì¼ì • ì§„í–‰ì—¬ë¶€(ì´ˆë¡ìƒ‰, íšŒìƒ‰)';
+COMMENT ON COLUMN CALENDAR.STATUS IS 'ì¼ì • ì‚­ì œì—¬ë¶€';
 
--- Ä¶¸°´õ »ùÇÃ µ¥ÀÌÅÍ 5°³
-INSERT INTO CALENDAR (CAL_NO, CAL_TITLE, CAL_CONTENT, START_DATE, END_DATE, CAL_CATEGORY, CAL_STATUS, STATUS) VALUES (SEQ_CDNO.NEXTVAL, 'ÁÖÁ¦¼±Á¤', 'ÇÁ·ÎÁ§Æ® ÁÖÁ¦ ¼±Á¤ ¹× ¿ªÇÒ ºÐ´ã', '2023-10-16', '2023-10-16', '¾÷¹«', DEFAULT, DEFAULT);
-INSERT INTO CALENDAR (CAL_NO, CAL_TITLE, CAL_CONTENT, START_DATE, END_DATE, CAL_CATEGORY, CAL_STATUS, STATUS) VALUES (SEQ_CDNO.NEXTVAL, 'ÆÀ È¸½Ä', '´ÜÇÕÀ» À§ÇÑ È¸½Ä', '2023-10-21', '2023-10-21', '¼Ò¼È', DEFAULT, DEFAULT);
-INSERT INTO CALENDAR (CAL_NO, CAL_TITLE, CAL_CONTENT, START_DATE, END_DATE, CAL_CATEGORY, CAL_STATUS, STATUS) VALUES (SEQ_CDNO.NEXTVAL, 'ÆÀ ¼±Á¤', 'ÆÀ ¼±Á¤ ¹× ÀÎ»ç', '2023-10-4', '2023-10-4', '¾÷¹«', 'N', DEFAULT);
-INSERT INTO CALENDAR (CAL_NO, CAL_TITLE, CAL_CONTENT, START_DATE, END_DATE, CAL_CATEGORY, CAL_STATUS, STATUS) VALUES (SEQ_CDNO.NEXTVAL, '°¡Á·°ú Àú³á½Ä»ç', '°¡Á·°ú ±è¹äÃµ±¹¿¡¼­ Àú³á½Ä»ç', '2023-10-17', '2023-10-17', '°³ÀÎ', DEFAULT, DEFAULT);
-INSERT INTO CALENDAR (CAL_NO, CAL_TITLE, CAL_CONTENT, START_DATE, END_DATE, CAL_CATEGORY, CAL_STATUS, STATUS) VALUES (SEQ_CDNO.NEXTVAL, 'ÆäÀÌÁö Á¦ÀÛ', 'ÆäÀÌÁö Á¦ÀÛ ¹× ÇÇµå¹é', '2023-10-17', '2023-10-30', '¾÷¹«', DEFAULT, DEFAULT);
+-- ìº˜ë¦°ë” ìƒ˜í”Œ ë°ì´í„° 5ê°œ
+INSERT INTO CALENDAR (CAL_NO, CAL_TITLE, CAL_CONTENT, START_DATE, END_DATE, CAL_CATEGORY, CAL_STATUS, STATUS) VALUES (SEQ_CDNO.NEXTVAL, 'ì£¼ì œì„ ì •', 'í”„ë¡œì íŠ¸ ì£¼ì œ ì„ ì • ë° ì—­í•  ë¶„ë‹´', '2023-10-16', '2023-10-16', 'ì—…ë¬´', DEFAULT, DEFAULT);
+INSERT INTO CALENDAR (CAL_NO, CAL_TITLE, CAL_CONTENT, START_DATE, END_DATE, CAL_CATEGORY, CAL_STATUS, STATUS) VALUES (SEQ_CDNO.NEXTVAL, 'íŒ€ íšŒì‹', 'ë‹¨í•©ì„ ìœ„í•œ íšŒì‹', '2023-10-21', '2023-10-21', 'ì†Œì…œ', DEFAULT, DEFAULT);
+INSERT INTO CALENDAR (CAL_NO, CAL_TITLE, CAL_CONTENT, START_DATE, END_DATE, CAL_CATEGORY, CAL_STATUS, STATUS) VALUES (SEQ_CDNO.NEXTVAL, 'íŒ€ ì„ ì •', 'íŒ€ ì„ ì • ë° ì¸ì‚¬', '2023-10-4', '2023-10-4', 'ì—…ë¬´', 'N', DEFAULT);
+INSERT INTO CALENDAR (CAL_NO, CAL_TITLE, CAL_CONTENT, START_DATE, END_DATE, CAL_CATEGORY, CAL_STATUS, STATUS) VALUES (SEQ_CDNO.NEXTVAL, 'ê°€ì¡±ê³¼ ì €ë…ì‹ì‚¬', 'ê°€ì¡±ê³¼ ê¹€ë°¥ì²œêµ­ì—ì„œ ì €ë…ì‹ì‚¬', '2023-10-17', '2023-10-17', 'ê°œì¸', DEFAULT, DEFAULT);
+INSERT INTO CALENDAR (CAL_NO, CAL_TITLE, CAL_CONTENT, START_DATE, END_DATE, CAL_CATEGORY, CAL_STATUS, STATUS) VALUES (SEQ_CDNO.NEXTVAL, 'íŽ˜ì´ì§€ ì œìž‘', 'íŽ˜ì´ì§€ ì œìž‘ ë° í”¼ë“œë°±', '2023-10-17', '2023-10-30', 'ì—…ë¬´', DEFAULT, DEFAULT);
 
 --------------------------------------------------
 --------------     REPOSITORY	------------------	
@@ -897,22 +897,22 @@ CREATE TABLE REPOSITORY(
     REF_PNO NUMBER REFERENCES PROJECT
 );
 
--- ·¹ÆÄÁöÅä¸® ÄÚ¸àÆ® ÀÛ¼º
-COMMENT ON COLUMN REPOSITORY.REPO_NO IS '·¹ÆÄÁöÅä¸® ¹øÈ£';
-COMMENT ON COLUMN REPOSITORY.REPO_TITLE IS '·¹ÆÄÁöÅä¸® ÀÌ¸§';
-COMMENT ON COLUMN REPOSITORY.REPO_CONTENT IS '·¹ÆÄÁöÅä¸® ³»¿ë';
-COMMENT ON COLUMN REPOSITORY.REPO_STATUS IS '·¹ÆÄÁöÅä¸® °ø°³¿©ºÎ';
-COMMENT ON COLUMN REPOSITORY.CREATE_DATE IS '·¹ÆÄÁöÅä¸® »ý¼ºÀÏ';
-COMMENT ON COLUMN REPOSITORY.STATUS IS '·¹ÆÄÁöÅä¸® »èÁ¦¿©ºÎ';
-COMMENT ON COLUMN REPOSITORY.REF_MID IS 'ÂüÁ¶ È¸¿ø ¹øÈ£';
-COMMENT ON COLUMN REPOSITORY.REF_PNO IS 'ÂüÁ¶ ÇÁ·ÎÁ§Æ® ¹øÈ£';
+-- ë ˆíŒŒì§€í† ë¦¬ ì½”ë©˜íŠ¸ ìž‘ì„±
+COMMENT ON COLUMN REPOSITORY.REPO_NO IS 'ë ˆíŒŒì§€í† ë¦¬ ë²ˆí˜¸';
+COMMENT ON COLUMN REPOSITORY.REPO_TITLE IS 'ë ˆíŒŒì§€í† ë¦¬ ì´ë¦„';
+COMMENT ON COLUMN REPOSITORY.REPO_CONTENT IS 'ë ˆíŒŒì§€í† ë¦¬ ë‚´ìš©';
+COMMENT ON COLUMN REPOSITORY.REPO_STATUS IS 'ë ˆíŒŒì§€í† ë¦¬ ê³µê°œì—¬ë¶€';
+COMMENT ON COLUMN REPOSITORY.CREATE_DATE IS 'ë ˆíŒŒì§€í† ë¦¬ ìƒì„±ì¼';
+COMMENT ON COLUMN REPOSITORY.STATUS IS 'ë ˆíŒŒì§€í† ë¦¬ ì‚­ì œì—¬ë¶€';
+COMMENT ON COLUMN REPOSITORY.REF_MID IS 'ì°¸ì¡° íšŒì› ë²ˆí˜¸';
+COMMENT ON COLUMN REPOSITORY.REF_PNO IS 'ì°¸ì¡° í”„ë¡œì íŠ¸ ë²ˆí˜¸';
 
--- ·¹ÆÄÁöÅä¸® »ùÇÃ µ¥ÀÌÅÍ 5°³
-INSERT INTO REPOSITORY (REPO_NO, REPO_TITLE, REPO_CONTENT, REPO_STATUS, CREATE_DATE, STATUS, REF_MID, REF_PNO) VALUES (SEQ_RNO.NEXTVAL, 'FINAL_HTML', '·¹ÆÄÁö ³»¿ëÀÓµÂ', DEFAULT, DEFAULT, DEFAULT, '0000', 1);
-INSERT INTO REPOSITORY (REPO_NO, REPO_TITLE, REPO_CONTENT, REPO_STATUS, CREATE_DATE, STATUS, REF_MID, REF_PNO) VALUES (SEQ_RNO.NEXTVAL, 'FINAL_JSP', '·¹ÆÄÁö ³»¿ëÀÓµÂ', DEFAULT, DEFAULT, DEFAULT, '0000', 2);
-INSERT INTO REPOSITORY (REPO_NO, REPO_TITLE, REPO_CONTENT, REPO_STATUS, CREATE_DATE, STATUS, REF_MID, REF_PNO) VALUES (SEQ_RNO.NEXTVAL, 'FINAL_TEST', '·¹ÆÄÁö ³»¿ëÀÓµÂ', DEFAULT, DEFAULT, DEFAULT, '0000', 3);
-INSERT INTO REPOSITORY (REPO_NO, REPO_TITLE, REPO_CONTENT, REPO_STATUS, CREATE_DATE, STATUS, REF_MID, REF_PNO) VALUES (SEQ_RNO.NEXTVAL, 'FINAL_TEMPLATE', '·¹ÆÄÁö ³»¿ëÀÓµÂ', DEFAULT, DEFAULT, DEFAULT, '0000', 2);
-INSERT INTO REPOSITORY (REPO_NO, REPO_TITLE, REPO_CONTENT, REPO_STATUS, CREATE_DATE, STATUS, REF_MID, REF_PNO) VALUES (SEQ_RNO.NEXTVAL, 'FINAL_REAL', '·¹ÆÄÁö ³»¿ëÀÓµÂ', DEFAULT, DEFAULT, DEFAULT, '0000', 1);
+-- ë ˆíŒŒì§€í† ë¦¬ ìƒ˜í”Œ ë°ì´í„° 5ê°œ
+INSERT INTO REPOSITORY (REPO_NO, REPO_TITLE, REPO_CONTENT, REPO_STATUS, CREATE_DATE, STATUS, REF_MID, REF_PNO) VALUES (SEQ_RNO.NEXTVAL, 'FINAL_HTML', 'ë ˆíŒŒì§€ ë‚´ìš©ìž„ë ', DEFAULT, DEFAULT, DEFAULT, '0000', 1);
+INSERT INTO REPOSITORY (REPO_NO, REPO_TITLE, REPO_CONTENT, REPO_STATUS, CREATE_DATE, STATUS, REF_MID, REF_PNO) VALUES (SEQ_RNO.NEXTVAL, 'FINAL_JSP', 'ë ˆíŒŒì§€ ë‚´ìš©ìž„ë ', DEFAULT, DEFAULT, DEFAULT, '0000', 2);
+INSERT INTO REPOSITORY (REPO_NO, REPO_TITLE, REPO_CONTENT, REPO_STATUS, CREATE_DATE, STATUS, REF_MID, REF_PNO) VALUES (SEQ_RNO.NEXTVAL, 'FINAL_TEST', 'ë ˆíŒŒì§€ ë‚´ìš©ìž„ë ', DEFAULT, DEFAULT, DEFAULT, '0000', 3);
+INSERT INTO REPOSITORY (REPO_NO, REPO_TITLE, REPO_CONTENT, REPO_STATUS, CREATE_DATE, STATUS, REF_MID, REF_PNO) VALUES (SEQ_RNO.NEXTVAL, 'FINAL_TEMPLATE', 'ë ˆíŒŒì§€ ë‚´ìš©ìž„ë ', DEFAULT, DEFAULT, DEFAULT, '0000', 2);
+INSERT INTO REPOSITORY (REPO_NO, REPO_TITLE, REPO_CONTENT, REPO_STATUS, CREATE_DATE, STATUS, REF_MID, REF_PNO) VALUES (SEQ_RNO.NEXTVAL, 'FINAL_REAL', 'ë ˆíŒŒì§€ ë‚´ìš©ìž„ë ', DEFAULT, DEFAULT, DEFAULT, '0000', 1);
 
 --------------------------------------------------
 --------------     COMMIT	------------------	
@@ -925,19 +925,19 @@ CREATE TABLE PRO_COMMIT(
     REPO_NO NUMBER CONSTRAINT REPO_NO_FK REFERENCES REPOSITORY ON DELETE CASCADE
 );
 
--- Ä¿¹Ô ÄÚ¸àÆ® ÀÛ¼º
-COMMENT ON COLUMN PRO_COMMIT.COMMIT_NO IS 'Ä¿¹Ô ¹øÈ£';
-COMMENT ON COLUMN PRO_COMMIT.COMMIT_MEM IS 'Ä¿¹Ô ÀÛ¼ºÀÚ';
-COMMENT ON COLUMN PRO_COMMIT.COMMIT_DATE IS 'Ä¿¹Ô ³¯Â¥';
-COMMENT ON COLUMN PRO_COMMIT.COMM_HASH IS 'Ä¿¹Ô ÇØ½¬°ª';
-COMMENT ON COLUMN PRO_COMMIT.REPO_NO IS '·¹ÆÄÁöÅä¸® ¹øÈ£';
+-- ì»¤ë°‹ ì½”ë©˜íŠ¸ ìž‘ì„±
+COMMENT ON COLUMN PRO_COMMIT.COMMIT_NO IS 'ì»¤ë°‹ ë²ˆí˜¸';
+COMMENT ON COLUMN PRO_COMMIT.COMMIT_MEM IS 'ì»¤ë°‹ ìž‘ì„±ìž';
+COMMENT ON COLUMN PRO_COMMIT.COMMIT_DATE IS 'ì»¤ë°‹ ë‚ ì§œ';
+COMMENT ON COLUMN PRO_COMMIT.COMM_HASH IS 'ì»¤ë°‹ í•´ì‰¬ê°’';
+COMMENT ON COLUMN PRO_COMMIT.REPO_NO IS 'ë ˆíŒŒì§€í† ë¦¬ ë²ˆí˜¸';
 
--- Ä¿¹Ô »ùÇÃ µ¥ÀÌÅÍ 5°³
-INSERT INTO PRO_COMMIT (COMMIT_NO, COMMIT_MEM, COMMIT_DATE, COMM_HASH, REPO_NO) VALUES (SEQ_CNO.NEXTVAL, '0000', DEFAULT, '·Î±×ÀÎ ±â´É ¼öÁ¤', 1);
-INSERT INTO PRO_COMMIT (COMMIT_NO, COMMIT_MEM, COMMIT_DATE, COMM_HASH, REPO_NO) VALUES (SEQ_CNO.NEXTVAL, '0000', DEFAULT, 'ÁÁ¾Æ¿ä ±â´É ¹ö±× ¼öÁ¤', 2);
-INSERT INTO PRO_COMMIT (COMMIT_NO, COMMIT_MEM, COMMIT_DATE, COMM_HASH, REPO_NO) VALUES (SEQ_CNO.NEXTVAL, '0000', DEFAULT, '·¹ÆÄÁöÅä¸® µî·Ï ±â´É Ãß°¡', 3);
-INSERT INTO PRO_COMMIT (COMMIT_NO, COMMIT_MEM, COMMIT_DATE, COMM_HASH, REPO_NO) VALUES (SEQ_CNO.NEXTVAL, '0000', DEFAULT, '½Å°í ±â´É »èÁ¦', 4);
-INSERT INTO PRO_COMMIT (COMMIT_NO, COMMIT_MEM, COMMIT_DATE, COMM_HASH, REPO_NO) VALUES (SEQ_CNO.NEXTVAL, '0000', DEFAULT, '¸¶ÀÌÆäÀÌÁö ±â´É ÄÚµå ¼öÁ¤', 5);
+-- ì»¤ë°‹ ìƒ˜í”Œ ë°ì´í„° 5ê°œ
+INSERT INTO PRO_COMMIT (COMMIT_NO, COMMIT_MEM, COMMIT_DATE, COMM_HASH, REPO_NO) VALUES (SEQ_CNO.NEXTVAL, '0000', DEFAULT, 'ë¡œê·¸ì¸ ê¸°ëŠ¥ ìˆ˜ì •', 1);
+INSERT INTO PRO_COMMIT (COMMIT_NO, COMMIT_MEM, COMMIT_DATE, COMM_HASH, REPO_NO) VALUES (SEQ_CNO.NEXTVAL, '0000', DEFAULT, 'ì¢‹ì•„ìš” ê¸°ëŠ¥ ë²„ê·¸ ìˆ˜ì •', 2);
+INSERT INTO PRO_COMMIT (COMMIT_NO, COMMIT_MEM, COMMIT_DATE, COMM_HASH, REPO_NO) VALUES (SEQ_CNO.NEXTVAL, '0000', DEFAULT, 'ë ˆíŒŒì§€í† ë¦¬ ë“±ë¡ ê¸°ëŠ¥ ì¶”ê°€', 3);
+INSERT INTO PRO_COMMIT (COMMIT_NO, COMMIT_MEM, COMMIT_DATE, COMM_HASH, REPO_NO) VALUES (SEQ_CNO.NEXTVAL, '0000', DEFAULT, 'ì‹ ê³  ê¸°ëŠ¥ ì‚­ì œ', 4);
+INSERT INTO PRO_COMMIT (COMMIT_NO, COMMIT_MEM, COMMIT_DATE, COMM_HASH, REPO_NO) VALUES (SEQ_CNO.NEXTVAL, '0000', DEFAULT, 'ë§ˆì´íŽ˜ì´ì§€ ê¸°ëŠ¥ ì½”ë“œ ìˆ˜ì •', 5);
 
 --------------------------------------------------
 --------------     MILESTONE   ------------------	
@@ -955,19 +955,19 @@ CREATE TABLE MILESTONE (
    REPO_NO NUMBER REFERENCES REPOSITORY
 );
 
--- ¸¶ÀÏ½ºÅæ Å×ÀÌºí ÄÚ¸àÆ®
-COMMENT ON COLUMN MILESTONE.MIL_NO IS '¸¶ÀÏ½ºÅæ ¹øÈ£';
-COMMENT ON COLUMN MILESTONE.MIL_TITLE IS '¸¶ÀÏ½ºÅæ Á¦¸ñ';
-COMMENT ON COLUMN MILESTONE.CREATE_DATE IS '¸¶ÀÏ½ºÅæ »ý¼ºÀÏ';
-COMMENT ON COLUMN MILESTONE.MODIFY_DATE IS '¸¶ÀÏ½ºÅæ Á¾·áÀÏ';
-COMMENT ON COLUMN MILESTONE.END_DATE IS 'ÃÖ±Ù ¼öÁ¤ÀÏ';
-COMMENT ON COLUMN MILESTONE.ISSUING IS 'ÁøÇàÁßÀÎ ÀÌ½´';
-COMMENT ON COLUMN MILESTONE.PROGRESS IS 'ÁøÃ´µµ';
-COMMENT ON COLUMN MILESTONE.STATUS IS '¸¶ÀÏ½ºÅæ »óÅÂ';
-COMMENT ON COLUMN MILESTONE.MEM_ID IS '¸¶ÀÏ½ºÅæ ÀÛ¼ºÀÚ';
-COMMENT ON COLUMN MILESTONE.REPO_NO IS '·¹ÆÛÁöÅä¸® ¹øÈ£';
+-- ë§ˆì¼ìŠ¤í†¤ í…Œì´ë¸” ì½”ë©˜íŠ¸
+COMMENT ON COLUMN MILESTONE.MIL_NO IS 'ë§ˆì¼ìŠ¤í†¤ ë²ˆí˜¸';
+COMMENT ON COLUMN MILESTONE.MIL_TITLE IS 'ë§ˆì¼ìŠ¤í†¤ ì œëª©';
+COMMENT ON COLUMN MILESTONE.CREATE_DATE IS 'ë§ˆì¼ìŠ¤í†¤ ìƒì„±ì¼';
+COMMENT ON COLUMN MILESTONE.MODIFY_DATE IS 'ë§ˆì¼ìŠ¤í†¤ ì¢…ë£Œì¼';
+COMMENT ON COLUMN MILESTONE.END_DATE IS 'ìµœê·¼ ìˆ˜ì •ì¼';
+COMMENT ON COLUMN MILESTONE.ISSUING IS 'ì§„í–‰ì¤‘ì¸ ì´ìŠˆ';
+COMMENT ON COLUMN MILESTONE.PROGRESS IS 'ì§„ì²™ë„';
+COMMENT ON COLUMN MILESTONE.STATUS IS 'ë§ˆì¼ìŠ¤í†¤ ìƒíƒœ';
+COMMENT ON COLUMN MILESTONE.MEM_ID IS 'ë§ˆì¼ìŠ¤í†¤ ìž‘ì„±ìž';
+COMMENT ON COLUMN MILESTONE.REPO_NO IS 'ë ˆí¼ì§€í† ë¦¬ ë²ˆí˜¸';
 
--- ¸¶ÀÏ½ºÅæ INSERT¹®
+-- ë§ˆì¼ìŠ¤í†¤ INSERTë¬¸
 INSERT
   INTO MILESTONE
      (
@@ -985,7 +985,7 @@ INSERT
 VALUES
      (
        SEQ_MSNO.NEXTVAL
-     , '¸¶ÀÏ1'
+     , 'ë§ˆì¼1'
      , DEFAULT
      , NULL
      , NULL
@@ -1013,7 +1013,7 @@ INSERT
 VALUES
      (
        SEQ_MSNO.NEXTVAL
-     , '¸¶ÀÏ2'
+     , 'ë§ˆì¼2'
      , DEFAULT
      , NULL
      , NULL
@@ -1041,7 +1041,7 @@ INSERT
 VALUES
      (
        SEQ_MSNO.NEXTVAL
-     , '¸¶ÀÏ3'
+     , 'ë§ˆì¼3'
      , DEFAULT
      , NULL
      , NULL
@@ -1071,22 +1071,22 @@ CREATE TABLE ISSUE (
    REPO_NO NUMBER REFERENCES REPOSITORY
 );
 
--- ÀÌ½´ Å×ÀÌºí ÄÚ¸àÆ®
-COMMENT ON COLUMN ISSUE.ISS_NO IS 'ÀÌ½´¹øÈ£';
-COMMENT ON COLUMN ISSUE.ISS_TITLE IS 'ÀÌ½´Á¦¸ñ';
-COMMENT ON COLUMN ISSUE.ISS_CONTENT IS 'ÀÌ½´³»¿ë';
-COMMENT ON COLUMN ISSUE.CREATE_DATE IS 'ÀÌ½´ »ý¼ºÀÏ';
-COMMENT ON COLUMN ISSUE.MODIFY_DATE IS 'ÀÌ½´ ¼öÁ¤ÀÏ';
-COMMENT ON COLUMN ISSUE.END_DATE IS 'ÀÌ½´ Á¾·áÀÏ';
-COMMENT ON COLUMN ISSUE.ISS_ASSIGNEE IS 'ÀÌ½´ ÇÒ´ç¹ÞÀº »ç¶÷';
-COMMENT ON COLUMN ISSUE.ISS_STATUS IS 'ÀÌ½´ ÁøÇà»óÅÂ(Y/N)';
-COMMENT ON COLUMN ISSUE.STATUS IS 'ÀÌ½´»óÅÂ(Y/N)';
-COMMENT ON COLUMN ISSUE.MEM_ID IS 'ÀÌ½´ ÀÛ¼ºÀÚ';
-COMMENT ON COLUMN ISSUE.LAB_NAME IS 'ÀÌ½´°¡ ¼ÓÇÑ ¶óº§(,·Î ±¸ºÐ)';
-COMMENT ON COLUMN ISSUE.MIL_NO IS 'ÀÌ½´°¡ ¼ÓÇÑ ¸¶ÀÏ½ºÅæ';
-COMMENT ON COLUMN ISSUE.REPO_NO IS 'ÀÌ½´°¡ ¼ÓÇÑ ·¹ÆÛÁöÅä¸® ¹øÈ£';
+-- ì´ìŠˆ í…Œì´ë¸” ì½”ë©˜íŠ¸
+COMMENT ON COLUMN ISSUE.ISS_NO IS 'ì´ìŠˆë²ˆí˜¸';
+COMMENT ON COLUMN ISSUE.ISS_TITLE IS 'ì´ìŠˆì œëª©';
+COMMENT ON COLUMN ISSUE.ISS_CONTENT IS 'ì´ìŠˆë‚´ìš©';
+COMMENT ON COLUMN ISSUE.CREATE_DATE IS 'ì´ìŠˆ ìƒì„±ì¼';
+COMMENT ON COLUMN ISSUE.MODIFY_DATE IS 'ì´ìŠˆ ìˆ˜ì •ì¼';
+COMMENT ON COLUMN ISSUE.END_DATE IS 'ì´ìŠˆ ì¢…ë£Œì¼';
+COMMENT ON COLUMN ISSUE.ISS_ASSIGNEE IS 'ì´ìŠˆ í• ë‹¹ë°›ì€ ì‚¬ëžŒ';
+COMMENT ON COLUMN ISSUE.ISS_STATUS IS 'ì´ìŠˆ ì§„í–‰ìƒíƒœ(Y/N)';
+COMMENT ON COLUMN ISSUE.STATUS IS 'ì´ìŠˆìƒíƒœ(Y/N)';
+COMMENT ON COLUMN ISSUE.MEM_ID IS 'ì´ìŠˆ ìž‘ì„±ìž';
+COMMENT ON COLUMN ISSUE.LAB_NAME IS 'ì´ìŠˆê°€ ì†í•œ ë¼ë²¨(,ë¡œ êµ¬ë¶„)';
+COMMENT ON COLUMN ISSUE.MIL_NO IS 'ì´ìŠˆê°€ ì†í•œ ë§ˆì¼ìŠ¤í†¤';
+COMMENT ON COLUMN ISSUE.REPO_NO IS 'ì´ìŠˆê°€ ì†í•œ ë ˆí¼ì§€í† ë¦¬ ë²ˆí˜¸';
 
--- ÀÌ½´ INSERT¹®
+-- ì´ìŠˆ INSERTë¬¸
 INSERT
   INTO ISSUE
      (
@@ -1107,8 +1107,8 @@ INSERT
 VALUES
      (
        SEQ_INO.NEXTVAL
-     , 'Á¦¸ñ1'
-     , '³»¿ë1'
+     , 'ì œëª©1'
+     , 'ë‚´ìš©1'
      , DEFAULT
      , NULL
      , NULL
@@ -1141,8 +1141,8 @@ INSERT
 VALUES
      (
        SEQ_INO.NEXTVAL
-     , 'Á¦¸ñ2'
-     , '³»¿ë2'
+     , 'ì œëª©2'
+     , 'ë‚´ìš©2'
      , DEFAULT
      , NULL
      , NULL
@@ -1175,8 +1175,8 @@ INSERT
 VALUES
      (
        SEQ_INO.NEXTVAL
-     , 'Á¦¸ñ1'
-     , '³»¿ë1'
+     , 'ì œëª©1'
+     , 'ë‚´ìš©1'
      , DEFAULT
      , NULL
      , NULL
@@ -1205,28 +1205,28 @@ CREATE TABLE PULL_REQUEST(
     CREATE_DATE DATE  DEFAULT SYSDATE NOT NULL
 );
 
--- Ç®¸®Äù ÄÚ¸àÆ®
-COMMENT ON COLUMN PULL_REQUEST.PULL_NO IS 'Ç®¸®Äù ¹øÈ£';
-COMMENT ON COLUMN PULL_REQUEST.PULL_TITLE IS 'Ç®¸®Äù Á¦¸ñ';
-COMMENT ON COLUMN PULL_REQUEST.PULL_CONTENT IS 'Ç®¸®Äù ³»¿ë';
-COMMENT ON COLUMN PULL_REQUEST.PULL_WRITER IS 'Ç®¸®Äù ÀÛ¼ºÀÚ';
-COMMENT ON COLUMN PULL_REQUEST.PULL_MANAGER IS 'Ç®¸®Äù ´ã´çÀÚ';
-COMMENT ON COLUMN PULL_REQUEST.REPO_NO IS '·¹ÆÄÁöÅä¸® ¹øÈ£';
-COMMENT ON COLUMN PULL_REQUEST.ISS_NO IS 'ÀÌ½´ ¹øÈ£';
-COMMENT ON COLUMN PULL_REQUEST.MIL_NO IS '¸¶ÀÏ½ºÅæ ¹øÈ£';
-COMMENT ON COLUMN PULL_REQUEST.STATUS IS '»óÅÂ(M:¸ÓÁö,C:ÁøÇàÁß,N:°ÅÀý)';
-COMMENT ON COLUMN PULL_REQUEST.CREATE_DATE IS 'ÀÛ¼ºÀÏ';
+-- í’€ë¦¬í€˜ ì½”ë©˜íŠ¸
+COMMENT ON COLUMN PULL_REQUEST.PULL_NO IS 'í’€ë¦¬í€˜ ë²ˆí˜¸';
+COMMENT ON COLUMN PULL_REQUEST.PULL_TITLE IS 'í’€ë¦¬í€˜ ì œëª©';
+COMMENT ON COLUMN PULL_REQUEST.PULL_CONTENT IS 'í’€ë¦¬í€˜ ë‚´ìš©';
+COMMENT ON COLUMN PULL_REQUEST.PULL_WRITER IS 'í’€ë¦¬í€˜ ìž‘ì„±ìž';
+COMMENT ON COLUMN PULL_REQUEST.PULL_MANAGER IS 'í’€ë¦¬í€˜ ë‹´ë‹¹ìž';
+COMMENT ON COLUMN PULL_REQUEST.REPO_NO IS 'ë ˆíŒŒì§€í† ë¦¬ ë²ˆí˜¸';
+COMMENT ON COLUMN PULL_REQUEST.ISS_NO IS 'ì´ìŠˆ ë²ˆí˜¸';
+COMMENT ON COLUMN PULL_REQUEST.MIL_NO IS 'ë§ˆì¼ìŠ¤í†¤ ë²ˆí˜¸';
+COMMENT ON COLUMN PULL_REQUEST.STATUS IS 'ìƒíƒœ(M:ë¨¸ì§€,C:ì§„í–‰ì¤‘,N:ê±°ì ˆ)';
+COMMENT ON COLUMN PULL_REQUEST.CREATE_DATE IS 'ìž‘ì„±ì¼';
 
--- Ç®¸®Äù »ùÇÃµ¥ÀÌÅÍ
+-- í’€ë¦¬í€˜ ìƒ˜í”Œë°ì´í„°
 INSERT INTO 
             PULL_REQUEST
      VALUES 
      (
        SEQ_PQNO.NEXTVAL
-     , 'Ç®¸®Äù¹Þ¾Æ¶ù!'
-     , 'Ç®¸®Äù È®ÀÎÇØº¸½ÃÁö?'
+     , 'í’€ë¦¬í€˜ë°›ì•„ëž!'
+     , 'í’€ë¦¬í€˜ í™•ì¸í•´ë³´ì‹œì§€?'
      , '0000'
-     , 'È£»§¸Ç,¼¼±Õ¸Ç'
+     , 'í˜¸ë¹µë§¨,ì„¸ê· ë§¨'
      , 1
      , 1
      , 1
@@ -1239,10 +1239,10 @@ INSERT INTO
      VALUES 
      (
        SEQ_PQNO.NEXTVAL
-     , 'Ç®¸®Äù¹Þ¾Æ¶ù1!'
-     , 'Ç®¸®Äù È®ÀÎÇØº¸½ÃÁö1?'
+     , 'í’€ë¦¬í€˜ë°›ì•„ëž1!'
+     , 'í’€ë¦¬í€˜ í™•ì¸í•´ë³´ì‹œì§€1?'
      , '11111'
-     , 'È£»§¸Ç,¼¼±Õ¸Ç'
+     , 'í˜¸ë¹µë§¨,ì„¸ê· ë§¨'
      , 2
      , 2
      , 2
@@ -1255,10 +1255,10 @@ INSERT INTO
      VALUES 
      (
        SEQ_PQNO.NEXTVAL
-     , 'Ç®¸®Äù¹Þ¾Æ¶ù3!'
-     , 'Ç®¸®Äù È®ÀÎÇØº¸½ÃÁö3?'
+     , 'í’€ë¦¬í€˜ë°›ì•„ëž3!'
+     , 'í’€ë¦¬í€˜ í™•ì¸í•´ë³´ì‹œì§€3?'
      , '22222'
-     , 'È£»§¸Ç,¼¼±Õ¸Ç'
+     , 'í˜¸ë¹µë§¨,ì„¸ê· ë§¨'
      , 2
      , 2
      , 2
@@ -1271,10 +1271,10 @@ INSERT INTO
      VALUES 
      (
        SEQ_PQNO.NEXTVAL
-     , 'Ç®¸®Äù¹Þ¾Æ¶ù4!'
-     , 'Ç®¸®Äù È®ÀÎÇØº¸½ÃÁö4?'
+     , 'í’€ë¦¬í€˜ë°›ì•„ëž4!'
+     , 'í’€ë¦¬í€˜ í™•ì¸í•´ë³´ì‹œì§€4?'
      , '11111'
-     , 'È£»§¸Ç,¼¼±Õ¸Ç'
+     , 'í˜¸ë¹µë§¨,ì„¸ê· ë§¨'
      , 2
      , 2
      , 2
@@ -1287,10 +1287,10 @@ INSERT INTO
      VALUES 
      (
        SEQ_PQNO.NEXTVAL
-     , 'Ç®¸®Äù¹Þ¾Æ¶ù5!'
-     , 'Ç®¸®Äù È®ÀÎÇØº¸½ÃÁö5?'
+     , 'í’€ë¦¬í€˜ë°›ì•„ëž5!'
+     , 'í’€ë¦¬í€˜ í™•ì¸í•´ë³´ì‹œì§€5?'
      , '11111'
-     , 'È£»§¸Ç,¼¼±Õ¸Ç'
+     , 'í˜¸ë¹µë§¨,ì„¸ê· ë§¨'
      , 2
      , 2
      , 2
@@ -1309,16 +1309,16 @@ CREATE TABLE PULL_REVIEW(
     CREATE_DATE DATE DEFAULT SYSDATE
 );
 
--- Ç®¸®Äù½ºÆ® ¸®ºä Å×ÀÌºí ÄÚ¸àÆ®
-COMMENT ON COLUMN PULL_REVIEW.REVIEW_NO IS 'Ç®¸®Äù½ºÆ® ¸®ºä ¹øÈ£';
-COMMENT ON COLUMN PULL_REVIEW.REF_PULL IS 'ÂüÁ¶ÇÒ Ç®¸®Äù½ºÆ® ¹øÈ£';
-COMMENT ON COLUMN PULL_REVIEW.MEM_ID IS 'ÀÛ¼ºÇÑ È¸¿ø ¾ÆÀÌµð';
-COMMENT ON COLUMN PULL_REVIEW.REVIEW_CONTENT IS '¸®ºä ³»¿ë';
-COMMENT ON COLUMN PULL_REVIEW.CREATE_DATE IS 'ÀÛ¼ºÀÏ';
+-- í’€ë¦¬í€˜ìŠ¤íŠ¸ ë¦¬ë·° í…Œì´ë¸” ì½”ë©˜íŠ¸
+COMMENT ON COLUMN PULL_REVIEW.REVIEW_NO IS 'í’€ë¦¬í€˜ìŠ¤íŠ¸ ë¦¬ë·° ë²ˆí˜¸';
+COMMENT ON COLUMN PULL_REVIEW.REF_PULL IS 'ì°¸ì¡°í•  í’€ë¦¬í€˜ìŠ¤íŠ¸ ë²ˆí˜¸';
+COMMENT ON COLUMN PULL_REVIEW.MEM_ID IS 'ìž‘ì„±í•œ íšŒì› ì•„ì´ë””';
+COMMENT ON COLUMN PULL_REVIEW.REVIEW_CONTENT IS 'ë¦¬ë·° ë‚´ìš©';
+COMMENT ON COLUMN PULL_REVIEW.CREATE_DATE IS 'ìž‘ì„±ì¼';
 
--- Ç®¸®Äù½ºÆ® ¸®ºä Å×ÀÌºí »ùÇÃµ¥ÀÌÅÍ
-INSERT INTO PULL_REVIEW (REVIEW_NO, REF_PULL, MEM_ID, REVIEW_CONTENT, CREATE_DATE) VALUES (SEQ_PRNO.NEXTVAL, 1, '0000', 'ÀÌ»ó¹«', DEFAULT);
-INSERT INTO PULL_REVIEW (REVIEW_NO, REF_PULL, MEM_ID, REVIEW_CONTENT, CREATE_DATE) VALUES (SEQ_PRNO.NEXTVAL, 2, '22222', 'À¯»ó¹«', DEFAULT);
-INSERT INTO PULL_REVIEW (REVIEW_NO, REF_PULL, MEM_ID, REVIEW_CONTENT, CREATE_DATE) VALUES (SEQ_PRNO.NEXTVAL, 3, '11111', 'È«´ç¹«', DEFAULT);
+-- í’€ë¦¬í€˜ìŠ¤íŠ¸ ë¦¬ë·° í…Œì´ë¸” ìƒ˜í”Œë°ì´í„°
+INSERT INTO PULL_REVIEW (REVIEW_NO, REF_PULL, MEM_ID, REVIEW_CONTENT, CREATE_DATE) VALUES (SEQ_PRNO.NEXTVAL, 1, '0000', 'ì´ìƒë¬´', DEFAULT);
+INSERT INTO PULL_REVIEW (REVIEW_NO, REF_PULL, MEM_ID, REVIEW_CONTENT, CREATE_DATE) VALUES (SEQ_PRNO.NEXTVAL, 2, '22222', 'ìœ ìƒë¬´', DEFAULT);
+INSERT INTO PULL_REVIEW (REVIEW_NO, REF_PULL, MEM_ID, REVIEW_CONTENT, CREATE_DATE) VALUES (SEQ_PRNO.NEXTVAL, 3, '11111', 'í™ë‹¹ë¬´', DEFAULT);
 
 COMMIT;
