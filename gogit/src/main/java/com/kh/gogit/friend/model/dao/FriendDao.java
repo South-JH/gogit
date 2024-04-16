@@ -60,14 +60,21 @@ public ArrayList<Member> searchMember(String search, String memId,SqlSessionTemp
       
    }
 
-public ArrayList<Member> selectFriendList(String memId, PageInfo pi, SqlSessionTemplate sqlSession) {
-	 int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-     int limit = pi.getBoardLimit();
 
-     RowBounds rowBounds = new RowBounds(offset, limit);
-
-     return (ArrayList)sqlSession.selectList("friendMapper.selectFriendList", memId, rowBounds);
+public ArrayList<Member> selectFriendList(String memId, SqlSessionTemplate sqlSession) {
+	// TODO Auto-generated method stub
+	return null;
 }
+
+
+public ArrayList<Member> allMemberList(String memId, SqlSessionTemplate sqlSession) {
+	
+	return (ArrayList)sqlSession.selectList("friendMapper.allMemberList", memId);
+}
+
+
+
+
 
 
 

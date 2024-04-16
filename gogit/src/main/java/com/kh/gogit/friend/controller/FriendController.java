@@ -17,6 +17,7 @@ import com.kh.gogit.common.template.Pagination;
 import com.kh.gogit.friend.model.service.FriendServiceImpl;
 import com.kh.gogit.friend.model.vo.Friend;
 import com.kh.gogit.member.model.vo.Member;
+import com.microsoft.graph.models.Request;
 
 
 
@@ -36,28 +37,17 @@ private FriendServiceImpl fService;
    }
    
    
-   @ResponseBody
-   @RequestMapping(value="allMemberList.fr", produces="application/json; charset=UTF-8")
-   public void selectFriendList(@RequestParam(value="cpage",defaultValue = "1") int currentPage,String memId){
-
-      //int allMemberList = fservice.allMemberList();
-	   int listCount = fService.listCount(memId);
-
-      PageInfo pi1 = new Pagination().getPageInfo(listCount, currentPage, 5, 5);
-      ArrayList<Member> myBfList1 = fService.selectFriendList(memId, pi1);
-      
+   
      
 		 
-      
-   }
-   
+
    @ResponseBody
    @RequestMapping("addFriend.fr")
    public String addFriend(String bfTaker, String bfGiver, HttpSession session) {
       Friend f = new Friend();
       f.setBfTaker(bfTaker);
       f.setBfGiver(bfGiver);
-
+      
       int result = fService.addFriend(f);
       if(result > 0){
          session.setAttribute("alert", "dff");
@@ -69,7 +59,10 @@ private FriendServiceImpl fService;
    @ResponseBody
    @RequestMapping("acceptFriend.fr")
    public String acceptFriend(String bfTaker, String bfGiver, HttpSession session){
-      Friend f = new Friend();
+   
+	   
+	   Friend f = new Friend();
+
       f.setBfGiver(bfGiver);
       f.setBfTaker(bfTaker);
 
@@ -138,18 +131,36 @@ private FriendServiceImpl fService;
       return "";
    }
 
+
+   //@ResponseBody
+  // @RequestMapping(value="allMemberList.fr", produces="application/json; charset=UTF-8")
+  // public ArrayList<Member> selectFriendList(String memId){
+
+       //int allMemberList = fService.allMemberList();
+      // int listCount = fService.listCount(memId);
+
+       //return fService.selectFriendList(memId);
+  // }
+
    @ResponseBody
    @RequestMapping(value = "searchMember.fr", produces = "application/json; charset=UTF-8")
-   public String searchMember(String search, HttpSession session) {
-      
-      
-      String memId = ((Member)session.getAttribute("loginMember")).getMemId();
-      
-      
-      ArrayList<Member> list  = fService.searchMember(search, memId);
-  
-      return new Gson().toJson(list);
-
-   }
-
+   public String searchMember(String search, String memId, HttpSession session) {
+	   
+	   
+	   System.out.println(search);
+       System.out.println(memId);
+       
+       ArrayList<Member> list  = fService.searchMember(search, memId);
+       System.out.println(list);
+      return new Gson().toJson(list);   
+      }
+  @ResponseBody
+  @RequestMapping(value = "allMemberList.fr" , produces="application/json; charset=UTF-8")
+  public String allMemberList(String memId){
+	 
+	  ArrayList<Member> list = fService.allMemberList(memId);
+	  
+	  return new Gson().toJson(list);
+  }
+   
 }

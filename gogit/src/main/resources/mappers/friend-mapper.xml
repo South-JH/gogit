@@ -2,19 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="friendMapper">
  <resultMap type="Friend" id="friendResultSet">
-   <result column="mem_id" property="memId"/>
-   <result column="git_nick" property="gitNick"/>
-   <result column="mem_token" property="memToken"/>
-   <result column="mem_intro" property="memIntro"/>
-   <result column="create_date" property="createDate"/>
-   <result column="status" property="status"/>
-   <result column="team" property="team"/>
-   <result column="team_status" property="teamStatus"/>
+    <result column="mem_no" property="memNo"/>
+	<result column="mem_id" property="memId"/>
+	<result column="git_nick" property="gitNick"/>
+	<result column="avatar_url" property="avatarUrl"/>
+	<result column="mem_token" property="memToken"/>
+	<result column="mem_intro" property="memIntro"/>
+	<result column="create_date" property="createDate"/>
+	<result column="status" property="status"/>
+	<result column="team" property="team"/>
+	<result column="team_status" property="teamStatus"/>
     <result column="bf_giver"  property="bfGiver"/>
     <result column="bf_taker"  property="bfTaker"/>
-   <!--   <result column="fStatus"  property="fStatus"/>-->
+    <result column="fStatus"  property="fStatus"/>
     <result column="request_date"  property="requestDate"/>
-   <result column="profile" property="profile"/>
+    <result column="iSent" property="iSent"/>
+	<result column="friSent" property="friSent"/>
+	<result column="user_no" property="userNo"/>
+	<result column="profile" property="profile"/>
  
  </resultMap>
  
@@ -25,8 +30,14 @@
      where bf_taker = #{memId} 
 
  </select>
+    <select id="allMemberList" resultMap="friendResultSet">
+        select * from member
+        where status = 'Y'
+        and mem_id != #{memId}
+        
+    </select>
   <select id="selectFriendList">
-  	
+     
   </select>
   
   <insert id="addFriend">
@@ -42,7 +53,7 @@
          (
            #{bfGiver}
          , #{bfTaker}
-         , 'Y'
+         , 'A'
          , default
          )
   </insert>
@@ -57,7 +68,7 @@
          )
          values
          (
-		   #{bfGiver}
+         #{bfGiver}
          , #{bfTaker}
          , 'Y'
          , default
@@ -98,37 +109,47 @@
      )
   </insert>
 
- <!--   <select id="selectFriendList" resultMap="friendResultSet">
+   <!--  <select id="selectFriendList" resultMap="friendResultSet">
     select *
       from member
-          left join 
+          left join
               (
-              select nvl(a.bf_taker, nvl(b.bf_giver, a.bf_taker)) mem_id, a.status ISent,b.status FriSent
+              select nvl(a.bf_taker, nvl(b.bf_giver, a.bf_taker)) user_no, a.status ISent,b.status FriSent
               from (select * from friend where bf_giver = #{memId}) a
               full outer join (select * from friend where bf_taker = #{memId}) b on (a.bf_taker = b.bf_giver)
               )
-          on (mem_id = mem_id )
+          on (user_no = mem_id )
       where status = 'Y' and mem_id != #{memId}
-        and mem_id != #{memId} 
+        and mem_id != #{memId}
         order by mem_id
- </select>-->
+ </select>--> 
 
 
   <select id="searchMember" resultMap="friendResultSet" parameterType="hashmap">
-          select *
-         from member
-             left join 
-                 (
-                 select nvl(a.bf_taker, nvl(b.bf_giver, a.bf_taker)) memId, nvl(a.status,0) ISent, nvl(b.status,0) FriSent
-                 from (select * from friend where bf_giver = #{memId}) a
-                 full outer join (select * from friend where bf_taker = #{memId}) b on (a.bf_taker = b.bf_giver)
-                 )
-             on (a.mem_id = b.mem_id)
-         where status = 'Y' 
-           and mem_id != #{memId}
-             and git_nick like '%' || #{search} || '%'
-         
- 
+ <!--  select *
+			 from member
+			    left join 
+			        (
+			        select nvl(a.bf_taker, nvl(b.bf_giver, a.bf_taker)) user_no, nvl(a.status,0) iSent, nvl(b.status,0) friSent
+			        from (select * from friend where bf_giver = #{memId}) a
+			        full outer join (select * from friend where bf_taker = #{memId}) b on (a.bf_taker = b.bf_giver)
+			        )
+			    on (mem_id = user_no)
+			where status = 'Y' 
+			  and mem_id != #{memId}
+	          and git_nick like '%' || #{search} || '%' -->
+  <!--   SELECT m.*, f.bf_taker
+FROM member m
+JOIN friend f ON m.mem_Id = f.bf_giver
+WHERE m.status = 'Y'
+  AND m.mem_Id != #{memId}
+  AND m.git_nick LIKE '%' || #{search} || '%'-->
+
+        select * from member
+      where status = 'Y'
+      and mem_Id != #{memId}
+      and git_nick like '%' || #{search} || '%'
+      order by mem_Id
  </select>
  
   
