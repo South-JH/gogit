@@ -6,6 +6,78 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+.cont-select {
+    position: relative;
+    width: 200px;
+}
+
+.btn-select {
+	width: 100%;
+    padding: 13px 30px 13px 14px;
+    font-size: 12px;
+    line-height: 14px;
+    background-color: #fff;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    /* 말줄임 */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.btn-select:hover, .btn-select:focus {
+    border: 1px solid #9B51E0;
+    outline: 3px solid #F8E4FF;
+}
+
+.list-member {
+    display: none;
+    position: absolute;
+    width: 100%;
+    top: 49px;
+    left: 0;
+    border: 1px solid #C4C4C4;
+    box-sizing: border-box;
+    box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+.btn-select.on {
+    background: url("images/icon-Triangle-up.png") center right 14px no-repeat;
+}
+
+.btn-select.on+.list-member {
+    display: block;
+}
+
+.list-member li {
+    height: 40px;
+    padding: 5px 8px;
+    box-sizing: border-box;
+}
+
+.list-member li button {
+    width: 100%;
+    padding: 7px 10px;
+    border: none;
+    background-color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: left;
+    /* 말줄임 */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.list-member li button:hover, .list-member li button:focus {
+    background-color: #F8E4FF;
+}
+</style>
 </head>
 <body>
 
@@ -92,12 +164,14 @@
 								<div class="create-repo-select-ignore">
 									<div>Add .gitignore</div>
 									<div>
-										<select name="" id="">
-											<option value="">Java</option>
-											<option value="">Spring</option>
-											<option value="">JavaScript</option>
-											<option value="">JQuery</option>
-										</select>
+										<article class="cont-select">
+											<select id="gitignore-area">
+											<%-- <c:forEach var="git" items="${gitignore}">
+												<option>${ git }</option>
+											</c:forEach> --%>
+												<%-- <option>${ gitignore }</option> --%>
+											</select>
+										</article>
 									</div>
 								</div>
 
@@ -129,6 +203,39 @@
 				}
 				
 			})
+		})
+		
+		$(document).ready(function(){
+			console.log(${ gitignore });
+			
+			let gitignore = ${ gitignore };
+			/* console.log(gitignore); */
+			/* console.log(gitignore.c); */
+			//console.log($("#gitignore-area"));
+			let gitignoreArea = $("#gitignore-area");
+			let value = "";
+			
+			for(let i in gitignore){
+// 				value += "<li><button>" + i + "</button></li>";
+ 				value += "<option>" + i + "</option>";
+				
+				console.log(gitignore[i].contents);
+			}
+			
+			gitignoreArea.html(value);
+			/*
+	        const btn = document.querySelector('.btn-select');
+	        const list = document.querySelector('.git-list');
+	        btn.addEventListener('click', () => {
+	            btn.classList.toggle('on');
+	        });
+	        list.addEventListener('click', (event) => {
+	            if (event.target.nodeName === "BUTTON") {
+	                btn.innerText = event.target.innerText;
+	                btn.classList.remove('on');
+	            }
+	        });
+			*/
 		})
 	</script>
 	

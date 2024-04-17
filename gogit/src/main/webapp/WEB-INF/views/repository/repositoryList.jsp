@@ -46,10 +46,7 @@
 							</div>
 							<div class="repo-create">
 								<div class="repo-btn">
-									<a>Language</a>
-								</div>
-								<div class="repo-btn">
-									<a>Sort</a>
+									<a>Type</a>
 								</div>
 								<div class="repo-create-btn">
 									<a class="repo-create-btn-color" href="enrollForm.rp">New</a>
@@ -58,178 +55,49 @@
 	          			</div>
 
 						<!-- 목록 시작 -->
-	          			<div class="repo-list-wrap">
-							<div class="repo-list-area">
-								<div class="repo-list-one">
-									<div class="repo-list-one-area">
-										<div>
-											<img src="resources/images/repo-img.png" width="80px" height="80px">
-										</div>
-										<div class="repo-title-area">
-											<a href="detail.rp">
+						<div>
+							<c:forEach var="rpList" items="${ rpList }">
+			          			<div class="repo-list-wrap">
+									<div class="repo-list-area">
+										<div class="repo-list-one">
+											<div class="repo-list-one-area">
 												<div>
-													<h3>01_repository</h3>
+													<img src="resources/images/repo-img.png" width="80px" height="80px">
 												</div>
-											</a>
-											<div>에휴</div>
-											<div>Java &nbsp; JavaScript</div>
-										</div>
-										<div>
-											<div class="repo-public">
-												<div>Private</div>
+												<div class="repo-title-area">
+													<a href="detail.rp">
+														<div>
+															<h3>${ rpList.repoTitle }</h3>
+														</div>
+													</a>
+													<div>${ rpList.repoContent }</div>
+												</div>
+												<div>
+													<div class="repo-public">
+														<div>${ rpList.visibility }</div>
+													</div>
+												</div>
 											</div>
-										</div>
-									</div>
-									<div class="repo-other-area">
-										<div class="repo-other-img" onclick="openBtn(this);">
-											<img src="resources/images/menu-dots.png" width="20px" height="20px">
-										</div>
-										<div class="repo-other">
-											<div>
-												<a id="repo-other-a">수정</a>
-											</div>
-											<div>
-												<button type="button">초대</button>
-											</div>
-											<div>
-												<button type="button">삭제</button>
+											<div class="repo-other-area">
+												<div class="repo-other-img" onclick="openBtn(this);">
+													<img src="resources/images/menu-dots.png" width="20px" height="20px">
+												</div>
+												<div class="repo-other">
+													<div>
+														<a id="repo-other-a">수정</a>
+													</div>
+													<div>
+														<button type="button">초대</button>
+													</div>
+													<div>
+														<button type="button">삭제</button>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-						<!-- 목록 끝 -->
-
-						<!-- 목록 시작 -->
-						<div class="repo-list-wrap">
-							<div class="repo-list-area">
-								<div class="repo-list-one">
-									<div class="repo-list-one-area">
-										<div>
-											<img src="resources/images/repo-img.png" width="80px" height="80px">
-										</div>
-										<div class="repo-title-area">
-											<a href="">
-												<div>
-													<h3>01_repository</h3>
-												</div>
-											</a>
-											<div>에휴</div>
-											<div>Java &nbsp; JavaScript</div>
-										</div>
-										<div>
-											<div class="repo-public">
-												<div>Private</div>
-											</div>
-										</div>
-									</div>
-									<div class="repo-other-area">
-										<div class="repo-other-img" onclick="openBtn(this);">
-											<img src="resources/images/menu-dots.png" width="20px" height="20px">
-										</div>
-										<div class="repo-other">
-											<div>
-												<a id="repo-other-a">수정</a>
-											</div>
-											<div>
-												<button type="button">초대</button>
-											</div>
-											<div>
-												<button type="button">삭제</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 목록 끝 -->
-
-						<!-- 목록 시작 -->
-						<div class="repo-list-wrap">
-							<div class="repo-list-area">
-								<div class="repo-list-one">
-									<div class="repo-list-one-area">
-										<div>
-											<img src="resources/images/repo-img.png" width="80px" height="80px">
-										</div>
-										<div class="repo-title-area">
-											<a href="">
-												<div>
-													<h3>01_repository</h3>
-												</div>
-											</a>
-											<div>에휴</div>
-											<div>Java &nbsp; JavaScript</div>
-										</div>
-										<div>
-											<div class="repo-public">
-												<div>Private</div>
-											</div>
-										</div>
-									</div>
-									<div class="repo-other-area">
-										<div class="repo-other-img" onclick="openBtn(this);">
-											<img src="resources/images/menu-dots.png" width="20px" height="20px">
-										</div>
-										<div class="repo-other">
-											<div>
-												<a id="repo-other-a">수정</a>
-											</div>
-											<div>
-												<button type="button">초대</button>
-											</div>
-											<div>
-												<button type="button">삭제</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- 목록 끝 -->
-
-						<!-- 목록 시작 -->
-						<div class="repo-list-wrap">
-							<div class="repo-list-area">
-								<div class="repo-list-one">
-									<div class="repo-list-one-area">
-										<div>
-											<img src="resources/images/repo-img.png" width="80px" height="80px">
-										</div>
-										<div class="repo-title-area">
-											<a href="">
-												<div>
-													<h3>01_repository</h3>
-												</div>
-											</a>
-											<div>에휴</div>
-											<div>Java &nbsp; JavaScript</div>
-										</div>
-										<div>
-											<div class="repo-public">
-												<div>Private</div>
-											</div>
-										</div>
-									</div>
-									<div class="repo-other-area">
-										<div class="repo-other-img" onclick="openBtn(this);">
-											<img src="resources/images/menu-dots.png" width="20px" height="20px">
-										</div>
-										<div class="repo-other">
-											<div>
-												<a id="repo-other-a">수정</a>
-											</div>
-											<div>
-												<button type="button">초대</button>
-											</div>
-											<div>
-												<button type="button">삭제</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							</c:forEach>
 						</div>
 						<!-- 목록 끝 -->
 
