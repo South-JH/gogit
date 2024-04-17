@@ -88,6 +88,12 @@ public class PrDao {
 	}
 
 
+	public ArrayList<Pr> prTopList(SqlSessionTemplate sqlSession) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("prMapper.prTopList");
+	}
+
+
 
 
 

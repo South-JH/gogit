@@ -106,6 +106,14 @@ public class PrServiceImpl implements PrService{
 
 
 
+	@Override
+	public ArrayList<Pr> prTopList() {
+		// TODO Auto-generated method stub
+		return pDao.prTopList(sqlSession);
+	}
+
+
+
 
 
 }

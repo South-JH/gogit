@@ -24,5 +24,5 @@ public interface PrService {
 	ArrayList<Pr> searchPr(HashMap<String, String> keyword, PageInfo pi);
 	int updateMyPr(Pr p);
 	int deleteMyPr(int prNo);
-	
+	ArrayList<Pr> prTopList();
 }

@@ -228,4 +228,22 @@
 		 where pr_no = #{prNo}
 	</update>
   
+  
+  	<select id="prTopList" resultMap="PrResult">
+  		select 
+		       *
+		  from (	select
+		  		       pr_no
+		  		     , pr_title
+		  		     , to_char(p.create_date,'yyyy-mm-dd') create_date
+		  		     , p.count
+		  		     , git_nick
+		  		  from my_pr p
+		  		  join member m
+		  		    on (p.mem_id = m.mem_id)
+		  		 where p.status = 'Y'
+		         order
+		            by p.count desc)
+		where rownum between 1 and 5
+  	</select>
 </mapper>

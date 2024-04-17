@@ -182,4 +182,13 @@ public class prListViewController {
 		return "redirect:/mypr.pr";
 	}
 	
+	@ResponseBody
+	@RequestMapping("prTop.mp")
+	public ArrayList<Pr> prTopList(Model model) {
+		ArrayList<Pr> list = prService.prTopList();
+
+		
+		return list;
+	}
+	
 }
