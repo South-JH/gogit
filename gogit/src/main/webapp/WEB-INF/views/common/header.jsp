@@ -8,20 +8,21 @@
 <title>Insert title here</title>
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
-	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
-	<!-- CSS -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
-	<!-- Default theme -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
-	<!-- Semantic UI theme -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+<!-- CSS -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<!-- Default theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+<!-- Semantic UI theme -->
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
 
 
 <link rel="shortcut icon" type="image/png" href="resources/images/logo/logo2.png" />
 <link rel="shortcut icon" type="image/png" href="resources/images/logos/favicon.png" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <link rel="stylesheet" href="resources/css/styles.min.css" />
+<link rel="stylesheet" href="resources/common/header.css" />
 <script src="resources/js/jquery.min.js"></script>
 <script src="resources/js/bootstrap.bundle.min.js"></script>
 <script src="resources/js/sidebarmenu.js"></script>
@@ -36,8 +37,6 @@
 		</script>
 		<c:remove var="alertMsg" scope="session"/>
 </c:if>
-
-
 </head>
 <body>
 
@@ -56,8 +55,8 @@
 
         <!--  Header Start -->
         <header class="app-header">
-          <nav class="navbar navbar-expand-lg navbar-light">
-            <ul class="navbar-nav">
+          <nav class="navbar navbar-expand-lg navbar-light" id="header-nav">
+            <ul class="navbar-nav" id="header-alarm">
               <li class="nav-item d-block d-xl-none">
                 <a
                   class="nav-link sidebartoggler nav-icon-hover"
@@ -78,16 +77,26 @@
               class="navbar-collapse justify-content-end px-0"
               id="navbarNav"
             >
+              <div>
+              	<div class="header-searchbar">
+              		<div>
+              			<i class="ti ti-search"></i>
+              		</div>
+              		<div>
+              			<input type="text" placeholder="What are you looking for?">
+              		</div>
+              	</div>
+              </div>
               <ul
                 class="navbar-nav flex-row ms-auto align-items-center justify-content-end"
               >
-                <a
+                <!-- <a
                   href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/"
                   target="_blank"
                   class="btn btn-primary"
                   >Download Free</a
-                >
-                <li class="nav-item dropdown">
+                > -->
+                <li class="nav-item dropdown" id="header-profile-img">
                   <a
                     class="nav-link nav-icon-hover"
                     href="javascript:void(0)"

@@ -16674,7 +16674,7 @@ fieldset:disabled .btn {
 }
 .body-wrapper {
   position: relative;
-  background: #f9f9ff;
+/*   background: #f9f9ff; */
 }
 .body-wrapper > .container-fluid,
 .body-wrapper > .container-lg,
@@ -16738,7 +16738,7 @@ fieldset:disabled .btn {
   }
   #main-wrapper[data-layout="vertical"][data-header-position="fixed"]
     .app-header {
-    width: calc(100% - 270px);
+	width: calc(100% - 270px);
   }
   #main-wrapper[data-layout="vertical"][data-sidebartype="full"] .body-wrapper {
     margin-left: 270px;

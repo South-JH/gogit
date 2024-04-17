@@ -56,15 +56,17 @@
 /* 버전2 */
 #repository-tab>div {
 	height: 50px;
+	width: 300px;
 	display: flex;
 	align-items: center;
-	background: white;
+	background: whitesmoke;
 	border: 1px solid #e6e6e6;
 	border-radius: 7px;
+	font-weight: 600;
 }
 
 #repository-tab a:hover {
-	color: black;
+	color: #3acdd5;
 }
 
 #repository-tab i {

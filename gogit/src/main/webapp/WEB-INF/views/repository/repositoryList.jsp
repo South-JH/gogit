@@ -41,7 +41,8 @@
 	          			<div class="bottom-area-wrap">
 	          				<div class="repo-search">
 	          					<div class="repo-search-div">
-	          						<input type="text">
+	          						<input type="text" placeholder="Search">
+	          						<i class="ti ti-search"></i>
 	          					</div>
 							</div>
 							<div class="repo-create">

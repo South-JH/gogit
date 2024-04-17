@@ -10,8 +10,12 @@ h2, h5 {
 	height: auto;
 }
 
-.repo-wrap>div {
+.repo-wrap>div, .repo-wrap>form {
 	padding: 25px 0px;
+	width: 100%;
+}
+
+form>div {
 	width: 100%;
 }
 

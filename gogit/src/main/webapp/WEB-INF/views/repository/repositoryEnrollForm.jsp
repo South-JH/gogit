@@ -102,8 +102,9 @@
 								<h2>New &nbsp; Repository</h2>
 							</div>
 						</div>
-
-						<div>
+						
+						<form action="create.rp">
+						<div class="repo-wrap-cotent">
 							<div class="bottom-area">
 								<div class="repo-name-desc">
 									<div class="create-repo-name-area">
@@ -115,7 +116,7 @@
 										</div>
 										<div>
 											<div class="create-repo-name-input">
-												<input type="text" id="repo-name-input">
+												<input type="text" id="repo-name-input" name="repoName">
 											</div>
 											<div>
 												사용할 레파지토리의 이름을 입력해주세요
@@ -127,7 +128,7 @@
 											<h5>Description</h5>
 										</div>
 										<div class="create-repo-name-input">
-											<input type="text">
+											<input type="text" name="repoDesc">
 										</div>
 									</div>
 								</div>
@@ -135,7 +136,7 @@
 								<div class="create-repo-select-public-area">
 									<div class="create-repo-select-public">
 										<div class="select-radio-input-div">
-											<input type="radio" name="public">
+											<input type="radio" name="visibility" value="false">
 										</div>
 										<div>
 											<img src="resources/images/book-open.png" width="20"
@@ -145,7 +146,7 @@
 									</div>
 									<div class="create-repo-select-public">
 										<div class="select-radio-input-div">
-											<input type="radio" name="public">
+											<input type="radio" name="visibility" value="true">
 										</div>
 										<div>
 											<img src="resources/images/lock.png" width="20" height="20">
@@ -156,7 +157,7 @@
 
 								<div class="create-repo-checkbox-area">
 									<div>
-										<input type="checkbox">
+										<input type="checkbox" name="readme" value="false">
 									</div>
 									<div>Add a README file</div>
 								</div>
@@ -177,11 +178,12 @@
 
 								<div class="create-repo-btn-area">
 									<div>
-										<button>CREATE</button>
+										<button type="submit">CREATE</button>
 									</div>
 								</div>
 							</div>
 						</div>
+						</form>
 					</div>
 				</div>
 			</div>

@@ -185,7 +185,7 @@
               </li>
             </ul>
             
-            <div
+            <!-- <div
               class="unlimited-access hide-menu bg-light-primary position-relative mb-7 mt-5 rounded"
             >
               <div class="d-flex">
@@ -208,7 +208,7 @@
                   />
                 </div>
               </div>
-            </div>
+            </div> -->
             
           </nav>
           <!-- End Sidebar navigation -->

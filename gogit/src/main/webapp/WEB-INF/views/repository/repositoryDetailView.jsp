@@ -42,6 +42,7 @@ h4 {
 	border-radius: 7px;
 	padding: 10px 30px;
 	height: 700px;
+	box-shadow: 0 0 6px rgba(0,0,0,0.03), 0 0 6px rgba(0,0,0,0.03);
 }
 
 /* 왼쪽컨텐츠 사이즈 */

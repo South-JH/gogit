@@ -59,13 +59,14 @@ public class RepositoryController {
         //System.out.println(rpList);
 		model.addAttribute("rpList", rpList);
 		model.addAttribute("repoList", repoList);
-         
+        
 		return "repository/repositoryList";
 	}
 	
 	@RequestMapping("enrollForm.rp")
 	public String repoEnrollForm(Model model) throws IOException {
 		
+		/* gitignore API */
 		String url ="https://www.toptal.com/developers/gitignore/api/list?format=json";
 		
 		URL requestUrl = new URL(url);
@@ -90,6 +91,30 @@ public class RepositoryController {
 		model.addAttribute("gitignore", gitignore);
 		
 		return "repository/repositoryEnrollForm";
+	}
+	
+	@RequestMapping("create.rp")
+	public void createRepo(HttpSession session, String repoName, String repoDesc, String visibility, String readme) {
+		/*
+		System.out.println(repoName);
+		System.out.println(repoDesc);
+		System.out.println(visibility);
+		System.out.println(readme);
+		*/
+		if(readme == null) {
+			readme = "true";
+		}
+		
+		//System.out.println(readme);
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		String createRepo = rService.createRepo(m, repoName, repoDesc, visibility, readme);
+		System.out.println("여기왔냐?"+createRepo);
+		
+		/*
+		JsonObject repoObj = JsonParser.parseString(createRepo).getAsJsonObject();
+		System.out.println(repoObj.getAsJsonObject().get("name").getAsString());
+		*/
 	}
 	
 	@RequestMapping("detail.rp")
