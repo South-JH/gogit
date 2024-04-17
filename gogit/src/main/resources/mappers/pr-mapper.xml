@@ -212,5 +212,11 @@
 		    by pr_no desc
 		       
 	</select>
+	
+	<update id="deleteMyPr">
+		update my_pr
+		   set status = 'N'
+		 where pr_no = #{prNo}
+	</update>
   
 </mapper>

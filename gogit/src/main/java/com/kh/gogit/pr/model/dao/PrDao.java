@@ -78,7 +78,7 @@ public class PrDao {
 
 	public int deleteMyPr(SqlSessionTemplate sqlSession, int prNo) {
 		// TODO Auto-generated method stub
-		return 0;
+		return sqlSession.update("prMapper.deleteMyPr",prNo);
 	}
 
 

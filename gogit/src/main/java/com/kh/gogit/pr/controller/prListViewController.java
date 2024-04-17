@@ -151,10 +151,16 @@ public class prListViewController {
 	}
 	
 	@RequestMapping("delete.mp")
-	public String deleteMyPr(int prNo) {
+	public String deleteMyPr(int prNo, Model model) {
 		int result = prService.deleteMyPr(prNo);
 		
-		return "";
+		if(result>0) {
+			model.addAttribute("alertMsg", "삭제 되었습니다.");
+		}else {
+			model.addAttribute("alertMsg", "삭제 실패했습니다.");
+		}
+		
+		return "redirect:/mypr.pr";
 	}
 	
 }
