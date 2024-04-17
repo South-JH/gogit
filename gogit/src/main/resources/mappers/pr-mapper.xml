@@ -47,7 +47,7 @@
 			   pr_no
 			 , pr_title
 			 , pr_content
-			 , p.create_date
+			 , to_char(p.create_date,'yyyy-mm-dd') as "create_date"
 			 , pr_time
 			 , p.status
 			 , p.stack_name

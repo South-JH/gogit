@@ -90,7 +90,7 @@
 		             		<tr>
 		             			<th width="30px"> NO </th>
 		             			<th width="300px"> 제목 </th>
-		             			<th width="50px"> ID </th>
+		             			<th width="50px"> 작성자 </th>
 		             			<th width="30px"> 조회수 </th>
 		             		</tr>
 	             		</thead>
@@ -113,6 +113,9 @@
     	$(function(){
     		
     		searchPr(1);
+    		setInterval(() => {
+    			searchPr(1);
+			}, 1000);
     	})
     	
     	

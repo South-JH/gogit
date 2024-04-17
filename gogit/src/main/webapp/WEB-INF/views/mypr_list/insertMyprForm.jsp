@@ -10,11 +10,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       #form-wrap form {
         margin-top: 50px;
       }
-      #stack-wrap{
-      	border: 1px solid gray;
-      	border-radius: 5px;
+      #stack-wrap {
+        border: 1px solid gray;
+        border-radius: 5px;
       }
-		
+
       #stack-wrap li {
         width: 120px;
         list-style-type: none;
@@ -94,14 +94,11 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     name="prTime"
                   />
                   <br /><br />
-             
-                  
-                 
+
                   <label>기술스택 - 아래에서 선택해주세요</label>
-                  <br><br>
+                  <br /><br />
                   <div id="stack-wrap">
-                  	
-                  	 <br>
+                    <br />
                     <div id="front-wrap">
                       <label>프론트엔드</label>
                       <div id="front">
@@ -120,39 +117,56 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                       <label>기타</label>
                       <div id="etc"><ul></ul></div>
                     </div>
-                 
                   </div>
-         			
-                  <br><br>
+
+                  <br /><br />
                   <div id="myStack-wrap">
                     <label>나의 스택</label>
                     <div id="myStack">
-						<label>프론트엔드</label>
-             				<ul id="myfront"></ul>
-             				<label>백엔드</label>
-             				<ul id="myback"></ul>
-             				<label>모바일</label>
-             				<ul id="mymobile"></ul>
-             				<label>기타</label>
-             				<ul id="myetc"></ul>
-					</div>
+                      <label>프론트엔드</label>
+                      <ul id="myfront"></ul>
+                      <label>백엔드</label>
+                      <ul id="myback"></ul>
+                      <label>모바일</label>
+                      <ul id="mymobile"></ul>
+                      <label>기타</label>
+                      <ul id="myetc"></ul>
+                    </div>
                   </div>
-                  
                 </div>
+
                 <input type="hidden" name="stackName" id="stackName" />
-                <input type="hidden" name="memId" id="memId" value="${ loginUser.memId }"/>
-				<br />
-				<br />
-				<br />
-				<br />
-				<br />
-			
+
+                <input
+                  type="hidden"
+                  name="memId"
+                  id="memId"
+                  value="${ loginUser.memId }"
+                />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+
                 <label for="prContent">PR내용</label>
-                <br><br>
-                <textarea class="form-control" name="prContent" id="prContent" cols="100" rows="10" placeholder="내용 입력" style="resize: none"></textarea>
+                <br /><br />
+                <textarea
+                  class="form-control"
+                  name="prContent"
+                  id="prContent"
+                  cols="100"
+                  rows="10"
+                  placeholder="내용 입력"
+                  style="resize: none"
+                ></textarea>
                 <div align="center">
-                <button class="btn btn-danger">등록하기</button>
-                <button id="reset" type="reset" class="btn btn-warning">취소하기</button>
+                  <button id="insertBtn" class="btn btn-danger">
+                    등록하기
+                  </button>
+                  <button id="reset" type="reset" class="btn btn-warning">
+                    취소하기
+                  </button>
                 </div>
               </form>
             </div>
@@ -174,8 +188,13 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       let eValue = "";
       $(function () {
         selectStack();
+        $("#stackName").val(stackArray);
+        if (stackArray.length == 0) {
+          $("#insertBtn").attr("disabled", true);
+        } else {
+          $("#insertBtn").attr("disabled", false);
+        }
 
-        
         $("#front>ul").on("click", "li", function () {
           if (stackArray.indexOf($(this).text()) == -1) {
             stackArray.push($(this).text());
@@ -183,6 +202,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             fValue += "<li>" + stackArray[stackArray.length - 1] + "</li>";
             $("#myfront").html(fValue);
             $("#stackName").val(stackArray);
+            if (stackArray.length != 0) {
+                $("#insertBtn").attr("disabled", false);
+              } 
           }
         });
         $("#back>ul").on("click", "li", function () {
@@ -192,6 +214,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             bValue += "<li>" + stackArray[stackArray.length - 1] + "</li>";
             $("#myback").html(bValue);
             $("#stackName").val(stackArray);
+            if (stackArray.length != 0) {
+                $("#insertBtn").attr("disabled", false);
+              } 
           }
         });
         $("#mobile>ul").on("click", "li", function () {
@@ -201,6 +226,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             mValue += "<li>" + stackArray[stackArray.length - 1] + "</li>";
             $("#mymobile").html(mValue);
             $("#stackName").val(stackArray);
+            if (stackArray.length != 0) {
+                $("#insertBtn").attr("disabled", false);
+              } 
           }
         });
         $("#etc>ul").on("click", "li", function () {
@@ -210,75 +238,83 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             eValue += "<li>" + stackArray[stackArray.length - 1] + "</li>";
             $("#myetc").html(eValue);
             $("#stackName").val(stackArray);
+            if (stackArray.length != 0) {
+                $("#insertBtn").attr("disabled", false);
+              } 
           }
         });
-        
-        
-		$("#myfront").on("click","li",function(){
-    		
-    		for(let i in stackArray){
-    			if(stackArray[i] == $(this).text()){
-    				stackArray.splice(i,1);
-    			}
-    		}
-    		$("#front>ul").append("<li>"+$(this).text()+"</li>");
-    		$(this).remove();
-    		fValue="";
-   
-    	})
-    	$("#myback").on("click","li",function(){
-    		
-    		for(let i in stackArray){
-    			if(stackArray[i] == $(this).text()){
-    				stackArray.splice(i,1);
-    			}
-    		}
-    		
-    		$("#back>ul").append("<li>"+$(this).text()+"</li>");
-    		$(this).remove();
-    		bValue="";
-    
-    	})
-    	$("#mymobile").on("click","li",function(){
-    		
-    		for(let i in stackArray){
-    			if(stackArray[i] == $(this).text()){
-    				stackArray.splice(i,1);
-    			}
-    		}
-    		$("#mobile>ul").append("<li>"+$(this).text()+"</li>");
-    		$(this).remove();
-    		mValue="";
 
-    	})
-    	$("#myetc").on("click","li",function(){
-    		
-    		for(let i in stackArray){
-    			if(stackArray[i] == $(this).text()){
-    				stackArray.splice(i,1);
-    			}
-    		}
-    		$("#etc>ul").append("<li>"+$(this).text()+"</li>");
-    		$(this).remove();
-    		eValue="";
+        $("#myfront").on("click", "li", function () {
+          for (let i in stackArray) {
+            if (stackArray[i] == $(this).text()) {
+              stackArray.splice(i, 1);
+            }
+          }
+          $("#front>ul").append("<li>" + $(this).text() + "</li>");
+          $(this).remove();
+          fValue = "";
+          $("#stackName").val(stackArray);
+          if (stackArray.length == 0) {
+              $("#insertBtn").attr("disabled", true);
+            } 
+        });
+        $("#myback").on("click", "li", function () {
+          for (let i in stackArray) {
+            if (stackArray[i] == $(this).text()) {
+              stackArray.splice(i, 1);
+            }
+          }
 
-    	})
-        
-        
-        
-        $("#reset").click(function(){
-        	$("#myStack>ul").children().remove();
-        	stackArray = [];
-        	fValue="";
-        	bValue="";
-        	mValue="";
-        	eValue="";
-        	front=[];
-        	back=[];
-        	mobile=[];
-        	etc=[];
-        	selectStack();
-        })
+          $("#back>ul").append("<li>" + $(this).text() + "</li>");
+          $(this).remove();
+          bValue = "";
+          $("#stackName").val(stackArray);
+          if (stackArray.length == 0) {
+              $("#insertBtn").attr("disabled", true);
+            } 
+        });
+        $("#mymobile").on("click", "li", function () {
+          for (let i in stackArray) {
+            if (stackArray[i] == $(this).text()) {
+              stackArray.splice(i, 1);
+            }
+          }
+          $("#mobile>ul").append("<li>" + $(this).text() + "</li>");
+          $(this).remove();
+          mValue = "";
+          $("#stackName").val(stackArray);
+          if (stackArray.length == 0) {
+              $("#insertBtn").attr("disabled", true);
+            }
+        });
+        $("#myetc").on("click", "li", function () {
+          for (let i in stackArray) {
+            if (stackArray[i] == $(this).text()) {
+              stackArray.splice(i, 1);
+            }
+          }
+          $("#etc>ul").append("<li>" + $(this).text() + "</li>");
+          $(this).remove();
+          eValue = "";
+          $("#stackName").val(stackArray);
+          if (stackArray.length == 0) {
+              $("#insertBtn").attr("disabled", true);
+            }
+        });
+
+        $("#reset").click(function () {
+          $("#myStack>ul").children().remove();
+          stackArray = [];
+          fValue = "";
+          bValue = "";
+          mValue = "";
+          eValue = "";
+          front = [];
+          back = [];
+          mobile = [];
+          etc = [];
+          selectStack();
+        });
       });
 
       function selectStack() {
@@ -331,8 +367,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           },
         });
       }
-      
-      
     </script>
   </body>
 </html>

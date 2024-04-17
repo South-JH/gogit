@@ -157,7 +157,7 @@
              		</table>
              		<div id="btn-wrap">
 	             		   	<button type="submit" class="btn btn-warning">수정하기</button>
-	             			<button type="reset" class="btn btn-danger" onclick="deletePr();">취소하기</button>
+	             			<button type="button" class="btn btn-danger" onclick="location.href='detail.mp?bno=${pr.prNo}'">취소하기</button>
 	             		</div>
 	             		
 					</form>
@@ -177,6 +177,7 @@
 	    	
     
     	$(function(){
+    		$("#stackName").val(stackArr);
     		selectStack();
     		let myPrTime = new Date('${pr.prTime}');
 
@@ -188,6 +189,7 @@
     		$("#myetc").html(myetc);
 
     	})
+    	
     	
     	
     	
