@@ -1,6 +1,7 @@
 package com.kh.gogit.pr.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.kh.gogit.common.model.vo.PageInfo;
 import com.kh.gogit.pr.model.dao.PrDao;
 import com.kh.gogit.pr.model.vo.Pr;
 import com.kh.gogit.pr.model.vo.Reply;
+import com.kh.gogit.pr.model.vo.Stack;
 
 @Service
 public class PrServiceImpl implements PrService{
@@ -26,11 +28,7 @@ public class PrServiceImpl implements PrService{
 		return pDao.selectListCount(sqlSession);
 	}
 
-	@Override
-	public ArrayList<Pr> selectPrList(PageInfo pi) {
-		
-		return pDao.selectPrList(sqlSession,pi);
-	}
+
 
 	@Override
 	public int increaseCount(int bno) {
@@ -67,5 +65,47 @@ public class PrServiceImpl implements PrService{
 		// TODO Auto-generated method stub
 		return pDao.deleteReply(sqlSession, rno);
 	}
+
+	@Override
+	public ArrayList<Stack> selectStack() {
+		// TODO Auto-generated method stub
+		return pDao.selectStack(sqlSession);
+	}
+
+	@Override
+	public int insertMyPr(Pr p) {
+		// TODO Auto-generated method stub
+		return pDao.insertMyPr(sqlSession,p);
+	}
+
+	@Override
+	public int selectSearchList(HashMap<String, String> keyword) {
+		// TODO Auto-generated method stub
+		return pDao.selectSearchList(sqlSession,keyword);
+	}
+
+	@Override
+	public ArrayList<Pr> searchPr(HashMap<String, String> keyword, PageInfo pi) {
+		// TODO Auto-generated method stub
+		return pDao.searchPr(sqlSession,keyword,pi);
+	}
+
+
+
+	@Override
+	public Pr selectMyPr(int prNo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public int deleteMyPr(int prNo) {
+		// TODO Auto-generated method stub
+		return pDao.deleteMyPr(sqlSession,prNo);
+	}
+
+
 
 }

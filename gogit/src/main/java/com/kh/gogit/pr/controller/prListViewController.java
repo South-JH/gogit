@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,7 @@ import com.kh.gogit.common.template.Pagination;
 import com.kh.gogit.pr.model.service.PrServiceImpl;
 import com.kh.gogit.pr.model.vo.Pr;
 import com.kh.gogit.pr.model.vo.Reply;
+import com.kh.gogit.pr.model.vo.Stack;
 
 @Controller
 public class prListViewController {
@@ -33,26 +35,7 @@ public class prListViewController {
 		
 		return "mypr_list/prListView";
 	}
-	
-	@ResponseBody
-	@RequestMapping("prList.pr")
-	public HashMap<String, Object> selectPrList(@RequestParam(value = "cpage",defaultValue = "1")int currentPage) {
-		
-		int listCount = prService.selectListCount();
-		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
-		
-		ArrayList<Pr> list = prService.selectPrList(pi);
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("pi", pi);
-		map.put("list", list);
-		
-		
-		
-		return map;
-	}
-	
+
 	
 	
 	@RequestMapping("detail.mp")
@@ -115,8 +98,63 @@ public class prListViewController {
 	
 	
 	
-	@RequestMapping("insertFrom.mp")
+	@RequestMapping("insertForm.mp")
 	public String insertMyprForm() {
-		return "insertMyprForm";
+		
+		
+		
+		return "mypr_list/insertMyprForm";
 	}
+	
+	@ResponseBody
+	@RequestMapping("select.st")
+	public ArrayList<Stack> selectStack(){
+		ArrayList<Stack> list = prService.selectStack();
+		return list;
+	}
+	
+	@RequestMapping("insert.mp")
+	public String insertMyPr(Pr p) {
+		int result = prService.insertMyPr(p);
+		return "mypr_list/prListView";
+	}
+	
+	@ResponseBody
+	@RequestMapping("search.mp")
+	public HashMap<String, Object> searchPr(@RequestParam(value="cpage", defaultValue = "1")int currentPage, String condition, String searchPr) {
+		HashMap<String, String> keyword = new HashMap<String, String>();
+		
+		keyword.put("condition", condition);
+		keyword.put("searchPr", searchPr);
+		
+		int listCount = prService.selectSearchList(keyword);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		
+		ArrayList<Pr> list = prService.searchPr(keyword,pi);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("pi", pi);
+		map.put("condition", condition);
+		map.put("searchPr", searchPr);
+
+		
+		return map;
+	}
+	
+	
+	@RequestMapping("updateForm.mp")
+	public String updateForm() {
+		
+		return "mypr_list/updateMyprForm";
+	}
+	
+	@RequestMapping("delete.mp")
+	public String deleteMyPr(int prNo) {
+		int result = prService.deleteMyPr(prNo);
+		
+		return "";
+	}
+	
 }
