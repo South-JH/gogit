@@ -16,7 +16,7 @@
     <result column="bf_taker"  property="bfTaker"/>
     <result column="fStatus"  property="fStatus"/>
     <result column="request_date"  property="requestDate"/>
-    <result column="iSent" property="iSent"/>
+    <result column="isent" property="isent"/>
 	<result column="friSent" property="friSent"/>
 	<result column="user_no" property="userNo"/>
 	<result column="profile" property="profile"/>
@@ -31,14 +31,41 @@
 
  </select>
     <select id="allMemberList" resultMap="friendResultSet">
-        select * from member
-        where status = 'Y'
+ <!-- select m.*, f.* 
+from member m
+join friend f on m.mem_Id = f.bf_taker
+where m.status = 'Y'
+ and m.mem_Id != #{memId} -->
+   select *
+      from member
+          left join
+              (
+              select nvl(a.bf_taker, nvl(b.bf_giver, a.bf_taker)) user_no, a.status isent,b.status FriSent
+              from (select * from friend where bf_giver = #{memId}) a
+              full outer join (select * from friend where bf_taker = #{memId}) b on (a.bf_taker = b.bf_giver)
+              )
+          on (user_no = mem_id )
+      where status = 'Y' and mem_id != #{memId}
         and mem_id != #{memId}
+
         
     </select>
-  <select id="selectFriendList">
-     
-  </select>
+	<select id="myFriendList" resultMap="friendResultSet">
+    select *
+		from member
+		    left join 
+		        (
+		        select nvl(a.bf_taker, nvl(b.bf_giver, a.bf_taker)) user_no, a.status isent,b.status friSent
+		        from (select * from friend where bf_giver = #{memId}) a
+		        full outer join (select * from friend where bf_taker = #{memId}) b on (a.bf_taker = b.bf_giver)
+		        )
+		    on (mem_id = user_no)
+		where status = 'Y' and mem_id != #{memId}
+        and user_no != #{memId} 
+	</select>
+
+
+
   
   <insert id="addFriend">
   insert
@@ -109,7 +136,7 @@
      )
   </insert>
 
-   <!--  <select id="selectFriendList" resultMap="friendResultSet">
+    <!--  <select id="selectFriendList" resultMap="friendResultSet">
     select *
       from member
           left join
@@ -122,34 +149,34 @@
       where status = 'Y' and mem_id != #{memId}
         and mem_id != #{memId}
         order by mem_id
- </select>--> 
+ </select>-->
 
 
-  <select id="searchMember" resultMap="friendResultSet" parameterType="hashmap">
- <!--  select *
+  <select id="searchMember" resultMap="friendResultSet" parameterType="hashMap">
+ select *
 			 from member
 			    left join 
 			        (
-			        select nvl(a.bf_taker, nvl(b.bf_giver, a.bf_taker)) user_no, nvl(a.status,0) iSent, nvl(b.status,0) friSent
+			        select nvl(a.bf_taker, nvl(b.bf_giver, a.bf_taker)) user_no, nvl(a.status,0) isent, nvl(b.status,0) friSent
 			        from (select * from friend where bf_giver = #{memId}) a
 			        full outer join (select * from friend where bf_taker = #{memId}) b on (a.bf_taker = b.bf_giver)
 			        )
 			    on (mem_id = user_no)
 			where status = 'Y' 
 			  and mem_id != #{memId}
-	          and git_nick like '%' || #{search} || '%' -->
-  <!--   SELECT m.*, f.bf_taker
-FROM member m
-JOIN friend f ON m.mem_Id = f.bf_giver
-WHERE m.status = 'Y'
-  AND m.mem_Id != #{memId}
-  AND m.git_nick LIKE '%' || #{search} || '%'-->
+	          and git_nick like '%' || #{search} || '%' 
+<!--  select m.*, f.*
+from member m
+join friend f on m.mem_Id = f.bf_taker
+where m.status = 'Y'
+ and m.mem_Id != #{memId}
+ and m.git_nick like '%' || #{search} || '%' -->
 
-        select * from member
+       <!--   select * from member
       where status = 'Y'
       and mem_Id != #{memId}
       and git_nick like '%' || #{search} || '%'
-      order by mem_Id
+      order by mem_Id -->
  </select>
  
   

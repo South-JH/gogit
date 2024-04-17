@@ -61,15 +61,16 @@ public ArrayList<Member> searchMember(String search, String memId,SqlSessionTemp
    }
 
 
-public ArrayList<Member> selectFriendList(String memId, SqlSessionTemplate sqlSession) {
-	// TODO Auto-generated method stub
-	return null;
-}
-
 
 public ArrayList<Member> allMemberList(String memId, SqlSessionTemplate sqlSession) {
 	
 	return (ArrayList)sqlSession.selectList("friendMapper.allMemberList", memId);
+}
+
+
+public ArrayList<Member> myFriendList(String memId, SqlSessionTemplate sqlSession) {
+	
+	return (ArrayList)sqlSession.selectList("friendMapper.myFriendList", memId);
 }
 
 

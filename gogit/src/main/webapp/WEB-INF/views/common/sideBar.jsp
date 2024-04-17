@@ -174,7 +174,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
-                  href="form.fr"
+                  href="form.fr?memId=${ loginUser.memId }"
                   aria-expanded="false"
                 >
                   <span>

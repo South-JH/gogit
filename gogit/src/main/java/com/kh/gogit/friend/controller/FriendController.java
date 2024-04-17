@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.kh.gogit.common.model.vo.PageInfo;
@@ -17,6 +19,7 @@ import com.kh.gogit.common.template.Pagination;
 import com.kh.gogit.friend.model.service.FriendServiceImpl;
 import com.kh.gogit.friend.model.vo.Friend;
 import com.kh.gogit.member.model.vo.Member;
+import com.microsoft.graph.callrecords.models.Session;
 import com.microsoft.graph.models.Request;
 
 
@@ -31,23 +34,13 @@ public class FriendController {
 private FriendServiceImpl fService;
 
 
-   @RequestMapping("form.fr")
-   public String friendForm() {
-      return "friend/friendForm";
-   }
-   
-   
-   
-     
-		 
-
    @ResponseBody
    @RequestMapping("addFriend.fr")
    public String addFriend(String bfTaker, String bfGiver, HttpSession session) {
-      Friend f = new Friend();
-      f.setBfTaker(bfTaker);
-      f.setBfGiver(bfGiver);
+      Friend f = new Friend(bfTaker, bfGiver);
+     
       
+      System.out.println(f);
       int result = fService.addFriend(f);
       if(result > 0){
          session.setAttribute("alert", "dff");
@@ -118,40 +111,15 @@ private FriendServiceImpl fService;
       return result > 0 ? "success" : "fail";
    }
 
-   @ResponseBody
-   @RequestMapping(value = "selectMyFriend.fr", produces="application/json; charset=UTF-8")
-   public String selectMyFriend(@RequestParam(value="cpage", defaultValue = "1") int currentPage,String memId, HttpSession session){
-
-      int listCount = fService.listCount(memId);
-
-      PageInfo pi2 = new Pagination().getPageInfo(listCount, currentPage, 5, 5);
-
-      ArrayList<Member> myBList = fService.selectFriendList(memId, pi2);
-
-      return "";
-   }
 
 
-   //@ResponseBody
-  // @RequestMapping(value="allMemberList.fr", produces="application/json; charset=UTF-8")
-  // public ArrayList<Member> selectFriendList(String memId){
-
-       //int allMemberList = fService.allMemberList();
-      // int listCount = fService.listCount(memId);
-
-       //return fService.selectFriendList(memId);
-  // }
 
    @ResponseBody
    @RequestMapping(value = "searchMember.fr", produces = "application/json; charset=UTF-8")
    public String searchMember(String search, String memId, HttpSession session) {
-	   
-	   
-	   System.out.println(search);
-       System.out.println(memId);
-       
+    
        ArrayList<Member> list  = fService.searchMember(search, memId);
-       System.out.println(list);
+  
       return new Gson().toJson(list);   
       }
   @ResponseBody
@@ -159,8 +127,23 @@ private FriendServiceImpl fService;
   public String allMemberList(String memId){
 	 
 	  ArrayList<Member> list = fService.allMemberList(memId);
-	  
+
 	  return new Gson().toJson(list);
   }
+  
+  @ResponseBody
+  @RequestMapping("form.fr")
+  public ModelAndView myFriendList(String memId, ModelAndView mv) {
+	  
+	  ArrayList<Member> friendList = fService.myFriendList(memId);
+	  
+	 mv.addObject("friendList",friendList).setViewName("friend/friendForm");
+	 
+	return mv;
+	  
+  }
+  
+
+  
    
 }

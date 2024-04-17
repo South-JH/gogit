@@ -144,7 +144,7 @@ h2 {
                 <h3>친구 관리</h3>
             </div>
             <div class="page-content">
-                <class class="row">
+               
 
                     <!-- 친구 목록 -->
                     <div class="UJ-col-12 col-lg-9 card" style="height: 700px; margin:auto;">
@@ -255,6 +255,7 @@ h2 {
 
 
                         <!--===================== 찐 친구 목록 =======================-->
+                       
                                 <table class="table mb-0" width="150%" align="center" id="mainTable">
                            
                                     <thead>
@@ -269,35 +270,16 @@ h2 {
                                     </thead>
                                     <tbody>
                                            <c:choose>
-                                     <c:when test="${not empty myBfList1 }">
-                                     
-                                         <c:forEach var = "f" items="${myBfList1 }">
-                                         
-                                        
-                                              <tr>
-                                              
+                                     <c:when test="${not empty friendList }">
+								    <c:forEach var = "f" items="${friendList }">                                                
+                                              <tr>                                              
                                                   <td class="text-bold-500" >&nbsp;&nbsp; ${f.memId }</td>
                                                   <td> ${ f.gitNick}</td>
                                                   <td class="text-bold-500">
-
-                                                  </td>
-
-                                                  <td>
-                                                    
-                                                      <button class="dropdown-toggle" type="button" class="dropdownMenuButton"
-                                                          data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                                                          style="border: 0; background-color: white; width: 40px; height: 40px;">
-                                                          ⁝
-                                                      </button>
-                                                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                      
-                                                   
-                                                        <c:choose>
-                                                     
+                                                  <c:choose>                                                 
                                                         <c:when test="${!empty f.memId  and f.isent eq 'Y' and f.friSent eq 'Y' }">
                                                            <button class='friendBTN' type='button' style='background-color:#edb2ed; '>친구</button>
-                                                        </c:when>
-                                                        
+                                                        </c:when>                                                  
                                                         <c:when test ="${empty f.memId}">
                                                            <button class='friendBTN' type='button' style='background-color:#5ce5cf; '>친구 아님</button>
                                                         </c:when>
@@ -327,12 +309,67 @@ h2 {
                                                   <button class='friendBTN' type='button' style='background-color:lightgray;'>친구 차단됨</button>                                                  
                                                          </c:when>
 
-                                                      </c:choose>
-                                                      
-                                               
-                                                 
-      
-                                                      </div>
+                                                      </c:choose>														
+                                                  </td>
+                                                  <td>                                                 
+                                                        
+		                                              
+		                                                <button class="dropdown-toggle" type="button" class="dropdownMenuButton"
+		                                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+		                                                    style="border: 0; background-color: white; width: 40px; height: 40px;">
+		                                                    ⁝
+		                                                </button>
+		                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+		                                                
+		                                             
+		                                                   <c:choose>
+		                                                   		<c:when test ="${f.userNo !=0 and f.isent eq 'Y' and f.friSent eq 'Y' }">
+			                                                   		<button class='dropdown-item' style='background-color:#f7f7f7;'    onclick='deleteFriend( ${f.memId }, ${loginUser.memId});'>친구 삭제</button> 
+		                                                	        <button class='dropdown-item' onclick="blockFriend(${f.memId } ,  ${loginUser.memId} , '${f.isent }' , '${f.friSent }' , ${f.userNo } );">친구 차단</button> 
+		                                                   		</c:when>
+		                                                   		
+		                                                   		<c:when test="${ f.userNo != 0 and f.isent eq 'A' and f.friSent eq null}">
+		                                                   			<button class='dropdown-item' onclick='cancleAddFriend( ${f.memId }  , ${loginUser.memId} );'>친구 요청 취소</button>
+		                                                   		</c:when>
+		                                                   		
+		                                                   		<c:when test="${f.userNo != 0 and f.isent eq null and f.friSent eq 'A'}">
+			                                                   		<button class='dropdown-item' onclick='acceptFriend( ${f.memId } , ${loginUser.memId} );'>친구 수락</button> 
+	                                                                <button class='dropdown-item' onclick='refuseFriend( ${f.memId } , ${loginUser.memId} );'>친구 거절</button> 
+		                                                   		</c:when>
+		                                                   		
+		                                                   		<c:when test="${f.userNo != 0 and f.isent eq 'D' and (f.friSent eq 'A' or f.friSent eq 'Y' or f.friSent eq null )}">
+			                                                   		<button class='dropdown-item' onclick='cancleRefuseFriend(${f.memId }, ${loginUser.memId} );'>친구 차단 취소</button>
+		                                                   		</c:when>
+		                                                   		
+		                                                   		
+		                                                   		<c:when test="${f.userNo != 0 and f.isent eq 'B' and f.friSent eq 'A' }">
+				                                                   	<button class='dropdown-item' onclick="cancleRefuseFriend(${f.memId }, ${loginUser.memId} );">친구 거절 취소</button> 
+		                                                		    <button class='dropdown-item' onclick="blockFriend(${f.memId },  ${loginUser.memId} , '${f.isent }', '${f.friSent }', ${f.userNo });">친구 차단</button>
+		                                                   		</c:when>
+		                                                   		
+		                                                   		
+		                                                   		<c:when test="${f.userNo != 0 and( f.isent eq 'B' or f.isent eq null or f.isent eq 'A' or f.isent eq 'Y')and f.friSent eq 'D' }">
+				                                                   	<button class='dropdown-item' type='button'> ${ f.gitNick}  님이 회원님을 차단했습니다. </button> 
+		                                                   		</c:when>
+		                                                   		
+		                                                   		<c:when test="${f.userNo != 0 and  f.isent eq 'A' and f.friSent eq 'B' }">
+				                                                   	<button class='dropdown-item' type='button' style='background-color:#f7f7f7;' >${ f.gitNick}  님이 친추 요청을 거절했습니다. </button>
+		                                                   		</c:when>
+		                                                   		
+		                                                   		<c:otherwise>
+			                                                   		<button class='dropdown-item' style='border:0;' onclick="(${f.memId} ,${loginUser.memId});" >친구 추가</button> 
+		                                                            <button class='dropdown-item' style='border:0;' onclick="blockFriend(  ${f.memId }  ,  ${loginUser.memId}, ' ${f.isent }', '${f.friSent }' , ${f.userNo });">친구 차단</button> 
+		                                                   		</c:otherwise>
+
+		                                                   </c:choose>
+		                                                
+		                                         
+		                                           
+		
+		                                                </div>
+		
+		
+		                                            
       
       
                                                   </td>
@@ -440,6 +477,7 @@ h2 {
                        $("#selectFriBTN").click(function(){
                          	
                            selectAllFriend();
+                         
                         });
                         
                      
@@ -463,7 +501,7 @@ h2 {
                           			if(list.length != 0){
 	                            			for(let i in list){
 	                            				
-	                            			  console.log(list[i].friSent + "   : 친구상태태탵")
+	                            			  console.log(list[i].userNo + "   : 친구상태태탵")
 	                            				
 	                            				value += "<tr>"
 	                                             	  + "<td >" + list[i].memId +"</td>"
@@ -473,7 +511,7 @@ h2 {
 	                                                  + "<td class='text-bold-500' >"
 	                                              
 	                                                 
-			                            				if(list[i].userNo != 0 && list[i].status == 'Y' && list[i].friSent == 'Y'){
+			                            				if(list[i].userNo != 0 && list[i].isent == 'Y' && list[i].friSent == 'Y'){
 			                            					// 나와 친구일 때
 			                            					
 		                                                  	value += "<button class='friendBTN' type='button' style='background-color:#edb2ed; '>친구</button>"
@@ -558,11 +596,11 @@ h2 {
 	                                                	  value += "<button class='dropdown-item' onclick='cancleRefuseFriend(" + list[i].memId + "," + ${loginUser.memId} + ",&#39;" + list[i].friSent +"&#39;" +");'>친구 거절 취소</button> "
 	                                                		    + "<button class='dropdown-item' onclick='blockFriend(" + list[i].memId  +"," +  ${loginUser.memId} + ",&#39;" +list[i].isent + "&#39;,&#39;" + list[i].friSent + "&#39;," + list[i].memId    + ");'>친구 차단</button> "
                                                         
-                                                    }else if(list[i].userNo != 0 && (list[i].isent == null || list[i].isent == 'B' || list[i].isent == 'A' || list[i].isent == 'Y') && list[i].friSent == 'D' ){
+                                                    }else if(list[i].userNo != 0 && (list[i].iSent == null || list[i].isent == 'B' || list[i].isent == 'A' || list[i].isent == 'Y') && list[i].friSent == 'D' ){
                                                   	  // 친구가 날 차단했을 때 아무것도 없음 
                                                   	   value += "<button class='dropdown-item' type='button'>" + list[i].gitNick + " 님이 회원님을 차단했습니다. </button> "
                                                   	  
-                                                    }else if(list[i].userNo != 0 && list[i].isent == 'A'  && list[i].friSent == 'B'){
+                                                    }else if(list[i].userNo != 0 && list[i].iSent == 'A'  && list[i].friSent == 'B'){
                                                   	  // 친구가 내 친추를 거절했을 때 아무것도 없음 
                                                  	   value += "<button class='dropdown-item' type='button' style='background-color:#f7f7f7;' >" + list[i].gitNick + " 님이 친추 요청을 거절했습니다. </button> "
                                                  	  
@@ -817,7 +855,7 @@ h2 {
                                   data:{
                                      bfTaker:memId,
                                      bfGiver:login,
-                                     ISent : ISent,
+                                     ISent : isent,
                                      FriSent: FriSent,
                                      userNo : userNo
                                   },
@@ -898,7 +936,7 @@ h2 {
                                         if(list.length != 0){
                                            for(let i in list){
                                               
-                                        	   console.log(list[i].fStatus + "   : 친구상태태탵")
+                                        	   console.log(list[i].userNo + "   : 친구상태태탵")
                                               
                                               value += "<tr>"
                                                         + "<td >" + list[i].memId +"</td>"
@@ -906,7 +944,7 @@ h2 {
                                                         
                                                         
                                                         + "<td class='text-bold-500' >"
-                                                    
+                                                    	  
                                                         if(list[i].userNo != 0 && list[i].isent == 'Y' && list[i].friSent == 'Y'){
 			                            					// 나와 친구일 때
 			                            					
@@ -934,10 +972,9 @@ h2 {
 		                                                	
 		                                                  }else if(list[i].userNo != 0 && list[i].isent == 'A'  && list[i].friSent == 'B'){
 		                                                	  // 친구가 내 친추 거절했을 때
-		                                                	  
-		                                                	value +=  "<button class='friendBTN' type='button'  style='background-color:#ff033e;'>친구 거절됨</button>"
+		                                                	value += "<button class='friendBTN' type='button'  style='background-color:#ff033e;'>친구 거절됨</button>"
 		                                                	
-		                                                  } else if(list[i].userNo != 0 && list[i].isent == 'D' && (list[i].friSent == 'A' || list[i].friSent == 'Y' || list[i].friSent == null)){
+		                                                  } else if(list[i].userNo != 0 && list[i].isent == 'D' && (list[i].friSent == 'A' || list[i].friSent == 'Y' || list[i].friSent ==0 || list[i].friSent == null )){
 		                                                	  // 내가 친구 차단했을 때
 		                                                	  
 		                                                	value +=  "<button class='friendBTN' type='button' style='background-color:lightgray;'>친구 차단함</button>" 
@@ -966,22 +1003,22 @@ h2 {
 	                                                	  // &#39; 는 '이걸 의미함, 이렇게 작성안하고 'list[i].ISent' 이런식으로 하면 이 값을 컴터가 못알아챔... 바보들...
 	                                                	  
 	                                                	  value += "<button class='dropdown-item' style='background-color:#f7f7f7;'    onclick='deleteFriend("+ list[i].memId + "," + ${loginUser.memId}  +");'>친구 삭제</button> "
-	                                                	        + "<button class='dropdown-item' onclick='blockFriend(" + list[i].memId  +"," +  ${loginUser.memId} + ",&#39;" + list[i].ISent + "&#39;,&#39;" + list[i].FriSent + "&#39;," + list[i].userNo  + ");'>친구 차단</button> "
+	                                                	        + "<button class='dropdown-item' onclick='blockFriend(" + list[i].memId  +"," +  ${loginUser.memId} + ",&#39;" + list[i].isent + "&#39;,&#39;" + list[i].FriSent + "&#39;," + list[i].userNo  + ");'>친구 차단</button> "
 	                                                  
 	                                                  }else if(list[i].userNo != 0 && list[i].isent == 'A' && list[i].friSent == null ){
 	                                                	  // 친구 요청보냈을 때 친구 요청취소
 	                                                	  
 	                                                	  value += "<button class='dropdown-item' onclick='cancleAddFriend("+ list[i].memId  + "," + ${loginUser.memId}  + ");'>친구 요청 취소</button> "
 													
-                                                                
+	                                                	 
                                                          
-                                                      }else if(list[i].userNo != 0 && list[i].isent == null  && list[i].friSent == 'A'){
+                                                      }else if(list[i].userNo != 0 && list[i].iSent == null  && list[i].friSent == 'A'){
                                                     	  // 친구 요청왔을 때 친구 수락하거나 친구 거절하거나
                                                     	  
 	                                                	  value += "<button class='dropdown-item' onclick='acceptFriend(" + list[i].memId + "," + ${loginUser.memId} + ");'>친구 수락</button> "
                                                                  + "<button class='dropdown-item' onclick='refuseFriend(" + list[i].memId + "," + ${loginUser.memId} + ");'>친구 거절</button> "
                                                           
-                                                      }else if(list[i].userNo != 0 && list[i].isent == 'D' && (list[i].friSent == 'A' || list[i].friSent == 'Y' || list[i].friSent == null)){
+                                                      }else if(list[i].userNo != 0 && list[i].iSent == 'D' && (list[i].friSent == 'A' || list[i].friSent == 'Y' || list[i].friSent == null)){
                                                     	  // 친구 차단했을 때
                                                     	  
 	                                                	  value += "<button class='dropdown-item' onclick='cancelRefuseFriend(" + list[i].memId + "," + ${loginUser.memId} + ");'>친구 차단 취소</button> "
@@ -993,7 +1030,7 @@ h2 {
 	                                                	  value += "<button class='dropdown-item' onclick='cancelRefuseFriend(" + list[i].memId + "," + ${loginUser.memId} + ");'>친구 거절 취소</button> "
 	                                                		    + "<button class='dropdown-item' onclick='blockFriend(" + list[i].memId  +"," +  ${loginUser.memId} + ",&#39;" + list[i].ISent + "&#39;,&#39;" + list[i].FriSent + "&#39;," + list[i].userNo     + ");'>친구 차단</button> "
                                                           
-                                                      }else if(list[i].userNo != 0 && (list[i].isent == null || list[i].isent == 'B' || list[i].isent == 'A' || list[i].isent == 'Y') && list[i].friSent == 'D' ){
+                                                      }else if(list[i].userNo != 0 && (list[i].isent == null || list[i].isent == 'B' || list[i].iSent == 'A' || list[i].isent == 'Y') && list[i].friSent == 'D' ){
                                                     	  // 친구가 날 차단했을 때 아무것도 없음 
                                                     	   value += "<button class='dropdown-item' type='button'>" + list[i].gitNick + " 님이 회원님을 차단했습니다. </button> "
                                                     	  
@@ -1005,7 +1042,7 @@ h2 {
 	                                                	  // 친구가 아닐 때 친추보내거나, 차단하거나
 	                                                	  
 	                                                	  value += "<button class='dropdown-item' style='border:0;' onclick='addFriend(" + list[i].memId +"," + ${loginUser.memId} + ");' >친구 요청</button> "
-	                                                            + "<button class='dropdown-item' style='border:0;' onclick='blockFriend(" + list[i].memId  +"," +  ${loginUser.memId} + ",&#39;" + list[i].ISent + "&#39;,&#39;" + list[i].FriSent + "&#39;," + list[i].userNo    + ");'>친구 차단</button> "
+	                                                            + "<button class='dropdown-item' style='border:0;' onclick='blockFriend(" + list[i].memId  +"," +  ${loginUser.memId} + ",&#39;" + list[i].iSent + "&#39;,&#39;" + list[i].FriSent + "&#39;," + list[i].userNo    + ");'>친구 차단</button> "
 	                                               
                                                       }
 	                                                  + "</div>"

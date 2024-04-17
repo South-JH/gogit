@@ -22,7 +22,7 @@
 	color: gray;
 	margin: 20px 0;
 	padding: 10px;
-	font-size: 18px;
+	font-size: 16px;
 }
 
 #repository-tab>div {
@@ -31,7 +31,7 @@
 }
 
 /* 버전1 */
-#repository-tab>div>div {
+/* #repository-tab>div>div {
 	height: 40px;
 	display: flex;
 	align-items: center;
@@ -51,10 +51,10 @@
 	border: 1px solid #e6e6e6;
 	border-radius: 7px;
 	padding: 5px 10px;
-}
+} */
 
 /* 버전2 */
-/* #repository-tab>div {
+#repository-tab>div {
 	height: 50px;
 	display: flex;
 	align-items: center;
@@ -69,7 +69,7 @@
 
 #repository-tab i {
 	padding-right: 5px;
-} */
+} 
 </style>
 </head>
 <body>

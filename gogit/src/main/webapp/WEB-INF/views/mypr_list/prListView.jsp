@@ -12,6 +12,15 @@
    			 align-items: center;
    		 	justify-content: center;
 		}
+		#searchForm{
+			margin-left: 300px
+		}
+		#searchForm *{
+			float: left;
+		}
+		#searchPr{
+			width: 300px
+		}
 		.row>div{
 			margin-top: 50px
 		}
@@ -21,11 +30,16 @@
 		}
 		.table>tbody>tr {
 			text-align: center;
+			cursor: pointer;
+		}
+		.table>tbody>tr:hover{
+			background-color: rgb(13, 110, 253);
 		}
 		
 		.pagination>li{
 			cursor: pointer;
 		}
+		
 		
 		
 	</style>
@@ -56,6 +70,21 @@
              
              	<div>
              		<h3 class="display-5" align="center">PR</h3>
+             		<div id="searchForm" class="form-group">	        
+		             		<div class="select">
+			                    <select id="condition" class="form-select" name="condition" onchange="searchPr();">
+			                        <option value="writer">작성자</option>
+			                        <option value="title">제목</option>
+			                        <option value="content">내용</option>
+			                    </select>
+			                </div>
+			                <div id="input-wrap">
+		             			<input id="searchPr" type="text" name="searchPr" class="form-control" onkeyup="searchPr();" value="${ searchPr }">
+		             		</div>
+		             		<!-- <button type="button" class="searchBtn btn btn-primary"  onclick="searchPr(1);">검색</button> -->
+	             		
+             		</div>
+             		<button class="btn btn-sm btn-primary" style="float: right;" onclick="location.href='insertForm.mp'">나의 PR 등록</button>
 	             	<table class="table">
 	             		<thead>
 		             		<tr>
@@ -81,28 +110,36 @@
     </div>
     
     <script>
-    
     	$(function(){
-    		page(1)
+    		
+    		searchPr(1);
     	})
     	
-    	function page(cpage){
+    	
+    	function detail(data){
+    		location.href="detail.mp?bno="+$(data).children().eq(0).text();
+    	}
+    	
+    	function searchPr(cpage){
     		$.ajax({
-    			url:"prList.pr",
+    			url:"search.mp",
     			data:{
-    				cpage:cpage
+    				condition:$("#condition").val(),
+    				searchPr:$("#searchPr").val(),
+    				cpage:cpage,
     			},
     			success:function(data){
     				
-    				// pr 리스트 가져오기
-    				let list = "";
-    			
+    				$(".table>tbody").children().remove();
+    				$(".pagination").children().remove();
     				
+					let list = "";
+
     				for(let i in data.list){
-    					list+="<tr>"
+    					list+="<tr onclick='detail(this);'>"
     							+"<td>"+data.list[i].prNo+"</td>"
     							+"<td>"+data.list[i].prTitle+"</td>"
-    							+"<td>"+data.list[i].memId+"</td>"
+    							+"<td>"+data.list[i].gitNick+"</td>"
     							+"<td>"+data.list[i].count+"</td>"
     						+"</tr>"
     				}
@@ -113,7 +150,7 @@
     				let page = "";
     				
     				for(let i=data.pi.startPage;i<=data.pi.endPage;i++){
-    					page += "<li class='page-item'><a class='page-link' onclick='page("+i+")'>"+i+"</a></li>"
+    					page += "<li class='page-item'><a class='page-link' onclick='searchPr("+i+")'>"+i+"</a></li>"
     				}
     				
     				
@@ -121,7 +158,7 @@
     				if(data.pi.currentPage == 1){
     					pagebtn+="<li class='page-item disabled'><a class='page-link'>이전</a></li>"
     				}else{
-    					pagebtn+="<li class='page-item'><a class='page-link' onclick='page("+(data.pi.currentPage-1)+")'>이전</a></li>"
+    					pagebtn+="<li class='page-item'><a class='page-link' onclick='searchPr("+(data.pi.currentPage-1)+")'>이전</a></li>"
     				}
     				
     				pagebtn+=page;
@@ -129,19 +166,20 @@
     				if(data.pi.currentPage == data.pi.endPage){
     					pagebtn+="<li class='page-item disabled'><a class='page-link'>다음</a></li>"
     				}else{
-    					pagebtn+="<li class='page-item'><a class='page-link' onclick='page("+(data.pi.currentPage+1)+")'>다음</a></li>"
+    					pagebtn+="<li class='page-item'><a class='page-link' onclick='searchPr("+(data.pi.currentPage+1)+")'>다음</a></li>"
     					
     				}
 					
 		    		$(".pagination").html(pagebtn);		
-    				
-    				
     			},
     			error:function(){
-    				
+    				console.log("실패")
     			}
+    			
     		})
     	}
+    	
+
     
     </script>
 </body>

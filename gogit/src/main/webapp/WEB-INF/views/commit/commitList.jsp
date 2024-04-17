@@ -231,7 +231,7 @@ thead {
 				<!--  Row 1 -->
 				<div class="row">
 
-					<jsp:include page="repositoryTab.jsp" />
+					<jsp:include page="../repository/repositoryTab.jsp" />
 
 					<div class="repo-wrap">
 						<div>

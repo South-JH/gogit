@@ -59,10 +59,9 @@ public class FriendServiceImpl implements FriendService {
 
 	}
 
-	@Override
-	public ArrayList<Member> selectFriendList(String memId, PageInfo pi) {
-		return fDao.selectFriendList(memId, sqlSession);
-	}
+	
+
+
 
 	@Override
 	public ArrayList<Member> searchMember(String search, String memId) {
@@ -74,5 +73,13 @@ public class FriendServiceImpl implements FriendService {
 
 		return fDao.allMemberList(memId, sqlSession);
 	}
+
+	public ArrayList<Member> myFriendList(String memId) {
+		
+		return fDao.myFriendList(memId, sqlSession);
+	}
+
+
+	
 
 }

@@ -12,8 +12,27 @@
 		<result column="stack_name" property="stackName"/>
 		<result column="mem_id" property="memId"/>
 		<result column="count" property="count"/>
+		<result column="git_nick" property="gitNick"/>
 	</resultMap>
 	
+	
+	<resultMap type="Reply" id="ReplyResult">
+		<result column="reply_no" property="replyNo" />
+		<result column="mem_id" property="memId" />
+		<result column="rep_content" property="repContent" />
+		<result column="ref_pro" property="refPrNo" />
+		<result column="rep_date" property="repDate" />
+		<result column="status" property="status" />
+		<result column="git_nick" property="gitNick"/>
+	</resultMap>
+	
+	<resultMap type="Stack" id="StackResult">
+		<result column="stack_no" property="stackNo" />
+		<result column="stack_type" property="stackType" />
+		<result column="stack_name" property="stackName" />
+		<result column="stack_img" property="stackImg" />
+	</resultMap>
+
 
 	
 	<select id="selectListCount" resultType="_int">
@@ -28,16 +47,176 @@
 			   pr_no
 			 , pr_title
 			 , pr_content
-			 , create_date
+			 , p.create_date
 			 , pr_time
-			 , status
-			 , stack_name
-			 , mem_id
+			 , p.status
+			 , p.stack_name
+			 , p.mem_id
 			 , count
-		  from my_pr
-		 where status='Y'
+			 , git_nick
+		  from my_pr p
+		  join member m
+		    on (p.mem_id = m.mem_id)
+		 where p.status='Y'	
 		 order 
 		    by pr_no desc
 	</select>
+	
+	<update id="increaseCount">
+		update my_pr
+		   set count=count+1
+		 where pr_no = #{bno}
+		   and status = 'Y'
+	</update>
+	
+	<select id="prdetailView" resultMap="PrResult">
+		select
+			   pr_no
+			 , pr_title
+			 , pr_content
+			 , to_char(p.create_date,'yyyy-mm-dd') as "create_date"
+			 , p.stack_name
+			 , p.mem_id
+			 , git_nick
+			 , to_char(pr_time,'yyyy-mm-dd') as "pr_time"
+	      from my_pr p
+	      join member m on(p.mem_id = m.mem_id)
+	     where pr_no = #{bno}
+	       and p.status='Y'
+
+	</select>
+	
+	<select id="memberProfile" resultType="string">
+	select
+		   profile
+	  from member
+	 where mem_id=#{memId}
+	</select>
+	
+	<insert id="insertReply">
+		insert
+		  into reply
+		  	(
+		  	  reply_no
+		  	, mem_id
+		  	, rep_content
+		  	, ref_pro
+		  	, rep_date
+		  	)
+		 values
+		 	(
+		 	  seq_reno.nextval
+		 	, #{memId}
+		 	, #{repContent}
+		 	, #{refPrNo}
+		 	, sysdate
+		 	)
+	</insert>
+	
+	<select id="selectReply" resultMap="ReplyResult">
+		select
+		       reply_no
+		     , git_nick
+		     , r.mem_id
+		     , rep_content
+		     , ref_pro
+		     , to_char(rep_date,'yyyy-mm-dd') as "rep_date"
+		     , r.status
+		  from reply r
+		  join member m
+			on (r.mem_id = m.mem_id)
+		 where r.status='Y'
+		   and ref_pro = #{bno}
+		 order
+		    by reply_no desc
+
+	</select>
+	
+	<update id="deleteReply">
+		update reply
+		   set status = 'N'
+		 where reply_no = #{rno}
+	</update>
+	
+	<select id="selectStack" resultMap="StackResult">
+		select 
+			   stack_no
+			 , stack_type
+			 , stack_name
+			 , stack_img
+		  from stack	
+	</select>
+	
+	<insert id="insertMyPr">
+		insert 
+		  into my_pr
+		   (
+		   	  pr_no
+		   	, pr_title
+		   	, pr_content
+		   	, pr_time
+		   	, stack_name
+		   	, mem_id
+		   )
+		   values
+		   (
+		   	  seq_mpno.nextval
+		   	, #{prTitle}
+		   	, #{prContent}
+		   	, #{prTime}
+		   	, #{stackName}
+		   	, #{memId}
+		   )
+	   
+	</insert>
+	
+	<select id="selectSearchList" resultType="_int">
+		select 
+		       count(*)
+		  from my_pr p
+		  join member m
+		    on (p.mem_id = m.mem_id)
+		 where p.status='Y'
+		   <choose>
+			<when test="condition=='writer'"> and git_nick </when>
+			<when test="condition=='title'"> and pr_title </when>
+			<otherwise> and pr_content </otherwise>
+		</choose>
+			like '%' || #{searchPr} || '%'
+	</select>
+	
+	
+	<select id="searchPr" resultMap="PrResult">
+		select
+			   pr_no
+			 , pr_title
+			 , pr_content
+			 , p.create_date
+			 , pr_time
+			 , p.status
+			 , p.stack_name
+			 , p.mem_id
+			 , count
+			 , git_nick
+		  from my_pr p
+		  join member m
+		    on (p.mem_id = m.mem_id)
+		 where p.status='Y'
+		<choose>
+			<when test="condition=='writer'"> and git_nick </when>
+			<when test="condition=='title'"> and pr_title </when>
+			<otherwise> and pr_content </otherwise>
+		</choose>
+			like '%' || #{searchPr} || '%'
+		 order 
+		    by pr_no desc
+		       
+	</select>
+	
+	<update id="deleteMyPr">
+		update my_pr
+		   set status = 'N'
+		 where pr_no = #{prNo}
+	</update>
   
 </mapper>
