@@ -54,6 +54,39 @@
 	<!--  Main wrapper -->
 	<div class="body-wrapper">
 
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="resources/images/logo/logo2.png"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="resources/images/logos/favicon.png"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="resources/css/styles.min.css" />
+    <script src="resources/js/jquery.min.js"></script>
+    <script src="resources/js/bootstrap.bundle.min.js"></script>
+    <script src="resources/js/sidebarmenu.js"></script>
+    <script src="resources/js/app.min.js"></script>
+    <script src="resources/js/apexcharts.min.js"></script>
+    <script src="resources/js/simplebar.js"></script>
+    <script src="resources/js/dashboard.js"></script>
+  </head>
+  <body>
+    <!--  Body Wrapper -->
+    <div
+      class="page-wrapper"
+      id="main-wrapper"
+      data-layout="vertical"
+      data-navbarbg="skin6"
+      data-sidebartype="full"
+      data-sidebar-position="fixed"
+      data-header-position="fixed"
+    >
+      <!--  Main wrapper -->
+      <div class="body-wrapper">
         <!--  Header Start -->
         <header class="app-header">
           <nav class="navbar navbar-expand-lg navbar-light">
@@ -84,7 +117,9 @@
                 <a
                   href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/"
                   target="_blank"
-                  class="btn btn-primary">Download Free</a>
+                  class="btn btn-primary"
+                  >Download Free</a
+                >
                 <li class="nav-item dropdown">
                   <a
                     class="nav-link nav-icon-hover"
@@ -140,7 +175,7 @@
           </nav>
         </header>
         <!--  Header End -->
-   </div>
-</div>
-</body>
+      </div>
+    </div>
+  </body>
 </html>
