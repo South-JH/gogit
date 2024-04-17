@@ -79,7 +79,7 @@ pageEncoding="UTF-8"%>
                       로그인
                     </button>
                     <a
-                      href="http://github.com/login/oauth/authorize?client_id=bafc4109aa5941b24ce1"
+                      href="http://github.com/login/oauth/authorize?client_id=bafc4109aa5941b24ce1&scope=project repo"
                       >Click here</a
                     >
                   </form>

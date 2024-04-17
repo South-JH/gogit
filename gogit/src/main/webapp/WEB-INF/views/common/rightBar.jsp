@@ -12,6 +12,7 @@
     .proimg-div>img{
         width: 45px;
 		height: 45px;
+        border-radius: 50%;
     }
     /*div 가운데 정렬*/
     .addbtn-div{
@@ -20,37 +21,36 @@
     }
     .sliderhight-div, .rightBar-div{
         border-radius: 10px;
-        border: 1px solid #d4d2d2;
-    }
-    
+        /* border: 1px solid #d4d2d2; */
+    }  
 </style>
 </head>
 <body>
 
-    <div class="slideright-div">
+    <div class="slideright-div" style="margin-left: 10px;">
         <div class="sliderhight-div" style="background-color:#ffffff;">
             <div style="width: 300px; height: 300px;" class="teamlist">
                 <div class="teamMates" style="margin-bottom: 10px;"><b style="color: rgb(2 56 75);">TeamMates</b></div>
-                <div style="display: flex;">
-                    <div class="proimg-div" style="width: 60px;"><img src="https://holaworld.io/images/languages/javascript.svg"></div>
+                <div style="display: flex; margin-bottom: 5px;">
+                    <div class="proimg-div" style="width: 60px;"><img src="${loginUser.profile}"></div>
                     <div>
-                        <b>hijimin</b>
+                        <b>hijimin hihihihihi</b>
                         <div>@hijimin</div>
                     </div>
                 </div>   
                 
-                <div style="display: flex;">
-                    <div class="proimg-div" style="width: 60px;"><img src="https://holaworld.io/images/languages/javascript.svg"></div>
+                <div style="display: flex; margin-bottom: 5px;">
+                    <div class="proimg-div" style="width: 60px;"><img src="${loginUser.profile}"></div>
                     <div>
-                        <b>hijimin</b>
+                        <b>hijimin hihihihihi</b>
                         <div>@hijimin</div>
                     </div>
                 </div>
 
-                <div style="display: flex;">
-                    <div class="proimg-div" style="width: 60px;"><img src="https://holaworld.io/images/languages/javascript.svg"></div>
+                <div style="display: flex; margin-bottom: 5px;">
+                    <div class="proimg-div" style="width: 60px;"><img src="${loginUser.profile}"></div>
                     <div>
-                        <b>hijimin</b>
+                        <b>hijimin hihihihihi</b>
                         <div>@hijimin</div>
                     </div>
                 </div>  
@@ -74,7 +74,7 @@
             -->
         </div>
         <!-- 복사해보기 -->
-        <div class="rightBar-div" style="width: 300px; height: 275px; margin-top: 15px; background-color: #ffffff;">
+        <div class="rightBar-div" style="width: 300px; height: 275px; margin-top: 15px; padding: 5px; background-color: #ffffff;">
             <div><p style="text-align: center;"><b>팀원추가</b></p></div>
             <div>
                 <p style="text-align: left;">프로젝트에 추가할 팀원을 선택한 후에 하단에 '팀원 추가 하기' 버튼을 눌러주세요!</p>

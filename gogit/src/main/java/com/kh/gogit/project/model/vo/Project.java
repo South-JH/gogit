@@ -15,17 +15,17 @@ public class Project {
 	
 	private int proNo;
     private String proWriter; // member_id 참조
-    private String proStack;
-    private String proTitle;
-    private String proContent;
-    private int proMember;
-    private String proPeriod;
-    private String deadLine;
-    private String startDate;
-    private String positoin;
-    private String proStatus;
-    private String status;
-    private int count;
-    private String createDate;
+    private String proStack; // 사용기술스택
+    private String proTitle; // 프로젝트 이름
+    private String proContent; // 프로젝트 모집내용
+    private int proMember; // 모집인원
+    private String proPeriod; // 프로젝트 진행기간
+    private String deadLine; // 모집 마감일
+    private String startDate; // 시작 예정일
+    private String positoin; // 백엔드, 프론트엔드
+    private String proStatus; // 프로젝트 모집상태
+    private String status; // 프로젝트 게시글 상태
+    private int count; // 조회수
+    private String createDate; // 모집 생성일
 
 }
