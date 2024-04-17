@@ -12,7 +12,7 @@
 		<typeAlias type="com.kh.gogit.pr.model.vo.Reply" alias="Reply"/>
 		<typeAlias type="com.kh.gogit.pr.model.vo.Stack" alias="Stack"/>
 		<typeAlias type="com.kh.gogit.project.model.vo.Project" alias="Project"/>
-		<typeAlias type="com.kh.gogit.project.model.vo.Stack" alias="Stack"/>
+		<typeAlias type="com.kh.gogit.project.model.vo.Stack" alias="StackA"/>
 	</typeAliases>
 	
 	<mappers>
