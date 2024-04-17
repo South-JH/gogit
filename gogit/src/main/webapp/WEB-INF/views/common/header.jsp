@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,6 +20,15 @@
 <script src="resources/js/apexcharts.min.js"></script>
 <script src="resources/js/simplebar.js"></script>
 <script src="resources/js/dashboard.js"></script>
+
+<c:if test="${ not empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+</c:if>
+
+
 </head>
 <body>
 
