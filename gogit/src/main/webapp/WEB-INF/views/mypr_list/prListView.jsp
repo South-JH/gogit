@@ -33,7 +33,7 @@
 			cursor: pointer;
 		}
 		.table>tbody>tr:hover{
-			background-color: rgb(13, 110, 253);
+			background-color: #f0ad4e;
 		}
 		
 		.pagination>li{

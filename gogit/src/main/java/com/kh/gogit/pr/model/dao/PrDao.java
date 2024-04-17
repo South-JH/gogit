@@ -82,6 +82,12 @@ public class PrDao {
 	}
 
 
+	public int updateMyPr(SqlSessionTemplate sqlSession, Pr p) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("prMapper.updateMyPr",p);
+	}
+
+
 
 
 

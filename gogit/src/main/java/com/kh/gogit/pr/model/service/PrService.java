@@ -22,7 +22,7 @@ public interface PrService {
 	int insertMyPr(Pr p);
 	int selectSearchList(HashMap<String, String> keyword);
 	ArrayList<Pr> searchPr(HashMap<String, String> keyword, PageInfo pi);
-	Pr selectMyPr(int prNo);
+	int updateMyPr(Pr p);
 	int deleteMyPr(int prNo);
 	
 }

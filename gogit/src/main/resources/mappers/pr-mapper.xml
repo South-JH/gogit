@@ -218,5 +218,14 @@
 		   set status = 'N'
 		 where pr_no = #{prNo}
 	</update>
+	
+	<update id="updateMyPr">
+		update my_pr
+		   set pr_title=#{prTitle}
+		     , pr_content=#{prContent}
+		     , pr_time=#{prTime}
+		     , stack_name=#{stackName}
+		 where pr_no = #{prNo}
+	</update>
   
 </mapper>

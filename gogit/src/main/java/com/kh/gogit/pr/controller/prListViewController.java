@@ -147,9 +147,26 @@ public class prListViewController {
 	
 	
 	@RequestMapping("updateForm.mp")
-	public String updateForm() {
+	public String updateForm(int prNo,Model model) {
+		Pr p =prService.prdetailView(prNo);
+		String memProfile = prService.memberProfile(p.getMemId());
+
+		model.addAttribute("pr", p);
+		model.addAttribute("memProfile", memProfile);
+		return "mypr_list/prUpdateForm";
+	}
+	
+	@RequestMapping("update.mp")
+	public String updateMyPr(Pr p, HttpSession session) {
+	
+		int result = prService.updateMyPr(p);
+		if(result>0) {
+			session.setAttribute("alertMsg", "수정 되었습니다.");
+		}else {
+			session.setAttribute("alertMsg", "수정 실패 했습니다.");
+		}
 		
-		return "mypr_list/updateMyprForm";
+		return "redirect:/mypr.pr";
 	}
 	
 	@RequestMapping("delete.mp")
