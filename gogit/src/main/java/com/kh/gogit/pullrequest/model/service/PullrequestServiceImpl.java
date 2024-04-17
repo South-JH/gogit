@@ -25,7 +25,7 @@ public class PullrequestServiceImpl implements PullrequestService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public void getGitHubRepositoryList(Member loginUser) {
+	public String getPullrequestList(Member loginUser) {
 		// ================================= repository 조회 =================================
 		String url = "https://api.github.com/user/repos";
         
@@ -43,7 +43,7 @@ public class PullrequestServiceImpl implements PullrequestService {
         	System.out.println("가져왔다 repository");
         } else {
         	System.out.println("실패~");
-        	return;
+        	return null;
         }
         
         JsonArray repoArr = JsonParser.parseString(response1.getBody()).getAsJsonArray();
@@ -69,11 +69,12 @@ public class PullrequestServiceImpl implements PullrequestService {
         ResponseEntity<String> response = restTemplate.exchange(requestUrl, HttpMethod.GET, request, String.class);
         
         if(response1.getStatusCode() == HttpStatus.OK) {
-        	System.out.println("된듯?");
-        	System.out.println(response.getBody());
+//        	System.out.println(response.getBody());
+        	return response.getBody();
         	
         } else {
         	System.out.println("pull request list 조회 실패");
+        	return null;
         }
 	}
 

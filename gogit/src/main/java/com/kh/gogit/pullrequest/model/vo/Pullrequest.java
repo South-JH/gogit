@@ -1,7 +1,5 @@
 package com.kh.gogit.pullrequest.model.vo;
 
-import java.sql.Date;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +20,6 @@ public class Pullrequest {
 	private int issNo;
 	private int milNo;
 	private String status;
-	private Date createDate;
+	private String createDate;
 
 }

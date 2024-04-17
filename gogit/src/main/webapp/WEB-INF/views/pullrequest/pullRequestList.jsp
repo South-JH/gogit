@@ -123,24 +123,15 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>제목이어</td>
-											<td>작성자여</td>
-											<td>label</td>
-											<td>0.1</td>
-										</tr>
-										<tr>
-											<td>제목이어</td>
-											<td>작성자여</td>
-											<td>label</td>
-											<td>0.1</td>
-										</tr>
-										<tr>
-											<td>제목이어</td>
-											<td>작성자여</td>
-											<td>label</td>
-											<td>0.1</td>
-										</tr>
+										<!-- for문으로 pullreqArr 다 돌기 -->
+										<c:forEach var="pullreq" items="${ list }">
+											<tr>
+												<td>${ pullreq.pullTitle }</td>
+												<td>${ pullreq.pullWriter }</td>
+												<td>label</td>
+												<td>0.1</td>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
