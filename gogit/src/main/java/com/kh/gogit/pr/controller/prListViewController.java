@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -151,13 +153,13 @@ public class prListViewController {
 	}
 	
 	@RequestMapping("delete.mp")
-	public String deleteMyPr(int prNo, Model model) {
+	public String deleteMyPr(int prNo, HttpSession session) {
 		int result = prService.deleteMyPr(prNo);
 		
 		if(result>0) {
-			model.addAttribute("alertMsg", "삭제 되었습니다.");
+			session.setAttribute("alertMsg", "삭제 되었습니다.");
 		}else {
-			model.addAttribute("alertMsg", "삭제 실패했습니다.");
+			session.setAttribute("alertMsg", "삭제 실패했습니다.");
 		}
 		
 		return "redirect:/mypr.pr";

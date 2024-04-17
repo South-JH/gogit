@@ -218,7 +218,6 @@
     		$("#deletePr").modal("show");
     		$("#Prdelete").click(function(){
     			location.href="delete.mp?prNo=${pr.prNo}";
-    			alert("${alertMsg}")
     		})
     		 $("#close").on("click",function(){
  				$("#deletePr").modal("hide");
