@@ -17,7 +17,7 @@
 		<result column="create_date" property="createDate"/>
 	</resultMap>
 	
-	<resultMap id="StackResult" type="Stack">
+	<resultMap id="StackResult" type="StackA">
 		<result column="stack_no" property="stackNo"/>
 		<result column="stack_type" property="stackType"/>
 		<result column="stack_name" property="stackName"/>
