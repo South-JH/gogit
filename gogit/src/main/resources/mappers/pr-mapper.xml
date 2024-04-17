@@ -25,6 +25,13 @@
 		<result column="status" property="status" />
 		<result column="git_nick" property="gitNick"/>
 	</resultMap>
+	
+	<resultMap type="Stack" id="StackResult">
+		<result column="stack_no" property="stackNo" />
+		<result column="stack_type" property="stackType" />
+		<result column="stack_name" property="stackName" />
+		<result column="stack_img" property="stackImg" />
+	</resultMap>
 
 
 	
@@ -40,14 +47,17 @@
 			   pr_no
 			 , pr_title
 			 , pr_content
-			 , create_date
+			 , p.create_date
 			 , pr_time
-			 , status
-			 , stack_name
-			 , mem_id
+			 , p.status
+			 , p.stack_name
+			 , p.mem_id
 			 , count
-		  from my_pr
-		 where status='Y'
+			 , git_nick
+		  from my_pr p
+		  join member m
+		    on (p.mem_id = m.mem_id)
+		 where p.status='Y'	
 		 order 
 		    by pr_no desc
 	</select>
@@ -68,6 +78,7 @@
 			 , p.stack_name
 			 , p.mem_id
 			 , git_nick
+			 , to_char(pr_time,'yyyy-mm-dd') as "pr_time"
 	      from my_pr p
 	      join member m on(p.mem_id = m.mem_id)
 	     where pr_no = #{bno}
@@ -126,5 +137,80 @@
 		   set status = 'N'
 		 where reply_no = #{rno}
 	</update>
+	
+	<select id="selectStack" resultMap="StackResult">
+		select 
+			   stack_no
+			 , stack_type
+			 , stack_name
+			 , stack_img
+		  from stack	
+	</select>
+	
+	<insert id="insertMyPr">
+		insert 
+		  into my_pr
+		   (
+		   	  pr_no
+		   	, pr_title
+		   	, pr_content
+		   	, pr_time
+		   	, stack_name
+		   	, mem_id
+		   )
+		   values
+		   (
+		   	  seq_mpno.nextval
+		   	, #{prTitle}
+		   	, #{prContent}
+		   	, #{prTime}
+		   	, #{stackName}
+		   	, #{memId}
+		   )
+	   
+	</insert>
+	
+	<select id="selectSearchList" resultType="_int">
+		select 
+		       count(*)
+		  from my_pr p
+		  join member m
+		    on (p.mem_id = m.mem_id)
+		 where p.status='Y'
+		   <choose>
+			<when test="condition=='writer'"> and git_nick </when>
+			<when test="condition=='title'"> and pr_title </when>
+			<otherwise> and pr_content </otherwise>
+		</choose>
+			like '%' || #{searchPr} || '%'
+	</select>
+	
+	
+	<select id="searchPr" resultMap="PrResult">
+		select
+			   pr_no
+			 , pr_title
+			 , pr_content
+			 , p.create_date
+			 , pr_time
+			 , p.status
+			 , p.stack_name
+			 , p.mem_id
+			 , count
+			 , git_nick
+		  from my_pr p
+		  join member m
+		    on (p.mem_id = m.mem_id)
+		 where p.status='Y'
+		<choose>
+			<when test="condition=='writer'"> and git_nick </when>
+			<when test="condition=='title'"> and pr_title </when>
+			<otherwise> and pr_content </otherwise>
+		</choose>
+			like '%' || #{searchPr} || '%'
+		 order 
+		    by pr_no desc
+		       
+	</select>
   
 </mapper>

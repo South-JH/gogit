@@ -35,7 +35,7 @@
 	#reply-wrap textarea{
 		display: block;
 		float: left;
-		margin-left: 50px
+		margin-left: 150px
 	}
 	#insertReply{
 		display: block;
@@ -52,16 +52,18 @@
 		border: none
 	}
 	#stack li{
-		width:90px;
+		width:120px;
 		list-style-type: none;
 		display:inline-block;
 		background-color: #0275d8;
-		color:black;
+		color:white;
 		margin: 5px;
 		border-radius: 45%;
 		text-align: center;
 	}
-	
+	#btn-wrap>button{
+		margin: 10px
+	}
 	
 </style>
 </head>
@@ -95,8 +97,18 @@
              			<c:otherwise>
              				<img src="${ memProfile }">
              			</c:otherwise>
+             			
+             			
              		</c:choose>
-             		   		
+             		<br>
+             		<br>
+             		<br>
+             		<c:if test="${ loginUser.memId eq pr.memId}">
+	             		<div id="btn-wrap">
+	             		   	<button class="btn btn-warning" onclick="updatePr();">수정하기</button>
+	             			<button class="btn btn-danger" onclick="deletePr();">삭제하기</button>
+	             		</div>
+             		</c:if>
              	</div>
              	<div id="prDetail">
              		<h1>${ pr.gitNick }님의 PR</h1>
@@ -118,11 +130,16 @@
              			<tr>
              				<td colspan="5" id="stack"><ul></ul></td>
              			</tr>
-             			
+             			<tr>
+             				<th colspan="5">프로젝트 가능시간</th>
+             			</tr>
+             			<tr>
+             				<td colspan="5">${ pr.prTime }</td>
+             			</tr>
 
              			<tr>
              				<td colspan="5">
-             					<textarea rows="10" cols="100" readonly style="resize: none; border: none">${ pr.prContent }</textarea>
+             					<textarea class="form-control" rows="5" cols="100" readonly style="resize: none; border: none">${ pr.prContent }</textarea>
              				</td>
              			</tr>
              		</table>
@@ -138,7 +155,7 @@
              				<textarea rows="3" cols="100" style="resize: none" readonly="readonly">로그인후 이용 가능한 서비스입니다.</textarea>
              			</c:when>
              			<c:otherwise>
-             				<textarea rows="3" cols="70" style="resize: none" placeholder="댓글을 입력해주세요"></textarea>
+             				<textarea rows="3" cols="70" style="resize: none" placeholder="댓글을 입력해주세요" onkeyup="enter();"></textarea>
              				<button class="btn btn-primary" id="insertReply" onclick="insertReply();">등록</button>
              			</c:otherwise>
              		</c:choose>
@@ -164,6 +181,50 @@
            </div>
         </div>
     </div>
+    
+    
+  
+    
+    
+    <div class="modal fade" id="deletePr" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title">※주의※</h5>
+                    
+                </div>
+                <div class="modal-body">
+                   	<label>삭제하면 데이터를 다시 복원할 수 없습니다. 정말 삭제하시겠습니까?</label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="Prdelete">삭제</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="close">취소</button>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    
+    
+    
+      <script>
+    	function updatePr(){
+    		location.href="updateForm.mp?prNo=${pr.prNo}";
+    	}
+    	
+    	function deletePr(){
+    		$("#deletePr").modal("show");
+    		$("#Prdelete").click(function(){
+    			location.href="delete.mp?prNo=${pr.prNo}";
+    		})
+    		 $("#close").on("click",function(){
+ 				$("#deletePr").modal("hide");
+ 			}) 
+    	}
+    
+    </script>
     
     
     <script>
@@ -250,6 +311,12 @@
     			}
     		})
     	}
+    	
+    	function enter() {
+			if(window.event.keyCode==13){
+				insertReply()
+			}
+		}
     </script>
 </body>
 </html>
