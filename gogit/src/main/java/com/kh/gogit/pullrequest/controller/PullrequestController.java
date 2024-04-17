@@ -35,23 +35,19 @@ public class PullrequestController {
 		for(int i = 0; i < pullreqArr.size(); i ++) {
 			JsonObject pullreq = pullreqArr.get(i).getAsJsonObject();
 			
-			System.out.println(pullreq);
-			
 			Pullrequest prq = new Pullrequest();
 			prq.setPullTitle(pullreq.get("title").getAsString());
+			
 			if(!pullreq.get("body").isJsonNull()) {
-				System.out.println(pullreq.get("body"));
 				prq.setPullContent(pullreq.get("body").getAsString());
 			}
+			
 			prq.setPullWriter(pullreq.get("user").getAsJsonObject().get("login").getAsString());
-			System.out.println(pullreq.get("assignees"));
 //			prq.setPullManager(pullreq.get("assignees").getAsString());
 			prq.setCreateDate(pullreq.get("created_at").getAsString());
 			
 			list.add(prq);
 		}
-		
-		System.out.println(list);
 		
 		model.addAttribute("list", list);
 		
