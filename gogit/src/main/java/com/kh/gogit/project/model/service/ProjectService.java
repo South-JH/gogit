@@ -19,5 +19,15 @@ public interface ProjectService {
 	
 	// 스택 가져오기
 	ArrayList<Stack> selectStackList();
+	
+	// searchCount 가져오기
+	int selectSearchCount(String keyword);
+	ArrayList<Project> selectSearchList(PageInfo pi, String keyword);
+	
+	// 조회수 증가
+	int increaseCount(int pno);
+	
+	// 프로젝트 상세조회 가져오기
+	Project selectDetailList(int pno);
 
 }

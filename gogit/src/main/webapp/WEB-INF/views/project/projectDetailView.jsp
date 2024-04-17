@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,23 +90,55 @@
                                             </div>
                                             <br>
                                             <div>
-                                                작성자 : 박지민   |   마감일 : 2024-10-20
+                                                작성자 : ${ loginUser.gitNick }   |   마감일 : ${p.deadLine }
                                             </div>										                     
 
                                             <div>
-                                                <div>조회수 : 10</div>                                                                    
+                                                <div>조회수 : ${p.count }</div>                                                                    
                                             </div>                      
                                     </div>
 
                                     <div class="right-div" style="float: right;">                                                          
                                             <div>
-                                                <img src="resources/images/gogit-logo.png" style="width: 95px; height: 70px; margin-left: 40px;">
+                                                <!-- <img src="resources/images/gogit-logo.png" style="width: 95px; height: 70px; margin-left: 40px;"> -->
+                                                <img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">
                                             </div>
 
                                             <div>
-                                                <button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">프로젝트 신청완료(취소하기)</button>
+                                                <button  onclick="bookmark(event);" class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">프로젝트 신청하기</button>
                                             </div>                                
                                     </div>
+                                    
+                                    <c:if test=""></c:if>
+
+                                    
+
+                                    <script>
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                        function bookmark(event){
+                                        	
+                                        	$.ajax({
+                                        		url:"bookmark.pr",
+                                        		data:{
+                                        			pnp:${p.proNo}                                     			
+                                        		},
+                                        		success: function(){
+                                        			
+                                        		}, error: function(){
+                                        			
+                                        		}
+                                        		
+                                        	});
+                                            
+                                        }
+                                    </script>
+
                                 </div>
                                 <hr>
                                 <br>
@@ -119,7 +152,7 @@
                                                 모집인원
                                             </div>
                                             <div>
-                                                4명
+                                                ${ p.proMember }명
                                             </div>		
                                         </div>
                                         <br>									
@@ -127,52 +160,36 @@
                                         <div style="display: flex;">                                      
                                             <div style="width: 75px;">사용 언어</div>
                                                 <div id="content2_3">
-                                                    <button type="button" class="btn" style="border:1px solid lightgray; border-radius: 50px; height: 52px;padding-left: 0; margin-right: 10px;">
-                                                        <div style=" border-radius:50px; ">
-                                                            <span class="badge bg-transparent">
-                                                                <img src="https://holaworld.io/images/languages/javascript.svg" alt="" style="width:35px; height:35px; ">
-                                                            </span>
-                                                            <span style="padding-right: 10px;">JavaScript</span>
+                                                
+                                                <c:forEach var="s" items="${ stackList }">
+                                                <c:set var="testt1" value="${fn:split(p.proStack, ',')}"></c:set>
+                                                	<c:forEach var="testValue1" items="${ testt1 }">
+                                                	 	<c:if test="${ testValue1 eq s.stackName }">
+                                                    		<button type="button" class="btn" style="border:1px solid lightgray; border-radius: 50px; height: 52px;padding-left: 0; margin-right: 10px;">
+                                                        <div style=" border-radius:50px; ">                                                     
+                                                            <span class="badge bg-transparent">                                                            
+	                                                            <img src="${ s.stackImg }" alt="" style="width:35px; height:35px; ">                                                                                                                
+                                                            </span>                                                                                                                                              
+                                                            <span style="padding-right: 10px;">${testValue1 }</span>                                                                                                             	
                                                         </div>
                                                     </button>
-
-                                                    <button type="button" class="btn" style="border:1px solid lightgray; border-radius: 50px; height: 52px;padding-left: 0; margin-right: 10px;">
-                                                        <div style=" border-radius:50px; ">
-                                                            <span class="badge bg-transparent">
-                                                                <img src="https://holaworld.io/images/languages/reactnative.svg" alt="" style="width:35px; height:35px; ">
-                                                            </span>
-                                                            <span style="padding-right: 10px;">Vue</span>
-                                                        </div>
-                                                    </button>                                   
-                                            
-                                                    <button type="button" class="btn" style="border:1px solid lightgray; border-radius: 50px; height: 52px;padding-left: 0; margin-right: 10px;">
-                                                        <div style=" border-radius:50px; ">
-                                                            <span class="badge bg-transparent">
-                                                                <img src="https://holaworld.io/images/languages/figma.svg" alt="" style="width:35px; height:35px; ">
-                                                            </span>
-                                                            <span style="padding-right: 10px;">Figma</span>
-                                                        </div>
-                                                    </button>    
-                                                    
-                                                    <button type="button" class="btn" style="border:1px solid lightgray; border-radius: 50px; height: 52px;padding-left: 0; margin-right: 10px;">
-                                                        <div style=" border-radius:50px; ">
-                                                            <span class="badge bg-transparent">
-                                                                <img src="https://holaworld.io/images/languages/figma.svg" alt="" style="width:35px; height:35px; ">
-                                                            </span>
-                                                            <span style="padding-right: 10px;">Figma</span>
-                                                        </div>
-                                                    </button> 
+                                                       </c:if> 
+                                                    </c:forEach>
+                                                </c:forEach>                                             
                                             </div> 
                                         </div>
                                         <br>
 
                                         <div style="display: flex;">
                                             <div style="width: 75px;">모집포지션</div>
+                                            
                                             <div class="posi-div">
-                                                <div class="pro-public">디자이너</div>
-                                                <div class="pro-public">백엔드</div>
-                                                <div class="pro-public">전체</div>
+                                            <c:set var="testu" value="${fn:split(p.positoin, ',')}"></c:set>
+                                            	<c:forEach var="texttext" items="${ testu }">
+	                                                <div class="pro-public">${ texttext }</div>
+                                                </c:forEach>
                                             </div>
+                                            
                                         </div>
                                     </div>
 
@@ -184,7 +201,7 @@
                                             </div>                                  
 
                                             <div>
-                                                2024-10-12
+                                                ${p.deadLine }
                                             </div>
                                         </div>
                                         <br>
@@ -192,7 +209,7 @@
                                         <div style="display: flex;">
                                             <div style="width: 75px;">시작예정</div>
                                             <div>
-                                                2024-04-12
+                                                ${p.startDate }
                                             </div>
                                         </div>
                                         <br>
@@ -200,7 +217,7 @@
                                         <div style="display: flex;">
                                             <div style="width: 75px;">예상 기간</div>
                                             <div>
-                                                2개월
+                                                ${p.proPeriod }
                                             </div> 
                                         </div>                               
                                     </div>
@@ -211,7 +228,7 @@
                             <div class="bottom-div">
                                 <div><h2>프로젝트 소개</h2></div>
                                 <hr>
-                                <div style="height: 200px;">모집합니다</div>                         
+                                <div style="height: 200px;">${ p.proContent }</div>                         
                                 <div style="float: right;"><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">뒤로가기</button><button type="button" class="btn btn-warning" style="background-color: rgb(2 56 75);">수정하기</button></div>
                                 <br>
                                 <hr>

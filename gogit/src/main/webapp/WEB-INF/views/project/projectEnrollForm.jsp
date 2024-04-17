@@ -138,6 +138,7 @@
 													<option value="nodejs">Nodejs</option>
 													<option value="spring">Spring</option>
 													<option value="java">Java</option>
+													<option value="django">디장고</option>
 												  </select>
 											</div>
 										</div>

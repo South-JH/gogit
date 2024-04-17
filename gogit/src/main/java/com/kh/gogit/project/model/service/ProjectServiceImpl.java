@@ -77,5 +77,25 @@ public class ProjectServiceImpl implements ProjectService{
 	public ArrayList<Stack> selectStackList() {
 		return pDao.selectStackList(sqlSession);
 	}
+
+	@Override
+	public int selectSearchCount(String keyword) {
+		return pDao.selectSearchCount(sqlSession, keyword);
+	}
+
+	@Override
+	public ArrayList<Project> selectSearchList(PageInfo pi, String keyword) {
+		return pDao.selectSearchList(sqlSession, pi, keyword);
+	}
+
+	@Override
+	public int increaseCount(int pno) {
+		return pDao.increaseCount(sqlSession, pno);
+	}
+
+	@Override
+	public Project selectDetailList(int pno) {
+		return pDao.selectDetailList(sqlSession, pno);
+	}
 	
 }

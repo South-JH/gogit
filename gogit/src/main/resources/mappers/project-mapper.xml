@@ -90,6 +90,80 @@
 		     , stack_img
 		  from stack	
 	</select>
+	
+	<select id="selectSearchCount" resultType="_int">
+		SELECT 
+			  COUNT(*)
+		  FROM project p
+		 WHERE p.status = 'Y'
+		<choose>
+		   <when test="keyword == 'java' || keyword == 'go'">
+		   		and (p.pro_stack = #{keyword} OR p.pro_stack LIKE #{keyword}|| ',%' OR p.pro_stack LIKE '%,'|| #{keyword} ||',%' OR p.pro_stack LIKE '%,'|| #{keyword})
+		   </when>
+		   <otherwise>
+		       and p.pro_stack like '%' || #{keyword} || '%' 	    		
+		   </otherwise>
+	   </choose>    
+		 order 
+		    by pro_no desc
+	</select>
+	
+	<select id="selectSearchList" resultMap="projectResult">
+		select
+		       pro_no
+		     , pro_writer
+		     , pro_stack
+		     , pro_title
+		     , pro_content
+		     , pro_member
+		     , pro_period
+		     , to_char(pro_deadline, 'YYYY-MM-DD') as "pro_deadline"
+		     , to_char(pro_start_date, 'YYYY-MM-DD') as "pro_start_date"
+		     , pro_position
+		     , pro_status
+		     , count
+		     , create_date
+		  from project
+		 where status = 'Y'
+		<choose>
+		   <when test="keyword == 'java' || keyword == 'go'">
+		   		and (pro_stack = #{keyword} OR pro_stack LIKE #{keyword}|| ',%' OR pro_stack LIKE '%,'|| #{keyword} ||',%' OR pro_stack LIKE '%,'|| #{keyword})
+		   </when>
+		   <otherwise>
+		       and pro_stack like '%' || #{keyword} || '%' 	    		
+		   </otherwise>
+	   </choose>    
+		 order 
+		    by pro_no desc	
+	</select>
+	
+	<update id="increaseCount">
+		update
+		       project
+		   set count = count + 1
+		 where pro_no = #{pno}
+		   and status = 'Y'
+	</update>
+	
+	<select id="selectDetailList" resultMap="projectResult">
+		select
+		       pro_no
+		     , pro_writer
+		     , pro_stack
+		     , pro_title
+		     , pro_content
+		     , pro_member
+		     , pro_period
+		     , to_char(pro_deadline, 'YYYY-MM-DD') as "pro_deadline"
+		     , to_char(pro_start_date, 'YYYY-MM-DD') as "pro_start_date"
+		     , pro_position
+		     , pro_status
+		     , count
+		     , create_date
+		  from project
+		 where status = 'Y'
+		   and pro_no = #{pno}
+	</select>
 
 
 
