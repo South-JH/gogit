@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -145,16 +147,48 @@ public class prListViewController {
 	
 	
 	@RequestMapping("updateForm.mp")
-	public String updateForm() {
+	public String updateForm(int prNo,Model model) {
+		Pr p =prService.prdetailView(prNo);
+		String memProfile = prService.memberProfile(p.getMemId());
+
+		model.addAttribute("pr", p);
+		model.addAttribute("memProfile", memProfile);
+		return "mypr_list/prUpdateForm";
+	}
+	
+	@RequestMapping("update.mp")
+	public String updateMyPr(Pr p, HttpSession session) {
+	
+		int result = prService.updateMyPr(p);
+		if(result>0) {
+			session.setAttribute("alertMsg", "수정 되었습니다.");
+		}else {
+			session.setAttribute("alertMsg", "수정 실패 했습니다.");
+		}
 		
-		return "mypr_list/updateMyprForm";
+		return "redirect:/mypr.pr";
 	}
 	
 	@RequestMapping("delete.mp")
-	public String deleteMyPr(int prNo) {
+	public String deleteMyPr(int prNo, HttpSession session) {
 		int result = prService.deleteMyPr(prNo);
 		
-		return "";
+		if(result>0) {
+			session.setAttribute("alertMsg", "삭제 되었습니다.");
+		}else {
+			session.setAttribute("alertMsg", "삭제 실패했습니다.");
+		}
+		
+		return "redirect:/mypr.pr";
+	}
+	
+	@ResponseBody
+	@RequestMapping("prTop.mp")
+	public ArrayList<Pr> prTopList(Model model) {
+		ArrayList<Pr> list = prService.prTopList();
+
+		
+		return list;
 	}
 	
 }

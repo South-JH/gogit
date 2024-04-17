@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="friendMapper">
+ <resultMap type="Friend" id="friendResultSet">
+    <result column="mem_no" property="memNo"/>
+	<result column="mem_id" property="memId"/>
+	<result column="git_nick" property="gitNick"/>
+	<result column="avatar_url" property="avatarUrl"/>
+	<result column="mem_token" property="memToken"/>
+	<result column="mem_intro" property="memIntro"/>
+	<result column="create_date" property="createDate"/>
+	<result column="status" property="status"/>
+	<result column="team" property="team"/>
+	<result column="team_status" property="teamStatus"/>
+    <result column="bf_giver"  property="bfGiver"/>
+    <result column="bf_taker"  property="bfTaker"/>
+    <result column="fStatus"  property="fStatus"/>
+    <result column="request_date"  property="requestDate"/>
+    <result column="isent" property="isent"/>
+	<result column="friSent" property="friSent"/>
+	<result column="user_no" property="userNo"/>
+	<result column="profile" property="profile"/>
+ 
+ </resultMap>
+ 
+ <select id="listCount" resultType="_int">
+    select 
+           count(*)
+      from friend
+     where bf_taker = #{memId} 
+
+ </select>
+    <select id="allMemberList" resultMap="friendResultSet">
+ <!-- select m.*, f.* 
+from member m
+join friend f on m.mem_Id = f.bf_taker
+where m.status = 'Y'
+ and m.mem_Id != #{memId} -->
+   select *
+      from member
+          left join
+              (
+              select nvl(a.bf_taker, nvl(b.bf_giver, a.bf_taker)) user_no, a.status isent,b.status FriSent
+              from (select * from friend where bf_giver = #{memId}) a
+              full outer join (select * from friend where bf_taker = #{memId}) b on (a.bf_taker = b.bf_giver)
+              )
+          on (user_no = mem_id )
+      where status = 'Y' and mem_id != #{memId}
+        and mem_id != #{memId}
+
+        
+    </select>
+	<select id="myFriendList" resultMap="friendResultSet">
+    select *
+		from member
+		    left join 
+		        (
+		        select nvl(a.bf_taker, nvl(b.bf_giver, a.bf_taker)) user_no, a.status isent,b.status friSent
+		        from (select * from friend where bf_giver = #{memId}) a
+		        full outer join (select * from friend where bf_taker = #{memId}) b on (a.bf_taker = b.bf_giver)
+		        )
+		    on (mem_id = user_no)
+		where status = 'Y' and mem_id != #{memId}
+        and user_no != #{memId} 
+	</select>
+
+
+
+  
+  <insert id="addFriend">
+  insert
+         into friend
+         (
+           bf_giver
+         , bf_taker
+         , status
+         , request_date
+         )
+     values
+         (
+           #{bfGiver}
+         , #{bfTaker}
+         , 'A'
+         , default
+         )
+  </insert>
+  <insert id="acceptFriend">
+   insert
+         into friend
+         (
+           bf_giver
+          , bf_taker
+         , status
+         , request_date
+         )
+         values
+         (
+         #{bfGiver}
+         , #{bfTaker}
+         , 'Y'
+         , default
+         )
+  </insert>
+   <update id="acceptMyFriend">
+  update 
+         friend 
+     set status = 'Y' 
+   where bf_taker =  #{bfGiver}
+     and bf_giver =  #{bfTaker}
+ 
+ </update>   
+ <delete id="deleteFriend">
+    delete from 
+            friend
+     where bf_giver = #{bfGiver}
+       and bf_taker = #{bfTaker}   
+            
+ </delete>
+
+ <delete id="deleteMyFriend">
+    delete from 
+            friend
+     where bf_giver = #{bfTaker}
+       and bf_taker = #{bfGiver}   
+            
+ </delete>
+  <insert id="refuseFriend">
+   insert 
+     into friend 
+     values 
+     (
+       #{bfGiver}
+     , #{bfTaker}
+     , 'B'
+     , sysdate
+     )
+  </insert>
+
+    <!--  <select id="selectFriendList" resultMap="friendResultSet">
+    select *
+      from member
+          left join
+              (
+              select nvl(a.bf_taker, nvl(b.bf_giver, a.bf_taker)) user_no, a.status ISent,b.status FriSent
+              from (select * from friend where bf_giver = #{memId}) a
+              full outer join (select * from friend where bf_taker = #{memId}) b on (a.bf_taker = b.bf_giver)
+              )
+          on (user_no = mem_id )
+      where status = 'Y' and mem_id != #{memId}
+        and mem_id != #{memId}
+        order by mem_id
+ </select>-->
+
+
+  <select id="searchMember" resultMap="friendResultSet" parameterType="hashMap">
+ select *
+			 from member
+			    left join 
+			        (
+			        select nvl(a.bf_taker, nvl(b.bf_giver, a.bf_taker)) user_no, nvl(a.status,0) isent, nvl(b.status,0) friSent
+			        from (select * from friend where bf_giver = #{memId}) a
+			        full outer join (select * from friend where bf_taker = #{memId}) b on (a.bf_taker = b.bf_giver)
+			        )
+			    on (mem_id = user_no)
+			where status = 'Y' 
+			  and mem_id != #{memId}
+	          and git_nick like '%' || #{search} || '%' 
+<!--  select m.*, f.*
+from member m
+join friend f on m.mem_Id = f.bf_taker
+where m.status = 'Y'
+ and m.mem_Id != #{memId}
+ and m.git_nick like '%' || #{search} || '%' -->
+
+       <!--   select * from member
+      where status = 'Y'
+      and mem_Id != #{memId}
+      and git_nick like '%' || #{search} || '%'
+      order by mem_Id -->
+ </select>
+ 
+  
+</mapper>

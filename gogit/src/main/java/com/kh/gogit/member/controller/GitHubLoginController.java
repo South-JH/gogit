@@ -30,13 +30,13 @@ public class GitHubLoginController {
         	
             String userInfo = gitHubAuthService.getGitHubUserInfo(accessToken);
             
-            JsonObject userInfoObj = (JsonObject)new JsonParser().parse(userInfo);
+            JsonObject userInfoObj = JsonParser.parseString(userInfo).getAsJsonObject();
             
             Member m = new Member();
-            m.setMemId(userInfoObj.get("id").toString());
+            m.setMemId(userInfoObj.get("id").getAsString());
             m.setMemToken(accessToken);
-            m.setGitNick(userInfoObj.get("login").toString().replace("\"", ""));
-            m.setProfile(userInfoObj.get("avatar_url").toString().replace("\"", ""));
+            m.setGitNick(userInfoObj.get("login").getAsString());
+            m.setProfile(userInfoObj.get("avatar_url").getAsString());
             
             int checkResult = mService.checkMemberId(m.getMemId());
 

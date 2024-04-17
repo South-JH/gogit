@@ -33,7 +33,7 @@
 			cursor: pointer;
 		}
 		.table>tbody>tr:hover{
-			background-color: rgb(13, 110, 253);
+			background-color: #f0ad4e;
 		}
 		
 		.pagination>li{
@@ -90,7 +90,7 @@
 		             		<tr>
 		             			<th width="30px"> NO </th>
 		             			<th width="300px"> 제목 </th>
-		             			<th width="50px"> ID </th>
+		             			<th width="50px"> 작성자 </th>
 		             			<th width="30px"> 조회수 </th>
 		             		</tr>
 	             		</thead>
@@ -113,6 +113,9 @@
     	$(function(){
     		
     		searchPr(1);
+    		setInterval(() => {
+    			searchPr(1);
+			}, 1000);
     	})
     	
     	

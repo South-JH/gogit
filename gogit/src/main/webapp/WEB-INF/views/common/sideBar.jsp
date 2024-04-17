@@ -174,13 +174,13 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
-                  href="./sample-page.html"
+                  href="form.fr?memId=${ loginUser.memId }"
                   aria-expanded="false"
                 >
                   <span>
                     <i class="ti ti-brand-finder"></i>
                   </span>
-                  <span class="hide-menu">Friend</span>
+                  <span class="hide-menu" >Friend</span>
                 </a>
               </li>
             </ul>

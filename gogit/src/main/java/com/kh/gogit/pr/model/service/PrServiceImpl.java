@@ -91,13 +91,11 @@ public class PrServiceImpl implements PrService{
 	}
 
 
-
 	@Override
-	public Pr selectMyPr(int prNo) {
+	public int updateMyPr(Pr p) {
 		// TODO Auto-generated method stub
-		return null;
+		return pDao.updateMyPr(sqlSession, p);
 	}
-
 
 
 	@Override
@@ -105,6 +103,16 @@ public class PrServiceImpl implements PrService{
 		// TODO Auto-generated method stub
 		return pDao.deleteMyPr(sqlSession,prNo);
 	}
+
+
+
+	@Override
+	public ArrayList<Pr> prTopList() {
+		// TODO Auto-generated method stub
+		return pDao.prTopList(sqlSession);
+	}
+
+
 
 
 

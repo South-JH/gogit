@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,15 @@
 <title>Insert title here</title>
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-2.1.1.min.js" type="text/javascript"></script>
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<!-- Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<!-- Semantic UI theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+
 
 <link rel="shortcut icon" type="image/png" href="resources/images/logo/logo2.png" />
 <link rel="shortcut icon" type="image/png" href="resources/images/logos/favicon.png" />
@@ -19,6 +29,15 @@
 <script src="resources/js/apexcharts.min.js"></script>
 <script src="resources/js/simplebar.js"></script>
 <script src="resources/js/dashboard.js"></script>
+
+<c:if test="${ not empty alertMsg }">
+		<script>
+			alertify.alert("${alertMsg}");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+</c:if>
+
+
 </head>
 <body>
 
@@ -65,7 +84,9 @@
                 <a
                   href="https://adminmart.com/product/modernize-free-bootstrap-admin-dashboard/"
                   target="_blank"
-                  class="btn btn-primary">Download Free</a>
+                  class="btn btn-primary"
+                  >Download Free</a
+                >
                 <li class="nav-item dropdown">
                   <a
                     class="nav-link nav-icon-hover"
@@ -121,7 +142,7 @@
           </nav>
         </header>
         <!--  Header End -->
-   </div>
-</div>
-</body>
+      </div>
+    </div>
+  </body>
 </html>

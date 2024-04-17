@@ -7,9 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	div{
-		
-	}
+
 	#profile{
 		width: 300px;
 		float: left;
@@ -22,15 +20,15 @@
 		border-radius: 100%;
 	}
 	#prDetail{
-		width: 500px;
+		width: 700px;
 		float: left;
-		height: 500px;
+		height: auto;
 		margin-top: 50px;
 	}
 	#reply-wrap{
 		width: 800px;
+		margin-top: 50px;
 
-		margin-top: 50px
 	}
 	#reply-wrap textarea{
 		display: block;
@@ -88,7 +86,7 @@
          <div class="container-fluid">
              <!--  Row 1 -->
              <div class="row">
-             
+             	
              	<div id="profile">
              		<c:choose>
              			<c:when test="${empty memProfile }">
@@ -128,7 +126,17 @@
              				<th colspan="5">기술스택</th>
              			</tr>
              			<tr>
-             				<td colspan="5" id="stack"><ul></ul></td>
+             				<td colspan="5" id="stack">
+             				<label>프론트엔드</label>
+             				<ul id="front"></ul>
+             				<label>백엔드</label>
+             				<ul id="back"></ul>
+             				<label>모바일</label>
+             				<ul id="mobile"></ul>
+             				<label>기타</label>
+             				<ul id="etc"></ul>
+             				
+             				</td>
              			</tr>
              			<tr>
              				<th colspan="5">프로젝트 가능시간</th>
@@ -155,7 +163,7 @@
              				<textarea rows="3" cols="100" style="resize: none" readonly="readonly">로그인후 이용 가능한 서비스입니다.</textarea>
              			</c:when>
              			<c:otherwise>
-             				<textarea rows="3" cols="70" style="resize: none" placeholder="댓글을 입력해주세요" onkeyup="enter();"></textarea>
+             				<textarea rows="3" cols="70" style="resize: none" placeholder="댓글을 입력해주세요" onkeydown="enter();"></textarea>
              				<button class="btn btn-primary" id="insertReply" onclick="insertReply();">등록</button>
              			</c:otherwise>
              		</c:choose>
@@ -229,16 +237,67 @@
     
     <script>
     	let stackArr = '${ pr.stackName }'.split(",");
-    	let stack = "";
+    	let front = "";
+    	let back= "";
+    	let mobile = "";
+    	let etc = "";
     	
     	for(let i in stackArr){
-			stack += "<li>"+stackArr[i]+"</li>";
+    		switch (stackArr[i]) {
+			case "javascript":
+			case "typescript":
+			case "react":
+			case "vue":
+			case "svelte":
+			case "nextjs":
+				
+				front+="<li>"+stackArr[i]+"</li>"
+				break;
+			
+			case "java":
+			case "spring":
+			case "nodejs":
+			case "nestjs":
+			case "go":
+			case "kotlin":
+			case "express":
+			case "mysql":
+			case "mongodb":
+			case "python":
+			case "django":
+			case "php":
+			case "graphql":
+			case "firebase":
+				
+				back+="<li>"+stackArr[i]+"</li>"
+				break;
+				
+			case "flutter":
+			case "swift":
+			case "eactnative":
+			case "unity":
+				
+				mobile+="<li>"+stackArr[i]+"</li>"
+				break;
+				
+				
+				
+			default:
+				etc+="<li>"+stackArr[i]+"</li>"
+				break;
+			}
+    		
 		}
     
     
     	$(function(){
     		selectReply()
-    		$("#stack").html(stack);
+    		/* $("#stack").html(stack); */
+    		$("#front").html(front);
+    		$("#back").html(back);
+    		$("#mobile").html(mobile);
+    		$("#etc").html(etc);
+    		
     	})
     	
     	function insertReply(){
