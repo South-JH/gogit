@@ -3,7 +3,7 @@
 <mapper namespace="projectMapper">
 	<resultMap id="projectResult" type="Project">
 		<result column="pro_no" property="proNo"/>
-		<result column="pro_writer" property="proWriter"/>
+		<result column="git_nick" property="proWriter"/>
 		<result column="pro_stack" property="proStack"/>
 		<result column="pro_title" property="proTitle"/>
 		<result column="pro_content" property="proContent"/>
@@ -34,7 +34,7 @@
 	<select id="selectList" resultMap="projectResult">
 	select
 	       pro_no
-	     , pro_writer
+	     , git_nick
 	     , pro_stack
 	     , pro_title
 	     , pro_content
@@ -45,9 +45,10 @@
 	     , pro_position
 	     , pro_status
 	     , count
-	     , create_date
-	  from project
-	 where status = 'Y'
+	     , p.create_date
+	  from project p
+	  join member on (pro_writer = mem_id)
+	 where p.status = 'Y'
 	 order
 	    by pro_no desc
 	</select>
@@ -66,6 +67,7 @@
 		      , pro_deadline
 		      , pro_start_date
 		      , pro_position
+		      , pro_status
 		      )
 		      values
 		      (
@@ -79,6 +81,7 @@
 		      , #{deadLine}
 		      , #{startDate}
 		      , #{positoin}
+		      , 'Y'
 		      )
 	</insert>
 	
@@ -111,7 +114,7 @@
 	<select id="selectSearchList" resultMap="projectResult">
 		select
 		       pro_no
-		     , pro_writer
+		     , git_nick
 		     , pro_stack
 		     , pro_title
 		     , pro_content
@@ -122,9 +125,10 @@
 		     , pro_position
 		     , pro_status
 		     , count
-		     , create_date
-		  from project
-		 where status = 'Y'
+		     , p.create_date
+		  from project p
+		  join member on (pro_writer = mem_id)
+		 where p.status = 'Y'
 		<choose>
 		   <when test="keyword == 'java' || keyword == 'go'">
 		   		and (pro_stack = #{keyword} OR pro_stack LIKE #{keyword}|| ',%' OR pro_stack LIKE '%,'|| #{keyword} ||',%' OR pro_stack LIKE '%,'|| #{keyword})
@@ -148,7 +152,7 @@
 	<select id="selectDetailList" resultMap="projectResult">
 		select
 		       pro_no
-		     , pro_writer
+		     , git_nick
 		     , pro_stack
 		     , pro_title
 		     , pro_content
@@ -159,11 +163,42 @@
 		     , pro_position
 		     , pro_status
 		     , count
-		     , create_date
-		  from project
-		 where status = 'Y'
+		     , p.create_date
+		  from project p
+		  join member on (pro_writer = mem_id)
+		 where p.status = 'Y'
 		   and pro_no = #{pno}
 	</select>
+	
+	<update id="updateApplyProject">
+		update member
+		   set team_status = 'S'
+			  , team = #{pno}
+		  where mem_id = #{userId}
+	</update>
+	
+	<update id="updateCancleProject">
+		update member
+		   set team_status = 'N'
+			  , team = 0
+		  where mem_id = #{userId}	
+	</update>
+	
+	<update id="updateCompleteProject">
+		update project
+		   set pro_status = 'N'
+		 where pro_writer = #{userId}
+		   and pro_no = #{pno}	
+	</update>
+	
+	<update id="updateRestartProject">
+		update project
+		   set pro_status = 'Y'
+		 where pro_writer = #{userId}
+		   and pro_no = #{pno}	
+	</update>
+	
+	
 
 
 

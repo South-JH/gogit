@@ -90,7 +90,7 @@
                                             </div>
                                             <br>
                                             <div>
-                                                작성자 : ${ loginUser.gitNick }   |   마감일 : ${p.deadLine }
+                                                작성자 : ${ p.proWriter }   |   마감일 : ${p.deadLine }
                                             </div>										                     
 
                                             <div>
@@ -99,46 +99,150 @@
                                     </div>
 
                                     <div class="right-div" style="float: right;">                                                          
-                                            <div>
+                                            <div id="markImg">
                                                 <!-- <img src="resources/images/gogit-logo.png" style="width: 95px; height: 70px; margin-left: 40px;"> -->
-                                                <img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">
+                                                <!-- <img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">-->
                                             </div>
 
-                                            <div>
-                                                <button  onclick="bookmark(event);" class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">프로젝트 신청하기</button>
+                                            <div id="applybtn">
+                                                <!-- <button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);"></button> -->
                                             </div>                                
                                     </div>
                                     
-                                    <c:if test=""></c:if>
-
-                                    
-
+                                                        
                                     <script>
+                                    // 내가 프로젝트 작성자가 아니고, teamStatus가 No, 그리고 프로젝트 모집상태가 모집중일때(걍 신청자)
+                                   // alert("script read!");
                                     
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                        function bookmark(event){
+                                    if('${loginUser.gitNick}' != '${p.proWriter}'){
+                                    	if('${loginUser.gitNick}' != '${p.proWriter}' && '${loginUser.teamStatus}' == 'N' && '${p.proStatus}' == 'Y'){
+                                        	drawApplyBtn();
                                         	
-                                        	$.ajax({
-                                        		url:"bookmark.pr",
-                                        		data:{
-                                        			pnp:${p.proNo}                                     			
-                                        		},
-                                        		success: function(){
-                                        			
-                                        		}, error: function(){
-                                        			
-                                        		}
-                                        		
-                                        	});
-                                            
-                                        }
+                                        	// 그냥 프로젝트가 마감되었을때
+                                        }else if('${loginUser.gitNick}' != '${p.proWriter}' && '${loginUser.teamStatus}' == 'N' && '${loginUser.teamStatus}' == 'Y' && '${p.proStatus}' == 'N'){
+                                        	drawEndBtn();
+                                        	
+                                        	// 내가 신청한 프로젝트가 아닐 때(중복신청 불가)
+                                        }else if('${loginUser.gitNick}' != '${p.proWriter}' && '${loginUser.teamStatus}' == 'S' && '${p.proStatus}' == 'Y' && '${loginUser.team}' != '${p.proNo}'){
+                                        	drawNotMyProject();
+                                        	
+                                        	// 프로젝트 취소할때
+                                        }else if('${loginUser.gitNick}' != '${p.proWriter}' && '${loginUser.teamStatus}' == 'S' && '${p.proStatus}' == 'Y' && '${loginUser.team}' == '${p.proNo}'){
+                                        	// alert("script function")
+                                        	drawCancleBtn();
+                                        }                                  	                                 	
+                                    	
+                                    }else{
+                                    	if('${p.proStatus}' == 'Y'){ // 모집중일때 모집마감치고싶을때
+                                    		drawProjectApplyComplete();
+                                    	}else{ // 모집마감일때, 모집재개
+                                    		drawProjectApplyRestart();
+                                    	}	
+                                    }
+                                    
+                                    function drawProjectApplyRestart(){
+                                    	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
+                                    	$("#eventbtn").text("모집 재개");
+                                    	$("#eventbtn").attr("onclick", "projectstart()");
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">');
+                                    }
+                                    
+                                    
+                                    function drawProjectApplyComplete(){
+                                    	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
+                                    	$("#eventbtn").text("모집 마감");
+                                    	$("#eventbtn").attr("onclick", "projectEnd()");   
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark_filled.png" style="float:right; padding-right: 40px;" class="bookmark">');                                           
+                                    }
+                                    
+                                    function drawNotMyProject(){
+                                    	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
+                                    	$("#eventbtn").text("중복신청 불가합니다.");
+                                    	$("#eventbtn").attr("disabled", true);
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark_filled.png" style="float:right; padding-right: 40px;" class="bookmark">');
+                                    }
+                                    
+                                    function drawEndBtn(){
+                                    	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
+                                    	$("#eventbtn").text("마감된 프로젝트");
+                                    	$("#eventbtn").attr("disabled", true);
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">');
+                                    }
+                                    
+                                    function drawCancleBtn(){
+                                    	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
+                                    	$("#eventbtn").text("프로젝트 신청취소")
+                                    	$("#eventbtn").attr("onclick", "cancel()");
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark_filled.png" style="float:right; padding-right: 40px;" class="bookmark">');                                                                    	                                 
+                                    	
+                                    }
+                                    
+                                    function drawApplyBtn(){
+                                    	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
+                                    	$("#eventbtn").text("프로젝트 신청하기");
+                                    	$("#eventbtn").attr("onclick", "apply();");
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">');
+                                    }
+                                    
+                                    	function apply(){ // 신청하기(신청자입장)                                   	
+                                    		$.ajax({
+                        						url:"applypro.pr",
+                        						data:{pno:${p.proNo},
+                        							  userId:${loginUser.memId}},
+                        						success:function(result){
+                        							if(result > 0){
+                        								//alert("apply function!!")
+                        								drawCancleBtn();							
+                        							}                   					
+                        						}, error:function(){
+                        							
+                        						}
+                        					});                                   		                                 		
+                                    	}
+                                    	
+                                    	function cancel(){ // 신청취소(신청자입장)
+                                    		//alert("cancel function")
+                                    		$.ajax({
+                        						url:"cancel.pr",
+                        						data:{pno:${p.proNo},
+                        							  userId:${loginUser.memId}},
+                        						success:function(result){
+                        							if(result > 0){
+                        								drawApplyBtn();                       								
+                        							}                           							
+                        						}, error:function(){
+                        							
+                        						}
+                        					});
+                                    	}                                  	
+                                    	
+                                    	function projectEnd(){ // 프로젝트 마감일때(모집자입장)
+                                    		$.ajax({
+                        						url:"projectEnd.pr",
+                        						data:{pno:${p.proNo},
+                        							  userId:${loginUser.memId}},
+                        						success:function(result){
+                        							drawProjectApplyRestart();
+                        						}, error:function(){
+                        							
+                        						}
+                        					});
+                                    	}     
+                                    	
+                                    	function projectstart(){ // 프로젝트 모집재개(모집자입장)
+                                    		$.ajax({
+                        						url:"projectReStart.pr",
+                        						data:{pno:${p.proNo},
+                        							  userId:${loginUser.memId}},
+                        						success:function(result){
+                        							drawProjectApplyComplete();
+                        						}, error:function(){
+                        							
+                        						}
+                        					});
+                                    	}                                  	                    
                                     </script>
-
+  
                                 </div>
                                 <hr>
                                 <br>

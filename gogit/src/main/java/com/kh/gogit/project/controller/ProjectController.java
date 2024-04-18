@@ -19,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.kh.gogit.common.model.vo.PageInfo;
 import com.kh.gogit.common.template.Pagination;
+import com.kh.gogit.member.model.service.MemberServiceImpl;
 import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.project.model.service.ProjectServiceImpl;
 import com.kh.gogit.project.model.vo.Project;
@@ -79,8 +80,6 @@ public class ProjectController {
 	public String insertProject(Project p, Model model, HttpSession session) {
 		p.setProWriter(((Member)session.getAttribute("loginUser")).getMemId());
 		
-		// System.out.println(p);
-		
 		int result = pService.insertProject(p);
 				
 		if(result > 0) {
@@ -113,7 +112,71 @@ public class ProjectController {
 		new Gson().toJson(list, response.getWriter());
 	}
 	
+	@RequestMapping(value="applypro.pr", produces="application/json; charset=utf-8")
+	public void updateApplyProject(String pno, String userId, HttpServletResponse response, HttpSession session) throws IOException {
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("pno", pno);
+		map.put("userId", userId);
+		
+		int result = pService.updateApplyProject(map);
+		
+		if(result>0) {			
+			Member updateMember = pService.selectMember(userId);
+			session.setAttribute("loginUser", updateMember);
+		}
+		response.getWriter().print(result);
+	}
+	
+	@RequestMapping(value="cancel.pr", produces="application/json; charset=utf-8")
+	public void cancelProject(String pno, String userId, HttpServletResponse response, HttpSession session) throws IOException {
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("pno", pno);
+		map.put("userId", userId);
+		
+		int result = pService.updateCancleProject(map);
+		
+		if(result>0) {			
+			Member updateMember = pService.selectMember(userId);
+			session.setAttribute("loginUser", updateMember);
+		}
+		response.getWriter().print(result);
+	}	
+	
+	@RequestMapping(value="projectEnd.pr", produces="application/json; charset=utf-8")
+	public void completeProject(String pno, String userId, HttpServletResponse response, HttpSession session) throws IOException {
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("pno", pno);
+		map.put("userId", userId);
+		
+		int result = pService.updateCompleteProject(map);
+		
+		if(result>0) {			
+			Member updateMember = pService.selectMember(userId);
+			session.setAttribute("loginUser", updateMember);
+		}
+		response.getWriter().print(result);
+	}
+	
+	@RequestMapping(value="projectReStart.pr", produces="application/json; charset=utf-8")
+	public void restartProject(String pno, String userId, HttpServletResponse response, HttpSession session) throws IOException {
+		
+		HashMap<String, String> map = new HashMap<String, String>();
+		map.put("pno", pno);
+		map.put("userId", userId);
+		
+		int result = pService.updateRestartProject(map);
+		
+		if(result>0) {			
+			Member updateMember = pService.selectMember(userId);
+			session.setAttribute("loginUser", updateMember);
+		}
+		response.getWriter().print(result);
+	}
 	
 	
-
+	
+	
+	
 }

@@ -1,12 +1,14 @@
 package com.kh.gogit.project.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.gogit.common.model.vo.PageInfo;
+import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.project.model.vo.Project;
 import com.kh.gogit.project.model.vo.Stack;
 
@@ -53,5 +55,27 @@ public class ProjectDao {
 	public Project selectDetailList(SqlSessionTemplate sqlSession, int pno) {
 		return sqlSession.selectOne("projectMapper.selectDetailList", pno);
 	}
+	
+	public int updateApplyProject(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("projectMapper.updateApplyProject", map);
+	}
+	
+	public Member selectMember(SqlSessionTemplate sqlSession, String memId) {
+		return (Member)sqlSession.selectOne("memberMapper.loginMember", memId);
+	}
+	
+	public int updateCancleProject(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("projectMapper.updateCancleProject", map);
+	}
+	
+	public int updateCompleteProject(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("projectMapper.updateCompleteProject", map);
+	}
+	
+	public int updateRestartProject(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		return sqlSession.update("projectMapper.updateRestartProject", map);
+	}
+	
+	
 
 }

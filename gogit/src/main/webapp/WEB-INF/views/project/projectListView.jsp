@@ -223,8 +223,8 @@
 							                        
 							                        
 							                        
-							                        let result = map.list1;
-							                        let result1 = map.stackList;
+							                        let result = map.list1; // array
+							                        let result1 = map.stackList; // array
 							                        
 							                        console.log(result);
 							                        console.log(result1);
@@ -232,7 +232,8 @@
 							                        let value = "";
 							                        
 							                        for(let i=0; i<result.length; i++){
-							                        	
+							                        let proStatus = result[i].proStatus;
+							                        console.log(i + "status : " + proStatus)
 							                        		let rv = result[i];
 							                        		
 							                        		
@@ -243,20 +244,32 @@
 							                        		let count = rv.count;
 							                        		let prowriter = rv.proWriter;
 															let prostack = rv.proStack;
+															
+															
+							                        		if(proStatus === 'Y'){
+							                        			console.log("모집중");
+							                        			value += 
+									                        		'<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='+'detail.pr'+'">'
+																	+ '<div class="pro-public">모집중</div>'
+																	+ '<br>'
+																	+ '<div>마감일:'+deadLine+'</div>'
+																	+ '<br>'
+																	+ '<div>'+ proContent +'</div>'
+																	+ '<br>'						
+																	+ '<div class="pro-public1" id="content2_31">';							                        			
+							                        		}else{
+							                        			console.log("모집완료");
+							                        			value += 
+									                        		'<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='+'detail.pr'+'">'
+																	+ '<div class="pro-public" style="background-color: #d9d9d9;">모집마감</div>'
+																	+ '<br>'
+																	+ '<div>마감일:'+deadLine+'</div>'
+																	+ '<br>'
+																	+ '<div>'+ proContent +'</div>'
+																	+ '<br>'						
+																	+ '<div class="pro-public1" id="content2_31">';				                        			
+							                        		}
 							                        		
-							                        		console.log(deadLine);
-							                        		console.log(result1);
-							                        		
-							                        		value += 
-							                        		'<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='+'detail.pr'+'">'
-															+ '<div class="pro-public">모집중</div>'
-															+ '<br>'
-															+ '<div>마감일:'+deadLine+'</div>'
-															+ '<br>'
-															+ '<div>'+ proContent +'</div>'
-															+ '<br>'
-						
-															+ '<div class="pro-public1" id="content2_31">';
 															
 															let testu = positoin.split(",");
 															for(let i =0; i<testu.length; i++){
@@ -334,7 +347,14 @@
 							<div id="content2_3">
 								<c:forEach var="p" items="${ list }">
 									<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr?pno=${p.proNo}'">
-										<div class="pro-public">모집중</div>
+										<c:choose>
+											<c:when test="${p.proStatus eq 'Y' }">
+												<div class="pro-public">모집중</div>
+											</c:when>
+											<c:otherwise>
+												<div class="pro-public" style="background-color: #d9d9d9;">모집마감</div>
+											</c:otherwise>
+										</c:choose>
 										<br>
 										<div>마감일:${ p.deadLine }</div>
 										<br>
@@ -361,7 +381,7 @@
 	
 										<div><hr></div>
 										<div>조회수:0</div>
-										<div>작성자:${ loginUser.gitNick }</div>
+										<div>작성자:${ p.proWriter }</div>
 									</div>
 								</c:forEach>							
 								

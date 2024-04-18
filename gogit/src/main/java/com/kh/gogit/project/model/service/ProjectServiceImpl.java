@@ -1,6 +1,7 @@
 package com.kh.gogit.project.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,31 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public Project selectDetailList(int pno) {
 		return pDao.selectDetailList(sqlSession, pno);
+	}
+
+	@Override
+	public int updateApplyProject(HashMap<String, String> map) {
+		return pDao.updateApplyProject(sqlSession, map);
+	}
+
+	@Override
+	public Member selectMember(String memId) {
+		return pDao.selectMember(sqlSession, memId);
+	}
+
+	@Override
+	public int updateCancleProject(HashMap<String, String> map) {
+		return pDao.updateCancleProject(sqlSession, map);
+	}
+
+	@Override
+	public int updateCompleteProject(HashMap<String, String> map) {
+		return pDao.updateCompleteProject(sqlSession, map);
+	}
+
+	@Override
+	public int updateRestartProject(HashMap<String, String> map) {
+		return pDao.updateRestartProject(sqlSession, map);
 	}
 	
 }
