@@ -72,49 +72,56 @@ public class RepositoryController {
 		URL requestUrl = new URL(url);
 		HttpURLConnection urlConnection = (HttpURLConnection)requestUrl.openConnection();
 		urlConnection.setRequestMethod("GET");
-		BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream())); // 기반스트림을 가지고 보조스트림 만들어주기
+		BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
 		
-		String gitignore = "";
+		String gitName = "";
 		String line;
 		
-		while((line = br.readLine()) != null) {
-			gitignore += line;
+		while ((line = br.readLine()) != null) {
+			gitName += line;
 		}
 		
 		br.close();
-		urlConnection.disconnect();
 		
-//		JsonArray gitignoreArr = JsonParser.parseString(gitignore).getAsJsonArray();
+		JsonObject totalObj = JsonParser.parseString(gitName).getAsJsonObject();
 		
-//		System.out.println(gitignore);
-		
-		model.addAttribute("gitignore", gitignore);
+		model.addAttribute("gitName", totalObj);
 		
 		return "repository/repositoryEnrollForm";
 	}
 	
 	@RequestMapping("create.rp")
-	public void createRepo(HttpSession session, String repoName, String repoDesc, String visibility, String readme) {
-		/*
-		System.out.println(repoName);
-		System.out.println(repoDesc);
-		System.out.println(visibility);
-		System.out.println(readme);
-		*/
-		if(readme == null) {
-			readme = "true";
+	public String createRepo(HttpSession session, String repoName, String repoDesc, String visibility, String readme, String[] git) {
+		
+		String gitStr = "";
+		for(String str : git) {
+			gitStr += str;
 		}
 		
-		//System.out.println(readme);
+		System.out.println(gitStr);
+		
+		if(readme == null) {
+			readme = "false";
+		}
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		String createRepo = rService.createRepo(m, repoName, repoDesc, visibility, readme);
-		System.out.println("여기왔냐?"+createRepo);
-		
-		/*
-		JsonObject repoObj = JsonParser.parseString(createRepo).getAsJsonObject();
-		System.out.println(repoObj.getAsJsonObject().get("name").getAsString());
-		*/
+
+		if(createRepo != null) {
+			
+			String createGit = rService.createGitignore(m, repoName, gitStr);
+			
+			if(createGit != null) {
+				session.setAttribute("alertMsg", "레파지토리를 생성했습니다");
+				return "redirect:list.rp";
+			} else {
+				System.out.println("깃이그노어 생성 실패");
+				return null;
+			}
+		} else {
+			System.out.println("레파지토리 생성 실패");
+			return null;
+		}
 	}
 	
 	@RequestMapping("detail.rp")

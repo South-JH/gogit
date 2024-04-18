@@ -56,14 +56,19 @@
 	          			</div>
 
 						<!-- 목록 시작 -->
-						<div>
+						<div class="repo-list-total-wrap">
+							<div>
+							
+							</div>
+							<div></div>
+						
 							<c:forEach var="rpList" items="${ rpList }">
 			          			<div class="repo-list-wrap">
 									<div class="repo-list-area">
 										<div class="repo-list-one">
 											<div class="repo-list-one-area">
 												<div>
-													<img src="resources/images/repo-img.png" width="80px" height="80px">
+													<img src="resources/images/repo-img.png" width="60px" height="60px">
 												</div>
 												<div class="repo-title-area">
 													<a href="detail.rp">

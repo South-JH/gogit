@@ -1,5 +1,5 @@
 #navbarNav {
-	position: relative;
+/* 	position: relative; */
 }
 
 .header-searchbar {
@@ -8,15 +8,12 @@
 	justify-content: center;
 	border: 1px solid #e3e3e3;
 	border-radius: 25px;
-/* 	background: #eee; */
 	width: 400px;
 	height: 37px;
 	padding: 10px 20px;
-    position: absolute;
-    /* left: 175px;
-    top: 10px; */
-    left: 550px;
-    top: 15px;
+/*     position: absolute; */
+/*     left: 550px; */
+/*     top: 15px; */
 }
 
 .header-searchbar>div {
@@ -49,11 +46,11 @@
 /* #header-nav {
 	position: relative;
 } */
-#header-alarm {
+/* #header-alarm {
 	position: absolute;
 	right: 60px;
 	top: 0px;
-}
+} */
 /*
 #header-profile-img {
 	top: -5px;	

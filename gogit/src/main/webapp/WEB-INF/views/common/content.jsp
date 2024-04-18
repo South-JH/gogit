@@ -34,8 +34,9 @@
           <!--  Row 1 -->
           <br> <br>
           <div class="row">
-          <h3>프로젝트 캘린더</h3>
-          <jsp:include page="../calendar/calendar.jsp" />
+          
+	          <h3>프로젝트 캘린더</h3>
+	          <jsp:include page="../calendar/calendar.jsp" />
             
           </div>
           <br> <hr> <br>

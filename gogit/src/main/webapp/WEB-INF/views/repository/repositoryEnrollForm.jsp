@@ -6,84 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-.cont-select {
-    position: relative;
-    width: 200px;
-}
-
-.btn-select {
-	width: 100%;
-    padding: 13px 30px 13px 14px;
-    font-size: 12px;
-    line-height: 14px;
-    background-color: #fff;
-    border: 1px solid #C4C4C4;
-    box-sizing: border-box;
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: left;
-    /* 말줄임 */
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.btn-select:hover, .btn-select:focus {
-    border: 1px solid #9B51E0;
-    outline: 3px solid #F8E4FF;
-}
-
-.list-member {
-    display: none;
-    position: absolute;
-    width: 100%;
-    top: 49px;
-    left: 0;
-    border: 1px solid #C4C4C4;
-    box-sizing: border-box;
-    box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
-}
-
-.btn-select.on {
-    background: url("images/icon-Triangle-up.png") center right 14px no-repeat;
-}
-
-.btn-select.on+.list-member {
-    display: block;
-}
-
-.list-member li {
-    height: 40px;
-    padding: 5px 8px;
-    box-sizing: border-box;
-}
-
-.list-member li button {
-    width: 100%;
-    padding: 7px 10px;
-    border: none;
-    background-color: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: left;
-    /* 말줄임 */
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-}
-
-.list-member li button:hover, .list-member li button:focus {
-    background-color: #F8E4FF;
-}
-</style>
 </head>
 <body>
 
 	<jsp:include page="../common/sideBar.jsp" />
 	
 	<jsp:include page="../common/header.jsp" />
+	
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
 		data-navbarbg="skin6" data-sidebartype="full"
@@ -136,28 +67,27 @@
 								<div class="create-repo-select-public-area">
 									<div class="create-repo-select-public">
 										<div class="select-radio-input-div">
-											<input type="radio" name="visibility" value="false">
+											<input type="radio" name="visibility" value="false" id="radio1">
 										</div>
 										<div>
-											<img src="resources/images/book-open.png" width="20"
-												height="20">
+											<img src="resources/images/book-open.png" width="20" height="20">
 										</div>
-										<div>Public</div>
+										<div><label for="radio1">Public</label></div>
 									</div>
 									<div class="create-repo-select-public">
 										<div class="select-radio-input-div">
-											<input type="radio" name="visibility" value="true">
+											<input type="radio" name="visibility" value="true" id="radio2">
 										</div>
 										<div>
 											<img src="resources/images/lock.png" width="20" height="20">
 										</div>
-										<div>Private</div>
+										<div><label for="radio2">Private</label></div>
 									</div>
 								</div>
 
 								<div class="create-repo-checkbox-area">
 									<div>
-										<input type="checkbox" name="readme" value="false">
+										<input type="checkbox" name="readme" value="true">
 									</div>
 									<div>Add a README file</div>
 								</div>
@@ -166,11 +96,8 @@
 									<div>Add .gitignore</div>
 									<div>
 										<article class="cont-select">
-											<select id="gitignore-area">
-											<%-- <c:forEach var="git" items="${gitignore}">
-												<option>${ git }</option>
-											</c:forEach> --%>
-												<%-- <option>${ gitignore }</option> --%>
+											<select id="gitignore-area" name="git" class="select" multiple="multiple">
+											
 											</select>
 										</article>
 									</div>
@@ -208,37 +135,43 @@
 		})
 		
 		$(document).ready(function(){
-			console.log(${ gitignore });
 			
-			let gitignore = ${ gitignore };
-			/* console.log(gitignore); */
-			/* console.log(gitignore.c); */
-			//console.log($("#gitignore-area"));
-			let gitignoreArea = $("#gitignore-area");
-			let value = "";
+			let gitArr = [];
+			let gitName = ${ gitName };
+			console.log(${ gitName });
 			
-			for(let i in gitignore){
-// 				value += "<li><button>" + i + "</button></li>";
- 				value += "<option>" + i + "</option>";
+			for(let key in gitName){
+				let value = gitName[key];
+				gitArr.push(value);
 				
-				console.log(gitignore[i].contents);
 			}
 			
-			gitignoreArea.html(value);
-			/*
-	        const btn = document.querySelector('.btn-select');
-	        const list = document.querySelector('.git-list');
-	        btn.addEventListener('click', () => {
-	            btn.classList.toggle('on');
-	        });
-	        list.addEventListener('click', (event) => {
-	            if (event.target.nodeName === "BUTTON") {
-	                btn.innerText = event.target.innerText;
-	                btn.classList.remove('on');
-	            }
-	        });
-			*/
+			//console.log("array confirm");
+			//console.log(gitArr);
+			let nameValue = "";
+			
+			console.log("gitArr .name");
+			let count = 0;
+			console.log(gitArr.length);
+			
+			for(let i=0; i<gitArr.length; i++){
+				
+				if(gitArr[i].name != "KonyVisualizer" && gitArr[i].name != "Django" ) {
+					count++;
+					nameValue += "<option value='" + gitArr[i].contents + "'>" + gitArr[i].name + "</option>";
+					console.log(gitArr[i].name);
+					
+				}
+			}
+			console.log(count);
+			
+			//console.log(nameValue);
+			let gitignore = $("#gitignore-area");
+			gitignore.html(nameValue);
+			
+			$('#gitignore-area').select2();
 		})
+		
 	</script>
 	
 <link href="resources/repository/repositoryEnrollForm.css" rel="stylesheet">
