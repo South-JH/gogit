@@ -175,6 +175,11 @@ public class ProjectController {
 		response.getWriter().print(result);
 	}
 	
+	@RequestMapping("search.jm")
+	public String searchList() {
+		return "common/searchView";
+	}
+	
 	
 	
 	

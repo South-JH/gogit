@@ -80,8 +80,13 @@
               <div>
               	<div class="header-searchbar">
               		<div>
-              			<i class="ti ti-search"></i>
+              			<i class="ti ti-search" onclick="searchjm();"></i>
               		</div>
+                  <script>
+                    function searchjm(){
+                      location.href="search.jm"
+                    }
+                  </script>
               		<div>
               			<input type="text" placeholder="What are you looking for?">
               		</div>
