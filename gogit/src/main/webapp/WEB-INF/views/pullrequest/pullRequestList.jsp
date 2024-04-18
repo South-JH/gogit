@@ -212,33 +212,16 @@
 									<!-- <a href="list.pullrq">Open</a>
 									<a href="list.pullrq/closed">Closed</a> -->
 								</div>
-								<table>
+								<table id="pullRequest-table">
 									<thead>
 										<tr>
 											<th>Pull request Title</th>
-											<th>Pull request 작성자</th>
+											<th>Author</th>
 											<th>Assignees</th>
-											<th>Milestone</th>
+											<th>Create Date</th>
 										</tr>
 									</thead>
-									<tbody>
-										<!-- for문으로 pullreqArr 다 돌기 -->
-										<c:forEach var="pullreq" items="${ list }">
-											<tr>
-												<td>${ pullreq.pullTitle }</td>
-												<td>${ pullreq.pullWriter }</td>
-												<td>
-													<c:if test="${ not empty pullreq.pullManager }">
-														<c:set var="assignee" value="${ fn:split(pullreq.pullManager, ',') }"/>
-														<c:forEach var="profile" items="${ fn:split(pullreq.pullManagerProfile, ',') }" varStatus="status">
-															<span tooltip="${ assignee[status.index] }" flow="down"><img class="profile" src="${ profile }" style="width: 25px; height: 25px; border-radius: 100%;"></span>
-														</c:forEach>
-													</c:if>
-												</td>
-												<td>0.1</td>
-											</tr>
-										</c:forEach>
-									</tbody>
+									<tbody></tbody>
 								</table>
 							</div>
 						</div>
@@ -247,32 +230,134 @@
 			</div>
 		</div>
 	</div>
-
-	<!-- 
+	
 	<script>
 		$(function() {
-			const list = ${list};
-			$("input[name=status]").on("change", function() {
-				const list = ${ list };
+			const list = ${ list };
 				
-				for(let i in list) {
-					// console.log(list[i]);
-					const title = list[i].title;
-					const content = list[i].body;
-					const writer = list[i].user.login;
-					const assignees = list[i].assignees;
-					const 
+			let openList = [];
+			let closedList = [];
+			for(let i in list) {
+				if(list[i].status == "open") {
+					openList.push(list[i]);
+				} else {
+					closedList.push(list[i]);
 				}
+			}
+			
+			let tbody = "";
+			
+			for(let i in openList) {
+				const title = openList[i].pullTitle;
+				const content = openList[i].pullContent;
+				const writer = openList[i].pullWriter;
+				const assignees = openList[i].pullManager;
+				const profiles = openList[i].pullManagerProfile;
+				const status = openList[i].status;
+				const createDate = openList[i].createDate.split('T')[0];
+
+				tbody += `<tr>
+							<td>\${ title }</td>
+							<td>\${ writer }</td>
+							<td>
+						`;
 				
-				console.log(list);
-				// if($("input[name=status]:checked").val() === "open") {
+				if(assignees != "") {
+					let assigneeArr = assignees.split(',');
+					let profileArr = profiles.split(',');
 
-				// } else {
+					for(let i = 0; i < profileArr.length; i++) {
+						tbody += `<span tooltip="\${ assigneeArr[i] }" flow="down">
+									<img class="profile" src="\${ profileArr[i] }" style="width: 25px; height: 25px; border-radius: 100%;">
+								</span>
+								`;
+					}
+				}
 
-				// }
+				tbody += `</td>
+							<td>\${ createDate }</td>
+						<tr>
+						`;
+			}
+			
+			$('#pullRequest-table>tbody').html(tbody);
+
+			$("input[name=status]").on("change", function() {
+				let tbody = "";
+
+				if($("input[name=status]:checked").val() == "open") {
+					for(let i in openList) {
+						const title = openList[i].pullTitle;
+						const content = openList[i].pullContent;
+						const writer = openList[i].pullWriter;
+						const assignees = openList[i].pullManager;
+						const profiles = openList[i].pullManagerProfile;
+						const status = openList[i].status;
+						const createDate = openList[i].createDate.split('T')[0];
+
+						tbody += `<tr>
+									<td>\${ title }</td>
+									<td>\${ writer }</td>
+									<td>
+								`;
+						
+						if(assignees != "") {
+							let assigneeArr = assignees.split(',');
+							let profileArr = profiles.split(',');
+
+							for(let i = 0; i < profileArr.length; i++) {
+								tbody += `<span tooltip="\${ assigneeArr[i] }" flow="down">
+											<img class="profile" src="\${ profileArr[i] }" style="width: 25px; height: 25px; border-radius: 100%;">
+										</span>
+										`;
+							}
+						}
+
+						tbody += `</td>
+									<td>\${ createDate }</td>
+								<tr>
+								`;
+					}
+
+				} else {
+					for(let i in closedList) {
+						const title = closedList[i].pullTitle;
+						const content = closedList[i].pullContent;
+						const writer = closedList[i].pullWriter;
+						const assignees = closedList[i].pullManager;
+						const profiles = closedList[i].pullManagerProfile;
+						const status = closedList[i].status;
+						const createDate = closedList[i].createDate.split('T')[0];
+
+						tbody += `<tr>
+									<td>\${ title }</td>
+									<td>\${ writer }</td>
+									<td>
+								`;
+						
+						if(assignees != "") {
+							let assigneeArr = assignees.split(',');
+							let profileArr = profiles.split(',');
+
+							for(let i = 0; i < profileArr.length; i++) {
+								tbody += `<span tooltip="\${ assigneeArr[i] }" flow="down">
+											<img class="profile" src="\${ profileArr[i] }" style="width: 25px; height: 25px; border-radius: 100%;">
+										</span>
+										`;
+							}
+						}
+
+						tbody += `</td>
+									<td>\${ createDate }</td>
+								<tr>
+								`;
+					}
+				}
+
+				$('#pullRequest-table>tbody').html(tbody);
 			});
 		})
 	</script>
-	 -->	
+	
 </body>
 </html>
