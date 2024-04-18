@@ -187,15 +187,153 @@
 								
 									<div class="form-group">																				
 										<div>
-											<select style="background-color: #ffffff;" class="form-control" id="sel1" name="sellist1">
+											<select id="name" style="background-color: #ffffff;" class="form-control" id="sel1" name="sellist1">
 												<option>기술스택↓</option>
-												<option>자바</option>
-												<option>자바스크립트</option>
-												<option>파이썬</option>
-												<option>Go</option>
+												<option value="java">자바</option>
+												<option value="javascript">자바스크립트</option>
+												<option value="python">파이썬</option>
+												<option value="go">Go</option>
+												<option value="django">디장고</option>
 											</select>
 										</div>										
 									</div>
+									
+									<script>
+										function searchProject(selectedName, p){
+											$.ajax({
+												url:"search.pr",
+												data:{keyword:selectedName,
+													  cpage:p
+													},success:function(map){
+														
+													console.log(map)
+																									
+													let pi = map.pi;			
+							                        let currentPage = pi.currentPage;
+							                        let startPage = pi.startPage;
+							                        let endPage = pi.endPage;
+							                        let maxPage = pi.maxPage;
+							                        let $paging = $(".pagination");
+							                        
+							                        let keyword = map.keyword;
+							                      
+							                        
+							                        $("#content2_3").html("");
+							                        $paging.html("");
+							                        
+							                        
+							                        
+							                        let result = map.list1; // array
+							                        let result1 = map.stackList; // array
+							                        
+							                        console.log(result);
+							                        console.log(result1);
+							                        
+							                        let value = "";
+							                        
+							                        for(let i=0; i<result.length; i++){
+							                        let proStatus = result[i].proStatus;
+							                        console.log(i + "status : " + proStatus)
+							                        		let rv = result[i];
+							                        		
+							                        		
+							                        		let deadLine = rv.deadLine;
+							                        		let proContent = rv.proContent;
+							                        		let positoin = rv.positoin; //"zzszs,zszzs,zszszs"
+							                        		
+							                        		let count = rv.count;
+							                        		let prowriter = rv.proWriter;
+															let prostack = rv.proStack;
+															
+															
+							                        		if(proStatus === 'Y'){
+							                        			console.log("모집중");
+							                        			value += 
+									                        		'<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='+'detail.pr'+'">'
+																	+ '<div class="pro-public">모집중</div>'
+																	+ '<br>'
+																	+ '<div>마감일:'+deadLine+'</div>'
+																	+ '<br>'
+																	+ '<div>'+ proContent +'</div>'
+																	+ '<br>'						
+																	+ '<div class="pro-public1" id="content2_31">';							                        			
+							                        		}else{
+							                        			console.log("모집완료");
+							                        			value += 
+									                        		'<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='+'detail.pr'+'">'
+																	+ '<div class="pro-public" style="background-color: #d9d9d9;">모집마감</div>'
+																	+ '<br>'
+																	+ '<div>마감일:'+deadLine+'</div>'
+																	+ '<br>'
+																	+ '<div>'+ proContent +'</div>'
+																	+ '<br>'						
+																	+ '<div class="pro-public1" id="content2_31">';				                        			
+							                        		}
+							                        		
+															
+															let testu = positoin.split(",");
+															for(let i =0; i<testu.length; i++){
+																value += '<div>'+ testu[i] +'</div>'
+															}
+															value += '</div>'
+															      + '<div style="display: flex; margin-top: 5px;">'
+															
+															for(let i=0; i<result1.length; i++){
+																
+																let testt = prostack.split(",");
+																
+																for(let j=0; j<testt.length; j++){
+																	if(testt[j] == result1[i].stackName)
+															value += '<div class="stackimg">'
+																  + '<img src="'+ result1[i].stackImg +'"></div>'																  
+																}
+																
+															} 
+															value += '</div>'
+															      + '<div><hr></div>'
+																  + '<div>조회수:0</div>'
+																  + '<div>작성자:${ loginUser.gitNick }</div>'		
+															  	  + '</div>'																			                        	
+							                        		}							                        	
+							                        
+							                        $("#content2_3").html(value);
+							                        
+							                        if (currentPage != 1) {						                        	
+								                        $paging.append(
+								                                "<li class='page-item'><a class='page-link' href='search.pr?cpage=" + (currentPage - 1) + "&keyword=" + keyword + "'>Previous</a></li>"
+								                            );
+								                        }
+								                        
+								                        for (let p = startPage; p <= endPage; p++) {
+								                            if (p == currentPage) {
+								                              $paging.append("<li class='page-item'><a class='page-link'>"+p+"</a></li>");
+								                            } else {
+								                              $paging.append("<li class='page-item'><a class='page-link' onclick=searchProject('" + keyword + "'," + p + ")>" + p +"</a></li>");
+								                            }
+								                          } 
+								                        
+								                        if (currentPage != maxPage) {
+								                        	$paging.append(
+								                        		    "<li class='page-item'><a class='page-link' href='search.pr?cpage=" + (currentPage + 1) + "&keyword="+ keyword + "'>Next</a></li>");
+								                          }
+
+							                        if(keyword != null){
+							                        	$("#sel1 option[value=" + keyword + "]").attr("selected", true);
+							                        }
+							                        						  									                        
+												}, error:function(){
+													console.log("ajax 통신 실패!");
+												}
+											});
+										}									
+										
+										$('#name').on('change', function(){
+											
+											let selectedName = $(this).val();
+											searchProject(selectedName,1);
+										})																
+									</script>
+														
 									
 									<div class="repo-create-btn" style="width: 120px; margin-left: 5px;">
 										<div><a class="repo-create-btn-color" href="enrollForm.pj">프로젝트 작성</a></div>											
@@ -208,12 +346,19 @@
 						<div class="middle-div">
 							<div id="content2_3">
 								<c:forEach var="p" items="${ list }">
-									<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr'">
-										<div class="pro-public">모집중</div>
+									<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr?pno=${p.proNo}'">
+										<c:choose>
+											<c:when test="${p.proStatus eq 'Y' }">
+												<div class="pro-public">모집중</div>
+											</c:when>
+											<c:otherwise>
+												<div class="pro-public" style="background-color: #d9d9d9;">모집마감</div>
+											</c:otherwise>
+										</c:choose>
 										<br>
 										<div>마감일:${ p.deadLine }</div>
 										<br>
-										<div>${ p.proContent }</div>
+										<div>${ p.proTitle }</div>
 										<br>
 	
 										<div class="pro-public1" id="content2_31"> <!--style="display: flex; margin-bottom: 10px;"-->
@@ -236,7 +381,7 @@
 	
 										<div><hr></div>
 										<div>조회수:0</div>
-										<div>작성자:${ loginUser.gitNick }</div>
+										<div>작성자:${ p.proWriter }</div>
 									</div>
 								</c:forEach>							
 								
