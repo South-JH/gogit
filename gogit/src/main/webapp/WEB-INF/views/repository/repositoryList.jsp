@@ -9,7 +9,7 @@
 <style>
 .repo-list-count {
 	height: 50px;
-	background-color: #e6e6e6;
+	background-color: #eaedf3;
 	border-radius: 8px 8px 0 0;
 	padding: 10px 15px;
 }
@@ -77,7 +77,7 @@
 							<div>
 								<div>
 									<div class="repo-list-count">
-										<div>16 repository</div>
+										<div><h4>16 repository</h4></div>
 									</div>
 									<div class="repo-list-wrap">
 									<c:forEach var="rpList" items="${ rpList }">
