@@ -176,12 +176,133 @@
 
 						<div class="top-div">
 							<div class="topmenu-div" style="display:flex;">
-								<div style="width: 90px;" class="testtest"><a href="test.pr" style="color: rgb(2 56 75);">전체</a></div>					
-								<div style="width: 100px;"><a href="#" style="color: lightgray;">모집 중</a></div>
-								<div style="width: 120px;"><a href="#" style="color: lightgray;">모집 완료</a></div>
+								<div style="width: 90px;" class="testtest"><a onclick="allbtn()" style="color: rgb(2 56 75);">전체</a></div>					
+								<div style="width: 100px;" class="applying"><a onclick="applying()" style="color: lightgray; cursor: pointer;">모집 중</a></div>
+								<div style="width: 120px;" class="applycomplete"><a onclick="applycomplete()" style="color: lightgray; cursor: pointer;">모집 완료</a></div>
 							</div>
 							<br>
 							<br>
+
+							<script>
+								function allbtn(){
+									$(".testtest>a").css("color", "rgb(2 56 75)");
+									$(".applying>a").css("color", "lightgray");
+									$(".applycomplete>a").css("color", "lightgray");
+									location.href="list.pj";
+
+								}
+
+								function applying(){
+									$(".testtest>a").css("color", "lightgray");
+									$(".applying>a").css("color", "rgb(2 56 75)");
+									$(".applycomplete>a").css("color", "lightgray");
+
+									$.ajax({
+										url:"applyingList.pr",
+										success:function(map){
+											let pi = map.pi;			
+					                        let currentPage = pi.currentPage;
+					                        let startPage = pi.startPage;
+					                        let endPage = pi.endPage;
+					                        let maxPage = pi.maxPage;
+					                        let $paging = $(".pagination");
+					                        
+					                        $("#content2_3").html("");
+					                        $paging.html("");
+					                        							                       						                        
+					                        let result = map.list; // array
+					                        let result1 = map.stackList; // array
+					                        							                        
+					                        let value = "";
+					                        
+					                        for(let i=0; i<result.length; i++){
+						                        let proStatus = result[i].proStatus;
+						                        console.log(i + "status : " + proStatus)
+						                        		let rv = result[i];
+						                        		
+						                        		
+						                        		let deadLine = rv.deadLine;
+						                        		let proContent = rv.proContent;
+						                        		let positoin = rv.positoin; //"zzszs,zszzs,zszszs"
+		                        
+						                        		let count = rv.count;
+						                        		let prowriter = rv.proWriter;
+														let prostack = rv.proStack;
+														
+														value += 
+							                        		'<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='+'detail.pr'+'">'
+															+ '<div class="pro-public">모집중</div>'
+															+ '<br>'
+															+ '<div>마감일:'+deadLine+'</div>'
+															+ '<br>'
+															+ '<div>'+ proContent +'</div>'
+															+ '<br>'						
+															+ '<div class="pro-public1" id="content2_31">';
+															
+														let testu = positoin.split(",");
+														for(let i =0; i<testu.length; i++){
+															value += '<div>'+ testu[i] +'</div>'
+														}
+														value += '</div>'
+														      + '<div style="display: flex; margin-top: 5px;">'
+														
+														for(let i=0; i<result1.length; i++){
+															
+															let testt = prostack.split(",");
+															
+															for(let j=0; j<testt.length; j++){
+																if(testt[j] == result1[i].stackName)
+														value += '<div class="stackimg">'
+															  + '<img src="'+ result1[i].stackImg +'"></div>'																  
+															}
+															
+														} 
+														value += '</div>'
+														      + '<div><hr></div>'
+															  + '<div>조회수:'+ count +'</div>'
+															  + '<div>작성자:${ loginUser.gitNick }</div>'		
+														  	  + '</div>'																			                        	
+						                        		}
+					                        
+					                        $("#content2_3").html(value);
+					                        
+					                        if (currentPage != 1) {						                        	
+						                        $paging.append(
+						                                "<li class='page-item'><a class='page-link' href='applyingList.pr?cpage=" + (currentPage - 1) + "'>Previous</a></li>"
+						                            );
+						                        }
+						                        
+						                        for (let p = startPage; p <= endPage; p++) {
+						                            if (p == currentPage) {
+						                              $paging.append("<li class='page-item'><a class='page-link'>"+p+"</a></li>");
+						                            } 
+						                          } 
+						                        
+						                        if (currentPage != maxPage) {
+						                        	$paging.append(
+						                        		    "<li class='page-item'><a class='page-link' href='applyingList.pr?cpage=" + (currentPage + 1) + "'>Next</a></li>");
+						                          }
+
+											
+										},error:function(){
+											
+										}
+									});
+								}
+
+								function applycomplete(){
+									$(".testtest>a").css("color", "lightgray");
+									$(".applying>a").css("color", "lightgray");
+									$(".applycomplete>a").css("color", "rgb(2 56 75)");
+
+								}
+							</script>
+
+
+
+
+
+
 
 							<div style="display:flex;">
 								
@@ -204,10 +325,7 @@
 												url:"search.pr",
 												data:{keyword:selectedName,
 													  cpage:p
-													},success:function(map){
-														
-													console.log(map)
-																									
+													},success:function(map){																																							
 													let pi = map.pi;			
 							                        let currentPage = pi.currentPage;
 							                        let startPage = pi.startPage;
@@ -220,15 +338,10 @@
 							                        
 							                        $("#content2_3").html("");
 							                        $paging.html("");
-							                        
-							                        
-							                        
+							                        							                       						                        
 							                        let result = map.list1; // array
 							                        let result1 = map.stackList; // array
-							                        
-							                        console.log(result);
-							                        console.log(result1);
-							                        
+							                        							                        
 							                        let value = "";
 							                        
 							                        for(let i=0; i<result.length; i++){
@@ -240,6 +353,7 @@
 							                        		let deadLine = rv.deadLine;
 							                        		let proContent = rv.proContent;
 							                        		let positoin = rv.positoin; //"zzszs,zszzs,zszszs"
+							                        		let count = rv.count;
 							                        		
 							                        		let count = rv.count;
 							                        		let prowriter = rv.proWriter;
@@ -291,7 +405,7 @@
 															} 
 															value += '</div>'
 															      + '<div><hr></div>'
-																  + '<div>조회수:0</div>'
+																  + '<div>조회수:'+ count +'</div>'
 																  + '<div>작성자:${ loginUser.gitNick }</div>'		
 															  	  + '</div>'																			                        	
 							                        		}							                        	
@@ -380,7 +494,7 @@
 										</div>
 	
 										<div><hr></div>
-										<div>조회수:0</div>
+										<div>조회수:${ p.count }</div>
 										<div>작성자:${ p.proWriter }</div>
 									</div>
 								</c:forEach>							

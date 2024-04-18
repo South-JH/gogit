@@ -144,7 +144,7 @@
                                     	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
                                     	$("#eventbtn").text("모집 재개");
                                     	$("#eventbtn").attr("onclick", "projectstart()");
-                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">');
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 20px;" class="bookmark">');
                                     }
                                     
                                     
@@ -152,28 +152,28 @@
                                     	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
                                     	$("#eventbtn").text("모집 마감");
                                     	$("#eventbtn").attr("onclick", "projectEnd()");   
-                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark_filled.png" style="float:right; padding-right: 40px;" class="bookmark">');                                           
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark_filled.png" style="float:right; padding-right: 20px;" class="bookmark">');                                           
                                     }
                                     
                                     function drawNotMyProject(){
                                     	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
                                     	$("#eventbtn").text("중복신청 불가합니다.");
                                     	$("#eventbtn").attr("disabled", true);
-                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark_filled.png" style="float:right; padding-right: 40px;" class="bookmark">');
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark_filled.png" style="float:right; padding-right: 20px;" class="bookmark">');
                                     }
                                     
                                     function drawEndBtn(){
                                     	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
                                     	$("#eventbtn").text("마감된 프로젝트");
                                     	$("#eventbtn").attr("disabled", true);
-                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">');
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 20px;" class="bookmark">');
                                     }
                                     
                                     function drawCancleBtn(){
                                     	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
                                     	$("#eventbtn").text("프로젝트 신청취소")
                                     	$("#eventbtn").attr("onclick", "cancel()");
-                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark_filled.png" style="float:right; padding-right: 40px;" class="bookmark">');                                                                    	                                 
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark_filled.png" style="float:right; padding-right: 20px;" class="bookmark">');                                                                    	                                 
                                     	
                                     }
                                     
@@ -181,7 +181,7 @@
                                     	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
                                     	$("#eventbtn").text("프로젝트 신청하기");
                                     	$("#eventbtn").attr("onclick", "apply();");
-                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">');
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 20px;" class="bookmark">');
                                     }
                                     
                                     	function apply(){ // 신청하기(신청자입장)                                   	
@@ -332,8 +332,13 @@
                             <div class="bottom-div">
                                 <div><h2>프로젝트 소개</h2></div>
                                 <hr>
-                                <div style="height: 200px;">${ p.proContent }</div>                         
-                                <div style="float: right;"><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">뒤로가기</button><button type="button" class="btn btn-warning" style="background-color: rgb(2 56 75);">수정하기</button></div>
+                                <div style="height: 200px;">${ p.proContent }</div> 
+                                <div>
+                                    <div style="float: right;"><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);" onclick="history.back();">뒤로가기</button></div>
+                                    <c:if test="${ loginUser.memId eq p.proWriter }">
+                                     	<div style="float: right;"><button type="button" class="btn btn-warning" style="background-color: rgb(2 56 75);">수정하기</button></div>
+                                    </c:if>
+                                </div>                        
                                 <br>
                                 <hr>
 

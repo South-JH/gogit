@@ -46,5 +46,8 @@ public interface ProjectService {
 	
 	// 세션 갈아끼운 유저 조회해오기
 	Member selectMember(String memId);
+	
+	// 모집중만 조회
+	ArrayList<Project> applySelectList(PageInfo pi);
 
 }

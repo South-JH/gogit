@@ -175,6 +175,26 @@ public class ProjectController {
 		response.getWriter().print(result);
 	}
 	
+	@RequestMapping(value="applyingList.pr", produces="application/json; charset=utf-8")
+	public void applySelectList(@RequestParam (value="cpage", defaultValue ="1" ) int currentPage, HttpServletResponse response) throws JsonIOException, IOException {
+		int listCount = pService.selectListCount();
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 3, 8);
+		ArrayList<Project> list = pService.applySelectList(pi);
+		ArrayList<Stack> stackList = pService.selectStackList();
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pi", pi);
+		map.put("list", list);
+		map.put("stackList", stackList);
+		
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(map, response.getWriter());
+	}
+	
+	
+	
+	
+	
 	@RequestMapping("search.jm")
 	public String searchList() {
 		return "common/searchView";
