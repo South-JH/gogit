@@ -138,7 +138,7 @@ public class RepositoryController {
 	}
 	
 	@RequestMapping("detail.rp")
-	public String repoDetailView(HttpSession session) {
+	public String repoDetailView(HttpSession session, String repoName) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		String repoList = rService.repositoryList(m);

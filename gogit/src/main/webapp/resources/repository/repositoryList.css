@@ -1,8 +1,13 @@
 /* 전체 레파지토리 wrap */
+.row {
+	justify-content: center;
+}
+
 .repo-wrap {
 	display: flex;
 	flex-direction: column;
 	height: auto;
+	width: 80%;
 }
 
 .repo-wrap>div {
@@ -91,7 +96,7 @@ h2 {
 .repo-create {
 	display: flex;
 	justify-content: space-between;
-	width: 18%;
+	width: 23%;
 }
 
 .repo-create-btn, .repo-btn {
@@ -101,105 +106,48 @@ h2 {
 }
 
 /* 레포지토리 리스트 목록 스타일 */
-.repo-list-one {
-/* 	border: 1px solid #e6e6e6; */
-	border-radius: 6px;
-	height: 90px;
-	width: 100%;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding: 15px 20px;
-}
-
 .repo-list-total-wrap {
 	border: 1px solid #e6e6e6;
 	border-radius: 8px;
 }
 
-.repo-list-area {
-/* 	padding-top: 30px; */
+.repo-list-count {
+	height: 50px;
+	background-color: #eaedf3;
+	border-radius: 8px 8px 0 0;
+	padding: 10px 15px;
 }
 
-.repo-search {
-	padding-right: 7px;
-}
-
-.body-wrapper {
-	/* background-color: #f9f9ff; */
-}
-
-a {
-	color: #333333;
-	text-decoration: none;
-}
-
-.repo-title-area {
-	padding: 0px 35px;
-}
-
-.repo-list-one-area {
+.repo-list-top-area {
 	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 40px;
 }
 
-.repo-other-area {
-	height: 100%;
-    width: 35px;
-	display: flex;
-    flex-direction: row-reverse;
-	cursor: pointer;
-	position: relative;
+.repo-list-wrap-one {
+	border-top: 1px solid #e6e6e6;
 }
 
-.repo-other-img {
-	width: 35px;
-	height: 35px;
-	border-radius: 35px;
-	display: flex;
-    justify-content: center;
-    align-items: center;
+.repo-list-wrap-one>div {
+	padding: 10px 20px;
 }
 
-.repo-other-img:hover {
-	background-color: #eeeeee;
-}
-
-.repo-other {
-	display: flex;
-	flex-direction: column;
-    align-items: center;
-    width: 70px;
-	height: 90px;
-	position: absolute;
-    right: 50px;
-	border: 1px solid #e6e6e6;
-	/* box-shadow: 0px 0px 1px; */
-	display: none;
-	border-radius: 6px;
-}
-
-.repo-other>div {
-	height: 30px;
-	width: 100%;
+.top-area-title-visibility {
 	display: flex;
 	align-items: center;
-	justify-content: center;
-	cursor: pointer;
 }
 
-.repo-other button {
-	border: none;
-	background-color: transparent;
+.top-area-title-visibility h4 {
+/* 	color: #33bbff; */
+	padding-right: 30px;
+	margin: none;
 }
 
-.repo-other>div:hover {
-	background-color: #eeeeee;
-}
-
-.repo-public {
-	border: 1px solid #d9d9d9;
-	border-radius: 30px;
-	width: 80px;
+.top-area-visibility {
+	border: 1px solid #e6e6e6;
+	border-radius: 25px;
+	width: 90px;
 	height: 30px;
 	display: flex;
 	align-items: center;
@@ -207,14 +155,54 @@ a {
 	font-weight: 600;
 }
 
-#repo-other-a {
-	color: black;
+.top-area-action {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 120px;
 }
 
-.repo-other>div:first-child {
-	border-radius: 6px 6px 0 0;
+.top-area-action i {
+	border: 1px solid #e6e6e6;
+	border-radius: 15px;
+	width: 30px;
+	height: 30px;
+	padding: 5px;
+	font-size: 25px;
+	cursor: pointer;
 }
 
-.repo-other>div:last-child {
-	border-radius: 0 0 6px 6px;
+.top-area-action i:hover {
+	background-color: #e6e6e6;
+}
+
+.wrap-one {
+	padding-bottom: 10px;
+}
+
+.repo-count-list-area {
+	display: flex;
+	align-items: center;
+}
+
+.repo-count-list-area>div {
+	display: flex;
+	align-items: center;
+	padding-right: 10px;
+}
+
+.repo-count-list-area i {
+	font-size: 18px;
+	font-weight: 500;
+ 	padding-right: 5px;
+ 	vertical-align: middle;
+/*  	color: blue; */
+}
+
+.repo-search {
+	margin-right: 15px;
+}
+
+.repo-count-check {
+	color: #33bbff;
 }

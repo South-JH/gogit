@@ -6,23 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-.repo-list-count {
-	height: 50px;
-	background-color: #eaedf3;
-	border-radius: 8px 8px 0 0;
-	padding: 10px 15px;
-}
-
-.repo-list-top-area {
-	display: flex;
-	justify-content: space-between;
-}
-
-.repo-list-wrap {
-	padding: 10px 15px;
-}
-</style>
 </head>
 <body>
 	
@@ -82,79 +65,58 @@
 									<div class="repo-list-wrap">
 									<c:forEach var="rpList" items="${ rpList }">
 										<div>
-											<div>
-												<div class="repo-list-top-area">
-													<div>
-														<div>
-															<h4>${ rpList.repoTitle }</h4>
+											<div class="repo-list-wrap-one">
+												<div>
+													<div class="wrap-one">
+														<div class="repo-list-top-area">
+															<div class="top-area-title-visibility">
+																<a href="detail.rp?repoName=${ rpList.repoTitle }">
+																	<div>
+																		<h4>${ rpList.repoTitle }</h4>
+																	</div>
+																</a>
+																<div class="top-area-visibility">${ rpList.visibility }</div>
+															</div>
+															<div class="top-area-action">
+																<div><i class="ti ti-send"></i></div>
+																<div><i class="ti ti-pencil"></i></div>
+																<div><i class="ti ti-trash"></i></div>
+															</div>
 														</div>
-														<div>${ rpList.visibility }</div>
+														<div>${ rpList.repoContent }</div>
 													</div>
-													<div>
-														<div>초대</div>
-														<div>수정</div>
-														<div>삭제</div>
+													<div class="repo-count-list-area">
+													<c:if test="${ not empty rpList.language }">
+														<div>
+															<div><i class="ti ti-world"></i></div>
+															<div class="repo-count-check">${ rpList.language }</div>
+														</div>
+													</c:if>
+														<div>
+															<div><i class="ti ti-carambola"></i></div>
+															<div class="repo-count-check">${ rpList.stargazers }</div>
+														</div>
+														<div>
+															<div><i class="ti ti-git-fork"></i></div>
+															<div class="repo-count-check">${ rpList.fork }</div>
+														</div>
+														<div>
+															<div><i class="ti ti-circle-dot"></i></div>
+															<div class="repo-count-check">${ rpList.openIssue }</div>
+														</div>
+														<div>
+															<div class="repo-count-check"><i></i>${ updateAt }</div>
+														</div>
 													</div>
 												</div>
-												<div>${ rpList.repoContent }</div>
-											</div>
-											<div>
-												<div>${ rpList.language }</div>
-												<div>${ rpList.stargazers }</div>
-												<div>${ rpList.fork }</div>
-												<div>${ rpList.openIssue }</div>
-												<div>${ updateAt }</div>
 											</div>
 										</div>
 									</c:forEach>
 									</div>
 								</div>
 							</div>
-						
-			          			<div class="repo-list-wrap">
-									<div class="repo-list-area">
-										<div class="repo-list-one">
-											<div class="repo-list-one-area">
-												<div>
-													<img src="resources/images/repo-img.png" width="60px" height="60px">
-												</div>
-												<div class="repo-title-area">
-													<a href="detail.rp">
-														<div>
-															<h3></h3>
-														</div>
-													</a>
-													<div></div>
-													
-												</div>
-												<div>
-													<div class="repo-public">
-														<div></div>
-													</div>
-												</div>
-											</div>
-											<div class="repo-other-area">
-												<div class="repo-other-img" onclick="openBtn(this);">
-													<img src="resources/images/menu-dots.png" width="20px" height="20px">
-												</div>
-												<div class="repo-other">
-													<div>
-														<a id="repo-other-a">수정</a>
-													</div>
-													<div>
-														<button type="button">초대</button>
-													</div>
-													<div>
-														<button type="button">삭제</button>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
 						</div>
 						<!-- 목록 끝 -->
-
 	          		</div>
 	          	</div>
 	          </div>

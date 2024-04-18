@@ -10,7 +10,7 @@
 .issue-wrap>div {
 	background: white;
 	border-radius: 7px;
-	padding: 10px 30px;
+/* 	padding: 10px 30px; */
 	height: 710px;
 }
 
@@ -141,7 +141,7 @@
 	             					<table class="issue-list-table">
 	             						<thead>
 	             							<tr>
-	             								<th>NO.</th>
+	             								<th><input type="checkbox"></th>
 	             								<th>TITLE</th>
 	             								<th>WRITER</th>
 	             								<th>ASSIGNEE</th>
@@ -152,7 +152,7 @@
 	             						</thead>
 	             						<tbody>
 	             							<tr>
-	             								<td>3</td>
+	             								<td><input type="checkbox"></td>
 	             								<td><a href="detail.is">회원가입이 안돼요</a></td>
 	             								<td>crong9105</td>
 	             								<td>crong9105</td>
@@ -161,7 +161,7 @@
 	             								<td align="center">2</td>
 	             							</tr>
 	             							<tr>
-	             								<td>2</td>
+	             								<td><input type="checkbox"></td>
 	             								<td><a href="#">로그아웃이 안돼요</a></td>
 	             								<td>crong9105</td>
 	             								<td>crong9105</td>
@@ -170,7 +170,7 @@
 	             								<td align="center">3</td>
 	             							</tr>
 	             							<tr>
-	             								<td>1</td>
+	             								<td><input type="checkbox"></td>
 	             								<td><a href="#">로그인이안돼요</a></td>
 	             								<td>crong9105</td>
 	             								<td>crong9105</td>

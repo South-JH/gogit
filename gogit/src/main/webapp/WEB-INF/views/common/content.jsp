@@ -15,11 +15,11 @@
 	#content1, #content2{
 		width: 650px;
 		float: left;
-		margin: 50px;	
-		margin-top: 50px
+		margin: 0 50px;	
+		/* margin-top: 50px */
 	}
 	#content2{
-		margin-top: 200px
+		/* margin-top: 200px */
 	}
 
 
