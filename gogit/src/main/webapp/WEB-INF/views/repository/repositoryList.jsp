@@ -6,6 +6,23 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+.repo-list-count {
+	height: 50px;
+	background-color: #e6e6e6;
+	border-radius: 8px 8px 0 0;
+	padding: 10px 15px;
+}
+
+.repo-list-top-area {
+	display: flex;
+	justify-content: space-between;
+}
+
+.repo-list-wrap {
+	padding: 10px 15px;
+}
+</style>
 </head>
 <body>
 	
@@ -41,7 +58,7 @@
 	          			<div class="bottom-area-wrap">
 	          				<div class="repo-search">
 	          					<div class="repo-search-div">
-	          						<input type="text" placeholder="Search">
+	          						<input type="text" placeholder="Find a repository">
 	          						<i class="ti ti-search"></i>
 	          					</div>
 							</div>
@@ -58,11 +75,42 @@
 						<!-- 목록 시작 -->
 						<div class="repo-list-total-wrap">
 							<div>
-							
+								<div>
+									<div class="repo-list-count">
+										<div>16 repository</div>
+									</div>
+									<div class="repo-list-wrap">
+									<c:forEach var="rpList" items="${ rpList }">
+										<div>
+											<div>
+												<div class="repo-list-top-area">
+													<div>
+														<div>
+															<h4>${ rpList.repoTitle }</h4>
+														</div>
+														<div>${ rpList.visibility }</div>
+													</div>
+													<div>
+														<div>초대</div>
+														<div>수정</div>
+														<div>삭제</div>
+													</div>
+												</div>
+												<div>${ rpList.repoContent }</div>
+											</div>
+											<div>
+												<div>${ rpList.language }</div>
+												<div>${ rpList.stargazers }</div>
+												<div>${ rpList.fork }</div>
+												<div>${ rpList.openIssue }</div>
+												<div>${ updateAt }</div>
+											</div>
+										</div>
+									</c:forEach>
+									</div>
+								</div>
 							</div>
-							<div></div>
 						
-							<c:forEach var="rpList" items="${ rpList }">
 			          			<div class="repo-list-wrap">
 									<div class="repo-list-area">
 										<div class="repo-list-one">
@@ -73,14 +121,15 @@
 												<div class="repo-title-area">
 													<a href="detail.rp">
 														<div>
-															<h3>${ rpList.repoTitle }</h3>
+															<h3></h3>
 														</div>
 													</a>
-													<div>${ rpList.repoContent }</div>
+													<div></div>
+													
 												</div>
 												<div>
 													<div class="repo-public">
-														<div>${ rpList.visibility }</div>
+														<div></div>
 													</div>
 												</div>
 											</div>
@@ -103,7 +152,6 @@
 										</div>
 									</div>
 								</div>
-							</c:forEach>
 						</div>
 						<!-- 목록 끝 -->
 

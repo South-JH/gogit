@@ -54,6 +54,19 @@ public class RepositoryController {
             }
             
         	rp.setVisibility(repoArr.get(i).getAsJsonObject().get("visibility").getAsString());
+        	
+        	JsonElement languageElement = repoObj.get("language");
+        	if (languageElement == null || languageElement.isJsonNull()) {
+                rp.setLanguage("");
+            } else {
+                rp.setLanguage(languageElement.getAsString());
+            }
+        	
+        	rp.setStargazers(repoArr.get(i).getAsJsonObject().get("stargazers_count").getAsString());
+        	rp.setFork(repoArr.get(i).getAsJsonObject().get("forks_count").getAsString());
+        	rp.setOpenIssue(repoArr.get(i).getAsJsonObject().get("open_issues_count").getAsString());
+        	rp.setUpdateAt(repoArr.get(i).getAsJsonObject().get("updated_at").getAsString());
+        	
         	rpList.add(rp);
         }
         //System.out.println(rpList);

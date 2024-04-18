@@ -14,11 +14,11 @@ public class Repository {
 	private int repoNo;
 	private String repoTitle;
 	private String repoContent;
-	private String repoStatus;
-	private String createDate;
-	private String status;
-	private String refMid;
-	private int refPno;
 	private String visibility;
+	private String updateAt;
+	private String language;
+	private String stargazers;
+	private String fork;
+	private String openIssue;
 	
 }

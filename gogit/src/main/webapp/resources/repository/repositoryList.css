@@ -6,7 +6,7 @@
 }
 
 .repo-wrap>div {
-	padding: 25px 0px;
+	padding: 15px 0px;
 	/* width: 900px; */
 }
 
@@ -37,7 +37,7 @@ h2 {
 
 .repo-search-div {
 	border: 1px solid #e6e6e6;
-	width: 350px;
+	width: 500px;
 	height: 35px;
 	border-radius: 6px;
 	padding: 6px 10px;
