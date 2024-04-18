@@ -91,7 +91,7 @@ h2 {
 .repo-create {
 	display: flex;
 	justify-content: space-between;
-	width: 22%;
+	width: 18%;
 }
 
 .repo-create-btn, .repo-btn {
