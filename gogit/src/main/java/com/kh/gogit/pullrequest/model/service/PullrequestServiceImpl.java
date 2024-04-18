@@ -47,7 +47,7 @@ public class PullrequestServiceImpl implements PullrequestService {
         }
         
         JsonArray repoArr = JsonParser.parseString(response1.getBody()).getAsJsonArray();
-        JsonObject repoObj = repoArr.get(1).getAsJsonObject();
+        JsonObject repoObj = repoArr.get(15).getAsJsonObject();
         
         // ===============================================================================================
         
@@ -76,6 +76,29 @@ public class PullrequestServiceImpl implements PullrequestService {
         	System.out.println("pull request list 조회 실패");
         	return null;
         }
+	}
+	
+	public String getAssigneesProfile(Member loginUser, String assignee) {
+		
+		String profile = "";
+		String url = "https://api.github.com/users/" + assignee;
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Authorization", "Bearer " + loginUser.getMemToken());
+        headers.set("Accept", "application/vnd.github+json");
+        
+        HttpEntity<String> request = new HttpEntity<String>(headers);
+        
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+        
+        if(response.getStatusCode() == HttpStatus.OK) {
+        	profile = JsonParser.parseString(response.getBody()).getAsJsonObject().get("avatar_url").getAsString();
+        }
+        
+        return profile;
+		
 	}
 
 }

@@ -12,6 +12,17 @@
 	.table>tbody>tr:hover{
 		background-color: #FEE1E8
 	}
+	#content1, #content2{
+		width: 650px;
+		float: left;
+		margin: 50px;	
+		margin-top: 50px
+	}
+	#content2{
+		margin-top: 200px
+	}
+
+
 </style>
 </head>
 <body>
@@ -29,8 +40,8 @@
 	<!--  Main wrapper -->
 	<div class="body-wrapper">
 
-		<div class="container-fluid">
-
+		<div class="container-fluid" style="max-width: 2000px">
+		
           <!--  Row 1 -->
           <br> <br>
           <div class="row">
@@ -39,9 +50,9 @@
 	          <jsp:include page="../calendar/calendar.jsp" />
             
           </div>
-          <br> <hr> <br>
+       
           
-          <div class="row">
+          <div id="content2" class="row">
             <h3>인기 PR LIST</h3>
             <a href="mypr.pr" align="right">▶더보기</a>
             <table class="table">

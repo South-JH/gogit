@@ -1,6 +1,7 @@
 package com.kh.gogit.project.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,6 +77,51 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public ArrayList<Stack> selectStackList() {
 		return pDao.selectStackList(sqlSession);
+	}
+
+	@Override
+	public int selectSearchCount(String keyword) {
+		return pDao.selectSearchCount(sqlSession, keyword);
+	}
+
+	@Override
+	public ArrayList<Project> selectSearchList(PageInfo pi, String keyword) {
+		return pDao.selectSearchList(sqlSession, pi, keyword);
+	}
+
+	@Override
+	public int increaseCount(int pno) {
+		return pDao.increaseCount(sqlSession, pno);
+	}
+
+	@Override
+	public Project selectDetailList(int pno) {
+		return pDao.selectDetailList(sqlSession, pno);
+	}
+
+	@Override
+	public int updateApplyProject(HashMap<String, String> map) {
+		return pDao.updateApplyProject(sqlSession, map);
+	}
+
+	@Override
+	public Member selectMember(String memId) {
+		return pDao.selectMember(sqlSession, memId);
+	}
+
+	@Override
+	public int updateCancleProject(HashMap<String, String> map) {
+		return pDao.updateCancleProject(sqlSession, map);
+	}
+
+	@Override
+	public int updateCompleteProject(HashMap<String, String> map) {
+		return pDao.updateCompleteProject(sqlSession, map);
+	}
+
+	@Override
+	public int updateRestartProject(HashMap<String, String> map) {
+		return pDao.updateRestartProject(sqlSession, map);
 	}
 	
 }

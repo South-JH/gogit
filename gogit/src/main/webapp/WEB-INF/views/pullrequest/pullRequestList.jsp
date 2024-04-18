@@ -1,12 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<style>
+		/* #repository-area{
+			height: auto;
+		} */
+		
 		#pullRequest-create{
 			display: flex;
 		}
@@ -73,6 +78,98 @@
 			align-items: center;
 			justify-content: space-around;
 		}
+		
+		/* START TOOLTIP STYLES */
+		[tooltip] {
+  			position: relative; /* opinion 1 */
+		}
+
+		/* Applies to all tooltips */
+		[tooltip]::before, [tooltip]::after {
+  			text-transform: none; /* opinion 2 */
+			font-size: .9em; /* opinion 3 */
+			line-height: 1;
+		  	user-select: none;
+		  	pointer-events: none;
+		  	position: absolute;
+		  	display: none;
+		  	opacity: 0;
+		}
+		[tooltip]::before {
+  			content: '';
+  			border: 5px solid transparent; /* opinion 4 */
+  			z-index: 1001; /* absurdity 1 */
+		}
+		[tooltip]::after {
+  			content: attr(tooltip); /* magic! */
+  
+  			/* most of the rest of this is opinion */
+  			font-family: Helvetica, sans-serif;
+  			text-align: center;
+  
+  			/* 
+   			Let the content set the size of the tooltips 
+   			but this will also keep them from being obnoxious
+    		*/
+  			min-width: 3em;
+  			max-width: 21em;
+  			white-space: nowrap;
+  			overflow: hidden;
+  			text-overflow: ellipsis;
+  			padding: 1ch 1.5ch;
+  			border-radius: .3ch;
+  			box-shadow: 0 1em 2em -.5em rgba(0, 0, 0, 0.35);
+  			background: #333;
+  			color: #fff;
+  			z-index: 1000; /* absurdity 2 */
+		}
+
+		/* Make the tooltips respond to hover */
+		[tooltip]:hover::before, [tooltip]:hover::after {
+  			display: block;
+		}
+
+		/* don't show empty tooltips */
+		[tooltip='']::before, [tooltip='']::after {
+  			display: none !important;
+		}
+		
+		/* FLOW: DOWN */
+		[tooltip][flow^="down"]::before {
+  			top: 100%;
+  			border-top-width: 0;
+  			border-bottom-color: #333;
+		}
+		[tooltip][flow^="down"]::after {
+  			top: calc(100% + 5px);
+		}
+		[tooltip][flow^="down"]::before, [tooltip][flow^="down"]::after {
+  			left: 50%;
+  			transform: translate(-50%, .5em);
+		}
+		
+		/* KEYFRAMES */
+		@keyframes tooltips-vert {
+  			to {
+    			opacity: .9;
+    			transform: translate(-50%, 0);
+  			}
+		}
+
+		@keyframes tooltips-horz {
+  			to {
+    			opacity: .9;
+    			transform: translate(0, -50%);
+			}
+		}
+
+		/* FX All The Things */ 
+		[tooltip]:not([flow]):hover::before,
+		[tooltip]:not([flow]):hover::after,
+		[tooltip][flow^="down"]:hover::before,
+		[tooltip][flow^="down"]:hover::after {
+  			animation: tooltips-vert 300ms ease-out forwards;
+		}
 	</style>
 </head>
 <body>
@@ -112,37 +209,155 @@
 									&nbsp;&nbsp;&nbsp;
 									<input type="radio" id="status-closed" name="status" value="closed">
 									<label for="status-closed">Closed</label>
+									<!-- <a href="list.pullrq">Open</a>
+									<a href="list.pullrq/closed">Closed</a> -->
 								</div>
-								<table>
+								<table id="pullRequest-table">
 									<thead>
 										<tr>
 											<th>Pull request Title</th>
-											<th>Pull request 작성자</th>
-											<th>Label</th>
-											<th>Milestone</th>
+											<th>Author</th>
+											<th>Assignees</th>
+											<th>Create Date</th>
 										</tr>
 									</thead>
-									<tbody>
-										<!-- for문으로 pullreqArr 다 돌기 -->
-										<c:forEach var="pullreq" items="${ list }">
-											<tr>
-												<td>${ pullreq.pullTitle }</td>
-												<td>${ pullreq.pullWriter }</td>
-												<td>label</td>
-												<td>0.1</td>
-											</tr>
-										</c:forEach>
-									</tbody>
+									<tbody></tbody>
 								</table>
 							</div>
 						</div>
 					</div>
 				</div>
-				
 			</div>
-			
 		</div>
-		
 	</div>
+	
+	<script>
+		$(function() {
+			const list = ${ list };
+				
+			let openList = [];
+			let closedList = [];
+			for(let i in list) {
+				if(list[i].status == "open") {
+					openList.push(list[i]);
+				} else {
+					closedList.push(list[i]);
+				}
+			}
+			
+			let tbody = "";
+			
+			for(let i in openList) {
+				const title = openList[i].pullTitle;
+				const content = openList[i].pullContent;
+				const writer = openList[i].pullWriter;
+				const assignees = openList[i].pullManager;
+				const profiles = openList[i].pullManagerProfile;
+				const status = openList[i].status;
+				const createDate = openList[i].createDate.split('T')[0];
+
+				tbody += `<tr>
+							<td>\${ title }</td>
+							<td>\${ writer }</td>
+							<td>
+						`;
+				
+				if(assignees != "") {
+					let assigneeArr = assignees.split(',');
+					let profileArr = profiles.split(',');
+
+					for(let i = 0; i < profileArr.length; i++) {
+						tbody += `<span tooltip="\${ assigneeArr[i] }" flow="down">
+									<img class="profile" src="\${ profileArr[i] }" style="width: 25px; height: 25px; border-radius: 100%;">
+								</span>
+								`;
+					}
+				}
+
+				tbody += `</td>
+							<td>\${ createDate }</td>
+						<tr>
+						`;
+			}
+			
+			$('#pullRequest-table>tbody').html(tbody);
+
+			$("input[name=status]").on("change", function() {
+				let tbody = "";
+
+				if($("input[name=status]:checked").val() == "open") {
+					for(let i in openList) {
+						const title = openList[i].pullTitle;
+						const content = openList[i].pullContent;
+						const writer = openList[i].pullWriter;
+						const assignees = openList[i].pullManager;
+						const profiles = openList[i].pullManagerProfile;
+						const status = openList[i].status;
+						const createDate = openList[i].createDate.split('T')[0];
+
+						tbody += `<tr>
+									<td>\${ title }</td>
+									<td>\${ writer }</td>
+									<td>
+								`;
+						
+						if(assignees != "") {
+							let assigneeArr = assignees.split(',');
+							let profileArr = profiles.split(',');
+
+							for(let i = 0; i < profileArr.length; i++) {
+								tbody += `<span tooltip="\${ assigneeArr[i] }" flow="down">
+											<img class="profile" src="\${ profileArr[i] }" style="width: 25px; height: 25px; border-radius: 100%;">
+										</span>
+										`;
+							}
+						}
+
+						tbody += `</td>
+									<td>\${ createDate }</td>
+								<tr>
+								`;
+					}
+
+				} else {
+					for(let i in closedList) {
+						const title = closedList[i].pullTitle;
+						const content = closedList[i].pullContent;
+						const writer = closedList[i].pullWriter;
+						const assignees = closedList[i].pullManager;
+						const profiles = closedList[i].pullManagerProfile;
+						const status = closedList[i].status;
+						const createDate = closedList[i].createDate.split('T')[0];
+
+						tbody += `<tr>
+									<td>\${ title }</td>
+									<td>\${ writer }</td>
+									<td>
+								`;
+						
+						if(assignees != "") {
+							let assigneeArr = assignees.split(',');
+							let profileArr = profiles.split(',');
+
+							for(let i = 0; i < profileArr.length; i++) {
+								tbody += `<span tooltip="\${ assigneeArr[i] }" flow="down">
+											<img class="profile" src="\${ profileArr[i] }" style="width: 25px; height: 25px; border-radius: 100%;">
+										</span>
+										`;
+							}
+						}
+
+						tbody += `</td>
+									<td>\${ createDate }</td>
+								<tr>
+								`;
+					}
+				}
+
+				$('#pullRequest-table>tbody').html(tbody);
+			});
+		})
+	</script>
+	
 </body>
 </html>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -43,13 +44,36 @@ public class PullrequestController {
 			}
 			
 			prq.setPullWriter(pullreq.get("user").getAsJsonObject().get("login").getAsString());
-//			prq.setPullManager(pullreq.get("assignees").getAsString());
+			
+			JsonArray assigneesArr = pullreq.get("assignees").getAsJsonArray();
+			
+			String assignees = "";
+			String profiles = "";
+			for(int j = 0; j < assigneesArr.size(); j++) {
+				
+				String assignee = assigneesArr.get(j).getAsJsonObject().get("login").getAsString();
+				
+				String profile = prqService.getAssigneesProfile(loginUser, assignee);
+
+				if(j == assigneesArr.size() -1) {
+					assignees += assignee;
+					profiles += profile;
+				} else {
+					assignees += assignee + ",";
+					profiles += profile + ",";
+				}
+				
+			}
+			
+			prq.setPullManager(assignees);
+			prq.setPullManagerProfile(profiles);
+			prq.setStatus(pullreq.get("state").getAsString());
 			prq.setCreateDate(pullreq.get("created_at").getAsString());
 			
 			list.add(prq);
 		}
 		
-		model.addAttribute("list", list);
+		model.addAttribute("list", new Gson().toJson(list));
 		
 		return "pullrequest/pullRequestList";
 	}

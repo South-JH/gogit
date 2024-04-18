@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,23 +90,159 @@
                                             </div>
                                             <br>
                                             <div>
-                                                작성자 : 박지민   |   마감일 : 2024-10-20
+                                                작성자 : ${ p.proWriter }   |   마감일 : ${p.deadLine }
                                             </div>										                     
 
                                             <div>
-                                                <div>조회수 : 10</div>                                                                    
+                                                <div>조회수 : ${p.count }</div>                                                                    
                                             </div>                      
                                     </div>
 
                                     <div class="right-div" style="float: right;">                                                          
-                                            <div>
-                                                <img src="resources/images/gogit-logo.png" style="width: 95px; height: 70px; margin-left: 40px;">
+                                            <div id="markImg">
+                                                <!-- <img src="resources/images/gogit-logo.png" style="width: 95px; height: 70px; margin-left: 40px;"> -->
+                                                <!-- <img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">-->
                                             </div>
 
-                                            <div>
-                                                <button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">프로젝트 신청완료(취소하기)</button>
+                                            <div id="applybtn">
+                                                <!-- <button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);"></button> -->
                                             </div>                                
                                     </div>
+                                    
+                                                        
+                                    <script>
+                                    // 내가 프로젝트 작성자가 아니고, teamStatus가 No, 그리고 프로젝트 모집상태가 모집중일때(걍 신청자)
+                                   // alert("script read!");
+                                    
+                                    if('${loginUser.gitNick}' != '${p.proWriter}'){
+                                    	if('${loginUser.gitNick}' != '${p.proWriter}' && '${loginUser.teamStatus}' == 'N' && '${p.proStatus}' == 'Y'){
+                                        	drawApplyBtn();
+                                        	
+                                        	// 그냥 프로젝트가 마감되었을때
+                                        }else if('${loginUser.gitNick}' != '${p.proWriter}' && '${loginUser.teamStatus}' == 'N' && '${loginUser.teamStatus}' == 'Y' && '${p.proStatus}' == 'N'){
+                                        	drawEndBtn();
+                                        	
+                                        	// 내가 신청한 프로젝트가 아닐 때(중복신청 불가)
+                                        }else if('${loginUser.gitNick}' != '${p.proWriter}' && '${loginUser.teamStatus}' == 'S' && '${p.proStatus}' == 'Y' && '${loginUser.team}' != '${p.proNo}'){
+                                        	drawNotMyProject();
+                                        	
+                                        	// 프로젝트 취소할때
+                                        }else if('${loginUser.gitNick}' != '${p.proWriter}' && '${loginUser.teamStatus}' == 'S' && '${p.proStatus}' == 'Y' && '${loginUser.team}' == '${p.proNo}'){
+                                        	// alert("script function")
+                                        	drawCancleBtn();
+                                        }                                  	                                 	
+                                    	
+                                    }else{
+                                    	if('${p.proStatus}' == 'Y'){ // 모집중일때 모집마감치고싶을때
+                                    		drawProjectApplyComplete();
+                                    	}else{ // 모집마감일때, 모집재개
+                                    		drawProjectApplyRestart();
+                                    	}	
+                                    }
+                                    
+                                    function drawProjectApplyRestart(){
+                                    	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
+                                    	$("#eventbtn").text("모집 재개");
+                                    	$("#eventbtn").attr("onclick", "projectstart()");
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">');
+                                    }
+                                    
+                                    
+                                    function drawProjectApplyComplete(){
+                                    	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
+                                    	$("#eventbtn").text("모집 마감");
+                                    	$("#eventbtn").attr("onclick", "projectEnd()");   
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark_filled.png" style="float:right; padding-right: 40px;" class="bookmark">');                                           
+                                    }
+                                    
+                                    function drawNotMyProject(){
+                                    	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
+                                    	$("#eventbtn").text("중복신청 불가합니다.");
+                                    	$("#eventbtn").attr("disabled", true);
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark_filled.png" style="float:right; padding-right: 40px;" class="bookmark">');
+                                    }
+                                    
+                                    function drawEndBtn(){
+                                    	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
+                                    	$("#eventbtn").text("마감된 프로젝트");
+                                    	$("#eventbtn").attr("disabled", true);
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">');
+                                    }
+                                    
+                                    function drawCancleBtn(){
+                                    	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
+                                    	$("#eventbtn").text("프로젝트 신청취소")
+                                    	$("#eventbtn").attr("onclick", "cancel()");
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark_filled.png" style="float:right; padding-right: 40px;" class="bookmark">');                                                                    	                                 
+                                    	
+                                    }
+                                    
+                                    function drawApplyBtn(){
+                                    	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
+                                    	$("#eventbtn").text("프로젝트 신청하기");
+                                    	$("#eventbtn").attr("onclick", "apply();");
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">');
+                                    }
+                                    
+                                    	function apply(){ // 신청하기(신청자입장)                                   	
+                                    		$.ajax({
+                        						url:"applypro.pr",
+                        						data:{pno:${p.proNo},
+                        							  userId:${loginUser.memId}},
+                        						success:function(result){
+                        							if(result > 0){
+                        								//alert("apply function!!")
+                        								drawCancleBtn();							
+                        							}                   					
+                        						}, error:function(){
+                        							
+                        						}
+                        					});                                   		                                 		
+                                    	}
+                                    	
+                                    	function cancel(){ // 신청취소(신청자입장)
+                                    		//alert("cancel function")
+                                    		$.ajax({
+                        						url:"cancel.pr",
+                        						data:{pno:${p.proNo},
+                        							  userId:${loginUser.memId}},
+                        						success:function(result){
+                        							if(result > 0){
+                        								drawApplyBtn();                       								
+                        							}                           							
+                        						}, error:function(){
+                        							
+                        						}
+                        					});
+                                    	}                                  	
+                                    	
+                                    	function projectEnd(){ // 프로젝트 마감일때(모집자입장)
+                                    		$.ajax({
+                        						url:"projectEnd.pr",
+                        						data:{pno:${p.proNo},
+                        							  userId:${loginUser.memId}},
+                        						success:function(result){
+                        							drawProjectApplyRestart();
+                        						}, error:function(){
+                        							
+                        						}
+                        					});
+                                    	}     
+                                    	
+                                    	function projectstart(){ // 프로젝트 모집재개(모집자입장)
+                                    		$.ajax({
+                        						url:"projectReStart.pr",
+                        						data:{pno:${p.proNo},
+                        							  userId:${loginUser.memId}},
+                        						success:function(result){
+                        							drawProjectApplyComplete();
+                        						}, error:function(){
+                        							
+                        						}
+                        					});
+                                    	}                                  	                    
+                                    </script>
+  
                                 </div>
                                 <hr>
                                 <br>
@@ -119,7 +256,7 @@
                                                 모집인원
                                             </div>
                                             <div>
-                                                4명
+                                                ${ p.proMember }명
                                             </div>		
                                         </div>
                                         <br>									
@@ -127,52 +264,36 @@
                                         <div style="display: flex;">                                      
                                             <div style="width: 75px;">사용 언어</div>
                                                 <div id="content2_3">
-                                                    <button type="button" class="btn" style="border:1px solid lightgray; border-radius: 50px; height: 52px;padding-left: 0; margin-right: 10px;">
-                                                        <div style=" border-radius:50px; ">
-                                                            <span class="badge bg-transparent">
-                                                                <img src="https://holaworld.io/images/languages/javascript.svg" alt="" style="width:35px; height:35px; ">
-                                                            </span>
-                                                            <span style="padding-right: 10px;">JavaScript</span>
+                                                
+                                                <c:forEach var="s" items="${ stackList }">
+                                                <c:set var="testt1" value="${fn:split(p.proStack, ',')}"></c:set>
+                                                	<c:forEach var="testValue1" items="${ testt1 }">
+                                                	 	<c:if test="${ testValue1 eq s.stackName }">
+                                                    		<button type="button" class="btn" style="border:1px solid lightgray; border-radius: 50px; height: 52px;padding-left: 0; margin-right: 10px;">
+                                                        <div style=" border-radius:50px; ">                                                     
+                                                            <span class="badge bg-transparent">                                                            
+	                                                            <img src="${ s.stackImg }" alt="" style="width:35px; height:35px; ">                                                                                                                
+                                                            </span>                                                                                                                                              
+                                                            <span style="padding-right: 10px;">${testValue1 }</span>                                                                                                             	
                                                         </div>
                                                     </button>
-
-                                                    <button type="button" class="btn" style="border:1px solid lightgray; border-radius: 50px; height: 52px;padding-left: 0; margin-right: 10px;">
-                                                        <div style=" border-radius:50px; ">
-                                                            <span class="badge bg-transparent">
-                                                                <img src="https://holaworld.io/images/languages/reactnative.svg" alt="" style="width:35px; height:35px; ">
-                                                            </span>
-                                                            <span style="padding-right: 10px;">Vue</span>
-                                                        </div>
-                                                    </button>                                   
-                                            
-                                                    <button type="button" class="btn" style="border:1px solid lightgray; border-radius: 50px; height: 52px;padding-left: 0; margin-right: 10px;">
-                                                        <div style=" border-radius:50px; ">
-                                                            <span class="badge bg-transparent">
-                                                                <img src="https://holaworld.io/images/languages/figma.svg" alt="" style="width:35px; height:35px; ">
-                                                            </span>
-                                                            <span style="padding-right: 10px;">Figma</span>
-                                                        </div>
-                                                    </button>    
-                                                    
-                                                    <button type="button" class="btn" style="border:1px solid lightgray; border-radius: 50px; height: 52px;padding-left: 0; margin-right: 10px;">
-                                                        <div style=" border-radius:50px; ">
-                                                            <span class="badge bg-transparent">
-                                                                <img src="https://holaworld.io/images/languages/figma.svg" alt="" style="width:35px; height:35px; ">
-                                                            </span>
-                                                            <span style="padding-right: 10px;">Figma</span>
-                                                        </div>
-                                                    </button> 
+                                                       </c:if> 
+                                                    </c:forEach>
+                                                </c:forEach>                                             
                                             </div> 
                                         </div>
                                         <br>
 
                                         <div style="display: flex;">
                                             <div style="width: 75px;">모집포지션</div>
+                                            
                                             <div class="posi-div">
-                                                <div class="pro-public">디자이너</div>
-                                                <div class="pro-public">백엔드</div>
-                                                <div class="pro-public">전체</div>
+                                            <c:set var="testu" value="${fn:split(p.positoin, ',')}"></c:set>
+                                            	<c:forEach var="texttext" items="${ testu }">
+	                                                <div class="pro-public">${ texttext }</div>
+                                                </c:forEach>
                                             </div>
+                                            
                                         </div>
                                     </div>
 
@@ -184,7 +305,7 @@
                                             </div>                                  
 
                                             <div>
-                                                2024-10-12
+                                                ${p.deadLine }
                                             </div>
                                         </div>
                                         <br>
@@ -192,7 +313,7 @@
                                         <div style="display: flex;">
                                             <div style="width: 75px;">시작예정</div>
                                             <div>
-                                                2024-04-12
+                                                ${p.startDate }
                                             </div>
                                         </div>
                                         <br>
@@ -200,7 +321,7 @@
                                         <div style="display: flex;">
                                             <div style="width: 75px;">예상 기간</div>
                                             <div>
-                                                2개월
+                                                ${p.proPeriod }
                                             </div> 
                                         </div>                               
                                     </div>
@@ -211,7 +332,7 @@
                             <div class="bottom-div">
                                 <div><h2>프로젝트 소개</h2></div>
                                 <hr>
-                                <div style="height: 200px;">모집합니다</div>                         
+                                <div style="height: 200px;">${ p.proContent }</div>                         
                                 <div style="float: right;"><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">뒤로가기</button><button type="button" class="btn btn-warning" style="background-color: rgb(2 56 75);">수정하기</button></div>
                                 <br>
                                 <hr>
