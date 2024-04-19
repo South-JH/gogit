@@ -206,3 +206,7 @@ h2 {
 .repo-count-check {
 	color: #33bbff;
 }
+
+.href-div {
+	cursor: pointer;
+}
