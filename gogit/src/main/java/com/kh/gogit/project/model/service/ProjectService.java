@@ -46,5 +46,14 @@ public interface ProjectService {
 	
 	// 세션 갈아끼운 유저 조회해오기
 	Member selectMember(String memId);
+	
+	// 프로젝트 수정하기
+	int updateProject(Project p);
+	
+	// 모집중만 조회
+	ArrayList<Project> applySelectList(PageInfo pi);
+	
+	// 모집중 카운트 가져오기
+	int applyListCount();
 
 }

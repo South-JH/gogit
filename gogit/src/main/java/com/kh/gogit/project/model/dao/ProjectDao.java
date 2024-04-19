@@ -76,6 +76,22 @@ public class ProjectDao {
 		return sqlSession.update("projectMapper.updateRestartProject", map);
 	}
 	
+	public ArrayList<Project> applySelectList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("projectMapper.applySelectList", null, rowBounds);
+	}
+	
+	public int updateProject(SqlSessionTemplate sqlSession, Project p) {
+		return sqlSession.update("projectMapper.updateProject", p);
+	}
+	
+	public int applyListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("projectMapper.applyListCount");
+	}
+	
 	
 
 }

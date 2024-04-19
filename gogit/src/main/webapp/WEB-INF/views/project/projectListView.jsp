@@ -45,6 +45,11 @@
 	.plist-div{
 		box-shadow: 5px 5px 10px gray;
 		cursor: pointer;
+		width: 270px;
+		height: 320px;
+		border-radius: 25px;
+		border: 2px solid #d4d2d2;
+		background-color:#ffffff;
 	}
 
 	#content2_3>div{
@@ -176,15 +181,140 @@
 
 						<div class="top-div">
 							<div class="topmenu-div" style="display:flex;">
-								<div style="width: 90px;" class="testtest"><a href="test.pr" style="color: rgb(2 56 75);">전체</a></div>					
-								<div style="width: 100px;"><a href="#" style="color: lightgray;">모집 중</a></div>
-								<div style="width: 120px;"><a href="#" style="color: lightgray;">모집 완료</a></div>
+								<div style="width: 90px;" class="testtest"><a onclick="allbtn()" style="color: rgb(2 56 75);">전체</a></div>					
+								<div style="width: 100px;" class="applying"><a onclick="applying(1)" id="applyingId" style="color: lightgray; cursor: pointer;">모집 중</a></div>
+								<div style="width: 120px;" class="applycomplete"><a onclick="applycomplete()" style="color: lightgray; cursor: pointer;">모집 완료</a></div>
 							</div>
 							<br>
 							<br>
 
-							<div style="display:flex;">
-								
+							<script>
+								function allbtn(){
+									$(".testtest>a").css("color", "rgb(2 56 75)");
+									$(".applying>a").css("color", "lightgray");
+									$(".applycomplete>a").css("color", "lightgray");
+									location.href="list.pj";
+
+								}
+
+								function applying(p){
+									$(".testtest>a").css("color", "lightgray");
+									$(".applying>a").css("color", "rgb(2 56 75)");
+									$(".applycomplete>a").css("color", "lightgray");
+
+									$.ajax({
+										url:"applyingList.pr",
+										data:{cpage:p},
+										success:function(map){
+											console.log(map)
+											let pi = map.pi;			
+					                        let currentPage = pi.currentPage;
+					                        let startPage = pi.startPage;
+					                        let endPage = pi.endPage;
+					                        let maxPage = pi.maxPage;
+					                        let $paging = $(".pagination");
+					                        
+					                        $("#content2_3").html("");
+					                        $paging.html("");
+					                        							                       						                        
+					                        let result = map.list; // array
+					                        let result1 = map.stackList; // array
+					                        console.log(result);
+					                        //console.log(pi);
+					                        							                        
+					                        let value = "";
+					                        
+					                        for(let i=0; i<result.length; i++){
+						                        let proStatus = result[i].proStatus;
+						                        
+						                        		let rv = result[i];					                    		
+						                        		
+						                        		let deadLine = rv.deadLine;
+						                        		let proContent = rv.proContent;
+						                        		let positoin = rv.positoin; //"zzszs,zszzs,zszszs"
+						                        		let pno = rv.proNo;				                        		
+		                        
+						                        		let count = rv.count;
+						                        		let prowriter = rv.proWriter;
+														let prostack = rv.proStack;
+														
+														value += 
+							                        		'<div class="plist-div" onclick="location.href=\'detail.pr?pno=' + pno + '\'">'
+															+ '<div class="pro-public">모집중</div>'
+															+ '<br>'
+															+ '<div>마감일:'+deadLine+'</div>'
+															+ '<br>'
+															+ '<div>'+ proContent +'</div>'
+															+ '<br>'						
+															+ '<div class="pro-public1" id="content2_31">';
+															
+														let testu = positoin.split(",");
+														for(let i =0; i<testu.length; i++){
+															value += '<div>'+ testu[i] +'</div>'
+														}
+														value += '</div>'
+														      + '<div style="display: flex; margin-top: 5px;">'
+														
+														for(let i=0; i<result1.length; i++){
+															
+															let testt = prostack.split(",");
+															
+															for(let j=0; j<testt.length; j++){
+																if(testt[j] == result1[i].stackName)
+														value += '<div class="stackimg">'
+															  + '<img src="'+ result1[i].stackImg +'"></div>'																  
+															}
+															
+														} 
+														value += '</div>'
+														      + '<div><hr></div>'
+															  + '<div>조회수:'+ count +'</div>'
+															  + '<div>작성자:${ loginUser.gitNick }</div>'		
+														  	  + '</div>'																			                        	
+						                        		}
+					                        
+					                        $("#content2_3").html(value);
+					                        console.log("------")
+					                        console.log(currentPage);
+					                        console.log(startPage);
+					                        console.log(endPage);
+					                        
+					                        if (currentPage != 1) {				                        	
+						                        $paging.append(				                               
+						                                "<li class='page-item'><a class='page-link' onclick=applying(" + (currentPage - 1) + ")>Previous</a></li>"
+						                            );
+						                        }
+						                        
+						                        for (let p = startPage; p <= endPage; p++) {
+						                            if (p == currentPage) {
+						                              $paging.append("<li class='page-item active'><a class='page-link' onclick=applying(" + p  + ")>" + p + "</a></li>");
+						                            }else{
+						                              $paging.append("<li class='page-item'><a class='page-link' onclick=applying(" + p  + ")>" + p + "</a></li>");
+						                            }
+						                          } 
+						                        
+						                        if (currentPage != maxPage) {
+						                        	console.log("야되냐3");
+						                        	$paging.append(
+						                        		    "<li class='page-item'><a class='page-link' onclick=applying(" + (currentPage + 1) + ")>Next</a></li>");
+						                          }
+
+											
+										},error:function(){
+											
+										}
+									});
+								}					
+							
+								function applycomplete(){
+									$(".testtest>a").css("color", "lightgray");
+									$(".applying>a").css("color", "lightgray");
+									$(".applycomplete>a").css("color", "rgb(2 56 75)");
+
+								}
+							</script>
+
+							<div style="display:flex;">								
 									<div class="form-group">																				
 										<div>
 											<select id="name" style="background-color: #ffffff;" class="form-control" id="sel1" name="sellist1">
@@ -204,10 +334,7 @@
 												url:"search.pr",
 												data:{keyword:selectedName,
 													  cpage:p
-													},success:function(map){
-														
-													console.log(map)
-																									
+													},success:function(map){																																							
 													let pi = map.pi;			
 							                        let currentPage = pi.currentPage;
 							                        let startPage = pi.startPage;
@@ -220,15 +347,10 @@
 							                        
 							                        $("#content2_3").html("");
 							                        $paging.html("");
-							                        
-							                        
-							                        
+							                        							                       						                        
 							                        let result = map.list1; // array
 							                        let result1 = map.stackList; // array
-							                        
-							                        console.log(result);
-							                        console.log(result1);
-							                        
+							                        							                        
 							                        let value = "";
 							                        
 							                        for(let i=0; i<result.length; i++){
@@ -244,12 +366,13 @@
 							                        		let count = rv.count;
 							                        		let prowriter = rv.proWriter;
 															let prostack = rv.proStack;
+															let pno = rv.proNo;
 															
 															
 							                        		if(proStatus === 'Y'){
 							                        			console.log("모집중");
 							                        			value += 
-									                        		'<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='+'detail.pr'+'">'
+									                        		'<div class="plist-div" onclick="location.href=\'detail.pr?pno=' + pno + '\'">'
 																	+ '<div class="pro-public">모집중</div>'
 																	+ '<br>'
 																	+ '<div>마감일:'+deadLine+'</div>'
@@ -260,7 +383,7 @@
 							                        		}else{
 							                        			console.log("모집완료");
 							                        			value += 
-									                        		'<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='+'detail.pr'+'">'
+									                        		'<div class="plist-div" onclick="location.href=\'detail.pr?pno=' + pno + '\'">'
 																	+ '<div class="pro-public" style="background-color: #d9d9d9;">모집마감</div>'
 																	+ '<br>'
 																	+ '<div>마감일:'+deadLine+'</div>'
@@ -291,7 +414,7 @@
 															} 
 															value += '</div>'
 															      + '<div><hr></div>'
-																  + '<div>조회수:0</div>'
+																  + '<div>조회수:'+ count +'</div>'
 																  + '<div>작성자:${ loginUser.gitNick }</div>'		
 															  	  + '</div>'																			                        	
 							                        		}							                        	
@@ -306,7 +429,7 @@
 								                        
 								                        for (let p = startPage; p <= endPage; p++) {
 								                            if (p == currentPage) {
-								                              $paging.append("<li class='page-item'><a class='page-link'>"+p+"</a></li>");
+								                              $paging.append("<li class='page-item active'><a class='page-link'>"+p+"</a></li>");
 								                            } else {
 								                              $paging.append("<li class='page-item'><a class='page-link' onclick=searchProject('" + keyword + "'," + p + ")>" + p +"</a></li>");
 								                            }
@@ -346,7 +469,7 @@
 						<div class="middle-div">
 							<div id="content2_3">
 								<c:forEach var="p" items="${ list }">
-									<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr?pno=${p.proNo}'">
+									<div class="plist-div" onclick="location.href='detail.pr?pno=${p.proNo}'">
 										<c:choose>
 											<c:when test="${p.proStatus eq 'Y' }">
 												<div class="pro-public">모집중</div>
@@ -380,7 +503,7 @@
 										</div>
 	
 										<div><hr></div>
-										<div>조회수:0</div>
+										<div>조회수:${ p.count }</div>
 										<div>작성자:${ p.proWriter }</div>
 									</div>
 								</c:forEach>							
@@ -401,8 +524,16 @@
 											<li class="page-item"><a class="page-link" href="list.pj?cpage=${ pi.currentPage - 1 }">Previous</a></li>
 										</c:otherwise>
 									</c:choose>
+									
 									<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-										<li class="page-item"><a class="page-link" href="list.pj?cpage=${ p }">${ p }</a></li>
+										<c:choose>
+											<c:when test="${ pi.currentPage eq p }">
+												<li class="page-item active"><a class="page-link" href="list.pj?cpage=${ p }">${ p }</a></li>
+											</c:when>
+											<c:otherwise>
+												<li class="page-item"><a class="page-link" href="list.pj?cpage=${ p }">${ p }</a></li>
+											</c:otherwise>
+										</c:choose>
 									</c:forEach>
 									
 									<c:choose>

@@ -123,5 +123,20 @@ public class ProjectServiceImpl implements ProjectService{
 	public int updateRestartProject(HashMap<String, String> map) {
 		return pDao.updateRestartProject(sqlSession, map);
 	}
+
+	@Override
+	public ArrayList<Project> applySelectList(PageInfo pi) {
+		return pDao.applySelectList(sqlSession, pi);
+	}
+
+	@Override
+	public int updateProject(Project p) {
+		return pDao.updateProject(sqlSession, p);
+	}
+
+	@Override
+	public int applyListCount() {
+		return pDao.applyListCount(sqlSession);
+	}
 	
 }

@@ -198,6 +198,51 @@
 		   and pro_no = #{pno}	
 	</update>
 	
+	<select id="applyListCount" resultType="_int">
+		select
+		       count(*)
+		  from project
+		 where pro_status = 'Y'
+	</select>
+	
+	<select id="applySelectList" resultMap="projectResult">
+	select
+	       pro_no
+	     , git_nick
+	     , pro_stack
+	     , pro_title
+	     , pro_content
+	     , pro_member
+	     , pro_period
+	     , to_char(pro_deadline, 'YYYY-MM-DD') as "pro_deadline"
+	     , to_char(pro_start_date, 'YYYY-MM-DD') as "pro_start_date"
+	     , pro_position
+	     , pro_status
+	     , count
+	     , p.create_date
+	  from project p
+	  join member on (pro_writer = mem_id)
+	 where p.status = 'Y'
+	   and p.pro_status = 'Y'
+	 order
+	    by pro_no desc
+	</select>
+	
+	<update id="updateProject">
+		update
+		       project
+		   set pro_stack = #{proStack}
+		     , pro_title = #{proTitle}
+		     , pro_content = #{proContent}
+		     , pro_member = #{proMember}
+		     , pro_period = #{proPeriod}
+		     , pro_deadline = #{deadLine}
+		     , pro_start_date = #{startDate}
+		     , pro_position = #{positoin}
+		     , create_date = SYSDATE
+		 where pro_no = #{proNo}	
+	</update>
+	
 	
 
 
