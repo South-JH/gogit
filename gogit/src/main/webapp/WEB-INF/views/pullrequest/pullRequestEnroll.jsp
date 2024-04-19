@@ -25,7 +25,6 @@
 
 		#base-branch-select, #compare-branch-select{
 			border: none;
-			background-color: #f9f9ff;
 		}
 
 		#pull-request-input-area{
