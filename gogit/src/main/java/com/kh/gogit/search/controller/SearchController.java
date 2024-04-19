@@ -30,7 +30,13 @@ public class SearchController {
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		
+		// JSON 응답을 받아옴
 		String searchList = sService.test1(m);
+		
+		// 객체를 담을 ArrayList를 생성
+		ArrayList<Search> seList = new ArrayList<Search>();
+		
+		/*
 		System.out.println("여기다" + searchList);
 		
 		ArrayList<Search> seList = new ArrayList<Search>();
@@ -71,16 +77,44 @@ public class SearchController {
 
 			
 			System.out.println("뭐죠? 여기거든요?" + login);
-			Search se = new Search();
-			se.setLogin(login); // getAsString 스트링으로 변환시켜주는 애
-			se.setAvatarUrl(firstItem.get("avatar_url").getAsString()); // getAsString 스트링으로 변환시켜주는 애
-			se.setHtmlUrl(firstItem.get("html_url").getAsString());
-			se.setTotalCount(seObj.get("total_count").getAsString());
-			se.setType(firstItem.get("type").getAsString());
-			
-			seList.add(se);
+			for (JsonElement elements : itemsArray) {
+				Search se = new Search();
+				se.setLogin(login); // getAsString 스트링으로 변환시켜주는 애
+				se.setAvatarUrl(firstItem.get("avatar_url").getAsString()); // getAsString 스트링으로 변환시켜주는 애
+				se.setHtmlUrl(firstItem.get("html_url").getAsString());
+				se.setTotalCount(seObj.get("total_count").getAsString());
+				se.setType(firstItem.get("type").getAsString());
+				
+				seList.add(se);
+				
+			}
 		}else {
 			System.out.println("객체도 배열도 아니면 뭐냐");
+		}
+		*/
+		
+		// 받아온 JSON 응답을 객체로 변환
+		JsonParser parser = new JsonParser(); // JSON파싱을 위해 JsonParser객체를 생성
+		JsonObject seObj = parser.parse(searchList).getAsJsonObject(); // 받아온 JSON 응답을 jsonObject로 변환
+		JsonArray itemsArray = seObj.getAsJsonArray("items"); // JsonObject에서 "items"의 키값을 가져옴
+
+		// 모든 아이템을 순회하며 객체를 생성
+		for (JsonElement element : itemsArray) { // items 배열 다 순회하기
+		    if (element.isJsonObject()) { // 각 요소가 JsonObject인지 확인
+		        JsonObject item = element.getAsJsonObject(); // JsonObject로 변환
+		        Search se = new Search();
+		        se.setLogin(item.get("login").getAsString()); // JsonObject에서 "login" 키의 값을 가져와서 setLogin
+		        se.setAvatarUrl(item.get("avatar_url").getAsString());
+		        se.setHtmlUrl(item.get("html_url").getAsString());
+		        se.setType(item.get("type").getAsString());
+		        seList.add(se);
+		    }
+		}
+
+		// 나머지 속성은 첫 번째 아이템의 값으로 설정
+		if (!seList.isEmpty()) { // 첫 번째 아이템의 "total_count" 속성 값을 가져와서 Search 객체의 totalCount에 설정
+		    Search firstItem = seList.get(0);
+		    firstItem.setTotalCount(seObj.get("total_count").getAsString());
 		}
 
 		model.addAttribute("seList", seList);
