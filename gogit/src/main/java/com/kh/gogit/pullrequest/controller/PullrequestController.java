@@ -80,6 +80,9 @@ public class PullrequestController {
 	
 	@RequestMapping("create.pullrq")
 	public String createPullRequestForm() {
+		// branch 조회해와야 함
+		prqService.getBranchList();
+		
 		return "pullrequest/pullRequestEnroll";
 	}
 
