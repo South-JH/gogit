@@ -17,6 +17,10 @@ pageEncoding="UTF-8"%>
 <script src="resources/js/dashboard.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <style>
+body {
+	background-color: #02384B;
+}
+
 #loginForm-wrap {
   margin: auto;
   width: 500px;
@@ -30,7 +34,7 @@ body {
 
 .login-btn-area {
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 }
 
 .github-login-btn {
@@ -63,6 +67,35 @@ body {
 .btn-primary {
 	height: 38px;
 }
+
+.card-body-img-area {
+	margin-bottom: 30px;
+}
+
+.card-body-img-area>div {
+	display: flex;
+	justify-content: center;
+}
+
+.card-body-img-area img {
+	border-radius: 100px;
+	padding: 15px;
+}
+
+#card-body-top {
+	border: none;
+	box-shadow: none;
+}
+
+.card-body-bottom {
+	display: flex;
+	justify-contet: space-around;
+	padding: 0 40px;
+}
+
+.card-body-bottom>* {
+	padding: 0 5px;
+}
 </style>
   </head>
 
@@ -72,28 +105,15 @@ body {
         <div class="container-fluid">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title fw-semibold mb-4" align="center">로그인</h5>
-              <div class="card">
-                <div class="card-body">
+              <div class="card-body-img-area">
+              	<div>
+              		<img src="resources/images/gogit-logo.png" width="300" height="250">
+              	</div>
+              </div>
+              <div class="new-card">
+                <div class="card-body" id="card-body-top">
                   <form action="main">
-                    <div class="mb-3">
-                      <label for="exampleInputEmail1" class="form-label">아이디</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
-                    </div>
-                    <div class="mb-3">
-                      <label for="exampleInputPassword1" class="form-label">비밀번호</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1"/>
-                    </div>
-                    <div class="mb-3 form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1"/>
-                      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                    </div>
                     <div class="login-btn-area">
-	                    <div>
-		                    <button type="submit" class="btn btn-primary" onclick="">
-		                      로그인
-		                    </button>
-	                    </div>
 	                    <div>
 	                    	<div class="github-login-btn">
 			                    <a href="http://github.com/login/oauth/authorize?client_id=bafc4109aa5941b24ce1&scope=repo user project delete_repo">
@@ -107,6 +127,16 @@ body {
                     </div>
                   </form>
                 </div>
+              </div>
+              <div>
+              	<div class="card-body">
+              		<div class="card-body-bottom">
+              			<div>New to GitHub?</div>
+              			<a href="https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home">
+              				<div>Create an account</div>
+              			</a>
+              		</div>
+              	</div>
               </div>
             </div>
           </div>
