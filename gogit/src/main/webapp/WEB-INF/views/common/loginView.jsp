@@ -82,6 +82,8 @@ pageEncoding="UTF-8"%>
                       href="http://github.com/login/oauth/authorize?client_id=bafc4109aa5941b24ce1&scope=repo user project delete_repo"
                       >Click here</a
                     >
+                    
+                    <a href="https://zoom.us/oauth/authorize?response_type=code&client_id=XOgW7jAmRtiAvKC4QUqTlQ&redirect_uri=http://localhost:8052/gogit/zoom/callback">zoom test</a>
                   </form>
                 </div>
               </div>
