@@ -18,5 +18,7 @@ public interface FriendService {
 	int refuseFriend(Friend f);
 	ArrayList<Member> searchMember(String search, String memId);
 	ArrayList<Member> myFriendList(String memId);
+	int blockOldFriend(Friend f);
+	int blockNoneFriend(Friend f);
 
 }

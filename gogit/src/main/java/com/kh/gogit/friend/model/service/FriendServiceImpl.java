@@ -59,7 +59,20 @@ public class FriendServiceImpl implements FriendService {
 
 	}
 
+
+	@Override
+	public int blockOldFriend(Friend f) {
+		
+		return fDao.blockOldFriend(f, sqlSession);
+	}
+
+
 	
+	@Override
+	public int blockNoneFriend(Friend f) {
+		
+		return fDao.blockNoneFriend(f, sqlSession);
+	}
 
 
 
@@ -77,6 +90,18 @@ public class FriendServiceImpl implements FriendService {
 	public ArrayList<Member> myFriendList(String memId) {
 		
 		return fDao.myFriendList(memId, sqlSession);
+	}
+
+	public int cancelAddFriend(Friend f) {
+		return fDao.cancelAddFriend(f, sqlSession);
+	}
+
+	public int cancelRefuseFriend(Friend f) {
+		return fDao.cancelRefuseFriend(f, sqlSession);
+	}
+
+	public int cancelRefuseFriend2(Friend f) {
+		return fDao.cancelRefuseFriend2(f, sqlSession);
 	}
 
 

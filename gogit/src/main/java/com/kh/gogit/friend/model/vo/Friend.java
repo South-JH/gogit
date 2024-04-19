@@ -33,3 +33,7 @@ public class Friend {
 	private String friSent;  // 친구가 나한테 친구관련 샹태를 보냄
 	private int userNo;
 }
+
+
+
+

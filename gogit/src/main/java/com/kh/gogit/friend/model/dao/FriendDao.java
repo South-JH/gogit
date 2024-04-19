@@ -15,8 +15,7 @@ import com.kh.gogit.member.model.vo.Member;
 public class FriendDao {
 
 
-
-   public int listCount(SqlSessionTemplate sqlSession, String memId) {
+public int listCount(SqlSessionTemplate sqlSession, String memId) {
       
       return sqlSession.selectOne("friendMapper.listCount");
    }
@@ -24,7 +23,7 @@ public class FriendDao {
 
    public int addFriend(SqlSessionTemplate sqlSession, Friend f) {
       
-      return sqlSession.insert("friendMapper.addFriend");
+      return sqlSession.insert("friendMapper.addFriend", f);
    }
 
    public int acceptFriend(Friend f, SqlSessionTemplate sqlSession){
@@ -73,6 +72,36 @@ public ArrayList<Member> myFriendList(String memId, SqlSessionTemplate sqlSessio
 	return (ArrayList)sqlSession.selectList("friendMapper.myFriendList", memId);
 }
 
+
+public int cancelAddFriend(Friend f,SqlSessionTemplate sqlsession) {
+	return sqlsession.delete("friendMapper.deleteFriend", f);
+}
+
+
+public int blockOldFriend(Friend f,SqlSessionTemplate sqlsession) {
+	
+	return sqlsession.update("friendMapper.blockOldFriend", f);
+			
+}
+
+
+public int blockNoneFriend(Friend f,SqlSessionTemplate sqlsession) {
+	
+	return sqlsession.insert("friendMapper.blockNoneFriend", f);
+}
+
+public int cancelRefuseFriend(Friend f,SqlSessionTemplate sqlsession) {
+	
+	return sqlsession.delete("friendMapper.cancelRefuseFriend", f);
+	
+}
+
+
+public int cancelRefuseFriend2(Friend f,SqlSessionTemplate sqlsession) {
+	
+	return sqlsession.delete("friendMapper.cancelRefuseFriend2", f);
+	
+}
 
 
 

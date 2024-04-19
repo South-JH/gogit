@@ -20,9 +20,9 @@
 	<result column="friSent" property="friSent"/>
 	<result column="user_no" property="userNo"/>
 	<result column="profile" property="profile"/>
- 
  </resultMap>
- 
+
+
  <select id="listCount" resultType="_int">
     select 
            count(*)
@@ -64,9 +64,6 @@ where m.status = 'Y'
         and user_no != #{memId} 
 	</select>
 
-
-
-  
   <insert id="addFriend">
   insert
          into friend
@@ -178,6 +175,50 @@ where m.status = 'Y'
       and git_nick like '%' || #{search} || '%'
       order by mem_Id -->
  </select>
+  <update id="blockOldFriend">
+ 	update friend 
+ 	   set status = 'D' 
+ 	 where bf_taker = #{bfTaker}
+ 	   and bf_giver = #{bfGiver}    
+ </update>
+ 
+ <!-- 원래 친구 아니었는데 그냥 차단하는 경우 -->
+ <insert id="blockNoneFriend">
+ 	 insert 
+ 	   into friend 
+ 	   (
+ 	     bf_giver
+ 	   , bf_taker
+ 	   , status
+ 	   , request_date
+ 	   ) 
+ 	   values 
+ 	   ( 
+ 	     #{bfGiver}
+ 	   , #{bfTaker}
+ 	   , 'D' 
+ 	   , sysdate
+ 	   )
+ </insert>
+ 
+  <delete id="cancelRefuseFriend">
+ 	delete from friend     
+ 	 where bf_giver = #{bfGiver}
+ 	   and bf_taker = #{bfTaker} 
+ </delete>
+ 
+ <delete id="cancelRefuseFriend2">
+ 	delete from friend     
+ 	 where bf_giver = #{bfTaker}
+ 	   and bf_taker = #{bfGiver} 
+ 
+ </delete>
+ 
+ 
+ 
+ 
+ 
+ 
  
   
 </mapper>

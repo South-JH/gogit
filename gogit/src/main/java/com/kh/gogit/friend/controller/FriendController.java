@@ -37,18 +37,57 @@ private FriendServiceImpl fService;
    @ResponseBody
    @RequestMapping("addFriend.fr")
    public String addFriend(String bfTaker, String bfGiver, HttpSession session) {
-      Friend f = new Friend(bfTaker, bfGiver);
+	   Friend f = new Friend();
+	      f.setBfGiver(bfGiver);
+	      f.setBfTaker(bfTaker);
      
       
-      System.out.println(f);
+     
       int result = fService.addFriend(f);
+      
       if(result > 0){
          session.setAttribute("alert", "dff");
       }
       return result > 0 ? "success" : "fail";
       
    }
-
+   @ResponseBody
+	@RequestMapping("blockFriend.fr")
+	public String blockFriend(String bfTaker, String bfGiver, String isent, String friSent , int userNo, HttpSession session) {
+		
+	   	
+		Friend f = new Friend();
+		f.setBfGiver(bfGiver);
+		f.setBfTaker(bfTaker);
+		f.setIsent(isent);
+		f.setFriSent(friSent);
+		f.setUserNo(userNo);
+		
+		
+		
+		 int result = 0;
+				
+		 
+		  // 친구인데 차단할때	
+		 if (userNo != 0 && isent.equals("Y") && friSent.equals("Y")) {
+				
+			 result = fService.blockOldFriend(f);
+			 
+		 }else if( userNo != 0 && isent.equals("B") && friSent.equals("A")){
+			 // 친추왔다가 거절했는데 그냥 차단하고 싶을 때
+			 result = fService.blockOldFriend(f);
+			
+		}else {
+			// 근데 만약 친구가 아닌데 그냥 차단하고 싶을 때는 insert하기 
+			
+			result = fService.blockNoneFriend(f);
+			
+			
+		}
+		
+		return result>0 ? "success" : "fail";
+	}
+	
    @ResponseBody
    @RequestMapping("acceptFriend.fr")
    public String acceptFriend(String bfTaker, String bfGiver, HttpSession session){
@@ -86,17 +125,19 @@ private FriendServiceImpl fService;
       return result * result2 > 0 ? "success" : "fail";
    }
 
-   /*
+   
    @ResponseBody
-   @RequestMapping("cancelAddFriend.fr"){
+   @RequestMapping("cancelAddFriend.fr")
       public String cancelAddFriend(String bfTaker, String bfGiver){
          Friend f = new Friend();
          f.setBfGiver(bfGiver);
          f.setBfTaker(bfTaker);
 
-         int result = fservice.cancelAddFriend(f);
+         int result = fService.cancelAddFriend(f);
+         
+         return result>0 ? "success" : "fail";
       }
-   }*/
+   
 
    @ResponseBody
    @RequestMapping("refuseFriend.fr")
@@ -143,7 +184,41 @@ private FriendServiceImpl fService;
 	  
   }
   
-
+  	@ResponseBody
+	@RequestMapping("cancleRefuseFriend.fr")
+	public String cancelRefuseFriend(String bfGiver, String bfTaker , String friSent) {
+		
+		Friend f = new Friend();
+		f.setBfGiver(bfGiver);
+		f.setBfTaker(bfTaker);
+		
+		int result = 0;
+		int result2 = 0;
+		
+		result = fService.cancelRefuseFriend(f);
+		
+		
+		
+		if(result>0) {
+			System.out.println(bfGiver);
+			System.out.println(bfTaker);
+			System.out.println(friSent);
+			result2 = fService.cancelRefuseFriend2(f);
+		}
+		
+		
+	
+		return result*result2>0 ? "success" : "fail";
+		
+	}
   
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
    
 }
