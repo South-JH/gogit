@@ -103,6 +103,7 @@
 						</ul>
 						</div>
 	             	</div>
+	             	<a href="https://zoom.us/oauth/authorize?response_type=code&client_id=P8tj51WDQVSCrmnmC3DCIg&redirect_uri=http://localhost:8052/gogit/zoom">zoom</a>
              	</div>
              </div>
            </div>
