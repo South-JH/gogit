@@ -70,11 +70,11 @@
 													<div class="wrap-one">
 														<div class="repo-list-top-area">
 															<div class="top-area-title-visibility">
-																<a href="detail.rp?repoName=${ rpList.repoTitle }">
+																<div class="href-div">
 																	<div>
 																		<h4>${ rpList.repoTitle }</h4>
 																	</div>
-																</a>
+																</div>
 																<div class="top-area-visibility">${ rpList.visibility }</div>
 															</div>
 															<div class="top-area-action">
@@ -128,24 +128,16 @@
 	 </div>
 
 <script>
-
-	/* 점점점 누르면 div 보이게 */
-
-	function openBtn(e){
-		//console.log($(e).siblings());
-
-		const other = $(e).siblings();
-
-		if(other.css("display") === 'none'){
-			other.css("display", "block");
-		}else{
-			other.css("display", "none");
-		}
-
-	}
+	
+	$(function(){
+		$(".href-div").click(function(){
+			//console.log($(this).children().children("h4").text());
+			//console.log($(this).siblings(".top-area-visibility").text());
+			location.href = "detail.rp?repoName=" + $(this).children().children("h4").text() + "&visibility=" + $(this).siblings(".top-area-visibility").text();
+		})
+	})
 	
 </script>
-	
 			
 <link href="resources/repository/repositoryList.css" rel="stylesheet">
 </body>

@@ -13,12 +13,17 @@ public class Repository {
 
 	private int repoNo;
 	private String repoTitle;
-	private String repoContent;
+	private String repoContent; // 레파지토리 설명
 	private String visibility;
 	private String updateAt;
 	private String language;
 	private String stargazers;
 	private String fork;
 	private String openIssue;
+	private String contentName; // 레파지토리 컨텐츠 내 파일명
+	private String sha; // 파일 커밋 번호
+	private String type; // 파일 타입
+	private String path; // 파일 경로
+	private String contentDesc; // 레파지토리 컨텐츠 내용
 	
 }

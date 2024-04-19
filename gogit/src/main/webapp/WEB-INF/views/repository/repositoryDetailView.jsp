@@ -41,7 +41,7 @@ h4 {
 	border: 1px solid #e6e6e6;
 	border-radius: 7px;
 	padding: 10px 30px;
-	height: 700px;
+	height: auto;
 	box-shadow: 0 0 6px rgba(0,0,0,0.03), 0 0 6px rgba(0,0,0,0.03);
 }
 
@@ -261,6 +261,7 @@ thead {
 	top: 40px;
 	display: none;
 	width: 220px;
+	box-shadow: 0 0 6px rgba(0,0,0,0.03), 0 0 6px rgba(0,0,0,0.03);
 }
 
 .switch-branch-area>div:first-child {
@@ -328,6 +329,17 @@ thead {
 .branch-area>div:hover {
 	background: #f9f9f9;
 }
+
+.repoTitle {
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+
+.repoTitle>i {
+	vertical-align: middle;
+	padding-right: 3px;
+}
 </style>
 </head>
 <body>
@@ -363,10 +375,10 @@ thead {
 	          		<div>
 		          		<div class="repo-detail-public-area">
 		          			<div>
-		          				<h4>01_repository</h4>
+		          				<h4>${ repoName }</h4>
 		          			</div>
 		          			<div class="repo-detail-public">
-		          				<div>Private</div>
+		          				<div>${ visibility }</div>
 		          			</div>
 		          		</div>
 		          		<div>
@@ -442,25 +454,32 @@ thead {
 											<table class="repo-table">
 												<thead>
 													<tr>
-														<th width="150">NAME</th>
+														<th width="350">NAME</th>
 														<th>RECENT COMMIT</th>
-														<th width="150">AUTHOR</th>
+														<th width="130">AUTHOR</th>
 														<th width="120">DATE</th>
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<td><i class="ti ti-folder"></i>gogit</td>
-														<td>Update RepositoryController.java</td>
-														<td><img src="resources/images/repo-img.png" width="20" height="20">crong9105</td>
-														<td>2024-04-14</td>
-													</tr>
-													<tr>
-														<td><i class="ti ti-folder"></i>gogit</td>
-														<td>Update RepositoryController.java</td>
-														<td><img src="resources/images/repo-img.png" width="20" height="20">crong9105</td>
-														<td>2024-04-14</td>
-													</tr>
+													<c:forEach var="rp" items="${ rpList }">
+														<tr>
+															<td onclick="subContent(this);" class="repoTitle">
+																<c:choose>
+																	<c:when test="${ rp.type eq 'file' }">
+																		<i class="ti ti-file"></i>
+																	</c:when>
+																	<c:otherwise>
+																		<i class="ti ti-folder"></i>
+																	</c:otherwise>
+																</c:choose>
+																<div>${ rp.contentName }</div>
+																<input type="hidden" value="${ rp.path }">
+															</td>
+															<td>Update RepositoryController.java</td>
+															<td><img src="resources/images/repo-img.png" width="20" height="20">crong9105</td>
+															<td>2024-04-14</td>
+														</tr>
+													</c:forEach>
 												</tbody>
 											</table>
 										</div>
@@ -528,6 +547,58 @@ thead {
 	        }
 	    });
 	});
+	
+	const repoName = $(".repo-detail-public-area h4").text();
+	
+	function subContent(e){
+		//console.log($(e).children("div").text());
+		//console.log(repoName);
+		const fileName = $(e).children("div").text();
+		const filePath = $(e).children("input").val();
+		
+		$.ajax({
+			url:"selectContent.rp",
+			data:{
+				repoName:repoName,
+				path:filePath
+			},
+			success:function(result){
+				
+				console.log(result);
+				//console.log(result.rpList);
+				
+				let list = result.rpList;
+				console.log(list);
+				let value = "";
+				$(".repo-table>tbody").text("");
+					
+ 				for(let i in list){
+					value += "<tr>"
+						   + "<td onclick=\"subContent(this);\" class=\"repoTitle\">"
+						   
+						   if(list[i].type === "file"){
+							   value += "<i class=\"ti ti-file\"></i>"
+						   } else{
+							   value += "<i class=\"ti ti-folder\"></i>"
+						   }
+						   
+					value += "<div>" + list[i].contentName + "</div>"
+						   + "<input type=\"hidden\" value=\"" + list[i].path + "\">"
+						   + "</td>"
+						   + "<td>" + "나중에여기다가 뭘쓰지...?" + "</td>"
+						   + "<td>" + "<img src=\"" + "" + "\" width=\"20\" height=\"20\">" + "작성자이름" + "</td>"
+						   + "<td>" + "여기에 업데이트 날짜 넣기" + "</td>"
+						   + "</tr>";
+				}
+				
+ 				$(".repo-table>tbody").html(value);
+				
+			},
+			error:function(){
+				console.log("subContent api 조회 실패");
+			}
+		})
+	}
 	
 </script>
 </body>

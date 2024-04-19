@@ -7,16 +7,22 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.gogit.member.model.vo.Member;
@@ -138,15 +144,149 @@ public class RepositoryController {
 	}
 	
 	@RequestMapping("detail.rp")
-	public String repoDetailView(HttpSession session, String repoName) {
+	public String repoDetailView(Model model, HttpSession session, String repoName, String visibility) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
-		String repoList = rService.repositoryList(m);
-		JsonArray repoArr = JsonParser.parseString(repoList).getAsJsonArray();
+		//System.out.println(repoName);
+		String repoContent = rService.repoDetailView(m, repoName);
 		
-		rService.repoDetailView(m);
+		JsonArray repoArr = JsonParser.parseString(repoContent).getAsJsonArray();
+		ArrayList<Repository> rpList = new ArrayList<Repository>();
 		
+        for(int i=0; i<repoArr.size(); i++) {
+        	
+        	Repository rp = new Repository();
+        	
+        	rp.setContentName(repoArr.get(i).getAsJsonObject().get("name").getAsString());
+        	rp.setSha(repoArr.get(i).getAsJsonObject().get("sha").getAsString());
+        	rp.setType(repoArr.get(i).getAsJsonObject().get("type").getAsString());
+        	rp.setPath(repoArr.get(i).getAsJsonObject().get("path").getAsString());
+        	//System.out.println(repoArr.get(i).getAsJsonObject().get("type").getAsString());
+        	rpList.add(rp);
+        }
+        
+        model.addAttribute("repoName", repoName);
+        model.addAttribute("visibility", visibility);
+        model.addAttribute("rpList", rpList);	
 		return "repository/repositoryDetailView";
+	}
+	
+	/*
+	@RequestMapping(value="selectContet.rp")
+	public ModelAndView getSubContent(HttpSession session, ModelAndView mv, String repoName, String path) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		String subContent = rService.getSubContent(m, repoName, path);
+		
+		JsonElement element = JsonParser.parseString(subContent);
+		ArrayList<Repository> rpList = new ArrayList<Repository>();
+		
+		if(element.isJsonArray()) {
+			// 데이터가 배열인 경우, 배열로 처리
+			
+			JsonArray repoArr = JsonParser.parseString(subContent).getAsJsonArray();
+			
+			for(int i=0; i<repoArr.size(); i++) {
+				
+				Repository rp = new Repository();
+				populateSubContent(repoArr.get(i).getAsJsonObject(), rp);
+		        rpList.add(rp);
+				
+			}
+			
+		} else if(element.isJsonObject()) {
+			// 데이터가 객체인 경우, 객체로 처리
+			
+			Repository rp = new Repository();
+			populateSubContent(element.getAsJsonObject(), rp);
+		    rpList.add(rp);
+			
+		} else {
+			System.out.println("객체도 배열도 아니면 뭐냐");
+		}
+        
+        mv.addObject("repoName", repoName)
+          .addObject("rpList", rpList)
+          .setViewName("repository/repositoryDetailView");
+        
+		return mv;
+		
+	}
+	*/
+	
+	@RequestMapping(value="selectContent.rp", produces="application/json; charset=UTF-8")
+	public void getSubContent(HttpServletResponse response, HttpSession session, String repoName, String path) throws JsonIOException, IOException {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		String subContent = rService.getSubContent(m, repoName, path);
+		
+		JsonElement element = JsonParser.parseString(subContent);
+		ArrayList<Repository> rpList = new ArrayList<Repository>();
+		
+		if(element.isJsonArray()) {
+			// 데이터가 배열인 경우, 배열로 처리
+			
+			JsonArray repoArr = JsonParser.parseString(subContent).getAsJsonArray();
+			
+			for(int i=0; i<repoArr.size(); i++) {
+				
+				Repository rp = new Repository();
+				populateSubContent(repoArr.get(i).getAsJsonObject(), rp);
+		        rpList.add(rp);
+				
+			}
+			
+		} else if(element.isJsonObject()) {
+			// 데이터가 객체인 경우, 객체로 처리
+			
+			Repository rp = new Repository();
+			populateSubContent(element.getAsJsonObject(), rp);
+		    rpList.add(rp);
+			
+		} else {
+			System.out.println("객체도 배열도 아니면 뭐냐");
+		}
+        
+		HashMap<Object, Object> map = new HashMap<Object, Object>();
+		map.put("repoName", repoName);
+		map.put("rpList", rpList);
+		
+		response.setContentType("application/json; charset=utf-8");
+		
+		new Gson().toJson(map, response.getWriter());
+		
+	}
+	
+	public void populateSubContent(JsonObject repoObj, Repository rp) {
+		
+		/*
+		rp.setContentName(repoArr.get(i).getAsJsonObject().get("name").getAsString());
+		rp.setSha(repoArr.get(i).getAsJsonObject().get("sha").getAsString());
+		rp.setType(repoArr.get(i).getAsJsonObject().get("type").getAsString());
+		rp.setPath(repoArr.get(i).getAsJsonObject().get("path").getAsString());
+		
+		// JsonObject repoObj = repoArr.get(i).getAsJsonObject();
+		JsonElement contentElement = repoObj.get("content");
+		if (contentElement == null || contentElement.isJsonNull()) {
+			rp.setContentDesc("");
+		} else {
+			rp.setContentDesc(contentElement.getAsString());
+		}
+		*/
+		
+	    rp.setContentName(repoObj.get("name").getAsString());
+	    rp.setSha(repoObj.get("sha").getAsString());
+	    rp.setType(repoObj.get("type").getAsString());
+	    rp.setPath(repoObj.get("path").getAsString());
+	    
+	    JsonElement contentElement = repoObj.get("content");
+	    //System.out.println(contentElement);
+	    if(contentElement != null) {
+	    	rp.setContentDesc(contentElement.isJsonNull() ? "" : contentElement.getAsString());
+	    } else {
+	    	rp.setContentDesc(null);
+	    }
+	    
 	}
 	
 }

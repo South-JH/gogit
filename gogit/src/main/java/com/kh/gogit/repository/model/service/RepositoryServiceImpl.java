@@ -15,7 +15,9 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.kh.gogit.member.model.vo.Member;
 
 @Service
@@ -51,19 +53,6 @@ public class RepositoryServiceImpl implements RepositoryService {
 		
 		return repoList;
 		
-	}
-	
-	public void repoDetailView(Member m) {
-		
-		String url = "https://api.github.com/repos/OWNER/REPO/contents/PATH";
-		
-		RestTemplate restTemplate = new RestTemplate();
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-		
-		headers.set("Authorization", "Bearer " + m.getMemToken());
-		headers.set("Accept", "Accept: application/vnd.github+json");
 	}
 	
 	public String createRepo(Member m, String repoName, String repoDesc, String visibility, String readme) {
@@ -147,5 +136,111 @@ public class RepositoryServiceImpl implements RepositoryService {
    		}
   		
 	}
+	
+	public String repoDetailView(Member m, String repoName) {
+		
+		String url = "https://api.github.com/repos/" + m.getGitNick() + "/" + repoName + "/contents/";
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		headers.set("Authorization", "Bearer " + m.getMemToken());
+		headers.set("Accept", "Accept: application/vnd.github+json");
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+		
+		String repoContent = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			repoContent = response.getBody();
+			//System.out.println(repoContent);
+		} else {
+			System.out.println("content 조회 실패");
+		}
+		
+		return repoContent;
+		
+	}
+	
+	public String getSubContent(Member m, String repoName, String path) {
+		
+		String url = "https://api.github.com/repos/"+ m.getGitNick() + "/"+ repoName + "/contents/" + path;
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		headers.set("Authorization", "Bearer " + m.getMemToken());
+		headers.set("Accept", "Accept: application/vnd.github+json");
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+		
+		String subContent = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			subContent = response.getBody();
+			
+	        JsonElement element = JsonParser.parseString(subContent);
+	        if (element.isJsonObject()) {
+	            JsonObject jsonObject = element.getAsJsonObject();
+	            
+	            // content 키가 있는지 확인
+	            if (jsonObject.has("content")) {
+	            	// content 값을 가져옴
+	            	String content = jsonObject.get("content").getAsString();
+	            	content = cleanBase64String(content);
+	            	
+	            	// Base64 유효성 검사
+	            	if(isValidBase64(content)) {
+	            		String decodedContent = decodeBase64(content);
+	            		jsonObject.addProperty("content", decodedContent);
+	            	} else {
+	                    System.out.println("Invalid Base64 string: " + content);
+	                }
+	            }
+	            subContent = jsonObject.toString(); 
+	        }
+			
+		} else {
+			System.out.println("content 조회 실패");
+		}
+		
+		//System.out.println(subContent);
+		return subContent;
+		
+	}
+	
+	private boolean isValidBase64(String str) {
+		try {
+	        Base64.getDecoder().decode(str.trim());
+	        return true;
+	    } catch (IllegalArgumentException e) {
+	        return false;
+	    }
+	}
+	
+	private String decodeBase64(String content) {
+		
+	    try {
+	        byte[] decodedBytes = Base64.getDecoder().decode(content);
+	        return new String(decodedBytes);
+	    } catch (IllegalArgumentException e) {
+	        // Base64 디코딩 중 오류 발생 시, 예외 처리하여 오류 메시지를 출력
+	        System.err.println("Base64 디코딩 오류: " + e.getMessage());
+	        return null; // 또는 예외를 throw하여 호출자에게 전달
+	    }
+	}
+	
+    private String cleanBase64String(String base64) {
+        base64 = base64.replaceAll("[^A-Za-z0-9+/=]", "");
+        int mod = base64.length() % 4;
+        if (mod != 0) {
+            base64 += "=".repeat(4 - mod);
+        }
+        return base64;
+    }
 	
 }
