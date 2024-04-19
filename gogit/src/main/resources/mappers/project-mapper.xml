@@ -198,6 +198,13 @@
 		   and pro_no = #{pno}	
 	</update>
 	
+	<select id="applyListCount" resultType="_int">
+		select
+		       count(*)
+		  from project
+		 where pro_status = 'Y'
+	</select>
+	
 	<select id="applySelectList" resultMap="projectResult">
 	select
 	       pro_no
@@ -220,6 +227,21 @@
 	 order
 	    by pro_no desc
 	</select>
+	
+	<update id="updateProject">
+		update
+		       project
+		   set pro_stack = #{proStack}
+		     , pro_title = #{proTitle}
+		     , pro_content = #{proContent}
+		     , pro_member = #{proMember}
+		     , pro_period = #{proPeriod}
+		     , pro_deadline = #{deadLine}
+		     , pro_start_date = #{startDate}
+		     , pro_position = #{positoin}
+		     , create_date = SYSDATE
+		 where pro_no = #{proNo}	
+	</update>
 	
 	
 

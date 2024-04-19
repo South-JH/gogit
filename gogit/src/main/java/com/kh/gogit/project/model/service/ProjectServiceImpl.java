@@ -128,5 +128,15 @@ public class ProjectServiceImpl implements ProjectService{
 	public ArrayList<Project> applySelectList(PageInfo pi) {
 		return pDao.applySelectList(sqlSession, pi);
 	}
+
+	@Override
+	public int updateProject(Project p) {
+		return pDao.updateProject(sqlSession, p);
+	}
+
+	@Override
+	public int applyListCount() {
+		return pDao.applyListCount(sqlSession);
+	}
 	
 }

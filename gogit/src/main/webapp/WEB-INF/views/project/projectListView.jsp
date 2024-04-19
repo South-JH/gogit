@@ -45,6 +45,11 @@
 	.plist-div{
 		box-shadow: 5px 5px 10px gray;
 		cursor: pointer;
+		width: 270px;
+		height: 320px;
+		border-radius: 25px;
+		border: 2px solid #d4d2d2;
+		background-color:#ffffff;
 	}
 
 	#content2_3>div{
@@ -177,7 +182,7 @@
 						<div class="top-div">
 							<div class="topmenu-div" style="display:flex;">
 								<div style="width: 90px;" class="testtest"><a onclick="allbtn()" style="color: rgb(2 56 75);">전체</a></div>					
-								<div style="width: 100px;" class="applying"><a onclick="applying()" style="color: lightgray; cursor: pointer;">모집 중</a></div>
+								<div style="width: 100px;" class="applying"><a onclick="applying(1)" id="applyingId" style="color: lightgray; cursor: pointer;">모집 중</a></div>
 								<div style="width: 120px;" class="applycomplete"><a onclick="applycomplete()" style="color: lightgray; cursor: pointer;">모집 완료</a></div>
 							</div>
 							<br>
@@ -192,14 +197,16 @@
 
 								}
 
-								function applying(){
+								function applying(p){
 									$(".testtest>a").css("color", "lightgray");
 									$(".applying>a").css("color", "rgb(2 56 75)");
 									$(".applycomplete>a").css("color", "lightgray");
 
 									$.ajax({
 										url:"applyingList.pr",
+										data:{cpage:p},
 										success:function(map){
+											console.log(map)
 											let pi = map.pi;			
 					                        let currentPage = pi.currentPage;
 					                        let startPage = pi.startPage;
@@ -212,25 +219,27 @@
 					                        							                       						                        
 					                        let result = map.list; // array
 					                        let result1 = map.stackList; // array
+					                        console.log(result);
+					                        //console.log(pi);
 					                        							                        
 					                        let value = "";
 					                        
 					                        for(let i=0; i<result.length; i++){
 						                        let proStatus = result[i].proStatus;
-						                        console.log(i + "status : " + proStatus)
-						                        		let rv = result[i];
-						                        		
+						                        
+						                        		let rv = result[i];					                    		
 						                        		
 						                        		let deadLine = rv.deadLine;
 						                        		let proContent = rv.proContent;
 						                        		let positoin = rv.positoin; //"zzszs,zszzs,zszszs"
+						                        		let pno = rv.proNo;				                        		
 		                        
 						                        		let count = rv.count;
 						                        		let prowriter = rv.proWriter;
 														let prostack = rv.proStack;
 														
 														value += 
-							                        		'<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='+'detail.pr'+'">'
+							                        		'<div class="plist-div" onclick="location.href=\'detail.pr?pno=' + pno + '\'">'
 															+ '<div class="pro-public">모집중</div>'
 															+ '<br>'
 															+ '<div>마감일:'+deadLine+'</div>'
@@ -265,22 +274,29 @@
 						                        		}
 					                        
 					                        $("#content2_3").html(value);
+					                        console.log("------")
+					                        console.log(currentPage);
+					                        console.log(startPage);
+					                        console.log(endPage);
 					                        
-					                        if (currentPage != 1) {						                        	
-						                        $paging.append(
-						                                "<li class='page-item'><a class='page-link' href='applyingList.pr?cpage=" + (currentPage - 1) + "'>Previous</a></li>"
+					                        if (currentPage != 1) {				                        	
+						                        $paging.append(				                               
+						                                "<li class='page-item'><a class='page-link' onclick=applying(" + (currentPage - 1) + ")>Previous</a></li>"
 						                            );
 						                        }
 						                        
 						                        for (let p = startPage; p <= endPage; p++) {
 						                            if (p == currentPage) {
-						                              $paging.append("<li class='page-item'><a class='page-link'>"+p+"</a></li>");
-						                            } 
+						                              $paging.append("<li class='page-item active'><a class='page-link' onclick=applying(" + p  + ")>" + p + "</a></li>");
+						                            }else{
+						                              $paging.append("<li class='page-item'><a class='page-link' onclick=applying(" + p  + ")>" + p + "</a></li>");
+						                            }
 						                          } 
 						                        
 						                        if (currentPage != maxPage) {
+						                        	console.log("야되냐3");
 						                        	$paging.append(
-						                        		    "<li class='page-item'><a class='page-link' href='applyingList.pr?cpage=" + (currentPage + 1) + "'>Next</a></li>");
+						                        		    "<li class='page-item'><a class='page-link' onclick=applying(" + (currentPage + 1) + ")>Next</a></li>");
 						                          }
 
 											
@@ -288,8 +304,8 @@
 											
 										}
 									});
-								}
-
+								}					
+							
 								function applycomplete(){
 									$(".testtest>a").css("color", "lightgray");
 									$(".applying>a").css("color", "lightgray");
@@ -298,14 +314,7 @@
 								}
 							</script>
 
-
-
-
-
-
-
-							<div style="display:flex;">
-								
+							<div style="display:flex;">								
 									<div class="form-group">																				
 										<div>
 											<select id="name" style="background-color: #ffffff;" class="form-control" id="sel1" name="sellist1">
@@ -353,17 +362,17 @@
 							                        		let deadLine = rv.deadLine;
 							                        		let proContent = rv.proContent;
 							                        		let positoin = rv.positoin; //"zzszs,zszzs,zszszs"
-							                        		let count = rv.count;
 							                        		
 							                        		let count = rv.count;
 							                        		let prowriter = rv.proWriter;
 															let prostack = rv.proStack;
+															let pno = rv.proNo;
 															
 															
 							                        		if(proStatus === 'Y'){
 							                        			console.log("모집중");
 							                        			value += 
-									                        		'<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='+'detail.pr'+'">'
+									                        		'<div class="plist-div" onclick="location.href=\'detail.pr?pno=' + pno + '\'">'
 																	+ '<div class="pro-public">모집중</div>'
 																	+ '<br>'
 																	+ '<div>마감일:'+deadLine+'</div>'
@@ -374,7 +383,7 @@
 							                        		}else{
 							                        			console.log("모집완료");
 							                        			value += 
-									                        		'<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='+'detail.pr'+'">'
+									                        		'<div class="plist-div" onclick="location.href=\'detail.pr?pno=' + pno + '\'">'
 																	+ '<div class="pro-public" style="background-color: #d9d9d9;">모집마감</div>'
 																	+ '<br>'
 																	+ '<div>마감일:'+deadLine+'</div>'
@@ -420,7 +429,7 @@
 								                        
 								                        for (let p = startPage; p <= endPage; p++) {
 								                            if (p == currentPage) {
-								                              $paging.append("<li class='page-item'><a class='page-link'>"+p+"</a></li>");
+								                              $paging.append("<li class='page-item active'><a class='page-link'>"+p+"</a></li>");
 								                            } else {
 								                              $paging.append("<li class='page-item'><a class='page-link' onclick=searchProject('" + keyword + "'," + p + ")>" + p +"</a></li>");
 								                            }
@@ -460,7 +469,7 @@
 						<div class="middle-div">
 							<div id="content2_3">
 								<c:forEach var="p" items="${ list }">
-									<div class="plist-div" style="width: 270px; height: 350px; border-radius: 25px; border: 2px solid #d4d2d2; background-color:#ffffff;" onclick="location.href='detail.pr?pno=${p.proNo}'">
+									<div class="plist-div" onclick="location.href='detail.pr?pno=${p.proNo}'">
 										<c:choose>
 											<c:when test="${p.proStatus eq 'Y' }">
 												<div class="pro-public">모집중</div>
@@ -515,8 +524,16 @@
 											<li class="page-item"><a class="page-link" href="list.pj?cpage=${ pi.currentPage - 1 }">Previous</a></li>
 										</c:otherwise>
 									</c:choose>
+									
 									<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-										<li class="page-item"><a class="page-link" href="list.pj?cpage=${ p }">${ p }</a></li>
+										<c:choose>
+											<c:when test="${ pi.currentPage eq p }">
+												<li class="page-item active"><a class="page-link" href="list.pj?cpage=${ p }">${ p }</a></li>
+											</c:when>
+											<c:otherwise>
+												<li class="page-item"><a class="page-link" href="list.pj?cpage=${ p }">${ p }</a></li>
+											</c:otherwise>
+										</c:choose>
 									</c:forEach>
 									
 									<c:choose>

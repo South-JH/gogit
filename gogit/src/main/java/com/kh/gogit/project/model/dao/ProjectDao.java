@@ -84,6 +84,14 @@ public class ProjectDao {
 		return (ArrayList)sqlSession.selectList("projectMapper.applySelectList", null, rowBounds);
 	}
 	
+	public int updateProject(SqlSessionTemplate sqlSession, Project p) {
+		return sqlSession.update("projectMapper.updateProject", p);
+	}
+	
+	public int applyListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("projectMapper.applyListCount");
+	}
+	
 	
 
 }

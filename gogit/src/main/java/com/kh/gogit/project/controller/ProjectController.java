@@ -177,9 +177,11 @@ public class ProjectController {
 	
 	@RequestMapping(value="applyingList.pr", produces="application/json; charset=utf-8")
 	public void applySelectList(@RequestParam (value="cpage", defaultValue ="1" ) int currentPage, HttpServletResponse response) throws JsonIOException, IOException {
-		int listCount = pService.selectListCount();
+		int listCount = pService.applyListCount();
+	
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 3, 8);
 		ArrayList<Project> list = pService.applySelectList(pi);
+		
 		ArrayList<Stack> stackList = pService.selectStackList();
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -189,6 +191,26 @@ public class ProjectController {
 		
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(map, response.getWriter());
+	}
+	
+	@RequestMapping("updateForm.pr")
+	public String updateProjectEnrollForm(int pno, Model model) {
+		model.addAttribute("p", pService.selectDetailList(pno));	
+		return "project/projectUpdateForm";
+	}
+	
+	@RequestMapping("update.pr")
+	public String updateProject(Project p, Model model, HttpSession session) {		
+		int result = pService.updateProject(p);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 게시글 수정되었습니다.");
+			return "redirect:detail.pr?pno=" + p.getProNo();
+		}else {
+			model.addAttribute("errorMsg","게시글 수정 실패");
+			return "common/errorPage";
+		}
+		
 	}
 	
 	
