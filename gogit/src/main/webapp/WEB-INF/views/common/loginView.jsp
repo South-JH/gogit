@@ -83,7 +83,7 @@ pageEncoding="UTF-8"%>
                       >Click here</a
                     >
                     
-                    <a href="https://zoom.us/oauth/authorize?response_type=code&client_id=XOgW7jAmRtiAvKC4QUqTlQ&redirect_uri=http://localhost:8052/gogit/zoom/callback">zoom test</a>
+                    <a href="https://zoom.us/oauth/authorize?response_type=code&client_id=qpGjOpDZQ5OWjpuP4j8IQ&redirect_uri=http://localhost:8052/gogit/zoom/callback">zoom test</a>
                   </form>
                 </div>
               </div>

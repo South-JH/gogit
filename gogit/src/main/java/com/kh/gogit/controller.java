@@ -36,8 +36,8 @@ public class controller {
 		System.out.println(code);
 		
 		String accessTokenUrl = "https://zoom.us/oauth/token";
-		String clientId = "XOgW7jAmRtiAvKC4QUqTlQ";
-		String clientSecret = "58FEoHlgcmO4wlgzeUemmMl6Qx1N8vpN";
+		String clientId = "qpGjOpDZQ5OWjpuP4j8IQ";
+		String clientSecret = "z7V1AQM3bhDCfetwNYperroOAoIOI4gn";
 		
 		RestTemplate restTemplate1 = new RestTemplate();
 		
