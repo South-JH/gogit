@@ -17,7 +17,7 @@ import com.kh.gogit.member.model.vo.Member;
 public class SearchServiceImpl {
 	
 	public String test1(Member loginUser) {
-		String url = "https://api.github.com/search/users?q=south-jh";
+		String url = "https://api.github.com/search/users?q=lovelove";
 		// 서치값 받아올꺼임
 		
 		RestTemplate restTemplate = new RestTemplate();

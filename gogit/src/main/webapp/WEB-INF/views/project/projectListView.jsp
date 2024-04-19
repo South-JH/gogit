@@ -350,12 +350,13 @@
 							                        							                       						                        
 							                        let result = map.list1; // array
 							                        let result1 = map.stackList; // array
-							                        							                        
+							                        console.log(result);
+							                        
 							                        let value = "";
 							                        
 							                        for(let i=0; i<result.length; i++){
 							                        let proStatus = result[i].proStatus;
-							                        console.log(i + "status : " + proStatus)
+							                        //console.log(i + "status : " + proStatus)
 							                        		let rv = result[i];
 							                        		
 							                        		
@@ -421,25 +422,31 @@
 							                        
 							                        $("#content2_3").html(value);
 							                        
-							                        if (currentPage != 1) {						                        	
-								                        $paging.append(
-								                                "<li class='page-item'><a class='page-link' href='search.pr?cpage=" + (currentPage - 1) + "&keyword=" + keyword + "'>Previous</a></li>"
-								                            );
-								                        }
-								                        
-								                        for (let p = startPage; p <= endPage; p++) {
-								                            if (p == currentPage) {
-								                              $paging.append("<li class='page-item active'><a class='page-link'>"+p+"</a></li>");
-								                            } else {
-								                              $paging.append("<li class='page-item'><a class='page-link' onclick=searchProject('" + keyword + "'," + p + ")>" + p +"</a></li>");
-								                            }
-								                          } 
-								                        
-								                        if (currentPage != maxPage) {
-								                        	$paging.append(
-								                        		    "<li class='page-item'><a class='page-link' href='search.pr?cpage=" + (currentPage + 1) + "&keyword="+ keyword + "'>Next</a></li>");
-								                          }
-
+							                        if(result.length != 0){
+							                        	if (currentPage != 1) {						                        	
+									                        $paging.append(
+									                                "<li class='page-item'><a class='page-link' href='search.pr?cpage=" + (currentPage - 1) + "&keyword=" + keyword + "'>Previous</a></li>"
+									                            );
+									                        }
+									                        
+									                        for (let p = startPage; p <= endPage; p++) {
+									                            if (p == currentPage) {
+									                              $paging.append("<li class='page-item active'><a class='page-link'>"+p+"</a></li>");
+									                            } else {
+									                              $paging.append("<li class='page-item'><a class='page-link' onclick=searchProject('" + keyword + "'," + p + ")>" + p +"</a></li>");
+									                            }
+									                          } 
+									                        
+									                        if (currentPage != maxPage) {
+									                        	$paging.append(
+									                        		    "<li class='page-item'><a class='page-link' href='search.pr?cpage=" + (currentPage + 1) + "&keyword="+ keyword + "'>Next</a></li>");
+									                          }else{
+									                        	  $paging.append(
+										                        		    "<li class='page-item disabled'><a class='page-link'>Next</a></li>");
+									                        	  
+									                          }						                        	
+							                        }
+							                        
 							                        if(keyword != null){
 							                        	$("#sel1 option[value=" + keyword + "]").attr("selected", true);
 							                        }
