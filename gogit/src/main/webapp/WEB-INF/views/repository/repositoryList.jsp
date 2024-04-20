@@ -6,13 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script> -->
 </head>
 <body>
-	
+		
 	<jsp:include page="../common/sideBar.jsp" />
 	
 	<jsp:include page="../common/header.jsp" />
-		
+	
 	<div
 	  class="page-wrapper"
 	  id="main-wrapper"
@@ -60,10 +62,10 @@
 							<div>
 								<div>
 									<div class="repo-list-count">
-										<div><h4>16 repository</h4></div>
+										<div><h4>${ rpList.size() } repository</h4></div>
 									</div>
 									<div class="repo-list-wrap">
-									<c:forEach var="rpList" items="${ rpList }">
+									<c:forEach var="rpList" items="${ rpList }" varStatus="rp">
 										<div>
 											<div class="repo-list-wrap-one">
 												<div>
@@ -78,13 +80,26 @@
 																<div class="top-area-visibility">${ rpList.visibility }</div>
 															</div>
 															<div class="top-area-action">
-																<div><i class="ti ti-send"></i></div>
-																<div><i class="ti ti-pencil"></i></div>
-																<div><i class="ti ti-trash"></i></div>
+																<div>
+																	<button type="button" data-toggle="modal" data-target="#inviteModal${ rp.index }">
+																		<i class="ti ti-send"></i>
+																	</button>
+																</div>
+																<div>
+																	<button type="button" data-toggle="modal" data-target="#updateModal${ rp.index }">
+																		<i class="ti ti-pencil"></i>
+																	</button>
+																</div>
+																<div onclick="deleteBtn(this);">
+																	<button type="button">
+																		<i class="ti ti-trash"></i>
+																	</button>
+																</div>
 															</div>
 														</div>
 														<div>${ rpList.repoContent }</div>
 													</div>
+
 													<div class="repo-count-list-area">
 													<c:if test="${ not empty rpList.language }">
 														<div>
@@ -121,7 +136,7 @@
 	          	</div>
 	          </div>
 	          <!-- 레파지토리 리스트 END -->
-	          
+				          
 	          </div>
 	        </div>
 	     </div>
@@ -131,14 +146,70 @@
 	
 	$(function(){
 		$(".href-div").click(function(){
-			//console.log($(this).children().children("h4").text());
-			//console.log($(this).siblings(".top-area-visibility").text());
+			console.log("왜안와..?");
+			console.log($(this).children().children("h4").text());
+			console.log($(this).siblings(".top-area-visibility").text());
 			location.href = "detail.rp?repoName=" + $(this).children().children("h4").text() + "&visibility=" + $(this).siblings(".top-area-visibility").text();
 		})
 	})
 	
-</script>
+	function deleteBtn(e){
+		
+		//console.log($(e).parent().siblings().eq(0).children().children().children().text());
+		const repoTitle = $(e).parent().siblings().eq(0).children().children().children().text();
+		//console.log(repoTitle);
+		
+		if(confirm("레포지토리를 삭제하시겠습니까?")){
 			
+			$.ajax({
+				url:"delete.rp",
+				data:{
+					repoName:repoTitle
+				},
+				success:function(result){
+	                alert(repoTitle + "레포지토리가 삭제되었습니다.");
+	                location.reload();
+				},
+		        error: function(error) {
+		            console.log("레포지토리 삭제 ajax 실패: " + error);
+		            alert("레포지토리 삭제에 실패했습니다.");
+		        }
+			})
+			
+		} else{
+			console.log("삭제 취소");
+		}
+	}
+	
+	function inviteBtn(e){
+		
+		const repoTitle;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+/* 	$(function(){
+		$(".btn-close").click(function(e) {
+			console.log("오냐?");
+			console.log($(this).parents(".modal"));
+			$(this).parents(".modal").modal.("hide");
+	    });
+	})
+	
+	// 모달이 닫히면 새로고침
+    $('#updateModal${rp.index}').on('hidden.bs.modal', function (e) { 
+        location.reload();
+    }); */
+		
+</script>
+
 <link href="resources/repository/repositoryList.css" rel="stylesheet">
 </body>
 </html>

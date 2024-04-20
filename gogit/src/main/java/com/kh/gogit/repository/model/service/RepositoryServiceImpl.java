@@ -25,7 +25,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 
 	public String repositoryList(Member m) {
 		
-		String url = "https://api.github.com/user/repos";
+		String url = "https://api.github.com/user/repos?sort=created&direction=desc";
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
@@ -95,8 +95,6 @@ public class RepositoryServiceImpl implements RepositoryService {
 	
 	public String createGitignore(Member m, String repoName, String git) {
 		
-		System.out.println("여기까지오냐?");
-		
   		String url = "https://api.github.com/repos/" + m.getGitNick() + "/" + repoName + "/contents/.gitignore";
   		 
  		RestTemplate restTemplate = new RestTemplate();
@@ -127,7 +125,7 @@ public class RepositoryServiceImpl implements RepositoryService {
         String createGit = "";
         
         if (response.getStatusCode() == HttpStatus.CREATED) {
-	   		 System.out.println("깃이그노어성공했냐?"); 
+	   		 //System.out.println("깃이그노어성공했냐?"); 
 	   		 createGit = response.getBody();
 	   		 return createGit; 
    		} else {
@@ -215,7 +213,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 	
 	private boolean isValidBase64(String str) {
 		try {
-	        Base64.getDecoder().decode(str.trim());
+	        Base64.getDecoder().decode(str.trim()); // 디코딩할 문자열의 앞뒤 공백을 제거하고 디코딩
 	        return true;
 	    } catch (IllegalArgumentException e) {
 	        return false;
@@ -225,8 +223,8 @@ public class RepositoryServiceImpl implements RepositoryService {
 	private String decodeBase64(String content) {
 		
 	    try {
-	        byte[] decodedBytes = Base64.getDecoder().decode(content);
-	        return new String(decodedBytes);
+	        byte[] decodedBytes = Base64.getDecoder().decode(content); // content 문자열을 디코딩하고 배열에 저장
+	        return new String(decodedBytes); // 디코딩된 문자열을 바이트배열로 반환
 	    } catch (IllegalArgumentException e) {
 	        // Base64 디코딩 중 오류 발생 시, 예외 처리하여 오류 메시지를 출력
 	        System.err.println("Base64 디코딩 오류: " + e.getMessage());
@@ -235,12 +233,12 @@ public class RepositoryServiceImpl implements RepositoryService {
 	}
 	
     private String cleanBase64String(String base64) {
-        base64 = base64.replaceAll("[^A-Za-z0-9+/=]", "");
-        int mod = base64.length() % 4;
-        if (mod != 0) {
+        base64 = base64.replaceAll("[^A-Za-z0-9+/=]", ""); // 대소문자, 알파벳, 숫자, +, \, =을 제외한 모든 문자를 찾아서 "" 빈문자열로 대체하여 제거
+        int mod = base64.length() % 4; // base64 문자열의 길이를 4로 나눈 나머지 값 저장
+        if (mod != 0) { // 나머지값이 0이 아니면, 그러니까 4배수가 아닌 경우 나머지값이 0일때까지 = 를 누적추가
             base64 += "=".repeat(4 - mod);
         }
         return base64;
     }
-	
+    
 }

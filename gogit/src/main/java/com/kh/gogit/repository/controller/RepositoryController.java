@@ -13,10 +13,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -113,11 +120,13 @@ public class RepositoryController {
 	public String createRepo(HttpSession session, String repoName, String repoDesc, String visibility, String readme, String[] git) {
 		
 		String gitStr = "";
-		for(String str : git) {
-			gitStr += str;
+		if(git != null) {
+			for(String str : git) {
+				gitStr += str;
+			}
 		}
 		
-		System.out.println(gitStr);
+		//System.out.println(gitStr);
 		
 		if(readme == null) {
 			readme = "false";
@@ -170,49 +179,6 @@ public class RepositoryController {
         model.addAttribute("rpList", rpList);	
 		return "repository/repositoryDetailView";
 	}
-	
-	/*
-	@RequestMapping(value="selectContet.rp")
-	public ModelAndView getSubContent(HttpSession session, ModelAndView mv, String repoName, String path) {
-		
-		Member m = (Member)session.getAttribute("loginUser");
-		String subContent = rService.getSubContent(m, repoName, path);
-		
-		JsonElement element = JsonParser.parseString(subContent);
-		ArrayList<Repository> rpList = new ArrayList<Repository>();
-		
-		if(element.isJsonArray()) {
-			// 데이터가 배열인 경우, 배열로 처리
-			
-			JsonArray repoArr = JsonParser.parseString(subContent).getAsJsonArray();
-			
-			for(int i=0; i<repoArr.size(); i++) {
-				
-				Repository rp = new Repository();
-				populateSubContent(repoArr.get(i).getAsJsonObject(), rp);
-		        rpList.add(rp);
-				
-			}
-			
-		} else if(element.isJsonObject()) {
-			// 데이터가 객체인 경우, 객체로 처리
-			
-			Repository rp = new Repository();
-			populateSubContent(element.getAsJsonObject(), rp);
-		    rpList.add(rp);
-			
-		} else {
-			System.out.println("객체도 배열도 아니면 뭐냐");
-		}
-        
-        mv.addObject("repoName", repoName)
-          .addObject("rpList", rpList)
-          .setViewName("repository/repositoryDetailView");
-        
-		return mv;
-		
-	}
-	*/
 	
 	@RequestMapping(value="selectContent.rp", produces="application/json; charset=UTF-8")
 	public void getSubContent(HttpServletResponse response, HttpSession session, String repoName, String path) throws JsonIOException, IOException {
@@ -287,6 +253,49 @@ public class RepositoryController {
 	    	rp.setContentDesc(null);
 	    }
 	    
+	}
+	
+	@RequestMapping("delete.rp")
+	public ResponseEntity<?> deleteRepo(HttpSession session, String repoName) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+    	String url = "https://api.github.com/repos/" + m.getGitNick() + "/" + repoName;
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    	
+    	headers.set("Authorization", "Bearer " + m.getMemToken());
+		headers.set("Accept", "Accept: application/vnd.github+json");
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		/*
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, request, String.class);
+		
+		String responseCode = "";
+		if(response.getStatusCode() == HttpStatus.NO_CONTENT) {
+			
+		} else {
+			System.out.println("api 실패");
+		}
+		*/
+	    try {
+	        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, request, String.class);
+
+	        if (response.getStatusCode() == HttpStatus.NO_CONTENT) {
+	            // 성공적으로 삭제됐을 때 클라이언트로 성공 메시지 보내기
+	        	return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+	        } else {
+	            // 삭제 실패 처리
+	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Failed to delete repository\"}");
+	        }
+	    } catch (Exception e) {
+	        // 예외 처리
+	        System.out.println("API 실패: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Server error occurred\"}");
+	    }
 	}
 	
 }

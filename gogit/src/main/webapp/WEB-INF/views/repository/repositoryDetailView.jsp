@@ -48,7 +48,7 @@ h4 {
 /* 왼쪽컨텐츠 사이즈 */
 .repo-detail-left-area {
 	padding: 20px 0;
-	width: 80%;
+	width: 90%;
 }
 
 .branch-area-btn {
@@ -338,7 +338,17 @@ thead {
 
 .repoTitle>i {
 	vertical-align: middle;
-	padding-right: 3px;
+	padding-right: 4px;
+	padding-top: 4px;
+	font-size: 17px;
+}
+
+.ti-folder {
+	filled: #3385ff;
+}
+
+tr:hover {
+	background-color: #eee;
 }
 </style>
 </head>
@@ -454,10 +464,10 @@ thead {
 											<table class="repo-table">
 												<thead>
 													<tr>
-														<th width="350">NAME</th>
+														<th width="330">NAME</th>
 														<th>RECENT COMMIT</th>
 														<th width="130">AUTHOR</th>
-														<th width="120">DATE</th>
+														<th width="130">DATE</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -473,7 +483,8 @@ thead {
 																	</c:otherwise>
 																</c:choose>
 																<div>${ rp.contentName }</div>
-																<input type="hidden" value="${ rp.path }">
+																<input type="hidden" value="${ rp.contentName }" id="rpContentName">
+																<input type="hidden" value="${ rp.path }" id="rpPath">
 															</td>
 															<td>Update RepositoryController.java</td>
 															<td><img src="resources/images/repo-img.png" width="20" height="20">crong9105</td>
@@ -552,9 +563,36 @@ thead {
 	
 	function subContent(e){
 		//console.log($(e).children("div").text());
-		//console.log(repoName);
-		const fileName = $(e).children("div").text();
-		const filePath = $(e).children("input").val();
+		
+		/*
+		if($(e).children("div").text() != "뒤로가기"){
+			const fileName = $(e).children("div").text();
+			const filePath = $(e).children("input").val();
+		} else {
+			const fileName = $(e).children("input").val().split("/").slice(-2, -1)[0];
+			const filePath = $(e).children("input").val().split("/").slice(0, -1).join("/");
+		}
+		*/
+		
+		const fileName = $(e).children("#rpContentName").val();
+		const filePath = $(e).children("#rpPath").val();
+		const newFileName = $(e).children("#rpPath").val().split("/").slice(-2, -1)[0];
+		const newFilePath = $(e).children("#rpPath").val().split("/").slice(0, -1).join("/");
+		
+		/*
+		// 새로운 파일 이름은 상위 폴더의 이름으로 설정
+		const parentFolderName = filePath.split("/").slice(-2, -1)[0]; // 상위 폴더의 이름
+		const newFileName = parentFolderName;
+		
+		// 새로운 파일 경로는 현재 파일 경로에서 마지막 두 단계의 폴더를 제거한 것
+		const folders = filePath.split("/");
+		const newFilePath = folders.slice(0, -1).join("/");
+		*/
+		
+		console.log("파일이름", fileName);
+		console.log("파일경로", filePath);
+		console.log("새로운파일이름:", newFileName);
+		console.log("새로운파일경로:", newFilePath);
 		
 		$.ajax({
 			url:"selectContent.rp",
@@ -564,14 +602,26 @@ thead {
 			},
 			success:function(result){
 				
-				console.log(result);
+				//console.log(result);
 				//console.log(result.rpList);
 				
 				let list = result.rpList;
-				console.log(list);
+				//console.log(list);
 				let value = "";
 				$(".repo-table>tbody").text("");
-					
+				
+				if(newFilePath !== repoName + "/" + newFileName){
+					value += "<tr>"
+						   + "<td onclick=\"subContent(this);\" class=\"repoTitle\">"
+						   + "<i class=\"ti ti-folder\"></i>"
+						   + "<div><b>" + "..." + "</b></div>"
+						   + "<input type=\"hidden\" value=\"" + newFileName + "\" id=\"rpContentName\">"
+						   + "<input type=\"hidden\" value=\"" + newFilePath + "\" id=\"rpPath\">"
+						   + "</td>"
+						   + "<td colspan=\"3\"></td>"
+						   + "</tr>"
+				}
+				
  				for(let i in list){
 					value += "<tr>"
 						   + "<td onclick=\"subContent(this);\" class=\"repoTitle\">"
@@ -583,11 +633,12 @@ thead {
 						   }
 						   
 					value += "<div>" + list[i].contentName + "</div>"
-						   + "<input type=\"hidden\" value=\"" + list[i].path + "\">"
+						   + "<input type=\"hidden\" value=\"" + list[i].contentName + "\" id=\"rpContentName\">"
+						   + "<input type=\"hidden\" value=\"" + list[i].path + "\" id=\"rpPath\">"
 						   + "</td>"
 						   + "<td>" + "나중에여기다가 뭘쓰지...?" + "</td>"
-						   + "<td>" + "<img src=\"" + "" + "\" width=\"20\" height=\"20\">" + "작성자이름" + "</td>"
-						   + "<td>" + "여기에 업데이트 날짜 넣기" + "</td>"
+						   + "<td>" + "<img src=\"" + "resources/images/repo-img.png" + "\" width=\"20\" height=\"20\">" + "작성자이름" + "</td>"
+						   + "<td>" + "2024-04-20" + "</td>"
 						   + "</tr>";
 				}
 				
