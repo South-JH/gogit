@@ -69,13 +69,6 @@ public class ProjectController {
 		}		
 	}
 	
-	@RequestMapping("test.pr")
-	public void test1(HttpSession session) {
-		Member m = (Member)session.getAttribute("loginUser");
-		
-		pService.test1(m);
-	}
-	
 	@RequestMapping("insert.pr")
 	public String insertProject(Project p, Model model, HttpSession session) {
 		p.setProWriter(((Member)session.getAttribute("loginUser")).getMemId());
@@ -209,21 +202,6 @@ public class ProjectController {
 		}else {
 			model.addAttribute("errorMsg","게시글 수정 실패");
 			return "common/errorPage";
-		}
-		
+		}	
 	}
-	
-	
-	
-	
-	
-	@RequestMapping("search.jm")
-	public String searchList() {
-		return "common/searchView";
-	}
-	
-	
-	
-	
-	
 }

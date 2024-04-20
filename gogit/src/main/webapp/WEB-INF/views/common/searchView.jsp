@@ -197,51 +197,37 @@ a {
                       
                        
                                 <div class="repo-list-wrap">
-                                  <div class="repo-list-area">
-                                      <div class="repo-list-one">
-                                          <div class="repo-list-one-area">
-                                              <div>
-                                                  <img src="resources/images/repo-img.png" width="60px" height="60px">
-                                              </div>
-                                              <div class="repo-title-area">
-                                                  <a href="detail.rp">
-                                                      <div>
-                                                          <h3>ㅇㅇㅇ</h3>
-                                                      </div>
-                                                  </a>
-                                                  <div>ㅇㅇ</div>
-                                              </div>
-                                              <div>
-                                                  <div class="repo-public">
-                                                      <div>ㅇㅇ</div>
-                                                  </div>
-                                              </div>
-                                          </div>         
-                                      </div>                                  
-                                  </div>
+                                
+                                <c:forEach var="s" items="${ seList }">
+	                                <div class="repo-list-area">
+	                                      <div class="repo-list-one">
+	                                          <div class="repo-list-one-area">
+	                                              <div>
+	                                                  <img src="resources/images/repo-img.png" width="60px" height="60px">
+	                                              </div>
+	                                              <div class="repo-title-area">
+	                                                  <a href="detail.rp">
+	                                                      <div>
+	                                                          <h3>${ s.login }</h3>
+	                                                      </div>
+	                                                  </a>
+	                                                  <div>ㅇㅇ</div>
+	                                              </div>
+	                                              <div>
+	                                                  <div class="repo-public">
+	                                                      <div>ㅇㅇ</div>
+	                                                  </div>
+	                                              </div>
+	                                          </div>         
+	                                      </div>                                  
+	                                  </div>                              
+                                <img src="https://ghchart.rshah.org/${ s.login }">
+                                </c:forEach>
+                                
+                                
+                                
 
-                                  <div class="repo-list-area">
-                                    <div class="repo-list-one">
-                                        <div class="repo-list-one-area">
-                                            <div>
-                                                <img src="resources/images/repo-img.png" width="60px" height="60px">
-                                            </div>
-                                            <div class="repo-title-area">
-                                                <a href="detail.rp">
-                                                    <div>
-                                                        <h3>ㅇㅇㅇ</h3>
-                                                    </div>
-                                                </a>
-                                                <div>ㅇㅇ</div>
-                                            </div>
-                                            <div>
-                                                <div class="repo-public">
-                                                    <div>ㅇㅇ</div>
-                                                </div>
-                                            </div>
-                                        </div>         
-                                    </div>                                  
-                                </div>
+                           
 
 
                               </div>
