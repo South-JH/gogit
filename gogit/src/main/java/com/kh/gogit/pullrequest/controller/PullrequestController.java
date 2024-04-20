@@ -85,5 +85,10 @@ public class PullrequestController {
 		
 		return "pullrequest/pullRequestEnroll";
 	}
+	
+	@RequestMapping("detail.pullrq")
+	public String detailPullRequest() {
+		return "pullrequest/pullRequestDetailView";
+	}
 
 }

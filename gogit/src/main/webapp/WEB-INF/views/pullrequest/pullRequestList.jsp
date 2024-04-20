@@ -256,7 +256,7 @@
 				const status = openList[i].status;
 				const createDate = openList[i].createDate.split('T')[0];
 
-				tbody += `<tr>
+				tbody += `<tr onclick="location.href='detail.pullrq'">
 							<td>\${ title }</td>
 							<td>\${ writer }</td>
 							<td>
