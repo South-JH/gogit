@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +23,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,6 +37,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.repository.model.service.RepositoryServiceImpl;
+import com.kh.gogit.repository.model.vo.Branch;
 import com.kh.gogit.repository.model.vo.Repository;
 
 @Controller
@@ -79,6 +83,7 @@ public class RepositoryController {
         	rp.setFork(repoArr.get(i).getAsJsonObject().get("forks_count").getAsString());
         	rp.setOpenIssue(repoArr.get(i).getAsJsonObject().get("open_issues_count").getAsString());
         	rp.setUpdateAt(repoArr.get(i).getAsJsonObject().get("updated_at").getAsString());
+        	rp.setOwner(repoArr.get(i).getAsJsonObject().get("owner").getAsJsonObject().get("login").getAsString());
         	
         	rpList.add(rp);
         }
@@ -153,11 +158,11 @@ public class RepositoryController {
 	}
 	
 	@RequestMapping("detail.rp")
-	public String repoDetailView(Model model, HttpSession session, String repoName, String visibility) {
+	public String repoDetailView(Model model, HttpSession session, String repoName, String visibility, String owner) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		//System.out.println(repoName);
-		String repoContent = rService.repoDetailView(m, repoName);
+		String repoContent = rService.repoDetailView(m, repoName, owner);
 		
 		JsonArray repoArr = JsonParser.parseString(repoContent).getAsJsonArray();
 		ArrayList<Repository> rpList = new ArrayList<Repository>();
@@ -176,15 +181,36 @@ public class RepositoryController {
         
         model.addAttribute("repoName", repoName);
         model.addAttribute("visibility", visibility);
-        model.addAttribute("rpList", rpList);	
+        model.addAttribute("owner", owner);
+        model.addAttribute("rpList", rpList);
+        
+        String collaboratorList = rService.collaboratorList(m, repoName, owner);
+        JsonArray colArr = JsonParser.parseString(collaboratorList).getAsJsonArray();
+        ArrayList<Repository> list = new ArrayList<Repository>();
+        
+        if(collaboratorList != null) {
+        	
+        	for(int i=0; i<colArr.size(); i++) {
+        		
+        		Repository rp = new Repository();
+        		rp.setCollaborator(colArr.get(i).getAsJsonObject().get("login").getAsString());
+        		rp.setAvatarUrl(colArr.get(i).getAsJsonObject().get("avatar_url").getAsString());
+        		
+        		list.add(rp);
+        		//System.out.println(list);
+        	}
+        }
+
+        model.addAttribute("list", list);
+        
 		return "repository/repositoryDetailView";
 	}
 	
 	@RequestMapping(value="selectContent.rp", produces="application/json; charset=UTF-8")
-	public void getSubContent(HttpServletResponse response, HttpSession session, String repoName, String path) throws JsonIOException, IOException {
-		
+	public void getSubContent(HttpServletResponse response, HttpSession session, String repoName, String path, String owner) throws JsonIOException, IOException {
+		//System.out.println(owner);
 		Member m = (Member)session.getAttribute("loginUser");
-		String subContent = rService.getSubContent(m, repoName, path);
+		String subContent = rService.getSubContent(m, repoName, path, owner);
 		
 		JsonElement element = JsonParser.parseString(subContent);
 		ArrayList<Repository> rpList = new ArrayList<Repository>();
@@ -285,17 +311,89 @@ public class RepositoryController {
 	        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, request, String.class);
 
 	        if (response.getStatusCode() == HttpStatus.NO_CONTENT) {
-	            // 성공적으로 삭제됐을 때 클라이언트로 성공 메시지 보내기
 	        	return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	        } else {
 	            // 삭제 실패 처리
 	            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("{\"error\":\"Failed to delete repository\"}");
 	        }
 	    } catch (Exception e) {
-	        // 예외 처리
 	        System.out.println("API 실패: " + e.getMessage());
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{\"error\":\"Server error occurred\"}");
 	    }
+	}
+	
+	@RequestMapping(value="invite.rp", produces = "application/json; charset=UTF-8")
+	public void inviteCollaborator(HttpSession session, HttpServletResponse response, String cbName, String repoName) throws IOException {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		String searchCollaborator = rService.serarchCollaborator(m, cbName);
+		
+		JsonObject searchObj = JsonParser.parseString(searchCollaborator).getAsJsonObject();
+		//System.out.println(cbObj.get("total_count").getAsString());
+		
+		String count = searchObj.get("total_count").getAsString();
+		response.setContentType("application/json; charset=utf-8");
+		
+		if(!count.equals("0")) {
+			
+			String collaborator = rService.inviteCollaborator(m, cbName, repoName);
+			//JsonObject cbObj = JsonParser.parseString(collaborator).getAsJsonObject(); 당장 가져올 값이 없음... 필요하면 그때 세팅해주자
+			if(collaborator != null) {
+				response.setStatus(HttpServletResponse.SC_OK);
+	            response.getWriter().write(cbName + "님에게 초대 요청을 보냈습니다.");
+			} else {
+	            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	            response.getWriter().write("초대에 실패했습니다.");
+	        }
+			
+		} else {
+		    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		    response.getWriter().write("사용자가 존재하지 않습니다.");
+		}
+		
+	}
+	
+	@RequestMapping(value="update.rp", produces = "application/json; charset=utf-8")
+	public String updateRepository(HttpServletResponse response, HttpSession session, String repoName, String repoRename, String repoContent, String visibility) throws IOException {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		response.setContentType("application/json; charset=utf-8");
+		
+		String updateRepo = rService.updateRepository(m, repoName, repoRename, repoContent, visibility);
+		
+		if(updateRepo != null) {
+			session.setAttribute("alertMsg", "레파지토리 수정 완");
+			return "redirect:list.rp";
+		} else {
+			session.setAttribute("alertMsg", "레파지토리 수정 실패...");
+			return "redirect:list.rp";
+		}
+		
+	}
+	
+	@RequestMapping("listBranches.rp")
+	public void getBranchesList(HttpSession session, HttpServletResponse response, String repoName, String owner) throws IOException {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		String branches = rService.getBranchesList(m, repoName, owner);
+		
+		JsonArray branchArr = JsonParser.parseString(branches).getAsJsonArray();
+		ArrayList<Branch> branch = new ArrayList<Branch>();
+			
+		for(int i=0; i<branchArr.size(); i++) {
+			//System.out.println(branchArr.get(i).getAsJsonObject().get("name").toString().replaceAll("\"", "").trim());
+			Branch b = new Branch();
+			b.setBranchName(branchArr.get(i).getAsJsonObject().get("name").toString().replaceAll("\"", "").trim());
+			b.setCommitSha(branchArr.get(i).getAsJsonObject().get("commit").getAsJsonObject().get("sha").toString().replaceAll("\"", "").trim());
+		
+			branch.add(b);
+		}
+		
+		response.setContentType("application/json; charset=utf-8");
+		response.getWriter().write(new Gson().toJson(branch));
+		
 	}
 	
 }

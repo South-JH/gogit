@@ -173,7 +173,7 @@ h2 {
 	color: #02384B;
 }
 
-.top-area-action i:hover {
+.unabled-area i:hover {
 	background-color: #e6e6e6;
 }
 
@@ -249,14 +249,18 @@ h2 {
 	align-items: center;
 }
 
-.modal-body-repo-visibility input {
+.modal-body-repo-visibility>div {
+	padding: 0 3px;
+}
+
+.modal-body-repo-radio input {
 	vertical-align: middle;
 }
 
 .modal-body-repo-radio {
 	display: flex;
 	align-items: center;
-	padding: 0 8px;
+/* 	padding: 0 8px; */
 }
 
 .modal-body-repo-radio>div {
@@ -286,7 +290,7 @@ h2 {
 	align-items: center;
 	justify-content: center;
 	padding: 10px 5px;
-	height: 30px;
+	height: 35px;
 	background: #eee;
 }
 
@@ -309,7 +313,11 @@ h2 {
 	margin-top: 15px;
 	background: #49BEFF;
 	border-radius: 6px;
-	height: 30px;
+	height: 35px;
+}
+
+.invite-footer-modal:hover {
+	background: #12aaff;
 }
 
 .invite-footer-modal>button {
@@ -319,4 +327,21 @@ h2 {
 	height: 100%;
 	color: white;
 	font-size: 16px;
+}
+
+.invite-header-modal-title {
+	display: flex;
+}
+
+.modal-body-inviteform {
+	margin-bottom: 20px;
+}
+
+.disabled-btn i {
+	background: #eee;
+	color: white;
+}
+
+button[disabled] {
+  pointer-events: none;
 }

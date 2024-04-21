@@ -55,7 +55,7 @@ h4 {
 	border: 1px solid #e6e6e6;
 	border-radius: 6px;
 	background: #f8f8f8;
-	width: 100px;
+/* 	width: 100px; */
 	height: 35px;
 	display: flex;
 	align-items: center;
@@ -78,17 +78,22 @@ h4 {
 }
 
 .branch-area-btn>div:first-child {
-	width: 60%;
+	width: auto;
+	padding: 0 10px;
+}
+
+.branch-area-btn>div:first-child>* {
+	padding: 0 2px;
 }
 
 .branch-area-btn>div:last-child {
-	width: 30%;
+	padding: 0 10px;
 }
 
 .top-content-branch-area {
 	display: flex;
 	justify-content: space-between;
-	width: 200px;
+	width: auto;
 }
 
 .top-content-branch-area>div:nth-child(2)>div {
@@ -196,6 +201,10 @@ thead {
 	padding: 10px 15px;
 }
 
+.repo-table td {
+	height: 42px;
+}
+
 .ti-clock-code {
 	vertical-align: middle;
 	font-size: 16px;
@@ -245,8 +254,17 @@ thead {
 	padding: 5px 0;
 }
 
+.contributors-member img{
+	border-radius: 50px;
+}
+
+.contributors-member>div{
+	padding: 0 5px;
+}
+
 .branch-area-div {
 	position: relative;
+	width: auto;
 }
 
 .repo-table>tbody>tr>td {
@@ -318,12 +336,13 @@ thead {
 }
 
 .branch-area>div {
-	height: 30px;
+	height: 35px;
 	padding: 0 5px;
 	border-radius: 6px;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
+	border-bottom: 1px solid #eeeeee;
 }
 
 .branch-area>div:hover {
@@ -386,6 +405,7 @@ tr:hover {
 		          		<div class="repo-detail-public-area">
 		          			<div>
 		          				<h4>${ repoName }</h4>
+		          				<input type="hidden" value="${ owner }">
 		          			</div>
 		          			<div class="repo-detail-public">
 		          				<div>${ visibility }</div>
@@ -424,7 +444,6 @@ tr:hover {
 				          								</div>
 				          								<div>
 				          									<div class="branch-area">
-				          										<div>main</div>
 				          									</div>
 				          								</div>
 				          							</div>
@@ -433,7 +452,7 @@ tr:hover {
 				          					<div>
 				          						<div>
 				          							<i class="ti ti-git-branch"></i>
-				          							<div><b>3</b></div>
+				          							<div><b class="branch-count"></b></div>
 				          							<div><b>Branches</b></div>
 				          						</div>
 				          					</div>
@@ -452,7 +471,7 @@ tr:hover {
 													<i class="ti ti-clock-code"></i>
 												</div>
 												<div>
-													<a href="list.cm">
+													<a href="view.cm?repoName=${ repoName }&owner=${ owner}">
 														<b>61 Commits</b>
 													</a>	
 												</div>
@@ -507,22 +526,18 @@ tr:hover {
 		          							<b>Contributors</b>
 		          						</div>
 		          						<div class="contributors-count">
-		          							<b>2</b>
+		          							<b>${ list.size() }</b>
 		          						</div>
 		          					</div>
 		          					<div>
-		          						<div class="contributors-member">
-		          							<div>
-		          								<img src="resources/images/repo-img.png" width="20" height="20">
-		          							</div>
-		          							<div>crong9105</div>
-		          						</div>
-		          						<div>
-		          							<div>
-		          								<img src="resources/images/repo-img.png" width="20" height="20">
-		          							</div>
-		          							<div>crong9105</div>
-		          						</div>
+		          						<c:forEach var="r" items="${ list }">
+			          						<div class="contributors-member">
+			          							<div>
+			          								<img src="${ r.avatarUrl }" width="20" height="20">
+			          							</div>
+			          							<div>${ r.collaborator }</div>
+			          						</div>
+		          						</c:forEach>
 		          					</div>
 		          				</div>
 		          			</div>
@@ -560,19 +575,10 @@ tr:hover {
 	});
 	
 	const repoName = $(".repo-detail-public-area h4").text();
+	const owner = $(".repo-detail-public-area input").val();
 	
 	function subContent(e){
 		//console.log($(e).children("div").text());
-		
-		/*
-		if($(e).children("div").text() != "뒤로가기"){
-			const fileName = $(e).children("div").text();
-			const filePath = $(e).children("input").val();
-		} else {
-			const fileName = $(e).children("input").val().split("/").slice(-2, -1)[0];
-			const filePath = $(e).children("input").val().split("/").slice(0, -1).join("/");
-		}
-		*/
 		
 		const fileName = $(e).children("#rpContentName").val();
 		const filePath = $(e).children("#rpPath").val();
@@ -589,16 +595,17 @@ tr:hover {
 		const newFilePath = folders.slice(0, -1).join("/");
 		*/
 		
-		console.log("파일이름", fileName);
-		console.log("파일경로", filePath);
-		console.log("새로운파일이름:", newFileName);
-		console.log("새로운파일경로:", newFilePath);
+		//console.log("파일이름", fileName);
+		//console.log("파일경로", filePath);
+		//console.log("새로운파일이름:", newFileName);
+		//console.log("새로운파일경로:", newFilePath);
 		
 		$.ajax({
 			url:"selectContent.rp",
 			data:{
 				repoName:repoName,
-				path:filePath
+				path:filePath,
+				owner:owner
 			},
 			success:function(result){
 				
@@ -606,10 +613,31 @@ tr:hover {
 				//console.log(result.rpList);
 				
 				let list = result.rpList;
-				//console.log(list);
-				let value = "";
-				$(".repo-table>tbody").text("");
+				$(".repo-table").text("");
 				
+				let hasContentDesc = list.some(item => item.contentDesc !== undefined);
+
+				let hvalue = "";
+				if (hasContentDesc) {
+				    // 하나라도 contentDesc가 정의된 경우
+				    hvalue += "<thead>"
+				            + "<tr>"
+				            + "<th colspan=\"4\">CODE</th>"
+				            + "</tr>"
+				            + "</thead>";
+				} else {
+				    // 모든 항목의 contentDesc가 undefined인 경우
+				    hvalue += "<thead>"
+				            + "<tr>"
+				            + "<th width=\"330\">NAME</th>"
+				            + "<th>RECENT COMMIT</th>"
+				            + "<th width=\"130\">AUTHOR</th>"
+				            + "<th width=\"130\">DATE</th>"
+				            + "</tr>"
+				            + "</thead>";
+				}
+				
+				let value = "";
 				if(newFilePath !== repoName + "/" + newFileName){
 					value += "<tr>"
 						   + "<td onclick=\"subContent(this);\" class=\"repoTitle\">"
@@ -619,30 +647,44 @@ tr:hover {
 						   + "<input type=\"hidden\" value=\"" + newFilePath + "\" id=\"rpPath\">"
 						   + "</td>"
 						   + "<td colspan=\"3\"></td>"
-						   + "</tr>"
-				}
-				
- 				for(let i in list){
-					value += "<tr>"
-						   + "<td onclick=\"subContent(this);\" class=\"repoTitle\">"
-						   
-						   if(list[i].type === "file"){
-							   value += "<i class=\"ti ti-file\"></i>"
-						   } else{
-							   value += "<i class=\"ti ti-folder\"></i>"
-						   }
-						   
-					value += "<div>" + list[i].contentName + "</div>"
-						   + "<input type=\"hidden\" value=\"" + list[i].contentName + "\" id=\"rpContentName\">"
-						   + "<input type=\"hidden\" value=\"" + list[i].path + "\" id=\"rpPath\">"
-						   + "</td>"
-						   + "<td>" + "나중에여기다가 뭘쓰지...?" + "</td>"
-						   + "<td>" + "<img src=\"" + "resources/images/repo-img.png" + "\" width=\"20\" height=\"20\">" + "작성자이름" + "</td>"
-						   + "<td>" + "2024-04-20" + "</td>"
 						   + "</tr>";
 				}
 				
- 				$(".repo-table>tbody").html(value);
+				for(let i in list){
+					
+					if(list[i].contentDesc === undefined){
+						// contentDesc가 undefined인 경우
+						value += "<tr>"
+							   + "<td onclick=\"subContent(this);\" class=\"repoTitle\">"
+							   
+							    if(list[i].type === "file"){
+							        value += "<i class=\"ti ti-file\"></i>"
+							    } else{
+								    value += "<i class=\"ti ti-folder\"></i>"
+							    }
+							   
+						value += "<div>" + list[i].contentName + "</div>"
+							   + "<input type=\"hidden\" value=\"" + list[i].contentName + "\" id=\"rpContentName\">"
+							   + "<input type=\"hidden\" value=\"" + list[i].path + "\" id=\"rpPath\">"
+							   + "</td>"
+							   + "<td>" + "나중에여기다가 뭘쓰지...?" + "</td>"
+							   + "<td>" + "<img src=\"" + "resources/images/repo-img.png" + "\" width=\"20\" height=\"20\">" + "작성자이름" + "</td>"
+							   + "<td>" + "2024-04-20" + "</td>"
+							   + "</tr>";
+							   
+					} else {
+						// contentDesc가 undefined인 경우 == 내용이 있는 경우
+						value += "<tr>"
+						 	   + "<td colspan=\"4\">" + list[i].contentDesc + "</td>"
+							   + "</tr>";
+							
+					}
+					
+				}
+				
+				let bvalue = "<tbody>" + value + "</tbody>";
+				
+				$(".repo-table").html(hvalue+bvalue);
 				
 			},
 			error:function(){
@@ -650,6 +692,35 @@ tr:hover {
 			}
 		})
 	}
+	
+	$(function(){
+		
+		$.ajax({
+			url:"listBranches.rp",
+			data:{
+				repoName:repoName,
+				owner:owner
+			},
+			success:function(result){
+				
+				$(".branch-area").text("");
+				$(".branch-count").text("");
+				let value = "";
+				
+				for(let i in result){
+					//console.log(result[i].branchName);
+					value += "<div onclick=\"switchBranch(this)\">" + result[i].branchName + "</div>";
+				}
+				
+				$(".branch-area").html(value);
+				$(".branch-count").text(result.length);
+				
+			},
+			error:function(){
+				console.log("브랜치 조회 실패");
+			}
+		})
+	})
 	
 </script>
 </body>

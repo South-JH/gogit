@@ -27,7 +27,7 @@
 <script src="resources/js/bootstrap.bundle.min.js"></script>
 <script src="resources/js/sidebarmenu.js"></script>
 <script src="resources/js/app.min.js"></script>
-<script src="resources/js/apexcharts.min.js"></script>
+<!-- <script src="resources/js/apexcharts.min.js"></script> -->
 <script src="resources/js/simplebar.js"></script>
 <script src="resources/js/dashboard.js"></script>
 
@@ -110,7 +110,7 @@
                     aria-expanded="false"
                   >
                     <img
-                      src="resources/images/profile/user-1.jpg"
+                      src="${ loginUser.profile }"
                       alt=""
                       width="35"
                       height="35"

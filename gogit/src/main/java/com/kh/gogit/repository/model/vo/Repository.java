@@ -25,5 +25,8 @@ public class Repository {
 	private String type; // 파일 타입
 	private String path; // 파일 경로
 	private String contentDesc; // 레파지토리 컨텐츠 내용
+	private String owner;
+	private String collaborator;
+	private String avatarUrl;
 	
 }

@@ -12,6 +12,11 @@
   height: 45px;
   cursor: pointer;
 }
+
+.repo-hover.selected {
+	background-color: #5d87ff;
+	color: white;
+}
 </style>
 </head>
 <body>
@@ -57,7 +62,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
-                  href="./index.html"
+                  href="main"
                   aria-expanded="false"
                 >
                   <span>
@@ -95,47 +100,8 @@
                 </a>
               </li>
               
-              <%-- 
-              <li class="sidebar-item">
-                <a
-                  class="sidebar-link"
-                  href="./ui-card.html"
-                  aria-expanded="false"
-                >
-                  <span>
-                    <i class="ti ti-cards"></i>
-                  </span>
-                  <span class="hide-menu">추가할거있으면 여기에</span>
-                </a>
-              </li>
-              <li class="sidebar-item">
-                <a
-                  class="sidebar-link"
-                  href="./ui-forms.html"
-                  aria-expanded="false"
-                >
-                  <span>
-                    <i class="ti ti-file-description"></i>
-                  </span>
-                  <span class="hide-menu">추가할거있으면 여기에</span>
-                </a>
-              </li>
-              <li class="sidebar-item">
-                <a
-                  class="sidebar-link"
-                  href="./ui-typography.html"
-                  aria-expanded="false"
-                >
-                  <span>
-                    <i class="ti ti-typography"></i>
-                  </span>
-                  <span class="hide-menu">추가할거있으면 여기에</span>
-                </a>
-              </li>
-              --%>
-               
               <li class="nav-small-cap repo-hover">
-              	<a href="list.rp" style="color: inherit;">
+              	<a href="list.rp" style="color: inherit;" class="sidebar-link">
 	                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
 	                <span class="hide-menu" style="line-height: 40px;">REPOSITORY</span>
                 </a>

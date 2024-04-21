@@ -6,15 +6,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-		
+	
 	<jsp:include page="../common/sideBar.jsp" />
 	
 	<jsp:include page="../common/header.jsp" />
-	
+		
 	<div
 	  class="page-wrapper"
 	  id="main-wrapper"
@@ -75,31 +75,171 @@
 																<div class="href-div">
 																	<div>
 																		<h4>${ rpList.repoTitle }</h4>
+																		<input type="hidden" name="owner" value="${ rpList.owner }">
 																	</div>
 																</div>
 																<div class="top-area-visibility">${ rpList.visibility }</div>
 															</div>
-															<div class="top-area-action">
-																<div>
-																	<button type="button" data-toggle="modal" data-target="#inviteModal${ rp.index }">
-																		<i class="ti ti-send"></i>
-																	</button>
-																</div>
-																<div>
-																	<button type="button" data-toggle="modal" data-target="#updateModal${ rp.index }">
-																		<i class="ti ti-pencil"></i>
-																	</button>
-																</div>
-																<div onclick="deleteBtn(this);">
-																	<button type="button">
-																		<i class="ti ti-trash"></i>
-																	</button>
-																</div>
-															</div>
+															<c:choose>
+																<c:when test="${ loginUser.gitNick eq rpList.owner }">
+																	<div class="top-area-action unabled-area">
+																		<div>
+																			<button type="button" data-toggle="modal" data-target="#inviteModal${ rp.index }">
+																				<i class="ti ti-send"></i>
+																			</button>
+																		</div>
+																		<div>
+																			<button type="button" data-toggle="modal" data-target="#updateModal${ rp.index }">
+																				<i class="ti ti-pencil"></i>
+																			</button>
+																		</div>
+																		<div onclick="deleteBtn(this);">
+																			<button type="button">
+																				<i class="ti ti-trash"></i>
+																			</button>
+																		</div>
+																	</div>
+																</c:when>
+																<c:otherwise>
+																	<div class="top-area-action">
+																		<div class="disabled-btn">
+																			<button type="button" data-toggle="modal" data-target="#inviteModal${ rp.index }" disabled>
+																				<i class="ti ti-send"></i>
+																			</button>
+																		</div>
+																		<div class="disabled-btn">
+																			<button type="button" data-toggle="modal" data-target="#updateModal${ rp.index }" disabled>
+																				<i class="ti ti-pencil"></i>
+																			</button>
+																		</div>
+																		<div class="disabled-btn" onclick="deleteBtn(this);">
+																			<button type="button" disabled>
+																				<i class="ti ti-trash"></i>
+																			</button>
+																		</div>
+																	</div>
+																</c:otherwise>
+															</c:choose>
 														</div>
 														<div>${ rpList.repoContent }</div>
 													</div>
-
+													
+													<%-- 초대Form 모달 --%>
+													<div class="modal" tabindex="-1" id="inviteModal${ rp.index }">
+													  <div class="modal-dialog modal-dialog-centered">
+													    <div class="modal-content">
+													      <div class="modal-header">
+													        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+													      </div>
+													      <div class="modal-body modal-body-inviteform">
+													        <div>
+													        	<div>
+													        		<div class="invite-header-modal">
+													        			<div>
+													        				<i class="ti ti-user-plus"></i>
+													        			</div>
+													        			<div class="invite-header-modal-title">
+													        				<div>
+													        					<h4>Add a Collaborator to &nbsp;</h4>
+													        				</div>
+													        				<div>
+													        					<h4>${ rpList.repoTitle }</h4>
+													        				</div>
+													        			</div>
+													        		</div>
+													        		<div>
+													        			<div class="invite-body-modal">
+													        				<input type="text" id="collaborator-input">
+													        			</div>
+													        		</div>
+													        		<div>
+													        			<c:choose>
+													        				<c:when test="">
+															        			<div class="invite-footer-modal">
+															        				<button type="button" disabled>Select a collaborator above</button>
+															        			</div>
+													        				</c:when>
+													        				<c:otherwise>
+													        					<div class="invite-footer-modal">
+															        				<button type="button" onclick="inviteBtn(this);">Add to this repository</button>
+															        			</div>
+													        				</c:otherwise>
+													        			</c:choose>
+													        		</div>
+													        	</div>
+													        </div>
+													      </div>
+													    </div>
+													  </div>
+													</div>
+													<%-- 초대Form 모달 End --%>												
+												
+													<%-- 수정Form 모달 --%>
+													<div class="modal" tabindex="-1" id="updateModal${ rp.index }">
+														<div class="modal-dialog modal-dialog-centered">
+															<div class="modal-content">
+																<div class="modal-header updateModal-header">
+																	<h3 class="modal-title">Repository Update</h5>
+																	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+																</div>
+																<form action="update.rp" method="post"> 
+																<input type="hidden" name="repoName" value="${ rpList.repoTitle }">
+																<div class="modal-body">
+																	<div>
+																		<div>
+																			<div class="modal-body-repo">
+																				<div><h5>Repository Rename</h5></div>
+																				<div class="moda-body-repo-input">
+																					<input type="text" name="repoRename" value="${ rpList.repoTitle }" maxlength="30">
+																				</div>
+																			</div>
+																			<div class="modal-body-repo">
+																				<div><h5>Description</h5></div>
+																				<div class="moda-body-repo-input">
+																					<input type="text" name="repoContent" value="${ rpList.repoContent }" maxlength="30">
+																				</div>
+																			</div>
+																			<div class="modal-body-repo">
+																				<div>
+																					<label for="public-radio${ rp.index }" class="modal-body-repo-radio">
+																						<div>
+																							<input type="radio" id="public-radio${ rp.index }" name="visibility" value="public" required>
+																						</div>
+																						<div class="modal-body-repo-visibility">
+																							<div>
+																								<img src="resources/images/book-open.png" width="20" height="20">
+																							</div>
+																							<div>Public</div>
+																						</div>
+																					</label>
+																				</div>
+																				<div>
+																					<label for="private-radio${ rp.index }" class="modal-body-repo-radio">
+																						<div>
+																							<input type="radio" id="private-radio${ rp.index }" name="visibility" value="private" required>
+																						</div>
+																						<div class="modal-body-repo-visibility">
+																							<div>
+																								<img src="resources/images/lock.png" width="20" height="20">
+																							</div>
+																							<div>Private</div>
+																						</div>
+																					</label>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="modal-footer">
+<!-- 																	<button type="button" class="btn btn-primary" onclick="updateBtn(this);">Save changes</button> -->
+																	<button type="submit" class="btn btn-primary">Save changes</button>
+																</div>
+																</form>
+															</div>
+														</div>
+													</div>
+													<%-- 수정Form 모달 End --%>
+													
 													<div class="repo-count-list-area">
 													<c:if test="${ not empty rpList.language }">
 														<div>
@@ -136,7 +276,7 @@
 	          	</div>
 	          </div>
 	          <!-- 레파지토리 리스트 END -->
-				          
+	          
 	          </div>
 	        </div>
 	     </div>
@@ -146,10 +286,10 @@
 	
 	$(function(){
 		$(".href-div").click(function(){
-			console.log("왜안와..?");
-			console.log($(this).children().children("h4").text());
-			console.log($(this).siblings(".top-area-visibility").text());
-			location.href = "detail.rp?repoName=" + $(this).children().children("h4").text() + "&visibility=" + $(this).siblings(".top-area-visibility").text();
+			//console.log($(this).children().children("h4").text());
+			//console.log($(this).siblings(".top-area-visibility").text());
+			//console.log($(this).children().children("input").val());
+			location.href = "detail.rp?repoName=" + $(this).children().children("h4").text() + "&visibility=" + $(this).siblings(".top-area-visibility").text() + "&owner=" + $(this).children().children("input").val();
 		})
 	})
 	
@@ -183,33 +323,54 @@
 	
 	function inviteBtn(e){
 		
-		const repoTitle;
+		console.log($(e).parent().parent().siblings().eq(1).children().children().val());
+		console.log($(e).parent().parent().siblings().eq(0).children().eq(1).children().eq(1).children().text());
+		let cbName = $(e).parent().parent().siblings().eq(1).children().children().val();
+		let repoTitle = $(e).parent().parent().siblings().eq(0).children().eq(1).children().eq(1).children().text();
 		
+		$.ajax({
+			url:"invite.rp",
+			data:{
+				cbName:cbName,
+				repoName:repoTitle
+			},
+			success:function(result){
+				alert(result);
+			},
+			error:function(xhr){
+				console.log("협력자초대 ajax 실패");
+				alert(xhr.responseText);
+			}
+		})
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-/* 	$(function(){
-		$(".btn-close").click(function(e) {
-			console.log("오냐?");
-			console.log($(this).parents(".modal"));
-			$(this).parents(".modal").modal.("hide");
-	    });
-	})
-	
-	// 모달이 닫히면 새로고침
-    $('#updateModal${rp.index}').on('hidden.bs.modal', function (e) { 
-        location.reload();
-    }); */
+	/*
+	function updateBtn(e){
 		
+		let form = e.form;
+		let formData = new FormData(form);
+		
+	    for (let pair of formData.entries()) {
+	        console.log(pair[0] + ': ' + pair[1]);
+	    }
+		
+		$.ajax({
+			url: "update.rp",
+			data: formData,
+			method: "POST",
+	        processData: false,
+	        contentType: false,
+			success:function(result){
+				alert(result);
+				location.reload();
+			},
+			error:function(xhr){
+				alert(xhr.responseText);
+			}
+		})
+	}
+	*/
 </script>
-
+			
 <link href="resources/repository/repositoryList.css" rel="stylesheet">
 </body>
 </html>

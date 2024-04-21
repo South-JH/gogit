@@ -1,9 +1,18 @@
 package com.kh.gogit.repository.model.service;
 
+import java.io.IOException;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPatch;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
+import org.json.simple.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -135,9 +144,9 @@ public class RepositoryServiceImpl implements RepositoryService {
   		
 	}
 	
-	public String repoDetailView(Member m, String repoName) {
+	public String repoDetailView(Member m, String repoName, String owner) {
 		
-		String url = "https://api.github.com/repos/" + m.getGitNick() + "/" + repoName + "/contents/";
+		String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/contents/";
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
@@ -162,9 +171,9 @@ public class RepositoryServiceImpl implements RepositoryService {
 		
 	}
 	
-	public String getSubContent(Member m, String repoName, String path) {
+	public String getSubContent(Member m, String repoName, String path, String owner) {
 		
-		String url = "https://api.github.com/repos/"+ m.getGitNick() + "/"+ repoName + "/contents/" + path;
+		String url = "https://api.github.com/repos/"+ owner + "/"+ repoName + "/contents/" + path;
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
@@ -240,5 +249,170 @@ public class RepositoryServiceImpl implements RepositoryService {
         }
         return base64;
     }
+    
+    public String collaboratorList(Member m, String repoName, String owner) {
+    	
+    	String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/collaborators";
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    	headers.add("Accept", "application/vnd.github+json");
+    	headers.add("Authorization", "Bearer " + m.getMemToken());
+    	
+		HttpEntity<String> request = new HttpEntity<String>(headers);		
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET , request, String.class);
+		
+		String collaboratorList = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			//System.out.println(response.getBody());
+			collaboratorList = response.getBody();
+			return collaboratorList;
+		}else {
+			System.out.println("협력자 검색 실패");
+			return null;
+		}
+    	
+    }
+    
+    public String serarchCollaborator(Member m, String cbName) {
+    	
+    	String url = "https://api.github.com/search/users?q=" + cbName;
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    	headers.add("Accept", "application/vnd.github+json");
+    	headers.add("Authorization", "Bearer " + m.getMemToken());
+    	
+		HttpEntity<String> request = new HttpEntity<String>(headers);		
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET , request, String.class);
+		
+		String searchCollaborator = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			searchCollaborator = response.getBody();
+			//System.out.println(searchCollaborator);
+		}else {
+			System.out.println("협력자 검색 실패");
+		}
+		
+		return searchCollaborator;
+    }
+    
+    public String inviteCollaborator(Member m, String cbName, String repoName) {
+    	
+    	String url = "https://api.github.com/repos/" + m.getGitNick() + "/" + repoName + "/collaborators/" + cbName;
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    	headers.add("Accept", "application/vnd.github+json");
+    	headers.add("Authorization", "Bearer " + m.getMemToken());
+    	
+    	HttpEntity<String> request = new HttpEntity<String>(headers);
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, request, String.class);
+		
+		String collaborator = "";
+		if(response.getStatusCode() == HttpStatus.CREATED) {
+			collaborator = response.getBody();
+			//System.out.println(collaborator);
+		} else {
+			System.out.println("협력자 추가 실패");
+		}
+		
+		return collaborator;
+    }
+	
+	/* 
+	 * MultiValueMap과 Map
+	 * 둘다 키-값으로 저장
+	 * 
+	 * Map은
+	 * 하나의 키에 하나의 값만 저장
+	 * 순서대로 저장되지 않음
+	 * 
+	 * MultiValueMap은
+	 * 하나의 키에 여러개의 값 저장
+	 * 저장한 순서를 보장
+	 * 스프링프레임워크에서 제공하는 메서드
+	*/
+    
+    public String updateRepository(Member m, String repoName, String repoRename, String repoContent, String visibility) {
+        String url = "https://api.github.com/repos/" + m.getGitNick() + "/" + repoName;
+        boolean visibilityBo;
+        String updateRepo = "";
+
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpPatch httpPatch = new HttpPatch(url);
+            
+            httpPatch.setHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString());
+            httpPatch.setHeader(HttpHeaders.ACCEPT, "application/vnd.github+json");
+            httpPatch.setHeader(HttpHeaders.AUTHORIZATION, "Bearer " + m.getMemToken());
+
+            JSONObject obj = new JSONObject();
+            obj.put("name", repoRename);
+            obj.put("description", repoContent);
+            visibilityBo = visibility.equals("private") ? true : false;
+            obj.put("private", visibilityBo);
+
+            StringEntity requestEntity = new StringEntity(obj.toString(), ContentType.APPLICATION_JSON);
+            httpPatch.setEntity(requestEntity);
+
+            CloseableHttpResponse response = httpClient.execute(httpPatch);
+            
+            updateRepo = EntityUtils.toString(response.getEntity());
+            if (response.getStatusLine().getStatusCode() == HttpStatus.OK.value()) {
+                //System.out.println("업데이트 성공: " + updateRepo);
+            } else {
+                System.out.println("업데이트 실패");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        return updateRepo;
+    }
+    
+    public String getBranchesList(Member m, String repoName, String owner) {
+    	
+    	String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/branches";
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    	headers.add("Accept", "application/vnd.github+json");
+    	headers.add("Authorization", "Bearer " + m.getMemToken());
+    	
+    	HttpEntity<String> request = new HttpEntity<String>(headers);
+    	ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+    	
+    	String branches = "";
+    	if(response.getStatusCode() == HttpStatus.OK) {
+    		branches = response.getBody();
+    		//System.out.println(branches);
+    	} else {
+    		System.out.println("실패~");
+    	}
+    			
+    	return branches;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 }
