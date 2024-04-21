@@ -26,12 +26,11 @@ public class SearchController {
 	private SearchServiceImpl sService;
 	
 	@RequestMapping("search.jm")
-	public String test1(HttpSession session, Model model) {
-		
+	public String test1(HttpSession session, Model model, String keyword) {
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		// JSON 응답을 받아옴
-		String searchList = sService.test1(m);
+		String searchList = sService.test1(m, keyword);
 		
 		// 객체를 담을 ArrayList를 생성
 		ArrayList<Search> seList = new ArrayList<Search>();
@@ -107,19 +106,21 @@ public class SearchController {
 		        se.setAvatarUrl(item.get("avatar_url").getAsString());
 		        se.setHtmlUrl(item.get("html_url").getAsString());
 		        se.setType(item.get("type").getAsString());
+		        se.setTotalCount(seObj.get("total_count").getAsString());
 		        seList.add(se);
 		    }
 		}
-
-		// 나머지 속성은 첫 번째 아이템의 값으로 설정
-		if (!seList.isEmpty()) { // 첫 번째 아이템의 "total_count" 속성 값을 가져와서 Search 객체의 totalCount에 설정
-		    Search firstItem = seList.get(0);
-		    firstItem.setTotalCount(seObj.get("total_count").getAsString());
-		}
-
-		model.addAttribute("seList", seList);
 		
+		// 나머지 속성은 첫 번째 아이템의 값으로 설정
+		//if (!seList.isEmpty()) { // 첫 번째 아이템의 "total_count" 속성 값을 가져와서 Search 객체의 totalCount에 설정
+		    //Search firstItem = seList.get(0); // seList에서 첫 번째 요소를 가져와서 firstItem 변수에 할당
+		    //firstItem.setTotalCount(seObj.get("total_count").getAsString());  // 첫 번째 요소인 firstItem의 total_count 값을 seObj에서 가져와서 설정함, 이 값은 JSON 응답에서 total_count 값임
+		    
+		    //for (Search searchItem : seList) { // for 루프 안에서 각 요소에 대해 total_count 값을 설정하고 있음, 이 부분이 for 루프 밖에서 total_count 값이 seList에 추가되는 것과 같은 효과를 줌
+		        //searchItem.setTotalCount(seObj.get("total_count").getAsString());
+		    //}
+		//}	
+		model.addAttribute("seList", seList);
 		return "common/searchView";
 	}
-
 }

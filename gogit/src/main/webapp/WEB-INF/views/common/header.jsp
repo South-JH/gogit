@@ -84,11 +84,18 @@
               		</div>
                   <script>
                     function searchjm(){
-                      location.href="search.jm"
+                    	let keyword = document.getElementById('searchinput').value;
+                        location.href="search.jm?keyword=" + keyword;	
+                    }
+                    function enterkey(){
+	                   	if(window.event.keyCode == 13){
+	                      let keyword = document.getElementById('searchinput').value;
+	                      location.href="search.jm?keyword=" + keyword;                   		
+	                   		}                    		
                     }
                   </script>
               		<div>
-              			<input type="text" placeholder="What are you looking for?">
+              			<input type="text" onkeyup="enterkey()" id="searchinput" placeholder="What are you looking for?">
               		</div>
               	</div>
               </div>

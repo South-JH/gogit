@@ -179,10 +179,10 @@ a {
                         <div>                         
                           <div style="display:flex;">
                               <div>
-                                  <a>Repository(16)</a>
+                                  <a>Repository()</a>
                               </div>
                               <div>
-                                  <a>User(3)</a>
+                                  <a>User(${seList.get(0).totalCount })</a>
                               </div>
                           </div>
                         </div>
@@ -203,15 +203,16 @@ a {
 	                                      <div class="repo-list-one">
 	                                          <div class="repo-list-one-area">
 	                                              <div>
-	                                                  <img src="resources/images/repo-img.png" width="60px" height="60px">
+	                                               <!--<img src="resources/images/repo-img.png" width="60px" height="60px">-->
+	                                                  <img src="${ s.avatarUrl }" width="60px" height="60px">
 	                                              </div>
 	                                              <div class="repo-title-area">
-	                                                  <a href="detail.rp">
+	                                                  <a href="detail.sr">
 	                                                      <div>
 	                                                          <h3>${ s.login }</h3>
 	                                                      </div>
 	                                                  </a>
-	                                                  <div>ㅇㅇ</div>
+	                                                  <div>public</div>
 	                                              </div>
 	                                              <div>
 	                                                  <div class="repo-public">
@@ -223,23 +224,13 @@ a {
 	                                  </div>                              
                                 <img src="https://ghchart.rshah.org/${ s.login }">
                                 </c:forEach>
-                                
-                                
-                                
-
-                           
-
-
-                              </div>
-                        
+                              </div>                 
                       </div>
                       <!-- 목록 끝 -->
-
                     </div>
                 </div>
             </div>
-            <!-- 검색 리스트 END -->
-             
+            <!-- 검색 리스트 END -->            
              </div>
            </div>
         </div>
