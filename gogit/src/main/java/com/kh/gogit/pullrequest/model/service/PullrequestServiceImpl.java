@@ -25,7 +25,7 @@ public class PullrequestServiceImpl implements PullrequestService {
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
-	public String getPullrequestList(Member loginUser) {
+	public String getPullrequestList(Member loginUser, String repoName) {
 		// ================================= repository 조회 =================================
 		String url = "https://api.github.com/user/repos";
         
@@ -54,7 +54,7 @@ public class PullrequestServiceImpl implements PullrequestService {
         // pull request 조회
         // https://api.github.com/repos/OWNER/REPO/pulls
         String owner = repoObj.getAsJsonObject("owner").get("login").getAsString(); // repository owner의 nickname 값
-        String repo = repoObj.get("name").getAsString(); // repository name 값
+        String repo = repoName; // repository name 값
         
         String requestUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/pulls?state=all";
         
@@ -101,7 +101,26 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 	}
 	
-	public void getBranchList() {
+	public String getBranchList(Member loginUser, String owner, String repoName) {
+		
+		// https://api.github.com/repos/OWNER/REPO/branches
+		String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/branches";
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(loginUser.getMemToken());
+		headers.set("Accept", "application/vnd.github+json");
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+		
+		if(response.getStatusCode() == HttpStatus.OK) {
+			return response.getBody();
+		} else {
+			return null;
+		}
 		
 	}
 

@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.kh.gogit.branch.model.vo.Branch;
 import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.pullrequest.model.service.PullrequestServiceImpl;
 import com.kh.gogit.pullrequest.model.vo.Pullrequest;
@@ -24,10 +25,10 @@ public class PullrequestController {
 	private PullrequestServiceImpl prqService;
 	
 	@RequestMapping("list.pullrq")
-	public String pullRequestList(HttpSession session, Model model) {
+	public String pullRequestList(String repoName, String visibility, HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		
-		String responseBody = prqService.getPullrequestList(loginUser);
+		String responseBody = prqService.getPullrequestList(loginUser, repoName);
 		
 		JsonArray pullreqArr = JsonParser.parseString(responseBody).getAsJsonArray();
 		
@@ -73,17 +74,44 @@ public class PullrequestController {
 			list.add(prq);
 		}
 		
+		model.addAttribute("repoName", repoName);
+		model.addAttribute("visibility", visibility);
 		model.addAttribute("list", new Gson().toJson(list));
 		
 		return "pullrequest/pullRequestList";
 	}
 	
-	@RequestMapping("create.pullrq")
-	public String createPullRequestForm() {
+	@RequestMapping("createForm.pullrq")
+	public String createPullRequestForm(Pullrequest pullreq, String owner, String repoName, HttpSession session, Model model) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
 		// branch 조회해와야 함
-		prqService.getBranchList();
+		owner = "south-jh";
+		String branchList = prqService.getBranchList(loginUser, owner, repoName);
+		
+		ArrayList<Branch> list = new ArrayList<Branch>();
+		if(branchList != null) {
+			JsonArray branchArr = JsonParser.parseString(branchList).getAsJsonArray();
+			
+			for(int i = 0; i < branchArr.size(); i++) {
+				JsonObject branch = branchArr.get(i).getAsJsonObject();
+				
+				String name = branch.get("name").getAsString();
+				String commitSHA = branch.get("commit").getAsJsonObject().get("sha").getAsString();
+				String commitUrl = branch.get("commit").getAsJsonObject().get("url").getAsString();
+				boolean isProtected = branch.get("protected").getAsBoolean();
+				
+				list.add(new Branch(name, commitSHA, commitUrl, isProtected));
+			}
+		}
+		
+		model.addAttribute("list", list);
 		
 		return "pullrequest/pullRequestEnroll";
+	}
+	
+	@RequestMapping("create.pullrq")
+	public void createPullRequest(Pullrequest pullrq) {
+		
 	}
 	
 	@RequestMapping("detail.pullrq")

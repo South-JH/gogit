@@ -17,6 +17,8 @@ public class Pullrequest {
 	private String pullWriter;
 	private String pullManager;
 	private String pullManagerProfile;
+	private String baseBranch;
+	private String compareBranch;
 	private int repoNo;
 	private int issNo;
 	private int milNo;

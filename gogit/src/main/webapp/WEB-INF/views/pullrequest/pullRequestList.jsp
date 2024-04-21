@@ -191,16 +191,16 @@
 						
 						<div id="pullRequest-area">
 							<div id="pullRequest-create">
-								<a href="create.pullrq" class="btn" id="create-btn">Pull request 생성</a>
+								<a href="createForm.pullrq?owner=${ owner }&repoName=${ repoName }" class="btn" id="create-btn">Pull request 생성</a>
 							</div>
 
 							<div id="pullRequest-list">
 								<div class="repo-detail-public-area">
 				          			<div>
-				          				<h4>01_repository</h4>
+				          				<h4>${ repoName }</h4>
 				          			</div>
 				          			<div class="repo-detail-public">
-				          				<div>Private</div>
+				          				<div>${ visibility }</div>
 				          			</div>
 				          		</div>
 								<div id="choose-status">
