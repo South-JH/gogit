@@ -95,7 +95,7 @@
                     }
                   </script>
               		<div>
-              			<input type="text" onkeyup="enterkey()" id="searchinput" placeholder="What are you looking for?">
+              			<input type="text" onkeyup="enterkey()" value="${keyword }" id="searchinput" placeholder="What are you looking for?">
               		</div>
               	</div>
               </div>

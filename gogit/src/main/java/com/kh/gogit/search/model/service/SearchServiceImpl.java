@@ -27,12 +27,13 @@ public class SearchServiceImpl {
 		
 		headers.set("Authorization", "Bearer " + loginUser.getMemToken());
 		headers.set("Accept", "Accept: application/vnd.github+json");
-		
+
 		//MultiValueMap<String, String> body = new LinkedMultiValueMap<String, String>();
-		//body.add("name", "test");
-		//body.add("body", "hi");
+
+	
 		
 		HttpEntity<String> request = new HttpEntity<String>(headers);		
+		//HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(headers);
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET , request, String.class);
 		
@@ -43,6 +44,62 @@ public class SearchServiceImpl {
 			System.out.println("검색 api 실패");
 		}
 		return searchList;
+	}
+	
+	public String test2(Member loginUser, String keyword, String page) {
+		String url = "https://api.github.com/search/users?q=" + keyword + "&page=" + page;
+		// 서치값 받아올꺼임
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		headers.set("Authorization", "Bearer " + loginUser.getMemToken());
+		headers.set("Accept", "Accept: application/vnd.github+json");
+
+//		MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
+//		body.add("page", page);
+//		body.add("q", keyword);
+
+	
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);		
+		//HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET , request, String.class);
+		
+		String searchList = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			searchList = response.getBody();
+		}else {
+			System.out.println("검색 api 실패");
+		}
+		return searchList;
+	}
+	
+	public String userDetailView(String nickName, Member loginUser) {
+		String url = "https://api.github.com/users/" + nickName + "/repos";
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		headers.set("Authorization", "Bearer " + loginUser.getMemToken());
+		headers.set("Accept", "Accept: application/vnd.github+json");
+		
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+		
+		String userContent = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			userContent = response.getBody();
+		}else {
+			System.out.println("content 조회 실패");
+		}
+		return userContent;
 	}
 
 }

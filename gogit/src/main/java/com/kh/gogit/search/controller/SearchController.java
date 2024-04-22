@@ -1,7 +1,10 @@
 package com.kh.gogit.search.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.repository.model.vo.Repository;
 import com.kh.gogit.search.model.service.SearchServiceImpl;
 import com.kh.gogit.search.model.vo.Search;
+
+import kotlin.reflect.TypeOfKt;
 
 @Controller
 public class SearchController {
@@ -27,6 +33,7 @@ public class SearchController {
 	
 	@RequestMapping("search.jm")
 	public String test1(HttpSession session, Model model, String keyword) {
+		
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		// JSON 응답을 받아옴
@@ -111,7 +118,7 @@ public class SearchController {
 		    }
 		}
 		
-		// 나머지 속성은 첫 번째 아이템의 값으로 설정
+		// 다른방법)나머지 속성은 첫 번째 아이템의 값으로 설정
 		//if (!seList.isEmpty()) { // 첫 번째 아이템의 "total_count" 속성 값을 가져와서 Search 객체의 totalCount에 설정
 		    //Search firstItem = seList.get(0); // seList에서 첫 번째 요소를 가져와서 firstItem 변수에 할당
 		    //firstItem.setTotalCount(seObj.get("total_count").getAsString());  // 첫 번째 요소인 firstItem의 total_count 값을 seObj에서 가져와서 설정함, 이 값은 JSON 응답에서 total_count 값임
@@ -121,6 +128,65 @@ public class SearchController {
 		    //}
 		//}	
 		model.addAttribute("seList", seList);
+		model.addAttribute("keyword", keyword);
 		return "common/searchView";
 	}
+	
+	@RequestMapping("search.jmm")
+	public void test2(HttpSession session, Model model, String keyword, String page, HttpServletResponse response) throws JsonIOException, IOException {	
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		String searchList = sService.test2(m, keyword, page);
+		
+		ArrayList<Search> seList = new ArrayList<Search>();
+		
+		JsonParser parser = new JsonParser(); 
+		JsonObject seObj = parser.parse(searchList).getAsJsonObject();
+		JsonArray itemsArray = seObj.getAsJsonArray("items");
+
+		for (JsonElement element : itemsArray) { 
+		    if (element.isJsonObject()) { 
+		        JsonObject item = element.getAsJsonObject();
+		        Search se = new Search();
+		        se.setLogin(item.get("login").getAsString());
+		        se.setAvatarUrl(item.get("avatar_url").getAsString());
+		        se.setHtmlUrl(item.get("html_url").getAsString());
+		        se.setType(item.get("type").getAsString());
+		        se.setTotalCount(seObj.get("total_count").getAsString());
+		        seList.add(se);
+		    }
+		}		
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(seList, response.getWriter());
+	}
+	
+	@RequestMapping("detail.sr")
+	public String detailView(String nickName, String avatar, Model model, HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		String searchUserContent = sService.userDetailView(nickName, m);
+		JsonParser parser = new JsonParser(); 
+		JsonArray userArr = JsonParser.parseString(searchUserContent).getAsJsonArray(); // 대괄호는 어레이로 파싱(올때 스트링형으로 오니까 jSonArray형으로 파싱을 해줘야 키값으로 값을 뽑을수 있기에 파싱을함)
+		//JsonObject objuser = userArr.get(0).getAsJsonObject(); // 얘가 제이슨오브젝트, 어레이를 빼서 오브젝트로 만들어줌
+		
+		ArrayList<Search> list = new ArrayList<Search>();
+		
+		for (JsonElement element : userArr) { 
+		    if (element.isJsonObject()) { 
+		        JsonObject objuser = element.getAsJsonObject();
+		        Search se = new Search();
+				se.setName(objuser.get("name").getAsString());
+				se.setVisibility(objuser.get("visibility").getAsString());
+				se.setLanguage(objuser.get("language").isJsonNull() ? "" : objuser.get("language").getAsString());
+				se.setDescription(objuser.get("description").isJsonNull() ? "" : objuser.get("description").getAsString());
+		        list.add(se);
+		    }
+		}		
+
+		model.addAttribute("nickName", nickName)
+		.addAttribute("avatar", avatar)
+		.addAttribute("list",list) ;
+		return "search/searchDetailView";
+	}
+	
 }
