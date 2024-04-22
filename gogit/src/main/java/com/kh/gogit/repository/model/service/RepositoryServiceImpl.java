@@ -174,20 +174,20 @@ public class RepositoryServiceImpl implements RepositoryService {
 		
 	    try {
 	        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
-	        if (response.getStatusCode() == HttpStatus.OK && response.hasBody() && !response.getBody().isEmpty()) {
-	            return response.getBody();  // 유효한 데이터 수신
-	        } else if (response.getStatusCode() == HttpStatus.NO_CONTENT || response.getBody().isEmpty()) {
-	            System.out.println("지정된 저장소에 내용이 없습니다.");
-	            return null;  // 데이터가 없는 상황 처리
-	        } else {
-	            System.out.println("예상치 못한 상태 코드: " + response.getStatusCode());
+	        if (response.getStatusCode() == HttpStatus.OK && response.hasBody() && !response.getBody().isEmpty()) { // 상태코드가 200이고 데이터가 있으면
+	            return response.getBody();  
+	        } else if (response.getStatusCode() == HttpStatus.NO_CONTENT || response.getBody().isEmpty()) { // 데이터가 없으면
+	            return null;
+	        } else { // 그외에
 	            return null;
 	        }
 	    } catch (HttpClientErrorException ex) {
 	        if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
-	            System.err.println("저장소 또는 리소스를 찾을 수 없습니다: " + ex.getResponseBodyAsString());
+//	            System.err.println("저장소 또는 리소스를 찾을 수 없습니다: " + ex.getResponseBodyAsString());
+	        	System.out.println("레파지토리 컨텐츠 없음!");
 	        } else {
-	            System.err.println("클라이언트 오류: " + ex.getStatusCode() + " " + ex.getResponseBodyAsString());
+//	            System.err.println("클라이언트 오류: " + ex.getStatusCode() + " " + ex.getResponseBodyAsString());
+	        	System.out.println("뭔가가 오류났음!");
 	        }
 	        return null;
 	    }

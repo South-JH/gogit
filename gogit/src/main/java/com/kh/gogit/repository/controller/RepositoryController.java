@@ -181,14 +181,16 @@ public class RepositoryController {
 				rpList.add(rp);
 			}
 			
-			model.addAttribute("repoName", repoName);
-			model.addAttribute("visibility", visibility);
-			model.addAttribute("owner", owner);
 			model.addAttribute("rpList", rpList);
+			
 		} else {
 			System.out.println("컨텐츠없음!");
 		}
         
+		model.addAttribute("repoName", repoName);
+		model.addAttribute("visibility", visibility);
+		model.addAttribute("owner", owner);
+		
         String collaboratorList = rService.collaboratorList(m, repoName, owner);
         JsonArray colArr = JsonParser.parseString(collaboratorList).getAsJsonArray();
         ArrayList<Repository> list = new ArrayList<Repository>();

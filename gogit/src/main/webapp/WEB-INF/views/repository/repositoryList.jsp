@@ -113,12 +113,12 @@
 																<c:when test="${ loginUser.gitNick eq rpList.owner }">
 																	<div class="top-area-action unabled-area">
 																		<div>
-																			<button type="button" data-toggle="modal" data-target="#inviteModal${ rp.index }">
+																			<button class="invite-btn" type="button" data-toggle="modal" data-target="#inviteModal${ rp.index }">
 																				<i class="ti ti-send"></i>
 																			</button>
 																		</div>
 																		<div>
-																			<button type="button" data-toggle="modal" data-target="#updateModal${ rp.index }">
+																			<button class="update-btn" type="button" data-toggle="modal" data-target="#updateModal${ rp.index }">
 																				<i class="ti ti-pencil"></i>
 																			</button>
 																		</div>
@@ -178,22 +178,13 @@
 													        		</div>
 													        		<div>
 													        			<div class="invite-body-modal">
-													        				<input type="text" id="collaborator-input">
+													        				<input type="text" class="collaborator-input">
 													        			</div>
 													        		</div>
 													        		<div>
-													        			<c:choose>
-													        				<c:when test="">
-															        			<div class="invite-footer-modal">
-															        				<button type="button" disabled>Select a collaborator above</button>
-															        			</div>
-													        				</c:when>
-													        				<c:otherwise>
-													        					<div class="invite-footer-modal">
-															        				<button type="button" onclick="inviteBtn(this);">Add to this repository</button>
-															        			</div>
-													        				</c:otherwise>
-													        			</c:choose>
+											        					<div class="invite-footer-modal">
+													        				<button type="button" onclick="inviteBtn(this);">Add to this repository</button>
+													        			</div>
 													        		</div>
 													        	</div>
 													        </div>
@@ -201,7 +192,7 @@
 													    </div>
 													  </div>
 													</div>
-													<%-- 초대Form 모달 End --%>												
+													<%-- 초대Form 모달 End --%>
 												
 													<%-- 수정Form 모달 --%>
 													<div class="modal" tabindex="-1" id="updateModal${ rp.index }">
@@ -312,16 +303,37 @@
 	 </div>
 
 <script>
-	/*
-	$(function(){
-		$(".href-div").click(function(){
-			//console.log($(this).children().children("h4").text());
-			//console.log($(this).siblings(".top-area-visibility").text());
-			//console.log($(this).children().children("input").val());
-			location.href = "detail.rp?repoName=" + $(this).children().children("h4").text() + "&visibility=" + $(this).siblings(".top-area-visibility").text() + "&owner=" + $(this).children().children("input").val();
+
+	$(function() {
+		let inBtn = $(".invite-btn");
+		let colInput = $(".collaborator-input");
+		inBtn.click(function(){
+			console.log(inBtn.index($(this)));
+			colInput.eq(inBtn.index($(this))).val("");
 		})
 	})
-	*/
+	
+// 	$(function(){
+// 		$(".href-div").click(function(){
+// 			//console.log($(this).children().children("h4").text());
+// 			//console.log($(this).siblings(".top-area-visibility").text());
+// 			//console.log($(this).children().children("input").val());
+// 			location.href = "detail.rp?repoName=" + $(this).children().children("h4").text() + "&visibility=" + $(this).siblings(".top-area-visibility").text() + "&owner=" + $(this).children().children("input").val();
+// 		})
+// 	})
+	
+	
+	$(function(){
+		
+		$(".repo-btn").click(function(){
+			if($(".hidden-select-btn").css("display") === "none"){
+				$(".hidden-select-btn").css("display", "block");
+			}else{
+				$(".hidden-select-btn").css("display", "none");
+			}
+		})	
+	})
+	
 	function deleteBtn(e){
 		
 		//console.log($(e).parent().siblings().eq(0).children().children().children().text());
@@ -373,17 +385,6 @@
 		})
 	}
 	
-	$(function(){
-		
-		$(".repo-btn").click(function(){
-			if($(".hidden-select-btn").css("display") === "none"){
-				$(".hidden-select-btn").css("display", "block");
-			}else{
-				$(".hidden-select-btn").css("display", "none");
-			}
-		})	
-	})
-	
 	function typeSelect(e){
 		
 		console.log($(e).text());
@@ -430,12 +431,12 @@
 						   if(user === list[i].owner){
 							   value += "<div class=\"top-area-action unabled-area\">"
 							   		  + "<div>"
-							   		  + "<button type=\"button\" data-toggle=\"modal\" data-target=\"" + i + "\">"
+							   		  + "<button class=\"invite-btn\" type=\"button\" data-toggle=\"modal\" data-target=\"#inviteModal" + i + "\">"
 							   		  + "<i class=\"ti ti-send\"></i>"
 							   		  + "</button>"
 							   		  + "</div>"
 							   		  + "<div>"
-							   		  + "<button type=\"button\" data-toggle=\"modal\" data-target=\"" + i + "\">"
+							   		  + "<button class=\"update-btn\" type=\"button\" data-toggle=\"modal\" data-target=\"#updateModal" + i + "\">"
 							   		  + "<i class=\"ti ti-pencil\"></i>"
 							   		  + "</button>"
 							   		  + "</div>"
@@ -493,7 +494,7 @@
 						  + "</div>"
 						  + "<div>"
 						  + "<div class=\"invite-body-modal\">"
-						  + "<input type=\"text\" id=\"collaborator-input\">"
+						  + "<input type=\"text\" class=\"collaborator-input\">"
 						  + "</div>"
 						  + "</div>"
 						  + "<div>"

@@ -40,10 +40,11 @@ public class CommitController {
 		Member m = (Member)session.getAttribute("loginUser");
 		String commitList = cService.getCommitList(m, repoName, owner);
 		
-		JsonArray commitArr = JsonParser.parseString(commitList).getAsJsonArray();
 		ArrayList<Commit> cList = new ArrayList<Commit>();
 		
 		if(commitList != null) {
+			
+			JsonArray commitArr = JsonParser.parseString(commitList).getAsJsonArray();
 			
 			for(int i=0; i<commitArr.size(); i++) {
 				

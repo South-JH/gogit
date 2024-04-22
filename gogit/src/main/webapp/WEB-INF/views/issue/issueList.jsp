@@ -66,12 +66,16 @@
     background: rgb(36, 87, 228);
 }
 
+.issue-list-status>div {
+	display: flex;
+}
+
 .issue-list-status button {
 	border: none;
 	background: white;
 }
 
-.issue-list-status button:hover {
+.issue-list-status>div:hover {
 	border-bottom: 2px solid gray;
 }
 
@@ -114,15 +118,19 @@
 	             	<div>
 	             		<div class="issue-header-area">
 	             			<div class="issue-list-header">
-	             				<div class="issue-list-status">
-	             					<div>
-	             						<button type="button">3 Open</button>	
-	             					</div>
-	             					<div>
-	             						<button type="button">1 Close</button>	
-	             					</div>
-	             				</div>
-	             				<div class="issue-modi-btns">
+									<div class="issue-list-status">
+									<input type="hidden" id="hidden-name" value="${ repoName }">
+									<input type="hidden" id="hidden-owner" value="${ owner }">
+										<div>
+											<div>3</div>
+											<button type="button" onclick="issueStatus(this);">open</button>
+										</div>
+										<div>
+											<div>1</div>
+											<button type="button" onclick="issueStatus(this);">closed</button>
+										</div>
+									</div>
+									<div class="issue-modi-btns">
 	             					<div>
 	             						<select>
 	             							<option>OPEN</option>
@@ -191,4 +199,39 @@
         </div>
     </div>
 </body>
+
+<script>
+
+	let repoName = $("#hidden-name").val();
+	let owner = $("#hidden-owner").val();
+	
+	function issueStatus(e){
+		
+		let status = $(e).text();
+		console.log(status);
+		console.log(repoName);
+		console.log(owner);
+		
+		$.ajax({
+			url:"getList.is",
+			data:{
+				repoName:repoName,
+				owner:owner,
+				status:status
+			},
+			success:function(){
+				
+			},
+			error:function(){
+				console.log("커밋리스트조회 실패");
+			}
+		})
+			
+		
+	}
+		
+	
+
+</script>
+
 </html>
