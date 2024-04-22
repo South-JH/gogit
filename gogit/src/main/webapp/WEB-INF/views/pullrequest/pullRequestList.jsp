@@ -253,6 +253,7 @@
 			let tbody = "";
 			
 			for(let i in openList) {
+				const no = openList[i].pullNo;
 				const title = openList[i].pullTitle;
 				const content = openList[i].pullContent;
 				const writer = openList[i].pullWriter;
@@ -261,7 +262,7 @@
 				const status = openList[i].status;
 				const createDate = openList[i].createDate.split('T')[0];
 
-				tbody += `<tr onclick="location.href='detail.pullrq'">
+				tbody += `<tr onclick="location.href='detail.pullrq?owner=${owner}&repoName=${repoName}&pullNo=\${ no }'">
 							<td>\${ title }</td>
 							<td>\${ writer }</td>
 							<td>
@@ -292,6 +293,7 @@
 
 				if($("input[name=status]:checked").val() == "open") {
 					for(let i in openList) {
+						const no = openList[i].pullNo;
 						const title = openList[i].pullTitle;
 						const content = openList[i].pullContent;
 						const writer = openList[i].pullWriter;
@@ -300,7 +302,7 @@
 						const status = openList[i].status;
 						const createDate = openList[i].createDate.split('T')[0];
 
-						tbody += `<tr onclick="location.href='detail.pullrq'">
+						tbody += `<tr onclick="location.href='detail.pullrq?owner=${owner}&repoName=${repoName}&pullNo=\${ no }'">
 									<td>\${ title }</td>
 									<td>\${ writer }</td>
 									<td>
@@ -326,6 +328,7 @@
 
 				} else {
 					for(let i in closedList) {
+						const no = closedList[i].pullNo;
 						const title = closedList[i].pullTitle;
 						const content = closedList[i].pullContent;
 						const writer = closedList[i].pullWriter;
@@ -334,7 +337,7 @@
 						const status = closedList[i].status;
 						const createDate = closedList[i].createDate.split('T')[0];
 
-						tbody += `<tr onclick="location.href='detail.pullrq'">
+						tbody += `<tr onclick="location.href='detail.pullrq?owner=${owner}&repoName=${repoName}&pullNo=\${ no }'">
 									<td>\${ title }</td>
 									<td>\${ writer }</td>
 									<td>

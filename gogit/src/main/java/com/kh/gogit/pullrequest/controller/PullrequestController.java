@@ -25,10 +25,10 @@ public class PullrequestController {
 	private PullrequestServiceImpl prqService;
 	
 	@RequestMapping("list.pullrq")
-	public String pullRequestList(String repoName, String visibility, HttpSession session, Model model) {
+	public String pullRequestList(String repoName, String visibility, String owner, HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		
-		String responseBody = prqService.getPullrequestList(loginUser, repoName);
+		String responseBody = prqService.getPullrequestList(loginUser, repoName, owner);
 		
 		JsonArray pullreqArr = JsonParser.parseString(responseBody).getAsJsonArray();
 		
@@ -38,11 +38,10 @@ public class PullrequestController {
 			JsonObject pullreq = pullreqArr.get(i).getAsJsonObject();
 			
 			Pullrequest prq = new Pullrequest();
-			prq.setPullTitle(pullreq.get("title").getAsString());
 			
-			if(!pullreq.get("body").isJsonNull()) {
-				prq.setPullContent(pullreq.get("body").getAsString());
-			}
+			prq.setPullNo(pullreq.get("number").getAsInt());
+			
+			prq.setPullTitle(pullreq.get("title").getAsString());
 			
 			prq.setPullWriter(pullreq.get("user").getAsJsonObject().get("login").getAsString());
 			
@@ -76,6 +75,7 @@ public class PullrequestController {
 		
 		model.addAttribute("repoName", repoName);
 		model.addAttribute("visibility", visibility);
+		model.addAttribute("owner", owner);
 		model.addAttribute("list", new Gson().toJson(list));
 		
 		return "pullrequest/pullRequestList";
@@ -125,7 +125,11 @@ public class PullrequestController {
 	}
 	
 	@RequestMapping("detail.pullrq")
-	public String detailPullRequest() {
+	public String detailPullRequest(String owner, String repoName, int pullNo, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+//		prqService.getPullrequest(loginUser, owner, repoName, pullNo);
+		
 		return "pullrequest/pullRequestDetailView";
 	}
 
