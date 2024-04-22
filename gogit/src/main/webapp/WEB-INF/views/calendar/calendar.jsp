@@ -7,6 +7,7 @@ pageEncoding="UTF-8"%>
     <title>Insert title here</title>
     <script src="resources/js/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
 
     <style type="text/css">
       #calendar {
@@ -38,48 +39,47 @@ pageEncoding="UTF-8"%>
           },
           eventAdd: function (e) {
             test();
+            console.log(e.event._def.title);
             /* $.ajax({
-    		  url:"insert.cal",
-    		  data:{
-    			  
-    		  },
-    		  success:function(){
-    			  
-    		  },
-    		  error:function(){
-    			  
-    		  }
-    	  }) */
+       		  url:"insert.cal",
+       		  data:{
 
-            console.log(e);
+       		  },
+       		  success:function(){
+
+       		  },
+       		  error:function(){
+
+       		  }
+       	  }) */
           },
           eventChange: function (e) {
             /* $.ajax({
-		  url:"update.cal",
-		  data:{
-			  
-		  },
-		  success:function(){
-			  
-		  },
-		  error:function(){
-			  
-		  }
-	  }) */
+       url:"update.cal",
+       data:{
+
+       },
+       success:function(){
+
+       },
+       error:function(){
+
+       }
+      }) */
           },
           eventRemove: function (e) {
             /* $.ajax({
-		  url:"delete.cal",
-		  data:{
-			  
-		  },
-		  success:function(){
-			  
-		  },
-		  error:function(){
-			  
-		  }
-	  }) */
+       url:"delete.cal",
+       data:{
+
+       },
+       success:function(){
+
+       },
+       error:function(){
+
+       }
+      }) */
           },
 
           select: function (selectDay) {
@@ -118,28 +118,6 @@ pageEncoding="UTF-8"%>
         });
         calendar.render();
       });
-
-      let socket = null;
-
-      function test() {
-        socket = new SockJS("/gogit/alam.ws");
-        socket.onopen = onOpen;
-        socket.onclose = onClose;
-        socket.onmessage = onMessage;
-        console.log(socket);
-
-        function onOpen() {
-          console.log("ss");
-        }
-
-        function onClose() {
-          console.log("nn");
-        }
-
-        function onMessage() {
-          console.log("tt");
-        }
-      }
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>

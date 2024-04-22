@@ -23,9 +23,9 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<websocket:handlers>
-		<websocket:mapping handler="myHandler" path="/gogit/alam.ws"/>
-		<websocket:sockjs></websocket:sockjs>
+	<websocket:handlers allowed-origin-patterns="*">
+		<websocket:mapping handler="myHandler" path="alarm.ws"/>
+		<websocket:sockjs websocket-enabled="true"/>
 	</websocket:handlers>
     <beans:bean id="myHandler" class="com.kh.gogit.common.websockethandler.handler.WebSocketHandler"/>
     

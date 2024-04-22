@@ -42,6 +42,26 @@
 		</script>
 		<c:remove var="alertMsg" scope="session"/>
 </c:if>
+
+
+<style>
+	#alarmList{
+
+		height: 500px;
+		overflow: auto;
+	}
+	#alarmList li{
+		display: block;
+		box-sizing: border-box;
+		width: 450px;
+		margin-bottom: 10px;
+		font-size: 12px;
+	}
+	#alarmList button{
+		margin: 1px;
+	}
+
+</style>
 </head>
 <body>
 
@@ -72,11 +92,12 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-icon-hover" href="javascript:void(0)">
-                  <i class="ti ti-bell-ringing"></i>
+                <a class="nav-link nav-icon-hover" href="javascript:void(0)" onclick="alamList();">	
+                  <i class="ti ti-bell-ringing "></i>
                   <div class="notification bg-primary rounded-circle"></div>
-                </a>
-              </li>
+   
+                </a>               
+              </li>          
             </ul>
             <div
               class="navbar-collapse justify-content-end px-0"
@@ -158,5 +179,120 @@
         <!--  Header End -->
       </div>
     </div>
+    
+    <div class="modal fade" id="alamModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title"></h5>
+                </div>
+                <div class="modal-body">
+                	<h3 calss="text-primary">알람</h3>
+                   	<div id=alarmList>
+                   		<ul class="list-group"></ul>
+                   	</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        id="close">뒤로가기</button>
+                </div>
+    			
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    	$(function(){
+    		alarm();
+    	})
+    	
+    	function alarm(){
+    		$.ajax({
+    			url:"alarm.me",
+    			data:{
+    				memId:'${loginUser.memId}'
+    			},
+    			success:function(data){
+    				let value = "";
+    				for(let i in data){
+    					console.log(data[i].alarmType)
+    					switch (data[i].alarmType) {
+    					
+    					//프로젝트 알람
+						case "project":
+							if(data[i].alarmYn == 1){
+								value += "<li class='list-group-item active'>";
+							}else{
+								value += "<li class='list-group-item'>";
+							}
+							
+							value += "<input type='hidden' value='"+data[i].alarmNo+"'>"
+								+data[i].memId+"님이 프로젝트("+data[i].alarmTitle+")에 참가신청하셨습니다."
+								+"<button class='btn btn-warning' onclick='apply("+data[i].alarmContentNo+");'>수락</button>"
+								+"<button class='btn btn-danger' onclick='cancel();'>거절</button> </li>"
+							break;
+
+						default:
+							break;
+						}
+    					$("#alarmList > ul").html(value);
+    				}
+    			},
+    			error:function(){
+    				console.log("실패")
+    			}
+    		})
+    	}
+    
+    	function alamList(){
+    		$("#alamModal").modal("show");
+    		
+    	}
+    	
+    	$("#close").click(function(){
+    		$("#alamModal").modal("hide");
+    	})
+    	
+    	
+    	
+    	$("#alarmList > ul").on("click","li",function(){
+    		$(this).removeClass("active")
+    		console.log()
+    		
+    		$.ajax({
+    			url:"update.al",
+    			data:{
+    				alarmNo:$(this).children("input").val()
+    			},
+    			success:function(data){
+    				console.log(data)
+    			}
+    		})
+    	})
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	// 알람용 웹소켓
+    	socket = new SockJS("alarm.ws");
+
+        socket.onopen = function () {
+          
+
+        };
+
+        socket.onclose = function onClose(e) {
+          console.log(e.data);
+        };
+
+        socket.onmessage = function onMessage(e) {
+        	alertify.alert(e.data);
+        };
+    </script>
   </body>
 </html>

@@ -184,10 +184,10 @@
                                     	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">');
                                     }
                                     
-                                    	function apply(){ // 신청하기(신청자입장)                                   	
+                                    	function apply(proNo){ // 신청하기(신청자입장)                                   	
                                     		$.ajax({
                         						url:"applypro.pr",
-                        						data:{pno:${p.proNo},
+                        						data:{pno:proNo},
                         							  userId:${loginUser.memId}},
                         						success:function(result){
                         							if(result > 0){
@@ -197,7 +197,12 @@
                         						}, error:function(){
                         							
                         						}
-                        					});                                   		                                 		
+                        					});       
+                                    	
+                                    		if(socket){
+                                    			socket.send("${loginUser.memId},${ p.proContent },${p.proWriter},${p.proNo},project");
+                                    		}
+                                    	
                                     	}
                                     	
                                     	function cancel(){ // 신청취소(신청자입장)
@@ -214,6 +219,8 @@
                         							
                         						}
                         					});
+                                    	
+                                    		
                                     	}                                  	
                                     	
                                     	function projectEnd(){ // 프로젝트 마감일때(모집자입장)
