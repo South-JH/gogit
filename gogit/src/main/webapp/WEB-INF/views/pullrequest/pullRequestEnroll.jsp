@@ -77,13 +77,15 @@
 				<div class="row">
 					<h2 id="create-pull-request-h2">Create Pull Request</h2>
 
-					<form action="create.pullrq">
+					<form action="create.pullrq" method="post">
+						<input type="hidden" name="repoOwner" value="${ owner }">
+						<input type="hidden" name="repoName" value="${ repoName }">
 						<div id="select-branch">
 							<div id="base-branch">
 								base:
 								<select name="baseBranch" id="base-branch-select">
 									<c:forEach var="b" items="${ list }">
-										<option value="">${ b.name }</option>
+										<option value="${ loginUser.gitNick }:${ b.name }">${ b.name }</option>
 									</c:forEach>
 								</select>
 							</div>
@@ -96,7 +98,7 @@
 								compare:
 								<select name="compareBranch" id="compare-branch-select">
 									<c:forEach var="b" items="${ list }">
-										<option value="">${ b.name }</option>
+										<option value="${ loginUser.gitNick }:${ b.name }">${ b.name }</option>
 									</c:forEach>
 								</select>
 							</div>

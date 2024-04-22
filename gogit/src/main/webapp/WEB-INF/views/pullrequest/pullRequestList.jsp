@@ -190,9 +190,13 @@
 						<jsp:include page="../repository/repositoryTab.jsp"/>
 						
 						<div id="pullRequest-area">
-							<div id="pullRequest-create">
-								<a href="createForm.pullrq?owner=${ owner }&repoName=${ repoName }" class="btn" id="create-btn">Pull request 생성</a>
-							</div>
+							<form action="createForm.pullrq" method="post">
+								<div id="pullRequest-create">
+									<input type="hidden" name="owner" value=${ owner }>
+									<input type="hidden" name="repoName" value=${ repoName }>
+									<button type="submit" class="btn" id="create-btn">Pull request 생성</button>
+								</div>
+							</form>
 
 							<div id="pullRequest-list">
 								<div class="repo-detail-public-area">

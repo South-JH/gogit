@@ -104,14 +104,18 @@ public class PullrequestController {
 			}
 		}
 		
+		model.addAttribute("owner", owner);
+		model.addAttribute("repoName", repoName);
 		model.addAttribute("list", list);
 		
 		return "pullrequest/pullRequestEnroll";
 	}
 	
 	@RequestMapping("create.pullrq")
-	public void createPullRequest(Pullrequest pullrq) {
+	public void createPullRequest(Pullrequest pullrq, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
 		
+		prqService.createPullRequest(loginUser, pullrq);
 	}
 	
 	@RequestMapping("detail.pullrq")

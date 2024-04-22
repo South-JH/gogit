@@ -8,6 +8,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.JsonArray;
@@ -15,6 +17,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.pullrequest.model.dao.PullrequestDao;
+import com.kh.gogit.pullrequest.model.vo.Pullrequest;
 
 @Service
 public class PullrequestServiceImpl implements PullrequestService {
@@ -121,6 +124,25 @@ public class PullrequestServiceImpl implements PullrequestService {
 		} else {
 			return null;
 		}
+		
+	}
+	
+	public void createPullRequest(Member loginUser, Pullrequest pullrq) {
+		
+		// https://api.github.com/repos/OWNER/REPO/pulls
+		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/pulls";
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(loginUser.getMemToken());
+		headers.set("Accept", "application/vnd.github+json");
+		
+		MultiValueMap<String, String> body = new LinkedMultiValueMap<String, String>();
+		body.add("title", pullrq.getPullTitle());
+		body.add("body", pullrq.getPullContent());
+		body.add("head", pullrq.getCompareBranch());
+		body.add("base", pullrq.getBaseBranch());
 		
 	}
 
