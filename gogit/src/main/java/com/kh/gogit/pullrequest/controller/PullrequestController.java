@@ -82,7 +82,7 @@ public class PullrequestController {
 	}
 	
 	@RequestMapping("createForm.pullrq")
-	public String createPullRequestForm(Pullrequest pullreq, String owner, String repoName, HttpSession session, Model model) {
+	public String createPullRequestForm(String owner, String repoName, HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		// branch 조회해와야 함
 		owner = "south-jh";
@@ -112,10 +112,18 @@ public class PullrequestController {
 	}
 	
 	@RequestMapping("create.pullrq")
-	public void createPullRequest(Pullrequest pullrq, HttpSession session) {
+	public String createPullRequest(Pullrequest pullrq, HttpSession session) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		
-		prqService.createPullRequest(loginUser, pullrq);
+		boolean result = prqService.createPullRequest(loginUser, pullrq);
+		
+		if(result) {
+			session.setAttribute("alertMsg", "pull request가 생성되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "pull request 생성을 실패했습니다.");
+		}
+		
+		return "redirect:list.pullrq";
 	}
 	
 	@RequestMapping("detail.pullrq")

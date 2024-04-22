@@ -21,6 +21,7 @@ public class Pullrequest {
 	private String compareBranch;
 	private String repoName;
 	private String repoOwner;
+	private String repoVisibility;
 	private int issNo;
 	private int milNo;
 	private String status;

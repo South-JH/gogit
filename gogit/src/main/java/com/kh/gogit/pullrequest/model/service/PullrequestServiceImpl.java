@@ -1,32 +1,24 @@
 package com.kh.gogit.pullrequest.model.service;
 
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.gogit.member.model.vo.Member;
-import com.kh.gogit.pullrequest.model.dao.PullrequestDao;
 import com.kh.gogit.pullrequest.model.vo.Pullrequest;
 
 @Service
 public class PullrequestServiceImpl implements PullrequestService {
-	
-	@Autowired
-	private PullrequestDao prqDao;
-	
-	@Autowired
-	private SqlSessionTemplate sqlSession;
 	
 	public String getPullrequestList(Member loginUser, String repoName) {
 		// ================================= repository 조회 =================================
@@ -127,7 +119,7 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 	}
 	
-	public void createPullRequest(Member loginUser, Pullrequest pullrq) {
+	public boolean createPullRequest(Member loginUser, Pullrequest pullrq) {
 		
 		// https://api.github.com/repos/OWNER/REPO/pulls
 		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/pulls";
@@ -138,11 +130,21 @@ public class PullrequestServiceImpl implements PullrequestService {
 		headers.setBearerAuth(loginUser.getMemToken());
 		headers.set("Accept", "application/vnd.github+json");
 		
-		MultiValueMap<String, String> body = new LinkedMultiValueMap<String, String>();
-		body.add("title", pullrq.getPullTitle());
-		body.add("body", pullrq.getPullContent());
-		body.add("head", pullrq.getCompareBranch());
-		body.add("base", pullrq.getBaseBranch());
+		Map<String, String> body = new HashMap<String, String>();
+		body.put("title", pullrq.getPullTitle());
+		body.put("body", pullrq.getPullContent());
+		body.put("head", loginUser.getGitNick() + ":" + pullrq.getCompareBranch());
+		body.put("base", pullrq.getBaseBranch());
+		
+		HttpEntity<Map<String, String>> request = new HttpEntity<Map<String, String>>(body, headers);
+		
+		ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+		
+		if(response.getStatusCode() == HttpStatus.CREATED) {
+			return true;
+		} else {
+			return false;
+		}
 		
 	}
 

@@ -85,7 +85,7 @@
 								base:
 								<select name="baseBranch" id="base-branch-select">
 									<c:forEach var="b" items="${ list }">
-										<option value="${ loginUser.gitNick }:${ b.name }">${ b.name }</option>
+										<option>${ b.name }</option>
 									</c:forEach>
 								</select>
 							</div>
@@ -98,7 +98,7 @@
 								compare:
 								<select name="compareBranch" id="compare-branch-select">
 									<c:forEach var="b" items="${ list }">
-										<option value="${ loginUser.gitNick }:${ b.name }">${ b.name }</option>
+										<option>${ b.name }</option>
 									</c:forEach>
 								</select>
 							</div>

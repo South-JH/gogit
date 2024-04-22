@@ -237,6 +237,8 @@
 	
 	<script>
 		$(function() {
+			$("#pull-request").attr("href", "list.pullrq?repoName=${ repoName }&visibility=${ visibility }");
+			
 			const list = ${ list };
 				
 			let openList = [];
@@ -299,7 +301,7 @@
 						const status = openList[i].status;
 						const createDate = openList[i].createDate.split('T')[0];
 
-						tbody += `<tr>
+						tbody += `<tr onclick="location.href='detail.pullrq'">
 									<td>\${ title }</td>
 									<td>\${ writer }</td>
 									<td>
@@ -333,7 +335,7 @@
 						const status = closedList[i].status;
 						const createDate = closedList[i].createDate.split('T')[0];
 
-						tbody += `<tr>
+						tbody += `<tr onclick="location.href='detail.pullrq'">
 									<td>\${ title }</td>
 									<td>\${ writer }</td>
 									<td>
