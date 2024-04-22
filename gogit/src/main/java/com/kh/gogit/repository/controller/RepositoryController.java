@@ -164,10 +164,10 @@ public class RepositoryController {
 		//System.out.println(repoName);
 		String repoContent = rService.repoDetailView(m, repoName, owner);
 		
-		JsonArray repoArr = JsonParser.parseString(repoContent).getAsJsonArray();
-		ArrayList<Repository> rpList = new ArrayList<Repository>();
 		
 		if(repoContent != null) {
+			JsonArray repoArr = JsonParser.parseString(repoContent).getAsJsonArray();
+			ArrayList<Repository> rpList = new ArrayList<Repository>();
 			
 			for(int i=0; i<repoArr.size(); i++) {
 				

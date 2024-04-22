@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.JsonElement;
@@ -157,6 +158,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 		headers.set("Accept", "Accept: application/vnd.github+json");
 		
 		HttpEntity<String> request = new HttpEntity<String>(headers);
+		/*
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
 		
 		String repoContent = "";
@@ -168,8 +170,27 @@ public class RepositoryServiceImpl implements RepositoryService {
 			System.out.println("content 조회 실패");
 			return null;
 		}
+		*/
 		
-		
+	    try {
+	        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+	        if (response.getStatusCode() == HttpStatus.OK && response.hasBody() && !response.getBody().isEmpty()) {
+	            return response.getBody();  // 유효한 데이터 수신
+	        } else if (response.getStatusCode() == HttpStatus.NO_CONTENT || response.getBody().isEmpty()) {
+	            System.out.println("지정된 저장소에 내용이 없습니다.");
+	            return null;  // 데이터가 없는 상황 처리
+	        } else {
+	            System.out.println("예상치 못한 상태 코드: " + response.getStatusCode());
+	            return null;
+	        }
+	    } catch (HttpClientErrorException ex) {
+	        if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
+	            System.err.println("저장소 또는 리소스를 찾을 수 없습니다: " + ex.getResponseBodyAsString());
+	        } else {
+	            System.err.println("클라이언트 오류: " + ex.getStatusCode() + " " + ex.getResponseBodyAsString());
+	        }
+	        return null;
+	    }
 	}
 	
 	public String getSubContent(Member m, String repoName, String path, String owner) {
