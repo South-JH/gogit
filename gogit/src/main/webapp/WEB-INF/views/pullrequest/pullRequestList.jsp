@@ -192,8 +192,9 @@
 						<div id="pullRequest-area">
 							<form action="createForm.pullrq" method="post">
 								<div id="pullRequest-create">
-									<input type="hidden" name="owner" value=${ owner }>
+									<input type="hidden" name="repoOwner" value=${ owner }>
 									<input type="hidden" name="repoName" value=${ repoName }>
+									<input type="hidden" name="repoVisibility" value=${ visibility }>
 									<button type="submit" class="btn" id="create-btn">Pull request 생성</button>
 								</div>
 							</form>
@@ -213,8 +214,6 @@
 									&nbsp;&nbsp;&nbsp;
 									<input type="radio" id="status-closed" name="status" value="closed">
 									<label for="status-closed">Closed</label>
-									<!-- <a href="list.pullrq">Open</a>
-									<a href="list.pullrq/closed">Closed</a> -->
 								</div>
 								<table id="pullRequest-table">
 									<thead>
@@ -237,7 +236,7 @@
 	
 	<script>
 		$(function() {
-			$("#pull-request").attr("href", "list.pullrq?repoName=${ repoName }&visibility=${ visibility }");
+			$("#pull-request").attr("href", "list.pullrq?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }");
 			
 			const list = ${ list };
 				

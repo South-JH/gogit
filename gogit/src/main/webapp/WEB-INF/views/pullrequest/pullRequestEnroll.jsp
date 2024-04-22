@@ -78,8 +78,9 @@
 					<h2 id="create-pull-request-h2">Create Pull Request</h2>
 
 					<form action="create.pullrq" method="post">
-						<input type="hidden" name="repoOwner" value="${ owner }">
+						<input type="hidden" name="repoOwner" value="${ repoOwner }">
 						<input type="hidden" name="repoName" value="${ repoName }">
+						<input type="hidden" name="repoVisibility" value="${ repoVisibility }">
 						<div id="select-branch">
 							<div id="base-branch">
 								base:
@@ -112,7 +113,7 @@
 								</tr>
 								<tr>
 									<th>Content</th>
-									<td><textarea name="pullContent" class="form-control" id="" cols="30" rows="10" style="resize: none;"></textarea></td>
+									<td><textarea name="pullContent" class="form-control" cols="30" rows="10" style="resize: none;"></textarea></td>
 								</tr>
 							</table>
 						</div>

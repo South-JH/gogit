@@ -82,11 +82,10 @@ public class PullrequestController {
 	}
 	
 	@RequestMapping("createForm.pullrq")
-	public String createPullRequestForm(String owner, String repoName, HttpSession session, Model model) {
+	public String createPullRequestForm(Pullrequest pullrq, HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		// branch 조회해와야 함
-		owner = "south-jh";
-		String branchList = prqService.getBranchList(loginUser, owner, repoName);
+		String branchList = prqService.getBranchList(loginUser, pullrq);
 		
 		ArrayList<Branch> list = new ArrayList<Branch>();
 		if(branchList != null) {
@@ -104,8 +103,7 @@ public class PullrequestController {
 			}
 		}
 		
-		model.addAttribute("owner", owner);
-		model.addAttribute("repoName", repoName);
+		model.addAttribute("pullrq", pullrq);
 		model.addAttribute("list", list);
 		
 		return "pullrequest/pullRequestEnroll";
@@ -123,7 +121,7 @@ public class PullrequestController {
 			session.setAttribute("alertMsg", "pull request 생성을 실패했습니다.");
 		}
 		
-		return "redirect:list.pullrq";
+		return "redirect:list.pullrq?repoName=" + pullrq.getRepoName() + "&visibility=" + pullrq.getRepoVisibility() + "&owner=" + pullrq.getRepoOwner();
 	}
 	
 	@RequestMapping("detail.pullrq")

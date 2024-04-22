@@ -96,10 +96,10 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 	}
 	
-	public String getBranchList(Member loginUser, String owner, String repoName) {
+	public String getBranchList(Member loginUser, Pullrequest pullrq) {
 		
 		// https://api.github.com/repos/OWNER/REPO/branches
-		String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/branches";
+		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/branches";
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
