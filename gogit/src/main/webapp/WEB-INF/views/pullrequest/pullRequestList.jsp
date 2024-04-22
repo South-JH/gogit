@@ -190,17 +190,22 @@
 						<jsp:include page="../repository/repositoryTab.jsp"/>
 						
 						<div id="pullRequest-area">
-							<div id="pullRequest-create">
-								<a href="create.pullrq" class="btn" id="create-btn">Pull request 생성</a>
-							</div>
+							<form action="createForm.pullrq" method="post">
+								<div id="pullRequest-create">
+									<input type="hidden" name="repoOwner" value=${ owner }>
+									<input type="hidden" name="repoName" value=${ repoName }>
+									<input type="hidden" name="repoVisibility" value=${ visibility }>
+									<button type="submit" class="btn" id="create-btn">Pull request 생성</button>
+								</div>
+							</form>
 
 							<div id="pullRequest-list">
 								<div class="repo-detail-public-area">
 				          			<div>
-				          				<h4>01_repository</h4>
+				          				<h4>${ repoName }</h4>
 				          			</div>
 				          			<div class="repo-detail-public">
-				          				<div>Private</div>
+				          				<div>${ visibility }</div>
 				          			</div>
 				          		</div>
 								<div id="choose-status">
@@ -209,8 +214,6 @@
 									&nbsp;&nbsp;&nbsp;
 									<input type="radio" id="status-closed" name="status" value="closed">
 									<label for="status-closed">Closed</label>
-									<!-- <a href="list.pullrq">Open</a>
-									<a href="list.pullrq/closed">Closed</a> -->
 								</div>
 								<table id="pullRequest-table">
 									<thead>
@@ -233,6 +236,8 @@
 	
 	<script>
 		$(function() {
+			$("#pull-request").attr("href", "list.pullrq?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }");
+			
 			const list = ${ list };
 				
 			let openList = [];
@@ -256,7 +261,7 @@
 				const status = openList[i].status;
 				const createDate = openList[i].createDate.split('T')[0];
 
-				tbody += `<tr>
+				tbody += `<tr onclick="location.href='detail.pullrq'">
 							<td>\${ title }</td>
 							<td>\${ writer }</td>
 							<td>
@@ -295,7 +300,7 @@
 						const status = openList[i].status;
 						const createDate = openList[i].createDate.split('T')[0];
 
-						tbody += `<tr>
+						tbody += `<tr onclick="location.href='detail.pullrq'">
 									<td>\${ title }</td>
 									<td>\${ writer }</td>
 									<td>
@@ -329,7 +334,7 @@
 						const status = closedList[i].status;
 						const createDate = closedList[i].createDate.split('T')[0];
 
-						tbody += `<tr>
+						tbody += `<tr onclick="location.href='detail.pullrq'">
 									<td>\${ title }</td>
 									<td>\${ writer }</td>
 									<td>

@@ -17,7 +17,11 @@ public class Pullrequest {
 	private String pullWriter;
 	private String pullManager;
 	private String pullManagerProfile;
-	private int repoNo;
+	private String baseBranch;
+	private String compareBranch;
+	private String repoName;
+	private String repoOwner;
+	private String repoVisibility;
 	private int issNo;
 	private int milNo;
 	private String status;

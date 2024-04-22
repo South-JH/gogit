@@ -1,7 +1,8 @@
 package com.kh.gogit.pullrequest.model.service;
 
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -14,18 +15,12 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.gogit.member.model.vo.Member;
-import com.kh.gogit.pullrequest.model.dao.PullrequestDao;
+import com.kh.gogit.pullrequest.model.vo.Pullrequest;
 
 @Service
 public class PullrequestServiceImpl implements PullrequestService {
 	
-	@Autowired
-	private PullrequestDao prqDao;
-	
-	@Autowired
-	private SqlSessionTemplate sqlSession;
-	
-	public String getPullrequestList(Member loginUser) {
+	public String getPullrequestList(Member loginUser, String repoName) {
 		// ================================= repository 조회 =================================
 		String url = "https://api.github.com/user/repos";
         
@@ -54,7 +49,7 @@ public class PullrequestServiceImpl implements PullrequestService {
         // pull request 조회
         // https://api.github.com/repos/OWNER/REPO/pulls
         String owner = repoObj.getAsJsonObject("owner").get("login").getAsString(); // repository owner의 nickname 값
-        String repo = repoObj.get("name").getAsString(); // repository name 값
+        String repo = repoName; // repository name 값
         
         String requestUrl = "https://api.github.com/repos/" + owner + "/" + repo + "/pulls?state=all";
         
@@ -98,6 +93,58 @@ public class PullrequestServiceImpl implements PullrequestService {
         }
         
         return profile;
+		
+	}
+	
+	public String getBranchList(Member loginUser, Pullrequest pullrq) {
+		
+		// https://api.github.com/repos/OWNER/REPO/branches
+		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/branches";
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(loginUser.getMemToken());
+		headers.set("Accept", "application/vnd.github+json");
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+		
+		if(response.getStatusCode() == HttpStatus.OK) {
+			return response.getBody();
+		} else {
+			return null;
+		}
+		
+	}
+	
+	public boolean createPullRequest(Member loginUser, Pullrequest pullrq) {
+		
+		// https://api.github.com/repos/OWNER/REPO/pulls
+		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/pulls";
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(loginUser.getMemToken());
+		headers.set("Accept", "application/vnd.github+json");
+		
+		Map<String, String> body = new HashMap<String, String>();
+		body.put("title", pullrq.getPullTitle());
+		body.put("body", pullrq.getPullContent());
+		body.put("head", loginUser.getGitNick() + ":" + pullrq.getCompareBranch());
+		body.put("base", pullrq.getBaseBranch());
+		
+		HttpEntity<Map<String, String>> request = new HttpEntity<Map<String, String>>(body, headers);
+		
+		ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+		
+		if(response.getStatusCode() == HttpStatus.CREATED) {
+			return true;
+		} else {
+			return false;
+		}
 		
 	}
 

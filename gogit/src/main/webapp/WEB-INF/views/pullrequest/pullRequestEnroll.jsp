@@ -77,14 +77,17 @@
 				<div class="row">
 					<h2 id="create-pull-request-h2">Create Pull Request</h2>
 
-					<form action="#">
+					<form action="create.pullrq" method="post">
+						<input type="hidden" name="repoOwner" value="${ repoOwner }">
+						<input type="hidden" name="repoName" value="${ repoName }">
+						<input type="hidden" name="repoVisibility" value="${ repoVisibility }">
 						<div id="select-branch">
 							<div id="base-branch">
 								base:
 								<select name="baseBranch" id="base-branch-select">
-									<option value="">main</option>
-									<option value="">branch-1</option>
-									<option value="">branch-2</option>
+									<c:forEach var="b" items="${ list }">
+										<option>${ b.name }</option>
+									</c:forEach>
 								</select>
 							</div>
 
@@ -95,9 +98,9 @@
 							<div id="compare-branch">
 								compare:
 								<select name="compareBranch" id="compare-branch-select">
-									<option value="">main</option>
-									<option value="">branch-1</option>
-									<option value="">branch-2</option>
+									<c:forEach var="b" items="${ list }">
+										<option>${ b.name }</option>
+									</c:forEach>
 								</select>
 							</div>
 						</div>
@@ -106,11 +109,11 @@
 							<table>
 								<tr>
 									<th>Title</th>
-									<td><input type="text" class="form-control" name="pullRequestTitle"></td>
+									<td><input type="text" class="form-control" name="pullTitle"></td>
 								</tr>
 								<tr>
 									<th>Content</th>
-									<td><textarea name="pullRequestContent" class="form-control" id="" cols="30" rows="10" style="resize: none;"></textarea></td>
+									<td><textarea name="pullContent" class="form-control" cols="30" rows="10" style="resize: none;"></textarea></td>
 								</tr>
 							</table>
 						</div>

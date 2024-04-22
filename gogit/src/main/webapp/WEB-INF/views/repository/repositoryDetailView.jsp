@@ -549,6 +549,8 @@ tr:hover {
 
 <script>
 	$(function(){
+		$("#pull-request").attr("href", "list.pullrq?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }");
+		
 	    $(".branch-area-btn").click(function(event){
 	        event.stopPropagation();
 	        
