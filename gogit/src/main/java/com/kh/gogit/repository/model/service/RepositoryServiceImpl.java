@@ -163,11 +163,12 @@ public class RepositoryServiceImpl implements RepositoryService {
 		if(response.getStatusCode() == HttpStatus.OK) {
 			repoContent = response.getBody();
 			//System.out.println(repoContent);
+			return repoContent;
 		} else {
 			System.out.println("content 조회 실패");
+			return null;
 		}
 		
-		return repoContent;
 		
 	}
 	
@@ -403,7 +404,30 @@ public class RepositoryServiceImpl implements RepositoryService {
     	return branches;
     }
     
-    
+    public String typeRepoList(Member m, String type) {
+    	
+    	String url = "https://api.github.com/user/repos?sort=created&direction=desc&visibility=" + type;
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpHeaders headers = new HttpHeaders();
+    	headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+    	headers.add("Authorization", "Bearer " + m.getMemToken());
+    	headers.add("Accept", "application/vnd.github-json");
+    	
+    	HttpEntity<String> request = new HttpEntity<String>(headers);
+    	ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+    	
+    	String typeRepo = "";
+    	if(response.getStatusCode() == HttpStatus.OK) {
+    		typeRepo = response.getBody();
+    		//System.out.println(typeRepo);
+    		return typeRepo;
+    	} else {
+    		System.out.println("타입별 레파지토리 조회 실패");
+    		return null;
+    	}
+    	
+    }
     
     
     

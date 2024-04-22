@@ -82,7 +82,7 @@ public class RepositoryController {
         	rp.setStargazers(repoArr.get(i).getAsJsonObject().get("stargazers_count").getAsString());
         	rp.setFork(repoArr.get(i).getAsJsonObject().get("forks_count").getAsString());
         	rp.setOpenIssue(repoArr.get(i).getAsJsonObject().get("open_issues_count").getAsString());
-        	rp.setUpdateAt(repoArr.get(i).getAsJsonObject().get("updated_at").getAsString());
+        	rp.setUpdateAt(repoArr.get(i).getAsJsonObject().get("updated_at").getAsString().substring(0, 10));
         	rp.setOwner(repoArr.get(i).getAsJsonObject().get("owner").getAsJsonObject().get("login").getAsString());
         	
         	rpList.add(rp);
@@ -167,22 +167,27 @@ public class RepositoryController {
 		JsonArray repoArr = JsonParser.parseString(repoContent).getAsJsonArray();
 		ArrayList<Repository> rpList = new ArrayList<Repository>();
 		
-        for(int i=0; i<repoArr.size(); i++) {
-        	
-        	Repository rp = new Repository();
-        	
-        	rp.setContentName(repoArr.get(i).getAsJsonObject().get("name").getAsString());
-        	rp.setSha(repoArr.get(i).getAsJsonObject().get("sha").getAsString());
-        	rp.setType(repoArr.get(i).getAsJsonObject().get("type").getAsString());
-        	rp.setPath(repoArr.get(i).getAsJsonObject().get("path").getAsString());
-        	//System.out.println(repoArr.get(i).getAsJsonObject().get("type").getAsString());
-        	rpList.add(rp);
-        }
-        
-        model.addAttribute("repoName", repoName);
-        model.addAttribute("visibility", visibility);
-        model.addAttribute("owner", owner);
-        model.addAttribute("rpList", rpList);
+		if(repoContent != null) {
+			
+			for(int i=0; i<repoArr.size(); i++) {
+				
+				Repository rp = new Repository();
+				
+				rp.setContentName(repoArr.get(i).getAsJsonObject().get("name").getAsString());
+				rp.setSha(repoArr.get(i).getAsJsonObject().get("sha").getAsString());
+				rp.setType(repoArr.get(i).getAsJsonObject().get("type").getAsString());
+				rp.setPath(repoArr.get(i).getAsJsonObject().get("path").getAsString());
+				//System.out.println(repoArr.get(i).getAsJsonObject().get("type").getAsString());
+				rpList.add(rp);
+			}
+			
+			model.addAttribute("repoName", repoName);
+			model.addAttribute("visibility", visibility);
+			model.addAttribute("owner", owner);
+			model.addAttribute("rpList", rpList);
+		} else {
+			System.out.println("컨텐츠없음!");
+		}
         
         String collaboratorList = rService.collaboratorList(m, repoName, owner);
         JsonArray colArr = JsonParser.parseString(collaboratorList).getAsJsonArray();
@@ -199,6 +204,8 @@ public class RepositoryController {
         		list.add(rp);
         		//System.out.println(list);
         	}
+        } else {
+        	System.out.println("협업자없음!");
         }
 
         model.addAttribute("list", list);
@@ -393,6 +400,54 @@ public class RepositoryController {
 		
 		response.setContentType("application/json; charset=utf-8");
 		response.getWriter().write(new Gson().toJson(branch));
+		
+	}
+	
+	@RequestMapping("typeList.rp")
+	public void typeRepoList(HttpSession session, HttpServletResponse response, String type) throws JsonIOException, IOException {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		String typeRepo = rService.typeRepoList(m, type);
+		
+		JsonArray repoArr = JsonParser.parseString(typeRepo).getAsJsonArray();
+		ArrayList<Repository> rpList = new ArrayList<Repository>();
+		
+		if(typeRepo != null) {
+			
+	        for(int i=0; i<repoArr.size(); i++) {
+	        	JsonObject repoObj = repoArr.get(i).getAsJsonObject();
+	        	
+	        	Repository rp = new Repository();
+	        	rp.setRepoTitle(repoArr.get(i).getAsJsonObject().get("name").getAsString());
+	        	
+	            JsonElement descriptionElement = repoObj.get("description");
+	            if (descriptionElement == null || descriptionElement.isJsonNull()) {
+	                rp.setRepoContent("");
+	            } else {
+	                rp.setRepoContent(descriptionElement.getAsString());
+	            }
+	            
+	        	rp.setVisibility(repoArr.get(i).getAsJsonObject().get("visibility").getAsString());
+	        	
+	        	JsonElement languageElement = repoObj.get("language");
+	        	if (languageElement == null || languageElement.isJsonNull()) {
+	                rp.setLanguage("");
+	            } else {
+	                rp.setLanguage(languageElement.getAsString());
+	            }
+	        	
+	        	rp.setStargazers(repoArr.get(i).getAsJsonObject().get("stargazers_count").getAsString());
+	        	rp.setFork(repoArr.get(i).getAsJsonObject().get("forks_count").getAsString());
+	        	rp.setOpenIssue(repoArr.get(i).getAsJsonObject().get("open_issues_count").getAsString());
+	        	rp.setUpdateAt(repoArr.get(i).getAsJsonObject().get("updated_at").getAsString().substring(0, 10));
+	        	rp.setOwner(repoArr.get(i).getAsJsonObject().get("owner").getAsJsonObject().get("login").getAsString());
+	        	
+	        	rpList.add(rp);
+	        }
+		}
+		
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(rpList, response.getWriter());
 		
 	}
 	
