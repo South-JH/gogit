@@ -21,7 +21,7 @@
     }
     .sliderhight-div, .rightBar-div{
         border-radius: 10px;
-        /* border: 1px solid #d4d2d2; */
+        border: 1px solid #d4d2d2;
     }  
 </style>
 </head>
