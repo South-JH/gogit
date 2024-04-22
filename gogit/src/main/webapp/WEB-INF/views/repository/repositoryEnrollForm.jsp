@@ -67,7 +67,7 @@
 								<div class="create-repo-select-public-area">
 									<div class="create-repo-select-public">
 										<div class="select-radio-input-div">
-											<input type="radio" name="visibility" value="false" id="radio1">
+											<input type="radio" name="visibility" value="false" id="radio1" required>
 										</div>
 										<div>
 											<img src="resources/images/book-open.png" width="20" height="20">
@@ -76,7 +76,7 @@
 									</div>
 									<div class="create-repo-select-public">
 										<div class="select-radio-input-div">
-											<input type="radio" name="visibility" value="true" id="radio2">
+											<input type="radio" name="visibility" value="true" id="radio2" required>
 										</div>
 										<div>
 											<img src="resources/images/lock.png" width="20" height="20">

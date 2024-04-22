@@ -69,9 +69,13 @@ h2 {
 	border: 1px solid #e6e6e6;
 	border-radius: 6px;
 	height: 35px;
-	width: 100px;
+	width: auto;
 	font-weight: 600;
 	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	padding: 0 10px;
 }
 
 .repo-create-btn {
@@ -82,6 +86,10 @@ h2 {
 	width: 100px;
 	font-weight: 600;
 	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 15px;
 }
 
 .repo-create-btn-color {
@@ -96,13 +104,7 @@ h2 {
 .repo-create {
 	display: flex;
 	justify-content: space-between;
-	width: 23%;
-}
-
-.repo-create-btn, .repo-btn {
-	display: flex;
-	align-items: center;
-    justify-content: center;
+	width: auto;
 }
 
 /* 레포지토리 리스트 목록 스타일 */
@@ -170,10 +172,16 @@ h2 {
 	padding: 5px;
 	font-size: 25px;
 	cursor: pointer;
+	color: #02384B;
 }
 
-.top-area-action i:hover {
+.unabled-area i:hover {
 	background-color: #e6e6e6;
+}
+
+.top-area-action button {
+	border: none;
+	background: none;
 }
 
 .wrap-one {
@@ -205,8 +213,179 @@ h2 {
 
 .repo-count-check {
 	color: #33bbff;
+	display: flex;
+	align-items: center;
+}
+
+.repo-date {
+	color: #333333;
 }
 
 .href-div {
 	cursor: pointer;
+}
+
+.updateModal-header {
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.modal-body-repo {
+	padding: 15px 15px;
+}
+
+.modal-body-repo>div {
+	padding: 5px 0;
+}
+
+.moda-body-repo-input {
+	border: 1px solid #e6e6e6;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 5px 10px;
+}
+
+.moda-body-repo-input>input {
+	border: none;
+	outline: none;
+	width: 95%;
+}
+
+.modal-body-repo-visibility {
+	display: flex;
+	align-items: center;
+}
+
+.modal-body-repo-visibility>div {
+	padding: 0 3px;
+}
+
+.modal-body-repo-radio input {
+	vertical-align: middle;
+}
+
+.modal-body-repo-radio {
+	display: flex;
+	align-items: center;
+/* 	padding: 0 8px; */
+}
+
+.modal-body-repo-radio>div {
+	padding: 0 3px;
+}
+
+.ti-user-plus {
+	font-size: 60px;
+}
+
+.invite-header-modal {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+    align-items: center;
+    padding: 5px;
+}
+
+.invite-header-modal>div {
+	padding: 5px;
+}
+
+.invite-body-modal {
+	border: 1px solid #c3c3c3;
+	border-radius: 6px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px 5px;
+	height: 35px;
+	background: #eee;
+}
+
+.invite-body-modal:focus-within {
+	background: white;
+	outline: 1px solid #02384B;
+}
+
+.invite-body-modal>input {
+	border: none;
+	outline: none;
+	background: none;
+	width: 98%;
+}
+
+.invite-footer-modal {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 15px;
+	background: #49BEFF;
+	border-radius: 6px;
+	height: 35px;
+}
+
+.invite-footer-modal:hover {
+	background: #12aaff;
+}
+
+.invite-footer-modal>button {
+	border: none;
+	background: none;
+	width: 100%;
+	height: 100%;
+	color: white;
+	font-size: 16px;
+}
+
+.invite-header-modal-title {
+	display: flex;
+}
+
+.modal-body-inviteform {
+	margin-bottom: 20px;
+}
+
+.disabled-btn i {
+	background: #eee;
+	color: white;
+}
+
+button[disabled] {
+  pointer-events: none;
+}
+
+.repo-select-btn {
+	position: relative;
+}
+
+.hidden-select-btn {
+	position: absolute;
+	top: 45px;
+	right: -80px;
+	border:1px solid #e6e6e6;
+	border-radius: 6px;
+	background-color: white;
+	width: 150px;
+/* 	height: auto; */
+	display: none;
+	box-shadow: 0 0 6px rgba(0,0,0,0.03), 0 0 6px rgba(0,0,0,0.03);
+}
+
+.hidden-select-btn-title {
+	display: flex;
+	justify-content: space-between;
+	padding: 5px;
+}
+
+.hidden-btn-select-area>div {
+	border-top: 1px solid #e6e6e6;
+}
+
+.hidden-btn-select-area>div:hover {
+	background-color: #eee;
+	cursor: pointer;
+}
+
+.hidden-btn-select-area>div>div {
+	padding: 5px 10px;
 }

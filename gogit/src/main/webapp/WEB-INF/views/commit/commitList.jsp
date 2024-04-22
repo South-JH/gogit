@@ -37,7 +37,7 @@ h4 {
 	border: 1px solid #e6e6e6;
 	border-radius: 7px;
 	padding: 10px 30px;
-	height: 700px;
+	height: auto;
 }
 
 .repo-detail-left-area {
@@ -48,7 +48,7 @@ h4 {
 	border: 1px solid #e6e6e6;
 	border-radius: 6px;
 	background: #f8f8f8;
-	width: 100px;
+/* 	width: 100px; */
 	height: 35px;
 	display: flex;
 	align-items: center;
@@ -71,17 +71,23 @@ h4 {
 }
 
 .branch-area-btn>div:first-child {
-	width: 60%;
+	width: auto;
+	padding: 0 10px;
+}
+
+.branch-area-btn>div:first-child>* {
+	padding: 0 2px;
 }
 
 .branch-area-btn>div:last-child {
-	width: 30%;
+/* 	width: 30%; */
+	padding: 0 10px;
 }
 
 .top-content-branch-area {
 	display: flex;
 	justify-content: space-between;
-	width: 200px;
+	width: auto;
 }
 
 .top-content-branch-area>div:nth-child(2)>div {
@@ -131,6 +137,7 @@ thead {
 
 .branch-area-div {
 	position: relative;
+	width: auto;
 }
 
 .repo-table>tbody>tr>td {
@@ -201,16 +208,21 @@ thead {
 }
 
 .branch-area>div {
-	height: 30px;
+	height: 35px;
 	padding: 0 5px;
 	border-radius: 6px;
 	cursor: pointer;
 	display: flex;
 	align-items: center;
+	border-bottom: 1px solid #e6e6e6;
 }
 
 .branch-area>div:hover {
 	background: #f9f9f9;
+}
+
+.repo-table>tbody img {
+	border-radius: 100px;
 }
 </style>
 </head>
@@ -250,7 +262,7 @@ thead {
 														<div>
 															<i class="ti ti-git-branch"></i>
 															<div>
-																<b>main</b>
+																<b class="bold-title">main</b>
 															</div>
 														</div>
 														<div>
@@ -302,24 +314,6 @@ thead {
 														</tr>
 													</thead>
 													<tbody>
-														<tr>
-															<td>2</td>
-															<td>문제수정완료</td>
-															<td>
-																<img src="resources/images/repo-img.png" width="20" height="20">crong9105
-															</td>
-															<td>2024-04-14</td>
-															<td>dfsdf237u9sdkfsj3eows2</td>
-														</tr>
-														<tr>
-															<td>1</td>
-															<td>첫머지</td>
-															<td>
-																<img src="resources/images/repo-img.png" width="20" height="20">crong9105
-															</td>
-															<td>2024-04-14</td>
-															<td>dfsdf237u9sdkfsj3eows2</td>
-														</tr>
 													</tbody>
 												</table>
 											</div>
@@ -335,6 +329,8 @@ thead {
 			</div>
 		</div>
 	</div>
+	<input type="hidden" id="hidden-repo-name" value="${ repoName }">
+	<input type="hidden" id="hidden-owner" value="${ owner }">
 
 	<script>
 	$(function(){
@@ -358,6 +354,127 @@ thead {
 	        }
 	    });
 	});
+	
+	const repoName = $("#hidden-repo-name").val();
+	const owner = $("#hidden-owner").val();
+	console.log(repoName);
+	console.log(owner);
+	
+	$(function(){
+		
+		$.ajax({
+			url:"listBranches.rp",
+			data:{
+				repoName:repoName,
+				owner:owner
+			},
+			success:function(result){
+				
+				$(".branch-area").text("");
+				let value = "";
+				
+				for(let i in result){
+					//console.log(result[i].branchName);
+					value += "<div onclick=\"switchBranch(this);\">" + result[i].branchName + "</div>";
+				}
+				
+				$(".branch-area").html(value);
+				
+			},
+			error:function(){
+				console.log("브랜치 조회 실패");
+			}
+		})
+	})
+	
+	$(function(){
+	
+		$.ajax({
+			url: "list.cm",
+			data:{
+				repoName:repoName,
+				owner:owner
+			},
+			success:function(cList){
+				
+				//console.log(cList);
+				
+				let value = "";
+				$(".repo-table>tbody").text("");
+				
+				for(let i=cList.length - 1; i>=0; i--){
+					
+					value += "<tr>"
+						   + "<td>" + (i+1) + "</td>"
+						   + "<td>" + cList[i].message + "</td>"
+						   
+					if(cList[i].avatalUrl !== ""){
+						value += "<td>" + "<img src=\"" + cList[i].avatarUrl + "\" width=\"20\" height=\"20\">" + cList[i].author + "</td>"
+					}else{
+						value += "<td>" + "<img src=\"resources/images/repo-img.png\" width=\"20\" height=\"20\">" + cList[i].author + "</td>"
+					}
+						   
+					value += "<td>" + cList[i].commitDate + "</td>"
+						   + "<td>" + cList[i].sah + "</td>"
+						   + "</tr>";
+				}
+				
+				$(".repo-table>tbody").html(value);
+				
+			},
+			error:function(){
+				console.log("커밋리스트 조회 ajax 실패");
+			}
+		})
+		
+	})
+	
+	function switchBranch(e){
+		
+		console.log($(e).text());
+		let branches = $(e).text();
+		
+		$(".bold-title").text(branches);
+		$(".switch-branch-area").css("display", "none");
+		
+		$.ajax({
+			url:"branch.cm",
+			data:{
+				repoName:repoName,
+				owner:owner,
+				branches:branches
+			},
+			success:function(cList){
+				
+				let value = "";
+				$(".repo-table>tbody").text("");
+				
+				for(let i=cList.length - 1; i>=0; i--){
+					
+					value += "<tr>"
+						   + "<td>" + (i+1) + "</td>"
+						   + "<td>" + cList[i].message + "</td>"
+						   
+					if(cList[i].avatalUrl !== ""){
+						value += "<td>" + "<img src=\"" + cList[i].avatarUrl + "\" width=\"20\" height=\"20\">" + cList[i].author + "</td>"
+					}else{
+						value += "<td>" + "<img src=\"resources/images/repo-img.png\" width=\"20\" height=\"20\">" + cList[i].author + "</td>"
+					}
+						   
+					value += "<td>" + cList[i].commitDate + "</td>"
+						   + "<td>" + cList[i].sah + "</td>"
+						   + "</tr>";
+				}
+				
+				$(".repo-table>tbody").html(value);
+				
+			},
+			error:function(){
+				console.log("브랜치별 커밋리스트 조회 ajax 실패");
+			}
+		})
+		
+	}
 	
 </script>
 </body>
