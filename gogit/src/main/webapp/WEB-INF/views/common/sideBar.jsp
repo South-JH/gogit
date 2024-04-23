@@ -149,6 +149,25 @@
                   <span class="hide-menu" >Friend</span>
                 </a>
               </li>
+              
+              
+               <li class="nav-small-cap">
+                <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                <span class="hide-menu">MEETING</span>
+              </li>
+              <li class="sidebar-item">
+                <a
+                  class="sidebar-link"
+                  aria-expanded="false"
+                  onclick="zoom()"
+                  style="cursor: pointer;"
+                >
+                  <span>
+                    <i class="ti ti-brand-finder"></i>
+                  </span>
+                  <span class="hide-menu" >zoom</span>
+                </a>
+              
             </ul>
             
             <%-- <div
@@ -184,5 +203,38 @@
       <!--  Sidebar End -->
       
    </div>
+   
+   
+   
+   <script>
+   	function zoom(){
+   		$("#zoomModal").modal("show");
+   	}
+   </script>
+   
+   
+   
+   <!-- 모달 -->
+       <div
+      class="modal fade"
+      id="zoomModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="title">Zoom 회의생성</h5>
+          </div>
+          <div class="modal-body">
+            <form action="zoom/callback">
+            
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 </body>
 </html>

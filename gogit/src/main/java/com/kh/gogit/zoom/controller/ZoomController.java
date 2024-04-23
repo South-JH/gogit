@@ -1,4 +1,4 @@
-package com.kh.gogit;
+package com.kh.gogit.zoom.controller;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +9,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.LinkedMultiValueMap;
@@ -21,19 +20,18 @@ import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.kh.gogit.member.model.service.GitHubAuthService;
 
 @Controller
-public class controller {
+public class ZoomController {
 
-	@RequestMapping("main")
-	public String main() {
-		return "main";
+	@RequestMapping("zoom.me")
+	public String zoomCreate() {
+		return "project/zoomCreate";
 	}
 	
 	@GetMapping("/zoom/callback")
 	public void zoomCallback(@RequestParam("code") String code, HttpSession session) {
-		
+		System.out.println(code);
 		String accessTokenUrl = "https://zoom.us/oauth/token";
 		String clientId = "qpGjOpDZQ5OWjpuP4j8IQ";
 		String clientSecret = "z7V1AQM3bhDCfetwNYperroOAoIOI4gn";
@@ -79,5 +77,4 @@ public class controller {
 		ResponseEntity<String> response = restTemplate.exchange(requestUrl, HttpMethod.POST, request, String.class);
 		
 	}
-	
 }
