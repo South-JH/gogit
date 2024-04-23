@@ -148,6 +148,7 @@ public class PullrequestController {
 		pullrq.setRepoName(repoName);
 		pullrq.setRepoOwner(owner);
 		pullrq.setRepoVisibility(pullrqObj.get("base").getAsJsonObject().get("repo").getAsJsonObject().get("private").getAsString());
+		pullrq.setMergeable(pullrqObj.get("mergeable").getAsBoolean());
 		pullrq.setStatus(pullrqObj.get("merged").getAsBoolean() ? "Merged" : pullrqObj.get("state").getAsString());
 		pullrq.setCreateDate(pullrqObj.get("created_at").getAsString().split("T")[0]);
 
