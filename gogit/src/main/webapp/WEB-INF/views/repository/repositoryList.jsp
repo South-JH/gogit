@@ -132,12 +132,13 @@
 																<c:otherwise>
 																	<div class="top-area-action">
 																		<div class="disabled-btn">
-																			<button type="button" data-toggle="modal" data-target="#inviteModal${ rp.index }" disabled>
+<%-- 																			<button type="button" data-toggle="modal" data-target="#inviteModal${ rp.index }" disabled> --%>
+																			<button type="button" data-toggle="modal" data-target=".inviteModal" disabled>
 																				<i class="ti ti-send"></i>
 																			</button>
 																		</div>
 																		<div class="disabled-btn">
-																			<button type="button" data-toggle="modal" data-target="#updateModal${ rp.index }" disabled>
+																			<button type="button" data-toggle="modal" data-target=".updateModal" disabled>
 																				<i class="ti ti-pencil"></i>
 																			</button>
 																		</div>
@@ -154,7 +155,7 @@
 													</div>
 													
 													<%-- 초대Form 모달 --%>
-													<div class="modal" tabindex="-1" id="inviteModal${ rp.index }">
+													<div class="modal inviteModal" tabindex="-1" id="inviteModal${ rp.index }">
 													  <div class="modal-dialog modal-dialog-centered">
 													    <div class="modal-content">
 													      <div class="modal-header">
@@ -195,7 +196,7 @@
 													<%-- 초대Form 모달 End --%>
 												
 													<%-- 수정Form 모달 --%>
-													<div class="modal" tabindex="-1" id="updateModal${ rp.index }">
+													<div class="modal updateModal" tabindex="-1" id="updateModal${ rp.index }">
 														<div class="modal-dialog modal-dialog-centered">
 															<div class="modal-content">
 																<div class="modal-header updateModal-header">
@@ -310,9 +311,10 @@
 		inBtn.click(function(){
 			console.log(inBtn.index($(this)));
 			colInput.eq(inBtn.index($(this))).val("");
+			
 		})
-	})
-	
+	})	
+			
 // 	$(function(){
 // 		$(".href-div").click(function(){
 // 			//console.log($(this).children().children("h4").text());
@@ -321,7 +323,6 @@
 // 			location.href = "detail.rp?repoName=" + $(this).children().children("h4").text() + "&visibility=" + $(this).siblings(".top-area-visibility").text() + "&owner=" + $(this).children().children("input").val();
 // 		})
 // 	})
-	
 	
 	$(function(){
 		

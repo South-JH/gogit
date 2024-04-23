@@ -145,11 +145,11 @@
 									<input type="hidden" id="hidden-name" value="${ repoName }">
 									<input type="hidden" id="hidden-owner" value="${ owner }">
 										<div>
-											<div>3</div>
+											<div id="open-count">${ list.size() }</div>
 											<button type="button" onclick="issueStatus(this);">open</button>
 										</div>
 										<div>
-											<div>1</div>
+											<div id="close-count"></div>
 											<button type="button" onclick="issueStatus(this);">closed</button>
 										</div>
 									</div>
@@ -161,7 +161,7 @@
 	             						</select>
 	             					</div>
 		             				<div class="issue-create-btn">
-		             					<a href="create.is?repoName=${ repoName }&owner=${ owner )"><b>New issue</b></a>
+		             					<a href="create.is?repoName=${ repoName }&owner=${ owner }"><b>New issue</b></a>
 		             				</div>
 		             			</div>
 	             			</div>

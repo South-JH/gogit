@@ -460,6 +460,40 @@ public class RepositoryServiceImpl implements RepositoryService {
     	
     }
     
+    public String branchContent(Member m, String repoName, String owner, String branch) {
+    	
+    	String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/contents/?ref=" + branch;
+    	
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		headers.set("Authorization", "Bearer " + m.getMemToken());
+		headers.set("Accept", "Accept: application/vnd.github+json");
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		
+	    try {
+	        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+	        if (response.getStatusCode() == HttpStatus.OK && response.hasBody() && !response.getBody().isEmpty()) {
+	            return response.getBody();  
+	        } else if (response.getStatusCode() == HttpStatus.NO_CONTENT || response.getBody().isEmpty()) {
+	            return null;
+	        } else { // 그외에
+	            return null;
+	        }
+	    } catch (HttpClientErrorException ex) {
+	        if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
+	        	System.out.println("레파지토리 컨텐츠 없음!");
+	        } else {
+	        	System.out.println("뭔가가 오류났음!");
+	        }
+	        return null;
+	    }
+    	
+    }
+    
     
     
     

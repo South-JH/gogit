@@ -28,9 +28,10 @@ public class CommitController {
 	private CommitServiceImpl cService;
 
 	@RequestMapping("view.cm")
-	public String commitListView(Model model, String repoName, String owner) {
+	public String commitListView(Model model, String repoName, String owner, String visibility) {
 		model.addAttribute("repoName", repoName);
 		model.addAttribute("owner", owner);
+		model.addAttribute("visibility", visibility);
 		return "commit/commitList";
 	}
 	

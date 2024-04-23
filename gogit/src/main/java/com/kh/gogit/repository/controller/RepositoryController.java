@@ -164,7 +164,6 @@ public class RepositoryController {
 		//System.out.println(repoName);
 		String repoContent = rService.repoDetailView(m, repoName, owner);
 		
-		
 		if(repoContent != null) {
 			JsonArray repoArr = JsonParser.parseString(repoContent).getAsJsonArray();
 			ArrayList<Repository> rpList = new ArrayList<Repository>();
@@ -201,7 +200,7 @@ public class RepositoryController {
         		
         		Repository rp = new Repository();
         		rp.setCollaborator(colArr.get(i).getAsJsonObject().get("login").getAsString());
-        		rp.setAvatarUrl(colArr.get(i).getAsJsonObject().get("avatar_url").getAsString());
+        		rp.setAvatar(colArr.get(i).getAsJsonObject().get("avatar_url").getAsString());
         		
         		list.add(rp);
         		//System.out.println(list);
@@ -218,7 +217,7 @@ public class RepositoryController {
 	@RequestMapping(value="selectContent.rp", produces="application/json; charset=UTF-8")
 	public void getSubContent(HttpServletResponse response, HttpSession session, String repoName, String path, String owner, String repoType) throws JsonIOException, IOException {
 		//System.out.println(owner);
-		System.out.println(repoType);
+		//System.out.println(repoType);
 		Member m = (Member)session.getAttribute("loginUser");
 		String subContent = rService.getSubContent(m, repoName, path, owner);
 		
@@ -460,6 +459,37 @@ public class RepositoryController {
 		
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(rpList, response.getWriter());
+		
+	}
+	
+	@RequestMapping("brnachContent.rp")
+	public void branchContent(HttpSession session, HttpServletResponse response, String repoName, String owner, String branch) throws JsonIOException, IOException {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		String bContent = rService.branchContent(m, repoName, owner, branch);
+		
+		ArrayList<Repository> list = new ArrayList<Repository>();
+		if(bContent != null) {
+			
+			JsonArray repoArr = JsonParser.parseString(bContent).getAsJsonArray();
+			
+			for(int i=0; i<repoArr.size(); i++) {
+				
+				Repository rp = new Repository();
+				
+				rp.setContentName(repoArr.get(i).getAsJsonObject().get("name").getAsString());
+				rp.setSha(repoArr.get(i).getAsJsonObject().get("sha").getAsString());
+				rp.setType(repoArr.get(i).getAsJsonObject().get("type").getAsString());
+				rp.setPath(repoArr.get(i).getAsJsonObject().get("path").getAsString());
+				list.add(rp);
+			}
+			
+		} else {
+			System.out.println("컨텐츠없음!");
+		}
+		
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(list, response.getWriter());
 		
 	}
 	
