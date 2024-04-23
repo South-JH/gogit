@@ -26,7 +26,6 @@
 	    width: 32px !important;
 	    height: 32px;
 	    text-align: center;
-	    vertical-align: center;
 	    padding: 0 !important;
 	}
 	#comments .placeholder {
@@ -130,40 +129,74 @@
 									</table>
 	                    		</div>
                     		</div>
-                    		<c:if test="${ pullrq.status eq 'open' }">
-		                    	<div class="row mt-3">
-	                    			<p style="margin-left:8.33333333%;">Add more commits by pushing to the ${ pullrq.compareBranch } branch on ${ pullrq.repoOwner }/${ pullrq.repoName }.</p>
-			                    	<div class="row">
-			                    		<div class="col-1">
-			                    			<svg aria-hidden="true" height="24" viewBox="0 0 24 24" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-merge">
-											    <path d="M15 13.25a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm-12.5 6a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm0-14.5a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0ZM5.75 6.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 6.5Zm0 14.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 21Zm12.5-6a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 18.25 15Z"></path><path d="M6.5 7.25c0 2.9 2.35 5.25 5.25 5.25h4.5V14h-4.5A6.75 6.75 0 0 1 5 7.25Z"></path><path d="M5.75 16.75A.75.75 0 0 1 5 16V8a.75.75 0 0 1 1.5 0v8a.75.75 0 0 1-.75.75Z"></path>
-											</svg>
-			                    		</div>
-			                    		<div class="col">
-			                    			<div class="card">
-											  <ul class="list-group list-group-flush">
-											    <li class="list-group-item">
-											    	<div class="row">
-												    	<div class="col-1 sucess-icon">
-													    	<svg style="vertical-align: -webkit-baseline-middle;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-															  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
-															</svg>
-													    </div>
-													    <div class="col">
-													    	<h5>This branch has no conflicts with the base branch</h5>
-													    	<p>Rulesets ensure specific people approve pull requests before they're merged.</p>
-													    </div>
-											    	</div>
-											    </li>
-											  </ul>
-											  <div class="card-footer">
-											  	<button type="button" class="btn btn-success">Merge pull request</button>
-											  </div>
-											</div>
-			                    		</div>
+                    		<c:choose>
+	                    		<c:when test="${ pullrq.status eq 'open' and pullrq.mergeable }">
+			                    	<div class="row mt-3">
+		                    			<p style="margin-left:8.33333333%;">Add more commits by pushing to the ${ pullrq.compareBranch } branch on ${ pullrq.repoOwner }/${ pullrq.repoName }.</p>
+				                    	<div class="row">
+				                    		<div class="col-1">
+				                    			<svg aria-hidden="true" height="24" viewBox="0 0 24 24" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-merge">
+												    <path d="M15 13.25a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm-12.5 6a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm0-14.5a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0ZM5.75 6.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 6.5Zm0 14.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 21Zm12.5-6a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 18.25 15Z"></path><path d="M6.5 7.25c0 2.9 2.35 5.25 5.25 5.25h4.5V14h-4.5A6.75 6.75 0 0 1 5 7.25Z"></path><path d="M5.75 16.75A.75.75 0 0 1 5 16V8a.75.75 0 0 1 1.5 0v8a.75.75 0 0 1-.75.75Z"></path>
+												</svg>
+				                    		</div>
+				                    		<div class="col">
+				                    			<div class="card">
+												  <ul class="list-group list-group-flush">
+												    <li class="list-group-item">
+												    	<div class="row">
+													    	<div class="col-1 sucess-icon">
+														    	<svg style="vertical-align: -webkit-baseline-middle;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+																  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+																</svg>
+														    </div>
+														    <div class="col">
+														    	<h5>This branch has no conflicts with the base branch</h5>
+														    	<p>Rulesets ensure specific people approve pull requests before they're merged.</p>
+														    </div>
+												    	</div>
+												    </li>
+												  </ul>
+												  <div class="card-footer">
+												  	<button type="button" class="btn btn-success">Merge pull request</button>
+												  </div>
+												</div>
+				                    		</div>
+				                    	</div>
 			                    	</div>
-		                    	</div>
-	                    	</c:if>
+		                    	</c:when>
+		                    	<c:when test="${ pullrq.status eq 'open' and not pullrq.mergeable }">
+		                    		<div class="row mt-3">
+		                    			<p style="margin-left:8.33333333%;">Add more commits by pushing to the ${ pullrq.compareBranch } branch on ${ pullrq.repoOwner }/${ pullrq.repoName }.</p>
+				                    	<div class="row">
+				                    		<div class="col-1">
+				                    			<svg aria-hidden="true" height="24" viewBox="0 0 24 24" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-merge">
+												    <path d="M15 13.25a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm-12.5 6a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm0-14.5a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0ZM5.75 6.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 6.5Zm0 14.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 21Zm12.5-6a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 18.25 15Z"></path><path d="M6.5 7.25c0 2.9 2.35 5.25 5.25 5.25h4.5V14h-4.5A6.75 6.75 0 0 1 5 7.25Z"></path><path d="M5.75 16.75A.75.75 0 0 1 5 16V8a.75.75 0 0 1 1.5 0v8a.75.75 0 0 1-.75.75Z"></path>
+												</svg>
+				                    		</div>
+				                    		<div class="col">
+				                    			<div class="card">
+												  <ul class="list-group list-group-flush">
+												    <li class="list-group-item">
+												    	<div class="row">
+													    	<div class="col-1 conflict-icon">
+														    	여기다 추가해죠 아이콘
+														    </div>
+														    <div class="col">
+														    	<h5>This branch has no conflicts with the base branch</h5>
+														    	<p>Rulesets ensure specific people approve pull requests before they're merged.</p>
+														    </div>
+												    	</div>
+												    </li>
+												  </ul>
+												  <div class="card-footer">
+												  	<button type="button" class="btn btn-success">Merge pull request</button>
+												  </div>
+												</div>
+				                    		</div>
+				                    	</div>
+			                    	</div>
+		                    	</c:when>
+	                    	</c:choose>
 	                    	<div class="row">
 	                    		<div class="col-1">
 	                    			<a href="#">
