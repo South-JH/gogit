@@ -9,6 +9,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.JsonParser;
@@ -83,13 +86,15 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 		HttpEntity<Map<String, String>> request = new HttpEntity<Map<String, String>>(body, headers);
 		
-		ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
-		
-		if(response.getStatusCode() == HttpStatus.CREATED) {
-			return true;
-		} else {
+		try {
+			ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+			return response.getStatusCode() == HttpStatus.CREATED ? true : false;
+			
+		} catch (HttpClientErrorException e1) {
+			System.out.println(e1);
 			return false;
 		}
+		
 		
 	}
 	
@@ -102,7 +107,7 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setBearerAuth(loginUser.getMemToken());
-		headers.set("Accept", "application/vnd.github+json");
+		headers.set("Accept", "application/vnd.github.html+json");
 		
 		HttpEntity<String> request = new HttpEntity<String>(headers);
 		

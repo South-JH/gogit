@@ -49,10 +49,13 @@
                     <h4>
                     	<c:choose>
                     		<c:when test="${ pullrq.status eq 'open' }">
-		                    	<span class="badge rounded-pill bg-success"><i class="ti ti-git-pull-request"></i>${ pullrq.status }</span>
+		                    	<span class="badge rounded-pill bg-success"><i class="ti ti-git-pull-request"></i>Open</span>
+                    		</c:when>
+                    		<c:when test="${ pullrq.status eq 'closed' }">
+		                    	<span class="badge rounded-pill bg-danger"><i class="ti ti-git-pull-request"></i>Closed</span>
                     		</c:when>
                     		<c:otherwise>
-		                    	<span class="badge rounded-pill bg-danger"><i class="ti ti-git-pull-request"></i>${ pullrq.status }</span>
+		                    	<span class="badge rounded-pill" style="background-color: purple;"><i class="ti ti-git-pull-request"></i>${ pullrq.status }</span>
                     		</c:otherwise>
                     	</c:choose>
                     	${ pullrq.pullWriter } wants to merge ${ list.size() } commits into ${ pullrq.baseBranch } from ${ pullrq.compareBranch }
@@ -86,11 +89,11 @@
 									  	<span class="p-1">commented</span>
 									  	<span class="p-1">${ pullrq.createDate }</span>
 									  </div>
-									  <div class="card-body">
+									  <div class="card-body" id="pullrequest-content-area">
 									  	<c:if test="${ empty pullrq.pullContent }">
 									  		No description
 									  	</c:if>
-									    ${ pullrq.pullContent }
+									  	${ pullrq.pullContent }
 									  </div>
 									</div>
 									<table class="time-line table .table-borderless .table-sm">
