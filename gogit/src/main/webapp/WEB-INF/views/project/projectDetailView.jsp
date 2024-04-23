@@ -218,7 +218,12 @@
                         						}, error:function(){
                         							
                         						}
-                        					});                                   		                                 		
+                        					});       
+                                    	
+                                    		if(socket){
+                                    			socket.send("${loginUser.memId},${ p.proContent },${p.proWriter},${p.proNo},project");
+                                    		}
+                                    	
                                     	}
                                     	
                                     	function cancel(){ // 신청취소(신청자입장)
@@ -235,6 +240,8 @@
                         							
                         						}
                         					});
+                                    	
+                                    		
                                     	}                                  	
                                     	
                                     	function projectEnd(){ // 프로젝트 마감일때(모집자입장)

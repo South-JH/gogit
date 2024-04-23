@@ -103,6 +103,7 @@
 						</ul>
 						</div>
 	             	</div>
+	             	
              	</div>
              </div>
            </div>
@@ -113,9 +114,7 @@
     	$(function(){
     		
     		searchPr(1);
-    		setInterval(() => {
-    			searchPr(1);
-			}, 1000);
+
     	})
     	
     	
