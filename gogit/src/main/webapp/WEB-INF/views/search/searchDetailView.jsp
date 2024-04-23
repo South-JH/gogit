@@ -93,43 +93,6 @@
                             </div>
                             <div style="margin-left: 20px;">
                                 <div><h2>Popular repositiry</h2></div>
-<%--                                 <c:forEach var="s" items="${ list }"> --%>
-<%--                                 <c:choose> --%>
-<%-- 	                                	<c:when test="${ not empty list }"> --%>
-<!-- 	                                	ddddddddddddddddddddddddd -->
-<!-- 	                                <div class="repo-div" style="width: 440px; height:140px; border: 1px solid #d0d7de; border-radius: 0.375rem; padding: 16px;"> -->
-<!-- 	                                    <div style="display: flex;"> -->
-<%-- 	                                        <div class="reponame" style="width: 370px; margin-bottom: 10px;">${ s.name }</div> --%>
-<!-- 	                                        <div> -->
-<!-- 	                                            <div style="width: 60px; height: 20px; border-radius: 2em; border: 1px solid #d0d7de; padding:0 7px;"> -->
-<%-- 	                                                <span class="publicfont">${s.visibility }</span>  --%>
-<!-- 	                                            </div> -->
-<!-- 	                                        </div> -->
-<!-- 	                                    </div> -->
-	
-<%-- 	                                    <div class="contentfont" style="margin-bottom: 20px;">${s.description }</div> --%>
-<!-- 	                                    <div> -->
-<!-- 	                                        <div style="display: flex;"> -->
-<%-- 	                                        	<c:if test="${not empty s.language}"> --%>
-<!-- 	                                                <div style="width: 15px;"> -->
-<!-- 	                                                    <div class="repdo-language-color"></div>     -->
-<!-- 	                                                </div>                                       	 -->
-<%-- 	                                            </c:if> --%>
-<%-- 	                                            <div>${s.language }</div>  --%>
-<!-- 	                                        </div>    -->
-<!-- 	                                    </div>                              	 -->
-<!-- 	                                </div> -->
-<!-- 	                                <br> -->
-<%-- 	                                </c:when> --%>
-	                           
-<%-- 	                                <c:otherwise>                  --%>
-<!-- 	                                <div class="repo-div" style="width: 440px; height:140px; border: 1px solid #d0d7de; border-radius: 0.375rem; padding: 16px;"> -->
-<!-- 	                                	<div>doesn't have any public repositories yet.</div>	                                                                  	 -->
-<!-- 	                                </div>	                                   	 -->
-<%-- 	                                </c:otherwise> --%>
-<%--                                 </c:choose> --%>
-<%--                                 </c:forEach> --%>
-
 						<c:choose>
 					    <c:when test="${empty list}">
 					        <div class="repo-div" style="width: 440px; height:140px; border: 1px solid #d0d7de; border-radius: 0.375rem; padding: 16px;">

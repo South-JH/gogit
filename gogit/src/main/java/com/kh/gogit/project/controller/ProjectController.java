@@ -21,6 +21,7 @@ import com.kh.gogit.common.model.vo.PageInfo;
 import com.kh.gogit.common.template.Pagination;
 import com.kh.gogit.member.model.service.MemberServiceImpl;
 import com.kh.gogit.member.model.vo.Member;
+import com.kh.gogit.pr.model.vo.Reply;
 import com.kh.gogit.project.model.service.ProjectServiceImpl;
 import com.kh.gogit.project.model.vo.Project;
 import com.kh.gogit.project.model.vo.Stack;
@@ -203,5 +204,20 @@ public class ProjectController {
 			model.addAttribute("errorMsg","게시글 수정 실패");
 			return "common/errorPage";
 		}	
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="rlist.pr", produces="application/json; charset=utf-8")
+	public String ajaxSelectReplyList(int pno) {
+		ArrayList<Reply> list = pService.selectReplyList(pno);
+		
+		return new Gson().toJson(list);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="rinsert.pr")
+	public String ajaxInsertReply(Reply r) {
+		int result = pService.insertReply(r);
+		return result > 0 ? "success" : "fail";
 	}
 }

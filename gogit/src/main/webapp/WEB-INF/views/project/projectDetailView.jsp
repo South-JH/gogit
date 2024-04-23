@@ -374,29 +374,95 @@
                                     <div class="form-group">
                                         <div style="margin: auto; width: 500px; display: flex;">
                                             <input type="text" class="form-control" id="content" name="content" placeholder="댓글을 입력하세요">
-                                            <div style="width: 150px;"><button class="btn btn-primary" style="background-color: rgb(2 56 75);">작성</button></div>
+                                            <div style="width: 150px;"><button onclick="addReply();" class="btn btn-primary" style="background-color: rgb(2 56 75);">작성</button></div>
                                         </div>
                                     </div>
 
                                     <br>
 
                                             <div style="margin: auto; width: 600px; display: flex;">
-                                                <div>댓글(0)</div>
+                                                <div>댓글(<span id="rcount">0</span>)</div>
                                                 <div></div>
                                             </div>
                                 
 
-                                            <div class="reply-div">
+                                            <div id="replyArea" class="reply-div">
                                                 <div style="display: flex; margin: auto; width: 600px;">
-                                                    <div style="width: 150px;">testjimin</div>
-                                                    <div style="width: 400px;">저 참여할게요!</div>
-                                                    <div style="width: 200px;">2024-04-12</div>
-                                                    <div style="width: 150px;"><button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">댓글삭제</button></div>
+<!--                                                     <div style="width: 150px;">testjimin</div> -->
+<!--                                                     <div style="width: 400px;">저 참여할게요!</div> -->
+<!--                                                     <div style="width: 200px;">2024-04-12</div> -->
+<!--                                                     <div style="width: 150px;"><button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">댓글삭제</button></div> -->
                                                 </div>
                                                 <hr style="width: 600px; margin: 0px auto;">
                                                 <br>
                                             </div>                              
                                         </div>
+                                        
+                                        <script>
+                                        	$(function(){
+                                        		selectReplyList();
+                                        	})
+                                        	function addReply(){
+                                        		if($("#content").val().trim().length != 0){
+                                        			$.ajax({
+                                        				url:"rinsert.pr",
+                                        				data:{
+                                        					refProjectNo:${p.proNo},
+                                        					repContent:$("#content").val(),
+                                        					memId:'${loginUser.memId}'
+                                        				},success:function(status){
+                                        					console.log(status)
+                                        					
+                                        					if(status == "success"){
+                                        						selectReplyList();
+                                        						$("#content").val("");
+                                        					}
+                                        				}, error:function(){
+                                        					console.log("댓글 작성용 ajax 통신 실패");
+                                        				}
+                                        			})
+                                        		}else{
+                                        			alertify.alert("댓글 작성 후 등록 요청해주세요!");
+                                        		}
+                                        	}
+                                        	
+                                        	function selectReplyList(){
+                                        		$.ajax({
+                                        			url:"rlist.pr",
+                                        			data:{pno:${p.proNo}},
+                                        			success:function(list){
+                                        				console.log(list)
+                                        				
+                                        				let value = "";
+                                        				
+                                        				for (let i in list) {
+                                        				    value += "<div style=\"display: flex; margin: auto; width: 600px;\">" +                                     				    	
+                                        				             "<div style=\"width: 150px;\">" + list[i].gitNick + "</div>" +
+                                        				             "<div style=\"width: 400px;\">" + list[i].repContent + "</div>" +
+                                        				             "<div style=\"width: 200px;\">" + list[i].repDate + "</div>" +
+                                        				             "<div style=\"width: 150px;\">"
+                                        				             	
+                                        				             	//console.log('${loginUser.gitNick}')
+                                        				             	//console.log(list[i].gitNick)
+                                        				            	//console.log('${loginUser.gitNick}' == list[i].gitNick)
+                                        				             if('${loginUser.gitNick}' == list[i].gitNick){
+                                        				            	value +=  "<button class=\"btn btn-primary btn-sm\" style=\"background-color: rgb(2, 56, 75);\">댓글삭제</button>"
+		                                    				             			
+                                        				             }
+                                        				            value += "</div></div>" +
+                             				             			"<hr style=\"width: 400px; margin: 0px auto;\">"+
+                             				             			"<br>"
+                                        				             $("#replyArea").html(value);
+                                        				             $("#rcount").text(list.length);
+
+                                        				}
+                                        			}, error:function(){
+                                        				console.log("댓글 리스트 조회용 ajax 통신 실패!");
+                                        			}
+                                    			
+                                        		});
+                                        	}
+                                        </script>
 
                                     </div>
                                 </div>

@@ -23,7 +23,16 @@
 		<result column="stack_name" property="stackName"/>
 		<result column="stack_img" property="stackImg"/>
 	</resultMap>
-
+	
+	<resultMap type="Reply" id="ReplyResult">
+		<result column="reply_no" property="replyNo" />
+		<result column="mem_id" property="memId" />
+		<result column="rep_content" property="repContent" />
+		<result column="REF_PROJECTNO" property="refProjectNo" />
+		<result column="rep_date" property="repDate" />
+		<result column="status" property="status" />
+		<result column="git_nick" property="gitNick"/>
+	</resultMap>
 	<select id="selectListCount" resultType="_int">
 	select
 	       count(*)
@@ -242,6 +251,39 @@
 		     , create_date = SYSDATE
 		 where pro_no = #{proNo}	
 	</update>
+	
+	<insert id="insertReply">
+		insert
+		  into reply
+		  (
+		    reply_no
+		  , rep_content
+		  , ref_projectno
+		  , mem_id
+		  , rep_date
+		  )
+		  values
+		  (
+		    seq_reno.nextval
+		  , #{repContent}
+		  , #{refProjectNo}
+		  , #{memId} 
+		  , SYSDATE
+		  )	
+	</insert>
+	
+	<select id="selectReplyList" resultMap="ReplyResult">
+		select
+		       reply_no
+		     , git_nick
+		     , rep_content
+		     , to_char(rep_date, 'YYYY-MM-DD') as "rep_date"
+		     from reply r
+		     join member using (mem_id)
+		     where r.status = 'Y'
+		     and ref_projectno = #{pno}
+		     order by reply_no desc	
+	</select>
 	
 	
 
