@@ -210,7 +210,7 @@ a {
                                                         <div style="width: 30px;"><img src="${ r.avatarUrl }" width="20px" height="20px"></div>	                                               
                                                         <a href="detail.sr?nickName=${s.login}&avatar=${s.avatarUrl}">
                                                             <div>
-                                                                ${ r.fullName }
+                                                                <a href="#">${ r.fullName }</a>
                                                             </div>
                                                         </a>	                                                        
 	                                              </div>
