@@ -489,6 +489,7 @@ tr:hover {
 													<c:forEach var="rp" items="${ rpList }">
 														<tr>
 															<td onclick="subContent(this);" class="repoTitle">
+															<input class="hidden-repo-type" type="hidden" value="${ rp.type }">
 																<c:choose>
 																	<c:when test="${ rp.type eq 'file' }">
 																		<i class="ti ti-file"></i>
@@ -584,6 +585,8 @@ tr:hover {
 		const filePath = $(e).children("#rpPath").val();
 		const newFileName = $(e).children("#rpPath").val().split("/").slice(-2, -1)[0];
 		const newFilePath = $(e).children("#rpPath").val().split("/").slice(0, -1).join("/");
+		let repoType = $(e).children(".hidden-repo-type").val();
+		console.log(repoType);
 		
 		/*
 		// 새로운 파일 이름은 상위 폴더의 이름으로 설정
@@ -595,91 +598,126 @@ tr:hover {
 		const newFilePath = folders.slice(0, -1).join("/");
 		*/
 		
-		//console.log("파일이름", fileName);
-		//console.log("파일경로", filePath);
-		//console.log("새로운파일이름:", newFileName);
-		//console.log("새로운파일경로:", newFilePath);
+		console.log("파일이름", fileName);
+		console.log("파일경로", filePath);
+		console.log("새로운파일이름:", newFileName);
+		console.log("새로운파일경로:", newFilePath);
 		
 		$.ajax({
 			url:"selectContent.rp",
 			data:{
 				repoName:repoName,
 				path:filePath,
-				owner:owner
+				owner:owner,
+				repoType:repoType
 			},
 			success:function(result){
 				
-				//console.log(result);
+				console.log(typeof result);
 				//console.log(result.rpList);
 				
-				let list = result.rpList;
-				$(".repo-table").text("");
-				
-				let hasContentDesc = list.some(item => item.contentDesc !== undefined);
-
 				let hvalue = "";
-				if (hasContentDesc) {
-				    // 하나라도 contentDesc가 정의된 경우
-				    hvalue += "<thead>"
-				            + "<tr>"
-				            + "<th colspan=\"4\">CODE</th>"
-				            + "</tr>"
-				            + "</thead>";
-				} else {
-				    // 모든 항목의 contentDesc가 undefined인 경우
-				    hvalue += "<thead>"
-				            + "<tr>"
-				            + "<th width=\"330\">NAME</th>"
-				            + "<th>RECENT COMMIT</th>"
-				            + "<th width=\"130\">AUTHOR</th>"
-				            + "<th width=\"130\">DATE</th>"
-				            + "</tr>"
-				            + "</thead>";
-				}
-				
 				let value = "";
-				if(newFilePath !== repoName + "/" + newFileName){
-					value += "<tr>"
-						   + "<td onclick=\"subContent(this);\" class=\"repoTitle\">"
-						   + "<i class=\"ti ti-folder\"></i>"
-						   + "<div><b>" + "..." + "</b></div>"
-						   + "<input type=\"hidden\" value=\"" + newFileName + "\" id=\"rpContentName\">"
-						   + "<input type=\"hidden\" value=\"" + newFilePath + "\" id=\"rpPath\">"
-						   + "</td>"
-						   + "<td colspan=\"3\"></td>"
-						   + "</tr>";
-				}
 				
-				for(let i in list){
+				if(typeof result == "string"){
 					
-					if(list[i].contentDesc === undefined){
-						// contentDesc가 undefined인 경우
+				    hvalue += "<thead>"
+			           		+ "<tr>"
+			            	+ "<th colspan=\"4\">CODE</th>"
+			            	+ "</tr>"
+			            	+ "</thead>";
+			            	
+// 					if(newFilePath !== repoName + "/" + newFileName){
 						value += "<tr>"
 							   + "<td onclick=\"subContent(this);\" class=\"repoTitle\">"
-							   
-							    if(list[i].type === "file"){
-							        value += "<i class=\"ti ti-file\"></i>"
-							    } else{
-								    value += "<i class=\"ti ti-folder\"></i>"
-							    }
-							   
-						value += "<div>" + list[i].contentName + "</div>"
-							   + "<input type=\"hidden\" value=\"" + list[i].contentName + "\" id=\"rpContentName\">"
-							   + "<input type=\"hidden\" value=\"" + list[i].path + "\" id=\"rpPath\">"
+							   + "<i class=\"ti ti-folder\"></i>"
+							   + "<div><b>" + "..." + "</b></div>"
+							   + "<input type=\"hidden\" value=\"" + newFileName + "\" id=\"rpContentName\">"
+							   + "<input type=\"hidden\" value=\"" + newFilePath + "\" id=\"rpPath\">"
+// 							   + "<input type=\"hidden\" value=\"" + repoName + "\" id=\"rpContentName\">"
+// 							   + "<input type=\"hidden\" value=\"" + filePath + "\" id=\"rpPath\">"
 							   + "</td>"
-							   + "<td>" + "나중에여기다가 뭘쓰지...?" + "</td>"
-							   + "<td>" + "<img src=\"" + "resources/images/repo-img.png" + "\" width=\"20\" height=\"20\">" + "작성자이름" + "</td>"
-							   + "<td>" + "2024-04-20" + "</td>"
+							   + "<td colspan=\"3\"></td>"
 							   + "</tr>";
-							   
+// 					}
+			            	
+					value += "<tr>"
+					 	   + "<td colspan=\"4\">" + result + "</td>"
+						   + "</tr>";
+					
+				}else {
+				
+					let list = result.rpList;
+					$(".repo-table").text("");
+					
+					let hasContentDesc = list.some(item => item.contentDesc !== undefined);
+					
+					if (hasContentDesc) {
+					    // 하나라도 contentDesc가 정의된 경우
+					    hvalue += "<thead>"
+					            + "<tr>"
+					            + "<th colspan=\"4\">CODE</th>"
+					            + "</tr>"
+					            + "</thead>";
 					} else {
-						// contentDesc가 undefined인 경우 == 내용이 있는 경우
-						value += "<tr>"
-						 	   + "<td colspan=\"4\">" + list[i].contentDesc + "</td>"
-							   + "</tr>";
-							
+					    // 모든 항목의 contentDesc가 undefined인 경우
+					    hvalue += "<thead>"
+					            + "<tr>"
+					            + "<th width=\"330\">NAME</th>"
+					            + "<th>RECENT COMMIT</th>"
+					            + "<th width=\"130\">AUTHOR</th>"
+					            + "<th width=\"130\">DATE</th>"
+					            + "</tr>"
+					            + "</thead>";
 					}
 					
+
+// 					if(newFilePath !== repoName + "/" + newFileName){
+						value += "<tr>"
+							   + "<td onclick=\"subContent(this);\" class=\"repoTitle\">"
+							   + "<i class=\"ti ti-folder\"></i>"
+							   + "<div><b>" + "..." + "</b></div>"
+							   + "<input type=\"hidden\" value=\"" + newFileName + "\" id=\"rpContentName\">"
+							   + "<input type=\"hidden\" value=\"" + newFilePath + "\" id=\"rpPath\">"
+// 							   + "<input type=\"hidden\" value=\"" + repoName + "\" id=\"rpContentName\">"
+// 							   + "<input type=\"hidden\" value=\"" + filePath + "\" id=\"rpPath\">"
+							   + "</td>"
+							   + "<td colspan=\"3\"></td>"
+							   + "</tr>";
+// 					}
+					
+					for(let i in list){
+						
+						if(list[i].contentDesc === undefined){
+							// contentDesc가 undefined인 경우
+							value += "<tr>"
+								   + "<td onclick=\"subContent(this);\" class=\"repoTitle\">"
+								   + "<input class=\"hidden-repo-type\" type=\"hidden\" value=\"" + list[i].type + "\">"
+								   
+								    if(list[i].type === "file"){
+								        value += "<i class=\"ti ti-file\"></i>"
+								    } else{
+									    value += "<i class=\"ti ti-folder\"></i>"
+								    }
+								   
+							value += "<div>" + list[i].contentName + "</div>"
+								   + "<input type=\"hidden\" value=\"" + list[i].contentName + "\" id=\"rpContentName\">"
+								   + "<input type=\"hidden\" value=\"" + list[i].path + "\" id=\"rpPath\">"
+								   + "</td>"
+								   + "<td>" + "나중에여기다가 뭘쓰지...?" + "</td>"
+								   + "<td>" + "<img src=\"" + "resources/images/repo-img.png" + "\" width=\"20\" height=\"20\">" + "작성자이름" + "</td>"
+								   + "<td>" + "2024-04-20" + "</td>"
+								   + "</tr>";
+								   
+						} else {
+							// contentDesc가 undefined인 경우 == 내용이 있는 경우
+							value += "<tr>"
+							 	   + "<td colspan=\"4\">" + list[i].contentDesc + "</td>"
+								   + "</tr>";
+								
+						}
+						
+					}
 				}
 				
 				let bvalue = "<tbody>" + value + "</tbody>";

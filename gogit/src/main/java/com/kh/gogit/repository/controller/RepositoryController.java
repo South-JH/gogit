@@ -216,45 +216,55 @@ public class RepositoryController {
 	}
 	
 	@RequestMapping(value="selectContent.rp", produces="application/json; charset=UTF-8")
-	public void getSubContent(HttpServletResponse response, HttpSession session, String repoName, String path, String owner) throws JsonIOException, IOException {
+	public void getSubContent(HttpServletResponse response, HttpSession session, String repoName, String path, String owner, String repoType) throws JsonIOException, IOException {
 		//System.out.println(owner);
+		System.out.println(repoType);
 		Member m = (Member)session.getAttribute("loginUser");
 		String subContent = rService.getSubContent(m, repoName, path, owner);
 		
-		JsonElement element = JsonParser.parseString(subContent);
-		ArrayList<Repository> rpList = new ArrayList<Repository>();
-		
-		if(element.isJsonArray()) {
-			// 데이터가 배열인 경우, 배열로 처리
+		if("file".equals(repoType)) {
 			
-			JsonArray repoArr = JsonParser.parseString(subContent).getAsJsonArray();
-			
-			for(int i=0; i<repoArr.size(); i++) {
-				
-				Repository rp = new Repository();
-				populateSubContent(repoArr.get(i).getAsJsonObject(), rp);
-		        rpList.add(rp);
-				
-			}
-			
-		} else if(element.isJsonObject()) {
-			// 데이터가 객체인 경우, 객체로 처리
-			
-			Repository rp = new Repository();
-			populateSubContent(element.getAsJsonObject(), rp);
-		    rpList.add(rp);
+			response.setContentType("text/html; charset=utf-8");
+			response.getWriter().print(subContent);
 			
 		} else {
-			System.out.println("객체도 배열도 아니면 뭐냐");
+		
+			JsonElement element = JsonParser.parseString(subContent);
+			ArrayList<Repository> rpList = new ArrayList<Repository>();
+			
+			if(element.isJsonArray()) {
+				// 데이터가 배열인 경우, 배열로 처리
+				
+				JsonArray repoArr = JsonParser.parseString(subContent).getAsJsonArray();
+				
+				for(int i=0; i<repoArr.size(); i++) {
+					
+					Repository rp = new Repository();
+					populateSubContent(repoArr.get(i).getAsJsonObject(), rp);
+			        rpList.add(rp);
+					
+				}
+				
+			} else if(element.isJsonObject()) {
+				// 데이터가 객체인 경우, 객체로 처리
+				
+				Repository rp = new Repository();
+				populateSubContent(element.getAsJsonObject(), rp);
+			    rpList.add(rp);
+				
+			} else {
+				System.out.println("객체도 배열도 아니면 뭐냐");
+			}
+	        
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put("repoName", repoName);
+			map.put("rpList", rpList);
+			
+			response.setContentType("application/json; charset=utf-8");
+			
+			new Gson().toJson(map, response.getWriter());
+			
 		}
-        
-		HashMap<Object, Object> map = new HashMap<Object, Object>();
-		map.put("repoName", repoName);
-		map.put("rpList", rpList);
-		
-		response.setContentType("application/json; charset=utf-8");
-		
-		new Gson().toJson(map, response.getWriter());
 		
 	}
 	

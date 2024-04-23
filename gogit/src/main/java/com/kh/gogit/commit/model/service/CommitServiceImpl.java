@@ -17,7 +17,7 @@ public class CommitServiceImpl {
 
 	public String getCommitList(Member m, String repoName, String owner) {
 		
-		String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/commits?sha=main";
+		String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/commits?sha=main&per_page=100";
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
@@ -49,7 +49,7 @@ public class CommitServiceImpl {
 	
 	public String branchCommitList(Member m, String repoName, String owner, String branches) {
 		
-		String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/commits?sha=" + branches;
+		String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/commits?sha=" + branches + "&per_page=100";
 		
 		RestTemplate restTemplate = new RestTemplate();
 		

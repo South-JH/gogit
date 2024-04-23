@@ -10,7 +10,7 @@
 .issue-enroll-wrap>div {
 	background: white;
 	border-radius: 7px;
-	padding: 20px 30px;
+/* 	padding: 20px 30px; */
 	height: 710px;
 }
 
@@ -82,7 +82,7 @@
 	height: 40px;
 	font-weight: 700;
 	position: absolute;
-	right: 272px;
+	right: 286px;
     top: 18px;
 }
 </style>
@@ -181,6 +181,13 @@
 	</div>
 
 <script>
+
+	$(function(){
+		$("#pull-request").attr("href", "list.pullrq?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }");
+		$("#code").attr("href", "detail.rp?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }");
+		$("#issue").attr("href", "list.is?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }");
+	})
+
 	const editor = new toastui.Editor({
 	    el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
 	    height: '400px',                        // 에디터 영역의 높이 값 (OOOpx || auto)

@@ -203,11 +203,21 @@ public class RepositoryServiceImpl implements RepositoryService {
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		
 		headers.set("Authorization", "Bearer " + m.getMemToken());
-		headers.set("Accept", "Accept: application/vnd.github+json");
+		headers.set("Accept", "Accept: application/vnd.github.html+json");
 		
 		HttpEntity<String> request = new HttpEntity<String>(headers);
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
 		
+		String subContent = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			//System.out.println(response.getBody());
+			subContent = response.getBody();
+			return subContent;
+		} else {
+			System.out.println("콘텐츠 못가져왔다");
+			return null;
+		}
+		/*
 		String subContent = "";
 		if(response.getStatusCode() == HttpStatus.OK) {
 			subContent = response.getBody();
@@ -239,7 +249,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 		
 		//System.out.println(subContent);
 		return subContent;
-		
+		*/
 	}
 	
 	private boolean isValidBase64(String str) {
