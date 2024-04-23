@@ -18,20 +18,9 @@
     	margin-left: -14px;
     	background-color: white;
     }
-    .sucess-icon {
-    	display: inline-block;
-    	border-radius: 50%;
-	    color: white;
-	    background-color: #198754;
-	    width: 32px !important;
-	    height: 32px;
-	    text-align: center;
-	    padding: 0 !important;
-	}
 	#comments .placeholder {
 		background-color: white;
 	}
-	
     </style>
 </head>
 <body>
@@ -129,74 +118,65 @@
 									</table>
 	                    		</div>
                     		</div>
-                    		<c:choose>
-	                    		<c:when test="${ pullrq.status eq 'open' and pullrq.mergeable }">
-			                    	<div class="row mt-3">
-		                    			<p style="margin-left:8.33333333%;">Add more commits by pushing to the ${ pullrq.compareBranch } branch on ${ pullrq.repoOwner }/${ pullrq.repoName }.</p>
-				                    	<div class="row">
-				                    		<div class="col-1">
-				                    			<svg aria-hidden="true" height="24" viewBox="0 0 24 24" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-merge">
-												    <path d="M15 13.25a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm-12.5 6a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm0-14.5a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0ZM5.75 6.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 6.5Zm0 14.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 21Zm12.5-6a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 18.25 15Z"></path><path d="M6.5 7.25c0 2.9 2.35 5.25 5.25 5.25h4.5V14h-4.5A6.75 6.75 0 0 1 5 7.25Z"></path><path d="M5.75 16.75A.75.75 0 0 1 5 16V8a.75.75 0 0 1 1.5 0v8a.75.75 0 0 1-.75.75Z"></path>
-												</svg>
-				                    		</div>
-				                    		<div class="col">
-				                    			<div class="card">
-												  <ul class="list-group list-group-flush">
-												    <li class="list-group-item">
-												    	<div class="row">
+                    		<div class="row mt-3">
+                    			<p style="margin-left:8.33333333%;">Add more commits by pushing to the ${ pullrq.compareBranch } branch on ${ pullrq.repoOwner }/${ pullrq.repoName }.</p>
+		                    	<div class="row">
+		                    		<div class="col-1">
+		                    			<svg aria-hidden="true" height="24" viewBox="0 0 24 24" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-merge">
+										    <path d="M15 13.25a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm-12.5 6a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm0-14.5a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0ZM5.75 6.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 6.5Zm0 14.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 21Zm12.5-6a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 18.25 15Z"></path><path d="M6.5 7.25c0 2.9 2.35 5.25 5.25 5.25h4.5V14h-4.5A6.75 6.75 0 0 1 5 7.25Z"></path><path d="M5.75 16.75A.75.75 0 0 1 5 16V8a.75.75 0 0 1 1.5 0v8a.75.75 0 0 1-.75.75Z"></path>
+										</svg>
+		                    		</div>
+		                    		<div class="col">
+		                    			<div class="card">
+										  <ul class="list-group list-group-flush">
+										    <li class="list-group-item py-4">
+										    	<div class="row">
+										    		<c:choose>
+											    		<c:when test="${ pullrq.status eq 'open' and pullrq.mergeable }">
 													    	<div class="col-1 sucess-icon">
-														    	<svg style="vertical-align: -webkit-baseline-middle;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
-																  <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425z"/>
+														    	<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+																	<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+																	<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+																	<path d="M9 12l2 2l4 -4" />
 																</svg>
 														    </div>
 														    <div class="col">
 														    	<h5>This branch has no conflicts with the base branch</h5>
 														    	<p>Rulesets ensure specific people approve pull requests before they're merged.</p>
 														    </div>
-												    	</div>
-												    </li>
-												  </ul>
-												  <div class="card-footer">
-												  	<button type="button" class="btn btn-success">Merge pull request</button>
-												  </div>
-												</div>
-				                    		</div>
-				                    	</div>
-			                    	</div>
-		                    	</c:when>
-		                    	<c:when test="${ pullrq.status eq 'open' and not pullrq.mergeable }">
-		                    		<div class="row mt-3">
-		                    			<p style="margin-left:8.33333333%;">Add more commits by pushing to the ${ pullrq.compareBranch } branch on ${ pullrq.repoOwner }/${ pullrq.repoName }.</p>
-				                    	<div class="row">
-				                    		<div class="col-1">
-				                    			<svg aria-hidden="true" height="24" viewBox="0 0 24 24" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-merge">
-												    <path d="M15 13.25a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm-12.5 6a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm0-14.5a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0ZM5.75 6.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 6.5Zm0 14.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 21Zm12.5-6a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 18.25 15Z"></path><path d="M6.5 7.25c0 2.9 2.35 5.25 5.25 5.25h4.5V14h-4.5A6.75 6.75 0 0 1 5 7.25Z"></path><path d="M5.75 16.75A.75.75 0 0 1 5 16V8a.75.75 0 0 1 1.5 0v8a.75.75 0 0 1-.75.75Z"></path>
-												</svg>
-				                    		</div>
-				                    		<div class="col">
-				                    			<div class="card">
-												  <ul class="list-group list-group-flush">
-												    <li class="list-group-item">
-												    	<div class="row">
+													    </c:when>
+											    		<c:when test="${ pullrq.status eq 'open' and not pullrq.mergeable }">
 													    	<div class="col-1 conflict-icon">
-														    	여기다 추가해죠 아이콘
+														    	<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-triangle" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff4500" fill="none" stroke-linecap="round" stroke-linejoin="round">
+																  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+																  <path d="M12 9v4" />
+																  <path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" />
+																  <path d="M12 16h.01" />
+																</svg>
 														    </div>
 														    <div class="col">
 														    	<h5>This branch has no conflicts with the base branch</h5>
 														    	<p>Rulesets ensure specific people approve pull requests before they're merged.</p>
 														    </div>
-												    	</div>
-												    </li>
-												  </ul>
-												  <div class="card-footer">
-												  	<button type="button" class="btn btn-success">Merge pull request</button>
-												  </div>
-												</div>
-				                    		</div>
-				                    	</div>
-			                    	</div>
-		                    	</c:when>
-	                    	</c:choose>
+													    </c:when>
+												    </c:choose>
+										    	</div>
+										    </li>
+										  </ul>
+										<div class="card-footer">
+											<c:choose>
+												<c:when test="${ pullrq.status eq 'open' and pullrq.mergeable }">
+											  		<button type="button" class="btn btn-success">Merge pull request</button>
+												</c:when>
+												<c:when test="${ pullrq.status eq 'open' and not pullrq.mergeable }">
+											  		<button type="button" class="btn btn-dark" disabled>Merge pull request</button>
+												</c:when>
+											</c:choose>
+										</div>
+										</div>
+		                    		</div>
+		                    	</div>
+	                    	</div>
 	                    	<div class="row">
 	                    		<div class="col-1">
 	                    			<a href="#">
