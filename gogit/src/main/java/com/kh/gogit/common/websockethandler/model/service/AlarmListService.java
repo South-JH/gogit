@@ -11,4 +11,5 @@ public interface AlarmListService {
 	int applyProject(int pNo,String memId);
 	int cancelProject(String memId);
 	int deleteAlarm(int alarmNo);
+	int alCircle(String memId);
 }

@@ -12,7 +12,7 @@
   	<result column="alarm_date" property="alarmDate"/>
   	<result column="alarm_yn" property="alarmYn"/>
   	<result column="status" property="status"/>
-  	<result column="git_nick" property="memId"/>
+  	<result column="git_nick" property="gitNick"/>
   </resultMap>
   
   
@@ -49,6 +49,7 @@
   <select id="selectAlarmList" resultMap="AlarmListResult">
   	select 
   		   alarm_no
+  		 , a.mem_id
   		 , alarm_title
   		 , alarm_type
   		 , git_nick
@@ -89,5 +90,24 @@
   	   set status = 'N'
   	 where alarm_no = #{alarmNo}
   </update>
+  
+  <select id="selectTeamid" resultType="string">
+  	select mem_id
+  	  from member
+  	 where team = #{team}
+  </select>
+  
+  <select id="checkMemId" resultType="string">
+  	select alarm_type
+  	  from alarmlist
+  	 where mem_id = #{memId}
+  	   and alarm_type = 'zoom'
+  </select>
+  
+  <select id="alCircle" resultType="_int">
+  	select sum(alarm_yn)
+  	  from alarmlist
+  	 where rmem_id = #{memId}
+  </select>
   
 </mapper>

@@ -55,4 +55,10 @@ public class AlarmListServiceImpl implements AlarmListService{
 		return aDao.deleteAlarm(sqlSession,alarmNo);
 	}
 
+	@Override
+	public int alCircle(String memId) {
+		// TODO Auto-generated method stub
+		return aDao.alCircle(sqlSession,memId);
+	}
+
 }

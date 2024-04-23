@@ -21,5 +21,5 @@ public class AlarmList {
 	private String alarmDate;
 	private String alarmYn;
 	private String status;
-	
+	private String gitNick;
 }

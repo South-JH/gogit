@@ -46,17 +46,41 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {// 메시지
 		String[] arr = (message.getPayload()).split(",");
 		
-		String rmemId = aDao.selectMemid(sqlSession,arr[2]);
+		
 		
 		if(arr[4].equals("project")) {
+			String rmemId = aDao.selectMemid(sqlSession,arr[2]);
 			AlarmList al = new AlarmList();
-			al.setAlarmType(arr[4]);
 			al.setMemId(arr[0]);
 			al.setAlarmTitle(arr[1]);
 			al.setRmemId(rmemId);
 			al.setAlarmContentNo(Integer.parseInt(arr[3]));
+			al.setAlarmType(arr[4]);
 			
-			int result = aDao.insertAlarm(sqlSession,al);
+			aDao.insertAlarm(sqlSession,al);
+		}else if(arr[4].equals("zoom")) {
+			
+			ArrayList<String> memId = aDao.selectTeamid(sqlSession,arr[2]);
+			
+			ArrayList<String> type = aDao.checkMemId(sqlSession,arr[0]);
+			if(type.size()==0) {
+			
+				for(int i=0;i<memId.size();i++) {
+					AlarmList al = new AlarmList();
+					al.setMemId(arr[0]);
+					al.setRmemId(memId.get(i));
+					if(al.getMemId().equals(al.getRmemId())) {
+						al.setAlarmTitle(arr[5]);
+					}else {
+						al.setAlarmTitle(arr[6]);
+					}
+					al.setAlarmType(arr[4]);
+					
+					aDao.insertAlarm(sqlSession, al);
+				}
+			
+			}
+			
 		}
 		
 	

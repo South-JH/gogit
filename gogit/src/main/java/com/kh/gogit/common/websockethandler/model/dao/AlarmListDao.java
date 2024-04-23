@@ -50,4 +50,19 @@ public class AlarmListDao {
 		return sqlSession.update("alarmMapper.deleteAlarm",alarmNo);
 	}
 
+	public ArrayList<String> selectTeamid(SqlSessionTemplate sqlSession, String team) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("alarmMapper.selectTeamid",team);
+	}
+
+	public ArrayList<String> checkMemId(SqlSessionTemplate sqlSession, String memId) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("alarmMapper.checkMemId",memId);
+	}
+
+	public int alCircle(SqlSessionTemplate sqlSession, String memId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("alarmMapper.alCircle",memId);
+	}
+
 }

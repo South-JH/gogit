@@ -59,4 +59,14 @@ public class AlarmListController {
 		
 		return result>0?"success":"fail";
 	}
+	
+	@ResponseBody
+	@RequestMapping("alCircle.al")
+	public int alCircle(String memId) {
+		
+		int result = aService.alCircle(memId);
+		
+		return result;
+		
+	}
 }

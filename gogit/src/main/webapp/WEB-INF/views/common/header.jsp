@@ -63,11 +63,17 @@
 	}
 	#alarmList button{
 		display:block;
-		width:70px;
+		width:65px;
 		height:35px;
 		margin: 1px;
 		float: left;
+		margin-left: 5px;
 	}
+	#alarmList a{
+		font-size: 15px;
+		color:white;
+	}
+
 
 </style>
 </head>
@@ -100,9 +106,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-icon-hover" href="javascript:void(0)" onclick="alamList();">	
+                <a id="alarmLink" class="nav-link nav-icon-hover" href="javascript:void(0)" onclick="alamList();">	
                   <i class="ti ti-bell-ringing "></i>
-                  <div class="notification bg-primary rounded-circle"></div>
+                  
    
                 </a>               
               </li>          
@@ -225,8 +231,24 @@
     <script>
     	$(function(){
     		alarm();
-    		
+    		alarmCircle();
+    		setInterval(() => {
+    			alarm();
+    			alarmCircle();
+			}, 5000);
     	})
+    	
+    	function alarmCircle(){
+    		$.ajax({
+    			url:"alCircle.al",
+    			data:{memId:"${loginUser.memId}"},
+    			success:function(data){
+    				if(data>0){
+    					$("#alarmLink").append("<div class='notification bg-primary rounded-circle'></div>")
+    				}
+    			}
+    		})
+    	}
     	
     	function alarm(){
     		$.ajax({
@@ -243,9 +265,9 @@
 						case "project":
 							value += "<div>";
 	    					if(data[i].alarmYn == 1){
-	    						value +="<li class='list-group-item active' onclick='readAl(this);'>"+data[i].memId+"님이 프로젝트("+data[i].alarmTitle+")에 참가 요청했습니다."
+	    						value +="<li class='list-group-item active' onclick='readAl(this);'>"+data[i].gitNick+"님이 프로젝트("+data[i].alarmTitle+")에 참가 요청했습니다."
 	    					}else{
-	    						value +="<li class='list-group-item' onclick='readAl(this);'>"+data[i].memId+"님이 프로젝트("+data[i].alarmTitle+")에 참가 요청했습니다."
+	    						value +="<li class='list-group-item' onclick='readAl(this);'>"+data[i].gitNick+"님이 프로젝트("+data[i].alarmTitle+")에 참가 요청했습니다."
 	    					}
 	    					value += "<input type='hidden' value='"+data[i].memId+"'>"
 									+"<input type='hidden' value='"+data[i].alarmNo+"'> </li>"
@@ -254,7 +276,26 @@
 	    							
 	    						+"</div>"
 							break;
+						case "zoom":
+							value += "<div>";
+							if(data[i].alarmYn == 1){
+								value += "<li class='list-group-item active' onclick='readAl(this)'>줌 회의가 생성되었습니다.";
+							}else{
+								value += "<li class='list-group-item' onclick='readAl(this)'>줌 회의가 생성되었습니다.";
+							}
+							value +="<input type='hidden' value='"+data[i].memId+"'>"
+									+"<input type='hidden' value='"+data[i].alarmNo+"'> </li>"
+										
+							if(data[i].memId === data[i].rmemId){
+								value+="<button class='btn btn-secondary' style='width:120px'>"
+											+"<a href='"+data[i].alarmTitle+"' target='_blank'>회의생성</a>"
+									  +"</button>"
+							}else{
+								value+="<button class='btn btn-success' style='width:120px'><a href='"+data[i].alarmTitle+"' target='_blank'>회의참가</a>"
+							}
+							value += "</div>";
 
+							break;
 						default:
 							break;
 						}
@@ -296,6 +337,15 @@
     		}) 
     	}  
     	
+    	  
+    	  function createZoom(url){
+    		  location.href=url;
+    	  }
+    	  
+    	  function joinZoom(url){
+    		  location.href=url;
+    	  }
+    	  
     	  
     	  function cancel(e){
 

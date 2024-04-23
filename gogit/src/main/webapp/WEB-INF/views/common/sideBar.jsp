@@ -159,8 +159,7 @@
                 <a
                   class="sidebar-link"
                   aria-expanded="false"
-                  onclick="zoom()"
-                  style="cursor: pointer;"
+				  href="https://zoom.us/oauth/authorize?response_type=code&client_id=qpGjOpDZQ5OWjpuP4j8IQ&redirect_uri=http://localhost:8052/gogit/zoomCreate"
                 >
                   <span>
                     <i class="ti ti-brand-finder"></i>
@@ -204,37 +203,5 @@
       
    </div>
    
-   
-   
-   <script>
-   	function zoom(){
-   		$("#zoomModal").modal("show");
-   	}
-   </script>
-   
-   
-   
-   <!-- 모달 -->
-       <div
-      class="modal fade"
-      id="zoomModal"
-      tabindex="-1"
-      role="dialog"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="title">Zoom 회의생성</h5>
-          </div>
-          <div class="modal-body">
-            <form action="zoom/callback">
-            
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
 </body>
 </html>
