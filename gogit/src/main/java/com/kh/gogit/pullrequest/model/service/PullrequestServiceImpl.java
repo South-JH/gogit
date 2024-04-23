@@ -41,29 +41,6 @@ public class PullrequestServiceImpl implements PullrequestService {
         }
 	}
 	
-	public String getAssigneesProfile(Member loginUser, String assignee) {
-		
-		String profile = "";
-		String url = "https://api.github.com/users/" + assignee;
-		
-		RestTemplate restTemplate = new RestTemplate();
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Authorization", "Bearer " + loginUser.getMemToken());
-        headers.set("Accept", "application/vnd.github+json");
-        
-        HttpEntity<String> request = new HttpEntity<String>(headers);
-        
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
-        
-        if(response.getStatusCode() == HttpStatus.OK) {
-        	profile = JsonParser.parseString(response.getBody()).getAsJsonObject().get("avatar_url").getAsString();
-        }
-        
-        return profile;
-		
-	}
-	
 	public String getBranchList(Member loginUser, Pullrequest pullrq) {
 		
 		// https://api.github.com/repos/OWNER/REPO/branches
@@ -116,7 +93,7 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 	}
 	
-	public void getPullrequest(Member loginUser, String owner, String repoName, int pullNo) {
+	public String getPullrequest(Member loginUser, String owner, String repoName, int pullNo) {
 		
 		// https://api.github.com/repos/OWNER/REPO/pulls/PULL_NUMBER
 		String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/pulls/" + pullNo;
@@ -131,7 +108,32 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
 		
-		System.out.println(response);
+		if(response.getStatusCode() == HttpStatus.OK) {
+			return response.getBody();
+			
+		} else {
+			return null;
+		}
+		
+	}
+	
+	public String getCommitList(String url, Member loginUser) {
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(loginUser.getMemToken());
+		headers.set("Accept", "application/vnd.github+json");
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+		
+		if(response.getStatusCode() == HttpStatus.OK) {
+			return response.getBody();
+		} else {
+			return null;
+		}
 		
 	}
 
