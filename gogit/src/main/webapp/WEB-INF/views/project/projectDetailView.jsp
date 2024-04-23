@@ -184,10 +184,10 @@
                                     	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark.png" style="float:right; padding-right: 40px;" class="bookmark">');
                                     }
                                     
-                                    	function apply(proNo){ // 신청하기(신청자입장)                                   	
+                                    	function apply(){ // 신청하기(신청자입장)                                   	
                                     		$.ajax({
                         						url:"applypro.pr",
-                        						data:{pno:proNo},
+                        						data:{pno:${p.proNo},
                         							  userId:${loginUser.memId}},
                         						success:function(result){
                         							if(result > 0){

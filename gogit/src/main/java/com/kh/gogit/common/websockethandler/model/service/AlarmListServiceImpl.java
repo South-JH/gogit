@@ -31,4 +31,28 @@ public class AlarmListServiceImpl implements AlarmListService{
 		return aDao.updateAlarm(sqlSession,alarmNo);
 	}
 
+	@Override
+	public int applyProject(int pNo, String memId) {
+		// TODO Auto-generated method stub
+		return aDao.applyProject(sqlSession,pNo,memId);
+	}
+
+	@Override
+	public int cancelProject(String memId) {
+		// TODO Auto-generated method stub
+		return aDao.cancelProject(sqlSession,memId);
+	}
+
+	@Override
+	public String selectMemId(String memId) {
+		// TODO Auto-generated method stub
+		return aDao.selectMemid(sqlSession, memId);
+	}
+
+	@Override
+	public int deleteAlarm(int alarmNo) {
+		// TODO Auto-generated method stub
+		return aDao.deleteAlarm(sqlSession,alarmNo);
+	}
+
 }

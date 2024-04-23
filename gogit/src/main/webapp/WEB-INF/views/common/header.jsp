@@ -50,15 +50,23 @@
 		height: 500px;
 		overflow: auto;
 	}
+	#alarmList>ul{
+		display: block;
+	}
 	#alarmList li{
 		display: block;
 		box-sizing: border-box;
-		width: 450px;
+		width: 320px;
 		margin-bottom: 10px;
 		font-size: 12px;
+		float: left;
 	}
 	#alarmList button{
+		display:block;
+		width:70px;
+		height:35px;
 		margin: 1px;
+		float: left;
 	}
 
 </style>
@@ -190,7 +198,7 @@
                 <div class="modal-body">
                 	<h3 calss="text-primary">알람</h3>
                    	<div id=alarmList>
-                   		<ul class="list-group"></ul>
+                   		<ul class="list-group list-group-flush"></ul>
                    	</div>
                 </div>
                 <div class="modal-footer">
@@ -205,6 +213,7 @@
     <script>
     	$(function(){
     		alarm();
+    		
     	})
     	
     	function alarm(){
@@ -215,36 +224,90 @@
     			},
     			success:function(data){
     				let value = "";
+    				
     				for(let i in data){
-    					console.log(data[i].alarmType)
-    					switch (data[i].alarmType) {
     					
-    					//프로젝트 알람
+    					switch (data[i].alarmType) {
 						case "project":
-							if(data[i].alarmYn == 1){
-								value += "<li class='list-group-item active'>";
-							}else{
-								value += "<li class='list-group-item'>";
-							}
-							
-							value += "<input type='hidden' value='"+data[i].alarmNo+"'>"
-								+data[i].memId+"님이 프로젝트("+data[i].alarmTitle+")에 참가신청하셨습니다."
-								+"<button class='btn btn-warning' onclick='apply("+data[i].alarmContentNo+");'>수락</button>"
-								+"<button class='btn btn-danger' onclick='cancel();'>거절</button> </li>"
+							value += "<div>";
+	    					if(data[i].alarmYn == 1){
+	    						value +="<li class='list-group-item active' onclick='readAl(this);'>"+data[i].memId+"님이 프로젝트("+data[i].alarmTitle+")에 참가 요청했습니다."
+	    					}else{
+	    						value +="<li class='list-group-item' onclick='readAl(this);'>"+data[i].memId+"님이 프로젝트("+data[i].alarmTitle+")에 참가 요청했습니다."
+	    					}
+	    					value += "<input type='hidden' value='"+data[i].memId+"'>"
+									+"<input type='hidden' value='"+data[i].alarmNo+"'> </li>"
+	    							+"<button class='btn btn-warning' onclick='apply("+data[i].alarmContentNo+",this)'>승인</button>"
+	    							+"<button class='btn btn-danger' onclick='cancel(this)'>거절</button>"
+	    							
+	    						+"</div>"
 							break;
 
 						default:
 							break;
 						}
-    					$("#alarmList > ul").html(value);
+    					
+    					
     				}
+    				$("#alarmList>ul").html(value);
     			},
     			error:function(){
     				console.log("실패")
     			}
     		})
     	}
+    	
+    	
     
+    	
+    	  function apply(num,e){
+    		 $.ajax({
+    			url:"application.pr",
+    			data:{
+    				pNo:num,
+    				memId:$(e).siblings("li").children("input:eq(0)").val()
+    			},
+    			success:function(data){
+    				console.log(data)
+    			}
+    		})
+    		
+    		$.ajax({
+    			url:"delete.al",
+    			data:{
+    				alarmNo:$(e).siblings("li").children("input:eq(1)").val()
+    			},
+    			success:function(data){
+    				$(e).parent().remove();
+    				console.log(data)
+    			}
+    		}) 
+    	}  
+    	
+    	  
+    	  function cancel(e){
+
+    		   $.ajax({
+    			  url:"cancel.pr",
+    			  data:{memId:$(e).siblings("li").children("input:eq(0)").val()},
+    			  success:function(data){
+    				  console.log(data);
+    			  }
+    		  })
+    		  
+    		  $.ajax({
+    			url:"delete.al",
+    			data:{
+    				alarmNo:$(e).siblings("li").children("input:eq(1)").val()
+    			},
+    			success:function(data){
+    				$(e).parent().remove();
+    				console.log(data)
+    			}
+    		}) 
+    	  }
+    	
+    	
     	function alamList(){
     		$("#alamModal").modal("show");
     		
@@ -255,21 +318,18 @@
     	})
     	
     	
-    	
-    	$("#alarmList > ul").on("click","li",function(){
-    		$(this).removeClass("active")
-    		console.log()
-    		
+    	function readAl(e){
+    		$(e).removeClass("active")
     		$.ajax({
     			url:"update.al",
     			data:{
-    				alarmNo:$(this).children("input").val()
+    				alarmNo:$(e).children("input:eq(1)").val(),
     			},
     			success:function(data){
     				console.log(data)
     			}
     		})
-    	})
+    	}
     	
     	
     	

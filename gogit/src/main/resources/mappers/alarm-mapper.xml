@@ -68,7 +68,26 @@
   	update alarmlist
   	   set alarm_yn = 0
   	 where alarm_no = #{alarmNo}  
-  	
+  </update>
+  
+  <update id="applyProject">
+  	update member
+  	   set team=#{proNo}
+  	     , team_status='Y'
+  	 where mem_id=#{proWriter}
+  </update>
+  
+  <update id="cancelProject">
+  	update member
+  	   set team='0'
+  	     , team_status='N'
+  	 where mem_id=#{proWriter}
+  </update>
+  
+  <update id="deleteAlarm">
+  	update alarmlist
+  	   set status = 'N'
+  	 where alarm_no = #{alarmNo}
   </update>
   
 </mapper>

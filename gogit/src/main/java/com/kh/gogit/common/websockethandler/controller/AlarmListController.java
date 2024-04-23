@@ -26,10 +26,37 @@ public class AlarmListController {
 		return list;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="update.al",produces = "text/html; charset=utf-8")
 	
-	@RequestMapping("update.al")
 	public String updateAlarm(int alarmNo) {
 		int result = aService.updateAlarm(alarmNo);
-		return result>0?"success":"fale";
+		return result>0?"success":"fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="application.pr")
+	public String applyProject(int pNo,String memId) {
+		
+		String resultMemId = aService.selectMemId(memId);
+		
+		int result = aService.applyProject(pNo, resultMemId);
+		return result>0?"success":"fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="cancel.pr")
+	public String cancelProject(String memId) {
+		String resultMemId = aService.selectMemId(memId);
+		int result = aService.cancelProject(resultMemId);
+		return result>0?"success":"fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="delete.al")
+	public String deleteAlarm(int alarmNo) {
+		int result = aService.deleteAlarm(alarmNo);
+		
+		return result>0?"success":"fail";
 	}
 }
