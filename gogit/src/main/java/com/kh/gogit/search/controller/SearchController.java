@@ -37,7 +37,16 @@ public class SearchController {
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		// JSON 응답을 받아옴
-		String searchList = sService.test1(m, keyword);
+		String searchList = sService.test1(m, keyword,1);
+		String repoTotalCount = sService.test1(m, keyword,0);
+		
+		String count = "";
+		if(repoTotalCount != null) {	
+			// 받아온 JSON 응답을 객체로 변환
+			JsonParser parser = new JsonParser(); // JSON파싱을 위해 JsonParser객체를 생성
+			JsonObject countObj = JsonParser.parseString(repoTotalCount).getAsJsonObject();
+			count = countObj.get("total_count").getAsString();
+		}
 		
 		// 객체를 담을 ArrayList를 생성
 		ArrayList<Search> seList = new ArrayList<Search>();
@@ -127,8 +136,10 @@ public class SearchController {
 		        //searchItem.setTotalCount(seObj.get("total_count").getAsString());
 		    //}
 		//}	
-		model.addAttribute("seList", seList);
-		model.addAttribute("keyword", keyword);
+		model.addAttribute("seList", seList)
+		     .addAttribute("keyword", keyword)
+		     .addAttribute("count", count);
+		
 		return "common/searchView";
 	}
 	
@@ -188,5 +199,133 @@ public class SearchController {
 		.addAttribute("list",list) ;
 		return "search/searchDetailView";
 	}
+	
+	@RequestMapping("reposearch.jm")
+	public String test2(HttpSession session, Model model, String keyword) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		String repoList = sService.repoDetailView(keyword, m);
+		
+		ArrayList<Search> list = new ArrayList<Search>();
+		
+		JsonParser parser = new JsonParser();
+		JsonObject reObj = parser.parse(repoList).getAsJsonObject();
+		JsonArray itemsArray = reObj.getAsJsonArray("items");
+		
+		// sonElement는 JSON 객체나 배열의 특정 속성이나 요소를 가져오는 데 사용
+		for (JsonElement element : itemsArray) { // itemsArray에 있는 각 요소에 대해 반복문 실행
+		    JsonObject item = element.getAsJsonObject(); // 현재 요소를 JsonObject로 변환하여 item에 할당
+		    Search se = new Search(); // 새로운 Search 객체 생성
+		    
+		    // full_name 속성을 가져와서 Search 객체의 fullName 속성으로 설정
+		    se.setFullName(item.get("full_name").getAsString());
+		    
+		    // avatar_url 속성 처리
+//		    JsonElement avatarUrlElement = item.get("avatar_url"); // avatar_url 속성 값 가져오기
+//		    if (avatarUrlElement != null && !avatarUrlElement.isJsonNull()) { // 값이 null이 아닌 경우
+//		        se.setAvatarUrl(avatarUrlElement.getAsString()); // Search 객체의 avatarUrl 속성으로 설정
+//		    } else {
+//		        se.setAvatarUrl(""); // 값이 null이거나 속성이 없는 경우 빈 문자열로 설정
+//		    }
+		    
+		    JsonElement ownerElement = item.get("owner");
+		    JsonObject ownerObject = ownerElement.getAsJsonObject();
+		    String avatarUrl = ownerObject.get("avatar_url").getAsString();
+		    se.setAvatarUrl(avatarUrl);
+		    
+		    // description 속성 처리
+		    JsonElement descriptionElement = item.get("description"); // description 속성 값 가져오기
+		    // 값이 null이 아니면서 JsonNull이 아닌 경우에만 값을 가져와서 Search 객체의 description 속성으로 설정
+		    se.setDescription(descriptionElement != null && !descriptionElement.isJsonNull() ? descriptionElement.getAsString() : "");
+		    
+		    // topics 속성 처리
+		    JsonArray topicsArray = item.getAsJsonArray("topics"); // topics 속성 값을 배열로 가져오기
+		    StringBuilder topicsBuilder = new StringBuilder(); // 토픽을 문자열로 합치기 위한 StringBuilder 객체 생성
+		    for (JsonElement topicElement : topicsArray) { // 토픽 배열을 반복하면서 각 토픽을 StringBuilder에 추가
+		        topicsBuilder.append(topicElement.getAsString()).append(", ");
+		    }
+		    String topics = topicsBuilder.toString(); // StringBuilder를 문자열로 변환
+		    if (topics.length() > 0) { // 토픽이 존재하는 경우
+		        topics = topics.substring(0, topics.length() - 2); // 마지막 ", " 문자열 제거
+		    }
+		    se.setTopics(topics); // 합쳐진 토픽을 Search 객체의 topics 속성으로 설정
+		    
+		    // language 속성 처리
+		    JsonElement languageElement = item.get("language"); // language 속성 값 가져오기
+		    // 값이 null이 아니면서 JsonNull이 아닌 경우에만 값을 가져와서 Search 객체의 language 속성으로 설정
+		    se.setLanguage(languageElement != null && !languageElement.isJsonNull() ? languageElement.getAsString() : "");
+		    
+		    // pushed_at 속성을 가져와서 Search 객체의 pushedAt 속성으로 설정
+		    se.setPushedAt(item.get("pushed_at").getAsString().substring(0, 10));
+		    
+		    list.add(se); // 완성된 Search 객체를 리스트에 추가
+		}
+		model.addAttribute("list", list)
+		     .addAttribute("keyword", keyword);
+		System.out.println(list);
+		return "search/searchRepoDetailView";
+	}
+	
+	@RequestMapping("searchrepo.jmm")
+	public void test4(HttpSession session, Model model, String keyword, String page, HttpServletResponse response) throws JsonIOException, IOException {
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		System.out.println(keyword);
+		System.out.println(page);
+		
+		String searchRepoList = sService.test4(m, keyword, page);
+		
+		ArrayList<Search> seList = new ArrayList<Search>();
+		
+		JsonParser parser = new JsonParser();
+		JsonObject reObj = parser.parse(searchRepoList).getAsJsonObject();
+		JsonArray itemsArray = reObj.getAsJsonArray("items");
+		
+		// sonElement는 JSON 객체나 배열의 특정 속성이나 요소를 가져오는 데 사용
+		for (JsonElement element : itemsArray) { // itemsArray에 있는 각 요소에 대해 반복문 실행
+		    JsonObject item = element.getAsJsonObject(); // 현재 요소를 JsonObject로 변환하여 item에 할당
+		    Search se = new Search(); // 새로운 Search 객체 생성
+		    
+		    // full_name 속성을 가져와서 Search 객체의 fullName 속성으로 설정
+		    se.setFullName(item.get("full_name").getAsString());
+		    
+		    JsonElement ownerElement = item.get("owner");
+		    JsonObject ownerObject = ownerElement.getAsJsonObject();
+		    String avatarUrl = ownerObject.get("avatar_url").getAsString();
+		    se.setAvatarUrl(avatarUrl);
+		    
+		    // description 속성 처리
+		    JsonElement descriptionElement = item.get("description"); // description 속성 값 가져오기
+		    // 값이 null이 아니면서 JsonNull이 아닌 경우에만 값을 가져와서 Search 객체의 description 속성으로 설정
+		    se.setDescription(descriptionElement != null && !descriptionElement.isJsonNull() ? descriptionElement.getAsString() : "");
+		    
+		    // topics 속성 처리
+		    JsonArray topicsArray = item.getAsJsonArray("topics"); // topics 속성 값을 배열로 가져오기
+		    StringBuilder topicsBuilder = new StringBuilder(); // 토픽을 문자열로 합치기 위한 StringBuilder 객체 생성
+		    for (JsonElement topicElement : topicsArray) { // 토픽 배열을 반복하면서 각 토픽을 StringBuilder에 추가
+		        topicsBuilder.append(topicElement.getAsString()).append(", ");
+		    }
+		    String topics = topicsBuilder.toString(); // StringBuilder를 문자열로 변환
+		    if (topics.length() > 0) { // 토픽이 존재하는 경우
+		        topics = topics.substring(0, topics.length() - 2); // 마지막 ", " 문자열 제거
+		    }
+		    se.setTopics(topics); // 합쳐진 토픽을 Search 객체의 topics 속성으로 설정
+		    
+		    // language 속성 처리
+		    JsonElement languageElement = item.get("language"); // language 속성 값 가져오기
+		    // 값이 null이 아니면서 JsonNull이 아닌 경우에만 값을 가져와서 Search 객체의 language 속성으로 설정
+		    se.setLanguage(languageElement != null && !languageElement.isJsonNull() ? languageElement.getAsString() : "");
+		    
+		    // pushed_at 속성을 가져와서 Search 객체의 pushedAt 속성으로 설정
+		    se.setPushedAt(item.get("pushed_at").getAsString().substring(0, 10));
+		    
+		    seList.add(se); // 완성된 Search 객체를 리스트에 추가
+		}
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(seList, response.getWriter());
+		
+	}
+	
 	
 }

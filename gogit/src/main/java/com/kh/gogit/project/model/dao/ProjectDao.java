@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.gogit.common.model.vo.PageInfo;
 import com.kh.gogit.member.model.vo.Member;
+import com.kh.gogit.pr.model.vo.Reply;
 import com.kh.gogit.project.model.vo.Project;
 import com.kh.gogit.project.model.vo.Stack;
 
@@ -92,6 +93,13 @@ public class ProjectDao {
 		return sqlSession.selectOne("projectMapper.applyListCount");
 	}
 	
+	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.insert("projectMapper.insertReply", r);
+	}
+	
+	public ArrayList<Reply> selectReplyList(SqlSessionTemplate sqlSession, int pno){
+		return (ArrayList)sqlSession.selectList("projectMapper.selectReplyList", pno);
+	}
 	
 
 }
