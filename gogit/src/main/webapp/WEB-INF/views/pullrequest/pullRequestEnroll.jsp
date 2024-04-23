@@ -78,9 +78,9 @@
 					<h2 id="create-pull-request-h2">Create Pull Request</h2>
 
 					<form action="create.pullrq" method="post">
-						<input type="hidden" name="repoOwner" value="${ repoOwner }">
-						<input type="hidden" name="repoName" value="${ repoName }">
-						<input type="hidden" name="repoVisibility" value="${ repoVisibility }">
+						<input type="hidden" name="repoOwner" value="${ pullrq.repoOwner }">
+						<input type="hidden" name="repoName" value="${ pullrq.repoName }">
+						<input type="hidden" name="repoVisibility" value="${ pullrq.repoVisibility }">
 						<div id="select-branch">
 							<div id="base-branch">
 								base:

@@ -15,6 +15,7 @@ public class Pullrequest {
 	private String pullTitle;
 	private String pullContent;
 	private String pullWriter;
+	private String pullWriterProfile;
 	private String pullManager;
 	private String pullManagerProfile;
 	private String baseBranch;
