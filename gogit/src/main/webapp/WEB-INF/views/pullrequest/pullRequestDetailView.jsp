@@ -29,6 +29,10 @@
 	    vertical-align: center;
 	    padding: 0 !important;
 	}
+	#comments .placeholder {
+		background-color: white;
+	}
+	
     </style>
 </head>
 <body>
@@ -160,7 +164,29 @@
 			                    	</div>
 		                    	</div>
 	                    	</c:if>
+	                    	<div class="row">
+	                    		<div class="col-1">
+	                    			<a href="#">
+										<img src="${ pullrq.pullWriterProfile }" alt="" width="35" height="35" class="rounded-circle">
+					                </a>
+	                    		</div>
+		                    	<div class="col">
+		                    		<h5>Add a comment</h5>
+		                    		<div id="comments">
+									</div>
+		                    	</div>
+	                    	</div>
+	                    	<div class="float-end mt-2">
+	                    		<button type="button" class="btn btn-light mr-1">
+	                    			<svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+									    <path d="M3.25 1A2.25 2.25 0 0 1 4 5.372v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.251 2.251 0 0 1 3.25 1Zm9.5 5.5a.75.75 0 0 1 .75.75v3.378a2.251 2.251 0 1 1-1.5 0V7.25a.75.75 0 0 1 .75-.75Zm-2.03-5.273a.75.75 0 0 1 1.06 0l.97.97.97-.97a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.97.97.97.97a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-.97-.97-.97.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l.97-.97-.97-.97a.75.75 0 0 1 0-1.06ZM2.5 3.25a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0ZM3.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm9.5 0a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z"></path>
+									</svg>
+	                    			Close pull request
+	                    		</button>
+	                    		<button type="button" class="btn btn-success">Comment</button>
+	                    	</div>
                     	</div>
+                    	
                     	<div class="col"></div>
                     </div>
                     <div class="commits">
@@ -174,4 +200,15 @@
         </div>
     </div>
 </body>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<script>
+	const editor = new toastui.Editor({
+		el: document.querySelector('#comments'), // 에디터를 적용할 요소 (컨테이너)
+		height: '200px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+		previewStyle: 'tab',
+		initialValue: '',
+		placeholder: 'add your comment here...'
+	});
+</script>
 </html>
