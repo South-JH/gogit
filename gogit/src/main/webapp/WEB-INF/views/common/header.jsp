@@ -350,7 +350,7 @@
     	  function cancel(e){
 
     		   $.ajax({
-    			  url:"cancel.pr",
+    			  url:"alcancel.pr",
     			  data:{memId:$(e).siblings("li").children("input:eq(0)").val()},
     			  success:function(data){
     				  console.log(data);

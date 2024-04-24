@@ -220,6 +220,10 @@ public class SearchController {
 		    
 		    // full_name 속성을 가져와서 Search 객체의 fullName 속성으로 설정
 		    se.setFullName(item.get("full_name").getAsString());
+		    se.setName(item.get("name").getAsString());
+		    se.setVisibility(item.get("visibility").getAsString());
+		    
+		    se.setTotalCount(reObj.get("total_count").getAsString());
 		    
 		    // avatar_url 속성 처리
 //		    JsonElement avatarUrlElement = item.get("avatar_url"); // avatar_url 속성 값 가져오기
@@ -231,8 +235,11 @@ public class SearchController {
 		    
 		    JsonElement ownerElement = item.get("owner");
 		    JsonObject ownerObject = ownerElement.getAsJsonObject();
+		    
 		    String avatarUrl = ownerObject.get("avatar_url").getAsString();
+		    String login = ownerObject.get("login").getAsString();
 		    se.setAvatarUrl(avatarUrl);
+		    se.setLogin(login);
 		    
 		    // description 속성 처리
 		    JsonElement descriptionElement = item.get("description"); // description 속성 값 가져오기
@@ -263,17 +270,13 @@ public class SearchController {
 		}
 		model.addAttribute("list", list)
 		     .addAttribute("keyword", keyword);
-		System.out.println(list);
 		return "search/searchRepoDetailView";
 	}
 	
 	@RequestMapping("searchrepo.jmm")
 	public void test4(HttpSession session, Model model, String keyword, String page, HttpServletResponse response) throws JsonIOException, IOException {
 		Member m = (Member)session.getAttribute("loginUser");
-		
-		System.out.println(keyword);
-		System.out.println(page);
-		
+				
 		String searchRepoList = sService.test4(m, keyword, page);
 		
 		ArrayList<Search> seList = new ArrayList<Search>();
@@ -289,6 +292,8 @@ public class SearchController {
 		    
 		    // full_name 속성을 가져와서 Search 객체의 fullName 속성으로 설정
 		    se.setFullName(item.get("full_name").getAsString());
+		    se.setName(item.get("name").getAsString());
+		    se.setVisibility(item.get("visibility").getAsString());		    
 		    
 		    JsonElement ownerElement = item.get("owner");
 		    JsonObject ownerObject = ownerElement.getAsJsonObject();
@@ -296,7 +301,7 @@ public class SearchController {
 		    String avatarUrl = ownerObject.get("avatar_url").getAsString();
 		    String login = ownerObject.get("login").getAsString();
 		    se.setAvatarUrl(avatarUrl);
-		    se.setAvatarUrl(login);
+		    se.setLogin(login);
 		    
 		    // description 속성 처리
 		    JsonElement descriptionElement = item.get("description"); // description 속성 값 가져오기
@@ -324,7 +329,7 @@ public class SearchController {
 		    se.setPushedAt(item.get("pushed_at").getAsString().substring(0, 10));
 		    
 		    seList.add(se); // 완성된 Search 객체를 리스트에 추가
-		}
+		}	
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(seList, response.getWriter());
 		

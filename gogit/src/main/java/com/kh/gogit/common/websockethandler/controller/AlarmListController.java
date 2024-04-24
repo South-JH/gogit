@@ -45,7 +45,7 @@ public class AlarmListController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="cancel.pr")
+	@RequestMapping(value="alcancel.pr")
 	public String cancelProject(String memId) {
 		String resultMemId = aService.selectMemId(memId);
 		int result = aService.cancelProject(resultMemId);
