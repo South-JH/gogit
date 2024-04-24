@@ -186,7 +186,7 @@ a {
                         <div>                         
                           <div>                            
                               <div>
-                                  <a>192 results</a>
+                                  <a>${ list[0].totalCount} results</a>
                               </div>
                           </div>
                         </div>
@@ -199,7 +199,7 @@ a {
                           <div></div>
                       
                        
-                                <div class="repo-list-wrap">
+                                <div id="testAbc" class="repo-list-wrap">
                                                             
 	                                <div class="repo-list-area">
 	                                	  <c:if test="${ not empty list }">
@@ -210,7 +210,7 @@ a {
                                                         <div style="width: 30px;"><img src="${ r.avatarUrl }" width="20px" height="20px"></div>	                                               
                                                         <a href="detail.sr?nickName=${s.login}&avatar=${s.avatarUrl}">
                                                             <div>
-                                                                <a href="#">${ r.fullName }</a>
+                                                                <a href="permi.pr?repoName=${ r.name }&visibility=${ r.visibility }&owner=${ r.login }">${ r.fullName }</a>
                                                             </div>
                                                         </a>	                                                        
 	                                              </div>
@@ -241,7 +241,7 @@ a {
                               </div>                              
                  <script>
                 let lastScroll = 0;
-                let count = 0;
+                let count = 1;
                 let loading = false; // 추가된 부분: 호출 중인지 여부를 나타내는 변수
 
                 $(document).scroll(function(e){
@@ -262,7 +262,7 @@ a {
 
 			    function loadMoreData(count) {
 			        let keyword = document.getElementById('searchinput').value;
-			        let abc = document.getElementsByClassName('repo-list-wrap')[0].innerHTML;
+			        let abc = $('#testAbc');
 			        $.ajax({
 			            url: "searchrepo.jmm",
 			            data: {
@@ -271,6 +271,7 @@ a {
 			            },
 			            success: function(result){
 			                loading = false; // 추가된 부분: 호출 완료 후 상태 변경
+			                let value = "";
 			                if(result != null){
 				                for (let i = 0; i < result.length; i++) {
 				                    let rv = result[i];
@@ -281,14 +282,20 @@ a {
 				                    let topicsArray = topics.split(',');
 				                    let language = rv.language;
 				                    let pushedAt = rv.pushedAt;
+				                    let name = rv.name;
+				                    let visibility = rv.visibility;
+				                    let login = rv.login;
 				
-				                    abc += "<div class='repo-list-area'>" +
+				                    value += "<div class='repo-list-area'>" +
 				                    "<div class=\"repo-list-one\" style=\"justify-content: space-between;\">" +
 				                    "<div class=\"repo-list-one-area\">" +
 				                    "<div style=\"display: flex;\">" +
 				                    "<div style=\"width: 30px;\"><img src=\"" + avatarUrl + "\" width=\"20px\" height=\"20px\"></div>" +                                               
 				                    "<a href=\"detail.sr?key=" + avatarUrl + "\">" +
-				                    "<div>" + fullName + "</div>" +
+				                    "<div>" + 
+				                    "<a href=\"permi.pr?repoName=" + name + "&visibility=" + visibility + "&owner=" + login +"\">" + fullName + 
+				                    "</a>" +
+				                    "</div>" +
 				                    "</a>" +                                                        
 				                    "</div>" +
 				                    "</div>" +
@@ -300,11 +307,11 @@ a {
 								    	console.log("없어")
 								} else {
 								    for (let i = 0; i < topicsArray.length; i++) {
-								        abc += "<div class=\"testinline repo-public\">" + topicsArray[i].trim() + "</div>";
+								        value += "<div class=\"testinline repo-public\">" + topicsArray[i].trim() + "</div>";
 								    }
 								}
 									   
-				                    abc += "</div>" +
+				                    value += "</div>" +
 				                    "<div style=\"display: flex;\">" +
 				                    "<div>❤</div>" +
 				                    "<div style=\"display: inline-block;\">" + language + " · </div>" +
@@ -315,10 +322,10 @@ a {
 				                    "</div>";
 				                }		                	
 			                }else{
-			                	abc += "<div></div>" 
+			                	value += "<div></div>" 
 			                	
 			                }
-			                $(".repo-list-wrap").append(abc);             
+			                abc.append(value);             
 			            },
 			            error: function(){
 			                console.log("ajax 통신 실패!");

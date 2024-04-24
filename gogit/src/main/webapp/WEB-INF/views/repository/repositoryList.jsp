@@ -101,7 +101,7 @@
 													<div class="wrap-one">
 														<div class="repo-list-top-area">
 															<div class="top-area-title-visibility">
-																<a class="href-div" href="detail.rp?repoName=${ rpList.repoTitle }&visibility=${ rpList.visibility }&owner=${ rpList.owner }">
+																<a class="href-div" href="detail.rp?repoName=${ rpList.repoTitle }&visibility=${ rpList.visibility }&owner=${ rpList.owner }&permission=${ rpList.permission }">
 																	<div>
 																		<h4>${ rpList.repoTitle }</h4>
 																		<input type="hidden" name="owner" value="${ rpList.owner }">
@@ -420,7 +420,7 @@
 						   + "<div class=\"wrap-one\">"
 						   + "<div class=\"repo-list-top-area\">"
 						   + "<div class=\"top-area-title-visibility\">"
-						   + "<a class=\"href-div\" href=\"detail.rp?repoName=" + list[i].repoTitle + "&visibility=" + list[i].visibility + "&owner=" + list[i].owner + "\">"
+						   + "<a class=\"href-div\" href=\"detail.rp?repoName=" + list[i].repoTitle + "&visibility=" + list[i].visibility + "&owner=" + list[i].owner + "&permission=" + list[i].permission "\">"
 						   + "<div>"
 						   + "<h4>" + list[i].repoTitle + "</h4>"
 						   + "<input type=\"hidden\" name=\"owner\" value=\"" + list[i].owner + "\">"

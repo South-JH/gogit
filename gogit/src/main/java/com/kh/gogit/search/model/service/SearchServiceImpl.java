@@ -49,7 +49,7 @@ public class SearchServiceImpl {
 			
 			// 서치값 받아올꺼임
 
-			//MultiValueMap<String, String> body = new LinkedMultiValueMap<String, String>();
+			//MultiValueMap<String, String> body = new LinkedMultiValueMap<String, String>(); // 헤더만 셋팅해도 되서 막음
 
 			HttpEntity<String> request = new HttpEntity<String>(headers);		
 			//HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(headers);
@@ -78,12 +78,10 @@ public class SearchServiceImpl {
 		headers.set("Authorization", "Bearer " + loginUser.getMemToken());
 		headers.set("Accept", "Accept: application/vnd.github+json");
 
-//		MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>();
+//		MultiValueMap<String, Object> body = new LinkedMultiValueMap<String, Object>(); // 바디 셋팅 굳이 안해도 되서 주석으로 막음
 //		body.add("page", page);
 //		body.add("q", keyword);
 
-	
-		
 		HttpEntity<String> request = new HttpEntity<String>(headers);		
 		//HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<MultiValueMap<String, Object>>(headers);
 		
@@ -167,5 +165,28 @@ public class SearchServiceImpl {
 		}
 		return repoList;
 	}
-
+	
+	public String test5(Member loginUser, String repoName, String visibility, String owner) {
+		String url = "https://api.github.com/repos/" + owner + "/" + repoName;
+				
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		headers.set("Authorization", "Bearer " + loginUser.getMemToken());
+		headers.set("Accept", "Accept: application/vnd.github+json");
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+		
+		String getRepoList = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			getRepoList = response.getBody();
+		}else {
+			System.out.println("레포지토리 가져오기 실패!");
+		}
+		return getRepoList;
+	}
 }

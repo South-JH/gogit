@@ -213,7 +213,7 @@ a {
                           <div></div>
                       
                        
-                                <div class="repo-list-wrap">
+                                <div id="testAbc" class="repo-list-wrap">
                                 
                                 <c:forEach var="s" items="${ seList }">
 	                                <div class="repo-list-area">
@@ -240,7 +240,7 @@ a {
                               
                  <script>
 		    let lastScroll = 0;
-		    let count = 0;
+		    let count = 1;
 		    let loading = false; // 추가된 부분: 호출 중인지 여부를 나타내는 변수
 		
 		    $(document).scroll(function(e){
@@ -262,7 +262,7 @@ a {
 			    function loadMoreData(count) {
 			        console.log("여기임"+count);
 			        let keyword = document.getElementById('searchinput').value;
-			        let abc = document.getElementsByClassName('repo-list-wrap')[0].innerHTML;
+			        let abc = $('#testAbc');
 			        $.ajax({
 			            url: "search.jmm",
 			            data: {
@@ -271,13 +271,13 @@ a {
 			            },
 			            success: function(result){
 			                loading = false; // 추가된 부분: 호출 완료 후 상태 변경
-			                
+			                let value = "";
 			                for (let i = 0; i < result.length; i++) {
 			                    let rv = result[i];
 			                    let login = rv.login;
 			                    let avatarUrl = rv.avatarUrl;                 
 			
-			                abc += "<div class='repo-list-area'>" +
+			                value += "<div class='repo-list-area'>" +
 			                "<div class='repo-list-one'>" + 
 			                "<div class='repo-list-one-area'>" +
 			                "<div>" +
@@ -296,7 +296,7 @@ a {
 			                "</div>" +
 			                "</div>";
 			                }
-			                $(".repo-list-wrap").append(abc);             
+			                abc.append(value);             
 			            },
 			            error: function(){
 			                console.log("ajax 통신 실패!");
