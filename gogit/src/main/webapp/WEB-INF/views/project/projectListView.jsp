@@ -46,7 +46,7 @@
 		box-shadow: 5px 5px 10px gray;
 		cursor: pointer;
 		width: 270px;
-		height: 320px;
+		height: 330px;
 		border-radius: 25px;
 		border: 2px solid #d4d2d2;
 		background-color:#ffffff;
@@ -139,6 +139,14 @@
 	gap: 1px;
 	}
 
+	#contentStack{
+		height: auto;
+		display: grid;
+		grid-template-columns: repeat(6, 1fr);
+		gap: 1px;
+		margin-top: 5px;
+	}
+
 	/* 기술스택 이미지 크기 */
 	.stackimg>img{
 		width: 38px;
@@ -194,7 +202,6 @@
 									$(".applying>a").css("color", "lightgray");
 									$(".applycomplete>a").css("color", "lightgray");
 									location.href="list.pj";
-
 								}
 
 								function applying(p){
@@ -206,7 +213,7 @@
 										url:"applyingList.pr",
 										data:{cpage:p},
 										success:function(map){
-											console.log(map)
+											//console.log(map)
 											let pi = map.pi;			
 					                        let currentPage = pi.currentPage;
 					                        let startPage = pi.startPage;
@@ -219,7 +226,7 @@
 					                        							                       						                        
 					                        let result = map.list; // array
 					                        let result1 = map.stackList; // array
-					                        console.log(result);
+					                        //console.log(result);
 					                        //console.log(pi);
 					                        							                        
 					                        let value = "";
@@ -263,8 +270,7 @@
 																if(testt[j] == result1[i].stackName)
 														value += '<div class="stackimg">'
 															  + '<img src="'+ result1[i].stackImg +'"></div>'																  
-															}
-															
+															}															
 														} 
 														value += '</div>'
 														      + '<div><hr></div>'
@@ -274,10 +280,110 @@
 						                        		}
 					                        
 					                        $("#content2_3").html(value);
-					                        console.log("------")
-					                        console.log(currentPage);
-					                        console.log(startPage);
-					                        console.log(endPage);
+					                        //console.log("------")
+					                        //console.log(currentPage);
+					                        //console.log(startPage);
+					                        //console.log(endPage);
+					                        
+					                        if (currentPage != 1) {				                        	
+						                        $paging.append(				                               
+						                                "<li class='page-item'><a class='page-link' onclick=applying(" + (currentPage - 1) + ")>Previous</a></li>"
+						                            );
+						                        }
+						                        
+						                        for (let p = startPage; p <= endPage; p++) {
+						                            if (p == currentPage) {
+						                              $paging.append("<li class='page-item active'><a class='page-link' onclick=applying(" + p  + ")>" + p + "</a></li>");
+						                            }else{
+						                              $paging.append("<li class='page-item'><a class='page-link' onclick=applying(" + p  + ")>" + p + "</a></li>");
+						                            }
+						                          } 
+						                        
+						                        if (currentPage != maxPage) {
+						                        	$paging.append(
+						                        		    "<li class='page-item'><a class='page-link' onclick=applying(" + (currentPage + 1) + ")>Next</a></li>");
+						                          }											
+										},error:function(){
+											
+										}
+									});
+								}					
+							
+								function applycomplete(p){
+									$(".testtest>a").css("color", "lightgray");
+									$(".applying>a").css("color", "lightgray");
+									$(".applycomplete>a").css("color", "rgb(2 56 75)");
+									
+									$.ajax({
+										url:"applycompleteList.pr",
+										data:{cpage:p},
+										success:function(map){
+											let pi = map.pi;			
+					                        let currentPage = pi.currentPage;
+					                        let startPage = pi.startPage;
+					                        let endPage = pi.endPage;
+					                        let maxPage = pi.maxPage;
+					                        let $paging = $(".pagination");
+					                        
+					                        $("#content2_3").html("");
+					                        $paging.html("");
+					                        							                       						                        
+					                        let result = map.list; // array
+					                        let result1 = map.stackList; // array
+					                        console.log(result);
+					                        							                        
+					                        let value = "";
+					                        
+					                        for(let i=0; i<result.length; i++){
+						                        let proStatus = result[i].proStatus;
+						                        
+						                        		let rv = result[i];					                    		
+						                        		
+						                        		let deadLine = rv.deadLine;
+						                        		let proContent = rv.proContent;
+						                        		let positoin = rv.positoin; //"zzszs,zszzs,zszszs"
+						                        		let pno = rv.proNo;				                        		
+		                        
+						                        		let count = rv.count;
+						                        		let prowriter = rv.proWriter;
+														let prostack = rv.proStack;
+														
+														value += 
+							                        		'<div class="plist-div" onclick="location.href=\'detail.pr?pno=' + pno + '\'">'
+															+ '<div class="pro-public" style="background-color: #d9d9d9;">모집마감</div>'
+															+ '<br>'
+															+ '<div>마감일:'+deadLine+'</div>'
+															+ '<br>'
+															+ '<div>'+ proContent +'</div>'
+															+ '<br>'						
+															+ '<div class="pro-public1" id="content2_31">';
+															
+														let testu = positoin.split(",");
+														
+														for(let i =0; i<testu.length; i++){
+															value += '<div>'+ testu[i] +'</div>'
+														}
+														value += '</div>'
+														      + '<div style="display: flex; margin-top: 5px;">'
+														
+														for(let i=0; i<result1.length; i++){
+															
+															let testt = prostack.split(",");
+															
+															for(let j=0; j<testt.length; j++){
+																if(testt[j] == result1[i].stackName)
+														value += '<div class="stackimg">'
+															  + '<img src="'+ result1[i].stackImg +'"></div>'																  
+															}															
+														} 
+														value += '</div>'
+														      + '<div><hr></div>'
+															  + '<div>조회수:'+ count +'</div>'
+															  + '<div>작성자:${ loginUser.gitNick }</div>'		
+														  	  + '</div>'																			                        	
+						                        		}
+					                        
+					                        $("#content2_3").html(value);
 					                        
 					                        if (currentPage != 1) {				                        	
 						                        $paging.append(				                               
@@ -297,20 +403,11 @@
 						                        	console.log("야되냐3");
 						                        	$paging.append(
 						                        		    "<li class='page-item'><a class='page-link' onclick=applying(" + (currentPage + 1) + ")>Next</a></li>");
-						                          }
-
-											
+						                          }											
 										},error:function(){
 											
 										}
 									});
-								}					
-							
-								function applycomplete(){
-									$(".testtest>a").css("color", "lightgray");
-									$(".applying>a").css("color", "lightgray");
-									$(".applycomplete>a").css("color", "rgb(2 56 75)");
-
 								}
 							</script>
 
@@ -498,7 +595,7 @@
 												</c:forEach>																																								
 										</div>					
 	
-										<div style="display: flex; margin-top: 5px;">
+										<div id="contentStack">
 											<c:forEach var="s" items="${ stackList }">
 											<c:set var="testt" value="${fn:split(p.proStack, ',')}"></c:set>
 												<c:forEach var="testValue" items="${ testt }">
@@ -554,10 +651,8 @@
 								  </ul>						
 							</div>	
 						</div>
-					</div>
-					
-					<jsp:include page="../common/rightBar.jsp"/>
-										
+					</div>					
+					<jsp:include page="../common/rightBar.jsp"/>										
 				</div>
 		  </div>
            </div>
