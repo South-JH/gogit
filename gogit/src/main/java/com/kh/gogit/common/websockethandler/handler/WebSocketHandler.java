@@ -20,13 +20,11 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.kh.gogit.common.websockethandler.model.dao.AlarmListDao;
 import com.kh.gogit.common.websockethandler.model.vo.AlarmList;
-import com.sun.tools.sjavac.Log;
+
 
 @Component
 @RequestMapping("alarm.ws")
 public class WebSocketHandler extends TextWebSocketHandler {
-	
-	private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
 	
 	@Autowired
 	private AlarmListDao aDao = new AlarmListDao();
@@ -37,7 +35,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
    @Override
    public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 	   
-	   logger.info("Socket 연결");
+	  
 	   sessions.add(session);
    }
 	   
@@ -88,7 +86,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {//연결 해제
-		logger.info(session + " 클라이언트 접속 해제");
+		
 		sessions.remove(session);
 	}
 
