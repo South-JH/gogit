@@ -389,3 +389,12 @@ button[disabled] {
 .hidden-btn-select-area>div>div {
 	padding: 5px 10px;
 }
+
+.modal-header {
+	background-color: #409cff;
+    border-radius: 15px 15px 0 0;
+}
+
+.modal-title {
+	color: white;
+}

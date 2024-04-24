@@ -63,8 +63,13 @@ public class AlarmListDao {
 	public int alCircle(SqlSessionTemplate sqlSession, String memId) {
 		// TODO Auto-generated method stub
 		try {
+<<<<<<< HEAD
 			return sqlSession.selectOne("alarmMapper.alCircle",memId);			
 		} catch (Exception e){
+=======
+			return sqlSession.selectOne("alarmMapper.alCircle",memId);
+		} catch(Exception e) {
+>>>>>>> 115179c8cb977a0148f436466e3c561843699b19
 			return 0;
 		}
 	}

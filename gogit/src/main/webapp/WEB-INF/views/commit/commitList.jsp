@@ -334,6 +334,11 @@ thead {
 
 	<script>
 	$(function(){
+		
+		$("#pull-request").attr("href", "list.pullrq?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }");
+		$("#code").attr("href", "detail.rp?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }&permission=${ permission }");
+		$("#issue").attr("href", "list.is?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }");
+		
 	    $(".branch-area-btn").click(function(event){
 	        event.stopPropagation();
 	        
@@ -402,7 +407,7 @@ thead {
 				let value = "";
 				$(".repo-table>tbody").text("");
 				
-				for(let i=cList.length - 1; i>=0; i--){
+				for(let i=0; i<cList.length; i++){
 					
 					value += "<tr>"
 						   + "<td>" + (i+1) + "</td>"
@@ -449,7 +454,7 @@ thead {
 				let value = "";
 				$(".repo-table>tbody").text("");
 				
-				for(let i=cList.length - 1; i>=0; i--){
+				for(let i=0; i<cList.length; i++){
 					
 					value += "<tr>"
 						   + "<td>" + (i+1) + "</td>"

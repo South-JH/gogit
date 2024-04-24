@@ -137,8 +137,9 @@ public class PullrequestController {
 		
 		pullrq.setPullNo(pullrqObj.get("number").getAsInt());
 		pullrq.setPullTitle(pullrqObj.get("title").getAsString());
-		if(!pullrqObj.get("body").isJsonNull()) {
-			pullrq.setPullContent(pullrqObj.get("body").getAsString());
+		
+		if(!pullrqObj.get("body_html").isJsonNull()) {
+			pullrq.setPullContent(pullrqObj.get("body_html").getAsString());
 		}
 		pullrq.setPullWriter(pullrqObj.get("user").getAsJsonObject().get("login").getAsString());
 		pullrq.setPullWriterProfile(pullrqObj.get("user").getAsJsonObject().get("avatar_url").getAsString());
@@ -147,7 +148,10 @@ public class PullrequestController {
 		pullrq.setRepoName(repoName);
 		pullrq.setRepoOwner(owner);
 		pullrq.setRepoVisibility(pullrqObj.get("base").getAsJsonObject().get("repo").getAsJsonObject().get("private").getAsString());
-		pullrq.setStatus(pullrqObj.get("state").getAsString());
+		if(!pullrqObj.get("mergeable").isJsonNull()) {
+			pullrq.setMergeable(pullrqObj.get("mergeable").getAsBoolean());
+		}
+		pullrq.setStatus(pullrqObj.get("merged").getAsBoolean() ? "Merged" : pullrqObj.get("state").getAsString());
 		pullrq.setCreateDate(pullrqObj.get("created_at").getAsString().split("T")[0]);
 
 		//===================================== 커밋 리스트 가져와 ==================================
