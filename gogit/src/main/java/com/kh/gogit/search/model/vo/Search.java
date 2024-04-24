@@ -28,5 +28,7 @@ public class Search {
 	private String fullName; // 아바타 유알엘 옆에 이름
 	private String topics; // pwa, tutorial
 	private String pushedAt; // 푸쉬 최신날짜
+	private Boolean permission; // 권한
+	
 	
 }

@@ -210,7 +210,7 @@ a {
                                                         <div style="width: 30px;"><img src="${ r.avatarUrl }" width="20px" height="20px"></div>	                                               
                                                         <a href="detail.sr?nickName=${s.login}&avatar=${s.avatarUrl}">
                                                             <div>
-                                                                <a href="detail.rp?repoName=${ r.name }&visibility=${ r.visibility }&owner=${ r.login }">${ r.fullName }</a>
+                                                                <a href="permi.pr?repoName=${ r.name }&visibility=${ r.visibility }&owner=${ r.login }">${ r.fullName }</a>
                                                             </div>
                                                         </a>	                                                        
 	                                              </div>
@@ -282,6 +282,9 @@ a {
 				                    let topicsArray = topics.split(',');
 				                    let language = rv.language;
 				                    let pushedAt = rv.pushedAt;
+				                    let name = rv.name;
+				                    let visibility = rv.visibility;
+				                    let login = rv.login;
 				
 				                    value += "<div class='repo-list-area'>" +
 				                    "<div class=\"repo-list-one\" style=\"justify-content: space-between;\">" +
@@ -289,7 +292,10 @@ a {
 				                    "<div style=\"display: flex;\">" +
 				                    "<div style=\"width: 30px;\"><img src=\"" + avatarUrl + "\" width=\"20px\" height=\"20px\"></div>" +                                               
 				                    "<a href=\"detail.sr?key=" + avatarUrl + "\">" +
-				                    "<div>" + fullName + "</div>" +
+				                    "<div>" + 
+				                    "<a href=\"permi.pr?repoName=" + name + "&visibility=" + visibility + "&owner=" + login +"\">" + fullName + 
+				                    "</a>" +
+				                    "</div>" +
 				                    "</a>" +                                                        
 				                    "</div>" +
 				                    "</div>" +

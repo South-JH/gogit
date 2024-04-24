@@ -206,12 +206,13 @@ public class SearchController {
 		Member m = (Member)session.getAttribute("loginUser");
 		
 		String repoList = sService.repoDetailView(keyword, m);
-		
+		//System.out.println(repoList);
 		ArrayList<Search> list = new ArrayList<Search>();
 		
 		JsonParser parser = new JsonParser();
 		JsonObject reObj = parser.parse(repoList).getAsJsonObject();
 		JsonArray itemsArray = reObj.getAsJsonArray("items");
+		
 		
 		// sonElement는 JSON 객체나 배열의 특정 속성이나 요소를 가져오는 데 사용
 		for (JsonElement element : itemsArray) { // itemsArray에 있는 각 요소에 대해 반복문 실행
@@ -224,7 +225,7 @@ public class SearchController {
 		    se.setVisibility(item.get("visibility").getAsString());
 		    
 		    se.setTotalCount(reObj.get("total_count").getAsString());
-		    
+		    	   		  
 		    // avatar_url 속성 처리
 //		    JsonElement avatarUrlElement = item.get("avatar_url"); // avatar_url 속성 값 가져오기
 //		    if (avatarUrlElement != null && !avatarUrlElement.isJsonNull()) { // 값이 null이 아닌 경우
@@ -268,6 +269,7 @@ public class SearchController {
 		    
 		    list.add(se); // 완성된 Search 객체를 리스트에 추가
 		}
+		
 		model.addAttribute("list", list)
 		     .addAttribute("keyword", keyword);
 		return "search/searchRepoDetailView";
@@ -335,5 +337,17 @@ public class SearchController {
 		
 	}
 	
-	
+	@RequestMapping("permi.pr")
+	public String permiSelect(HttpSession session, Model model, String repoName, String visibility, String owner) {
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		String repoList = sService.test5(m, repoName, visibility, owner);
+		
+		String permission = "";
+		JsonParser parser = new JsonParser();
+		JsonObject perObj = JsonParser.parseString(repoList).getAsJsonObject();
+		permission = perObj.get("permissions").getAsJsonObject().get("push").getAsString();
+				
+		return "redirect:detail.rp?repoName=" + repoName + "&visibility=" + visibility +"&owner="+ owner + "&permission=" + permission;
+	}
 }
