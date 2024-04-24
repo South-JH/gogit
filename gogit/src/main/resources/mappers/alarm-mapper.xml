@@ -102,6 +102,7 @@
   	  from alarmlist
   	 where mem_id = #{memId}
   	   and alarm_type = 'zoom'
+  	   and status ='Y'
   </select>
   
   <select id="alCircle" resultType="_int">
