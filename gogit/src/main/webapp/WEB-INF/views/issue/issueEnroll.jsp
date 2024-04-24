@@ -140,6 +140,7 @@
 						<div>
 							<form action="create.is" method="post" id="issueForm">
 							<input type="hidden" name="repoName" value="${ repoName }">
+							<input type="hidden" name="visibility" value="${ visibility }">
 							<input type="hidden" name="owner" value="${ owner }">
 							<input type="hidden" name="body" id="is-desc">
 								<div class="issue-enroll-top-area">
@@ -148,7 +149,7 @@
 											<div>
 												<div><h5>Add a title</h5></div>
 												<div class="issue-create-title-input">
-													<input type="text" name="title">
+													<input type="text" name="title" required>
 												</div>
 											</div>
 										</div>
@@ -187,9 +188,9 @@
 																	</div>
 																	<div class="name-select-btn">
 																		<div>
-																			<img src="${ a.assigneesAvatar }" width="20" height="20">
+																			<img src="${ a.assigneeAvatar }" width="20" height="20">
 																		</div>
-																		<div>${ a.assignees }</div>
+																		<div>${ a.assignee }</div>
 																	</div>
 																</label>
 															</div>
@@ -209,14 +210,14 @@
 																<label for="lacheck${ la.index }" class="select-area-name">
 																	<div>
 																		<div>
-																			<input type="checkbox" id="lacheck${ la.index }" name="label" class="lacheck" value="${ l.laName }">
+																			<input type="checkbox" id="lacheck${ la.index }" name="labels" class="lacheck" value="${ l.label }">
 																		</div>
 																	</div>
 																	<div class="name-select-btn">
 																		<div>
-																			<div class="labelcolor" style="background-color: #${ l.laColor };"></div>
+																			<div class="labelcolor" style="background-color: #${ l.labelColor };"></div>
 																		</div>
-																		<div>${ l.laName }</div>
+																		<div>${ l.label }</div>
 																	</div>
 																</label>
 															</div>

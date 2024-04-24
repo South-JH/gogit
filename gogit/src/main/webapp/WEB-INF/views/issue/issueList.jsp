@@ -161,7 +161,7 @@
 	             						</select>
 	             					</div>
 		             				<div class="issue-create-btn">
-		             					<a href="enrollForm.is?repoName=${ repoName }&owner=${ owner }"><b>New issue</b></a>
+		             					<a href="enrollForm.is?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }"><b>New issue</b></a>
 		             				</div>
 		             			</div>
 	             			</div>
@@ -195,8 +195,8 @@
 	             									<td>
 	             										<div class="td-flex-css">
 		             										<c:choose>
-		             											<c:when test="${ not empty is.assigneeAvatar }">
-				             										<c:forEach var="a" items="${ is.assigneeAvatar }">
+		             											<c:when test="${ not empty is.assigneesAvatar }">
+				             										<c:forEach var="a" items="${ is.assigneesAvatar }">
 				             											<div class="img-flex-css"><img src="${ a }" width="20" height="20"></div>
 				             										</c:forEach>
 		             											</c:when>
@@ -209,8 +209,8 @@
 	             									<td>
 	             										<div class="td-flex-css">
 	             											<c:choose>
-		             											<c:when test="${ not empty is.labelColor }">
-					             									<c:forEach var="c" items="${ is.labelColor }">
+		             											<c:when test="${ not empty is.labelColors }">
+					             									<c:forEach var="c" items="${ is.labelColors }">
 					             										<div class="label-color" style="background-color:#${ c };"></div>
 					             									</c:forEach>
 		             											</c:when>
