@@ -23,8 +23,7 @@ public class Pullrequest {
 	private String repoName;
 	private String repoOwner;
 	private String repoVisibility;
-	private int issNo;
-	private int milNo;
+	private boolean mergeable;
 	private String status;
 	private String createDate;
 
