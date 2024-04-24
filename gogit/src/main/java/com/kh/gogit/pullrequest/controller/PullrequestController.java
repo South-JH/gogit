@@ -196,5 +196,12 @@ public class PullrequestController {
 		
 		return "redirect:detail.pullrq?owner=" + pullrq.getRepoOwner() + "&repoName=" + pullrq.getRepoName() + "&pullNo=" + pullrq.getPullNo();
 	}
+	
+	@RequestMapping("update.pullrq")
+	public void updatePullrequest(Pullrequest pullrq, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		boolean result = prqService.updatePullrequest(loginUser, pullrq);
+	}
 
 }

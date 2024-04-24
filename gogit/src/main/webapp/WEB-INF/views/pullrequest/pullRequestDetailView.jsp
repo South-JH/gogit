@@ -206,49 +206,6 @@
 												  			<button type="button" class="btn btn-dark" disabled>Merge pull request</button>
 														</c:when>
 													</c:choose>
-													
-													<script>
-														$(function() {
-															$("#merge-form").css("display", "none");
-															$("#confirm-merge-btn").css("display", "none");
-															$("#cancel-merge-btn").css("display", "none");
-														})
-														
-														function showMergeForm() {
-															$("#available-merge").css("display", "none");
-															$("#merge-btn").css("display", "none");
-
-															$("#merge-form").css("display", "");
-															$("#confirm-merge-btn").css("display", "");
-															$("#cancel-merge-btn").css("display", "");
-
-															$("input[name=commitTitle]").val("Merge pull request #${ pullrq.pullNo } from ${ pullrq.pullWriter }/${ pullrq.compareBranch }");
-															$("textarea[name=commitMessage]").val("${ pullrq.pullTitle }");
-														}
-
-														function hideMergeForm() {
-															$("#merge-form").css("display", "none");
-															$("#confirm-merge-btn").css("display", "none");
-															$("#cancel-merge-btn").css("display", "none");
-
-															$("#available-merge").css("display", "");
-															$("#merge-btn").css("display", "");
-														}
-
-														function validateMerge() {
-															if($("input[name=commitTitle]").val() == "") {
-																$("input[name=title]").val("Merge pull request #${ pullrq.pullNo } from ${ pullrq.pullWriter }/${ pullrq.compareBranch }");
-															} else {
-																$("input[name=title]").val($("input[name=commitTitle]").val());
-															}
-
-															if($("textarea[name=commitMessage]").val() == "") {
-																$("input[name=message]").val("${ pullrq.pullTitle }");
-															} else {
-																$("input[name=message]").val($("textarea[name=commitMessage]").val());
-															}
-														}
-													</script>
 												</div>
 											</div>
 			                    		</div>
@@ -305,5 +262,46 @@
 		initialValue: '',
 		placeholder: 'add your comment here...'
 	});
+
+	$(function() {
+		$("#merge-form").css("display", "none");
+		$("#confirm-merge-btn").css("display", "none");
+		$("#cancel-merge-btn").css("display", "none");
+	})
+	
+	function showMergeForm() {
+		$("#available-merge").css("display", "none");
+		$("#merge-btn").css("display", "none");
+
+		$("#merge-form").css("display", "");
+		$("#confirm-merge-btn").css("display", "");
+		$("#cancel-merge-btn").css("display", "");
+
+		$("input[name=commitTitle]").val("Merge pull request #${ pullrq.pullNo } from ${ pullrq.pullWriter }/${ pullrq.compareBranch }");
+		$("textarea[name=commitMessage]").val("${ pullrq.pullTitle }");
+	}
+
+	function hideMergeForm() {
+		$("#merge-form").css("display", "none");
+		$("#confirm-merge-btn").css("display", "none");
+		$("#cancel-merge-btn").css("display", "none");
+
+		$("#available-merge").css("display", "");
+		$("#merge-btn").css("display", "");
+	}
+
+	function validateMerge() {
+		if($("input[name=commitTitle]").val() == "") {
+			$("input[name=title]").val("Merge pull request #${ pullrq.pullNo } from ${ pullrq.pullWriter }/${ pullrq.compareBranch }");
+		} else {
+			$("input[name=title]").val($("input[name=commitTitle]").val());
+		}
+
+		if($("textarea[name=commitMessage]").val() == "") {
+			$("input[name=message]").val("${ pullrq.pullTitle }");
+		} else {
+			$("input[name=message]").val($("textarea[name=commitMessage]").val());
+		}
+	}
 </script>
 </html>

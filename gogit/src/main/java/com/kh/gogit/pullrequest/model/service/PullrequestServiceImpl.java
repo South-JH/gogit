@@ -145,6 +145,7 @@ public class PullrequestServiceImpl implements PullrequestService {
 	
 	public boolean createMerge(Member loginUser, Pullrequest pullrq, Commit commit) {
 		
+		// https://api.github.com/repos/OWNER/REPO/pulls/PULL_NUMBER/merge
 		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/pulls/" + pullrq.getPullNo() + "/merge";
 		
 		RestTemplate restTemplate = new RestTemplate();
@@ -160,6 +161,31 @@ public class PullrequestServiceImpl implements PullrequestService {
 		HttpEntity<Map<String, String>> request = new HttpEntity<Map<String,String>>(body, headers);
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, request, String.class);
+		
+		if(response.getStatusCode() == HttpStatus.OK) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	public boolean updatePullrequest(Member loginUser, Pullrequest pullrq) {
+		
+		// https://api.github.com/repos/OWNER/REPO/pulls/PULL_NUMBER
+		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/pulls/" + pullrq.getPullNo();
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(loginUser.getMemToken());
+		headers.set("Accept", "application/vnd.github+json");
+		
+		Map<String, String> body = new HashMap<String, String>();
+		
+		HttpEntity<Map<String, String>> request = new HttpEntity<Map<String,String>>(body, headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PATCH, request, String.class);
 		
 		if(response.getStatusCode() == HttpStatus.OK) {
 			return true;
