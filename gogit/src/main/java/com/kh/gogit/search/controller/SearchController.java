@@ -292,8 +292,11 @@ public class SearchController {
 		    
 		    JsonElement ownerElement = item.get("owner");
 		    JsonObject ownerObject = ownerElement.getAsJsonObject();
+		    
 		    String avatarUrl = ownerObject.get("avatar_url").getAsString();
+		    String login = ownerObject.get("login").getAsString();
 		    se.setAvatarUrl(avatarUrl);
+		    se.setAvatarUrl(login);
 		    
 		    // description 속성 처리
 		    JsonElement descriptionElement = item.get("description"); // description 속성 값 가져오기
