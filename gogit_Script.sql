@@ -589,31 +589,6 @@ COMMENT ON COLUMN REPLY.REF_PROJECTNO IS 'PROJECT 참조 게시물';
 COMMENT ON COLUMN REPLY.REP_DATE IS '댓글 작성일';     
 COMMENT ON COLUMN REPLY.STATUS IS '댓글 삭제여부';     
 
-INSERT INTO 
-            REPLY
-     VALUES
-     (
-       SEQ_RENO.NEXTVAL
-     , '0000'
-     , '저도 참여하고 싶어요'
-     , 1
-     , SYSDATE
-     , DEFAULT
-     );
-    
-    
-INSERT INTO 
-            REPLY
-     VALUES
-     (
-       SEQ_RENO.NEXTVAL
-     , '11111'
-     , '대한의 건아!! 성실한 제가 한번 참여해보겠읍니다.'
-     , 1
-     , SYSDATE
-     , DEFAULT
-     );
-
 --------------------------------------------------
 --------------     MY_PR	------------------	
 --------------------------------------------------
