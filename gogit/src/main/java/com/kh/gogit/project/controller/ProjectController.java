@@ -41,6 +41,10 @@ public class ProjectController {
 		ArrayList<Project> list = pService.selectList(pi);
 		ArrayList<Stack> stackList = pService.selectStackList();
 		
+		// 여기서 rightbar에 담을 애들 조회해오기
+		ArrayList<Member> prMemberList = pService.selectProjectMemberList();
+		System.out.println(prMemberList);
+		
 		mv.addObject("pi",pi)
 		  .addObject("list", list)
 		  .addObject("stackList", stackList)

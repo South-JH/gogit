@@ -62,4 +62,14 @@
 		  from member
 		 where mem_id = #{memId}
 	</select>
+	
+	<select id="selectProjectMemberList" resultMap="memberResult">
+			select
+		       git_nick
+		  from member m
+		  join project p on (mem_id = pro_writer)
+	     where p.pro_status = 'Y'
+	       and team_status = 'Y'
+	       and pro_no = team
+	</select>
 </mapper>
