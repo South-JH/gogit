@@ -161,7 +161,7 @@
 	             						</select>
 	             					</div>
 		             				<div class="issue-create-btn">
-		             					<a href="create.is?repoName=${ repoName }&owner=${ owner }"><b>New issue</b></a>
+		             					<a href="enrollForm.is?repoName=${ repoName }&owner=${ owner }"><b>New issue</b></a>
 		             				</div>
 		             			</div>
 	             			</div>

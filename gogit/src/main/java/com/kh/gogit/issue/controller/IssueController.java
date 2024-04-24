@@ -178,13 +178,58 @@ public class IssueController {
 		
 	}
 	
-	@RequestMapping("create.is")
-	public String createIssue(Model model, String repoName, String owner) {
+	@RequestMapping("enrollForm.is")
+	public String issueEnrollForm(HttpSession session, Model model, String repoName, String owner) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		String assignees = iService.assigneesList(m, repoName, owner);
+		ArrayList<Issue> aList = new ArrayList<Issue>();
+		ArrayList<Issue> lList = new ArrayList<Issue>();
+		
+		if(assignees != null) {
+			
+			JsonArray assiArr = JsonParser.parseString(assignees).getAsJsonArray();
+			
+			for(int i=0; i<assiArr.size(); i++) {
+				
+				Issue is = new Issue();
+				is.setAssignees(assiArr.get(i).getAsJsonObject().get("login").getAsString());
+				is.setAssigneesAvatar(assiArr.get(i).getAsJsonObject().get("avatar_url").getAsString());
+				
+				aList.add(is);
+			}
+		}
+		
+		String label = iService.labelList(m, repoName, owner);
+		
+		if(label != null) {
+			
+			JsonArray labelArr = JsonParser.parseString(label).getAsJsonArray();
+			
+			for(int i=0; i<labelArr.size(); i++) {
+				
+				Issue is = new Issue();
+				is.setLaName(labelArr.get(i).getAsJsonObject().get("name").getAsString());
+				is.setLaColor(labelArr.get(i).getAsJsonObject().get("color").getAsString());
+				is.setLaDesc(labelArr.get(i).getAsJsonObject().get("description").getAsString());
+				
+				lList.add(is);
+			}
+		}
 		
 		model.addAttribute("repoName", repoName);
 		model.addAttribute("owner", owner);
-		
+		model.addAttribute("aList", aList);
+		model.addAttribute("lList", lList);
 		return "issue/issueEnroll";
+	}
+	
+	@RequestMapping("create.is")
+	public void createIssue(HttpSession session, String repoName, String owner, String title, String body, String[] assignees, String[] label) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		iService.createIssue(m, repoName, owner, title, body, assignees, label);
+		
 	}
 	
 	@RequestMapping("detail.is")
