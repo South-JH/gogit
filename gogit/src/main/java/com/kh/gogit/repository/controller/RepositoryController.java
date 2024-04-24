@@ -84,6 +84,7 @@ public class RepositoryController {
         	rp.setOpenIssue(repoArr.get(i).getAsJsonObject().get("open_issues_count").getAsString());
         	rp.setUpdateAt(repoArr.get(i).getAsJsonObject().get("updated_at").getAsString().substring(0, 10));
         	rp.setOwner(repoArr.get(i).getAsJsonObject().get("owner").getAsJsonObject().get("login").getAsString());
+        	rp.setPermission(repoArr.get(i).getAsJsonObject().get("permissions").getAsJsonObject().get("push").getAsString());
         	
         	rpList.add(rp);
         }
@@ -158,7 +159,7 @@ public class RepositoryController {
 	}
 	
 	@RequestMapping("detail.rp")
-	public String repoDetailView(Model model, HttpSession session, String repoName, String visibility, String owner) {
+	public String repoDetailView(Model model, HttpSession session, String repoName, String visibility, String owner, String permission) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		//System.out.println(repoName);
@@ -189,25 +190,32 @@ public class RepositoryController {
 		model.addAttribute("repoName", repoName);
 		model.addAttribute("visibility", visibility);
 		model.addAttribute("owner", owner);
+		model.addAttribute("permission", permission);
+		//System.out.println(permission);
 		
-        String collaboratorList = rService.collaboratorList(m, repoName, owner);
-        JsonArray colArr = JsonParser.parseString(collaboratorList).getAsJsonArray();
-        ArrayList<Repository> list = new ArrayList<Repository>();
-        
-        if(collaboratorList != null) {
-        	
-        	for(int i=0; i<colArr.size(); i++) {
-        		
-        		Repository rp = new Repository();
-        		rp.setCollaborator(colArr.get(i).getAsJsonObject().get("login").getAsString());
-        		rp.setAvatar(colArr.get(i).getAsJsonObject().get("avatar_url").getAsString());
-        		
-        		list.add(rp);
-        		//System.out.println(list);
-        	}
-        } else {
-        	System.out.println("협업자없음!");
-        }
+		ArrayList<Repository> list = new ArrayList<Repository>();
+		if(permission.equals("true")) {
+			
+			String collaboratorList = rService.collaboratorList(m, repoName, owner);
+			
+			JsonArray colArr = JsonParser.parseString(collaboratorList).getAsJsonArray();
+			
+			if(collaboratorList != null) {
+				
+				for(int i=0; i<colArr.size(); i++) {
+					
+					Repository rp = new Repository();
+					rp.setCollaborator(colArr.get(i).getAsJsonObject().get("login").getAsString());
+					rp.setAvatar(colArr.get(i).getAsJsonObject().get("avatar_url").getAsString());
+					
+					list.add(rp);
+					//System.out.println(list);
+				}
+			} else {
+				System.out.println("협업자없음!");
+				return null;
+			}
+		}
 
         model.addAttribute("list", list);
         
@@ -452,6 +460,7 @@ public class RepositoryController {
 	        	rp.setOpenIssue(repoArr.get(i).getAsJsonObject().get("open_issues_count").getAsString());
 	        	rp.setUpdateAt(repoArr.get(i).getAsJsonObject().get("updated_at").getAsString().substring(0, 10));
 	        	rp.setOwner(repoArr.get(i).getAsJsonObject().get("owner").getAsJsonObject().get("login").getAsString());
+	        	rp.setPermission(repoArr.get(i).getAsJsonObject().get("permissions").getAsJsonObject().get("push").getAsString());
 	        	
 	        	rpList.add(rp);
 	        }

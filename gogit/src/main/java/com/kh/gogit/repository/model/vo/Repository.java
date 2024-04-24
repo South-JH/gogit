@@ -28,5 +28,6 @@ public class Repository {
 	private String owner;
 	private String collaborator;
 	private String avatar;
+	private String permission; // 권한
 	
 }
