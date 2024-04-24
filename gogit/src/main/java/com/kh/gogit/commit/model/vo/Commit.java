@@ -11,10 +11,10 @@ import lombok.ToString;
 @ToString
 public class Commit {
 
-	private String sah;
+	private String sha;
 	private String author;
 	private String commitDate;
-	private String avatarUrl;
+	private String avatar;
 	private String message;
 	
 }

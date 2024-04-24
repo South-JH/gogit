@@ -35,6 +35,10 @@
 			margin-top: 20px;
 			margin-left: 20px;
 		}
+		
+		#pullRequest-table>thead{
+			background-color: whitesmoke;
+		}
 
 		#pullRequest-list>table{
 			width: 100%;
@@ -239,7 +243,7 @@
 			$("#pull-request").attr("href", "list.pullrq?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }");
 			
 			const list = ${ list };
-				
+			
 			let openList = [];
 			let closedList = [];
 			for(let i in list) {
@@ -250,25 +254,48 @@
 				}
 			}
 			
+			if($("input[name=status]:checked").val() == "open") {
+				tbody = tbodyVal(openList);
+			} else {
+				tbody = tbodyVal(closedList);
+			}
+			
+			$('#pullRequest-table>tbody').html(tbody);
+
+			$("input[name=status]").on("change", function() {
+
+				if($("input[name=status]:checked").val() == "open") {
+					tbody = tbodyVal(openList);
+
+				} else {
+					tbody = tbodyVal(closedList);
+				}
+
+				$('#pullRequest-table>tbody').html(tbody);
+			});
+		})
+		
+		function tbodyVal(list) {
 			let tbody = "";
 			
-			for(let i in openList) {
-				const title = openList[i].pullTitle;
-				const content = openList[i].pullContent;
-				const writer = openList[i].pullWriter;
-				const assignees = openList[i].pullManager;
-				const profiles = openList[i].pullManagerProfile;
-				const status = openList[i].status;
-				const createDate = openList[i].createDate.split('T')[0];
+			for(let i in list) {
+				const no = list[i].pullNo;
+				const title = list[i].pullTitle;
+				const content = list[i].pullContent;
+				const writer = list[i].pullWriter;
+				const assignees = list[i].pullManager;
+				const profiles = list[i].pullManagerProfile;
+				const status = list[i].status;
+				const createDate = list[i].createDate.split('T')[0];
 
-				tbody += `<tr onclick="location.href='detail.pullrq'">
+				tbody += `<tr onclick="location.href='detail.pullrq?owner=${owner}&repoName=${repoName}&pullNo=\${ no }'">
 							<td>\${ title }</td>
 							<td>\${ writer }</td>
 							<td>
 						`;
 				
 				if(assignees != "") {
-					let assigneeArr = assignees.split(',');
+					let assigneeArr = assignees.split(','); // [south-jh,crong,jimin]
 					let profileArr = profiles.split(',');
 
 					for(let i = 0; i < profileArr.length; i++) {
@@ -285,83 +312,8 @@
 						`;
 			}
 			
-			$('#pullRequest-table>tbody').html(tbody);
-
-			$("input[name=status]").on("change", function() {
-				let tbody = "";
-
-				if($("input[name=status]:checked").val() == "open") {
-					for(let i in openList) {
-						const title = openList[i].pullTitle;
-						const content = openList[i].pullContent;
-						const writer = openList[i].pullWriter;
-						const assignees = openList[i].pullManager;
-						const profiles = openList[i].pullManagerProfile;
-						const status = openList[i].status;
-						const createDate = openList[i].createDate.split('T')[0];
-
-						tbody += `<tr onclick="location.href='detail.pullrq'">
-									<td>\${ title }</td>
-									<td>\${ writer }</td>
-									<td>
-								`;
-						
-						if(assignees != "") {
-							let assigneeArr = assignees.split(',');
-							let profileArr = profiles.split(',');
-
-							for(let i = 0; i < profileArr.length; i++) {
-								tbody += `<span tooltip="\${ assigneeArr[i] }" flow="down">
-											<img class="profile" src="\${ profileArr[i] }" style="width: 25px; height: 25px; border-radius: 100%;">
-										</span>
-										`;
-							}
-						}
-
-						tbody += `</td>
-									<td>\${ createDate }</td>
-								<tr>
-								`;
-					}
-
-				} else {
-					for(let i in closedList) {
-						const title = closedList[i].pullTitle;
-						const content = closedList[i].pullContent;
-						const writer = closedList[i].pullWriter;
-						const assignees = closedList[i].pullManager;
-						const profiles = closedList[i].pullManagerProfile;
-						const status = closedList[i].status;
-						const createDate = closedList[i].createDate.split('T')[0];
-
-						tbody += `<tr onclick="location.href='detail.pullrq'">
-									<td>\${ title }</td>
-									<td>\${ writer }</td>
-									<td>
-								`;
-						
-						if(assignees != "") {
-							let assigneeArr = assignees.split(',');
-							let profileArr = profiles.split(',');
-
-							for(let i = 0; i < profileArr.length; i++) {
-								tbody += `<span tooltip="\${ assigneeArr[i] }" flow="down">
-											<img class="profile" src="\${ profileArr[i] }" style="width: 25px; height: 25px; border-radius: 100%;">
-										</span>
-										`;
-							}
-						}
-
-						tbody += `</td>
-									<td>\${ createDate }</td>
-								<tr>
-								`;
-					}
-				}
-
-				$('#pullRequest-table>tbody').html(tbody);
-			});
-		})
+			return tbody;
+		}
 	</script>
 	
 </body>

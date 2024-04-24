@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="alarmMapper">
+  
+  <resultMap type="AlarmList" id="AlarmListResult">
+  	<result column="alarm_no" property="alarmNo"/>
+  	<result column="alarm_title" property="alarmTitle"/>
+  	<result column="alarm_type" property="alarmType"/>
+  	<result column="mem_id" property="memId"/>
+  	<result column="rmem_id" property="rmemId"/>
+  	<result column="alarm_content_no" property="alarmContentNo"/>
+  	<result column="alarm_date" property="alarmDate"/>
+  	<result column="alarm_yn" property="alarmYn"/>
+  	<result column="status" property="status"/>
+  	<result column="git_nick" property="gitNick"/>
+  </resultMap>
+  
+  
+  
+  <select id="selectMemId" resultType="string">
+  	select mem_id
+  	  from member
+  	 where git_nick = #{gitNick}
+  </select>
+  
+  <insert id="insertAlarm">
+  	insert
+  	  into alarmlist
+  	  (
+  	  	alarm_no,
+  	  	alarm_title,
+  	  	alarm_type,
+  	  	mem_id,
+  	  	rmem_id,
+  	  	alarm_content_no 	
+  	  )
+  	  values
+  	  (
+  	  	seq_alno.nextval,
+  	  	#{alarmTitle},
+  	  	#{alarmType},
+  	  	#{memId},
+  	  	#{rmemId},
+  	  	#{alarmContentNo}
+  	  )
+  	  
+  </insert>
+  
+  <select id="selectAlarmList" resultMap="AlarmListResult">
+  	select 
+  		   alarm_no
+  		 , a.mem_id
+  		 , alarm_title
+  		 , alarm_type
+  		 , git_nick
+  		 , rmem_id
+  		 , alarm_content_no
+  		 , alarm_yn
+  	  from alarmlist a
+  	  join member m
+  	    on (a.mem_id = m.mem_id)
+  	 where a.status = 'Y'
+  	   and rmem_id = #{memId}
+  	 order 
+  	    by alarm_no desc
+  </select>
+  
+  <update id="updateAlarm">
+  	update alarmlist
+  	   set alarm_yn = 0
+  	 where alarm_no = #{alarmNo}  
+  </update>
+  
+  <update id="applyProject">
+  	update member
+  	   set team=#{proNo}
+  	     , team_status='Y'
+  	 where mem_id=#{proWriter}
+  </update>
+  
+  <update id="cancelProject">
+  	update member
+  	   set team='0'
+  	     , team_status='N'
+  	 where mem_id=#{proWriter}
+  </update>
+  
+  <update id="deleteAlarm">
+  	update alarmlist
+  	   set status = 'N'
+  	 where alarm_no = #{alarmNo}
+  </update>
+  
+  <select id="selectTeamid" resultType="string">
+  	select mem_id
+  	  from member
+  	 where team = #{team}
+  </select>
+  
+  <select id="checkMemId" resultType="string">
+  	select alarm_type
+  	  from alarmlist
+  	 where mem_id = #{memId}
+  	   and alarm_type = 'zoom'
+  	   and status ='Y'
+  </select>
+  
+  <select id="alCircle" resultType="_int">
+  	select sum(alarm_yn)
+  	  from alarmlist
+  	 where rmem_id = #{memId}
+  </select>
+  
+</mapper>

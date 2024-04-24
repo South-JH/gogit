@@ -50,16 +50,16 @@ public class CommitController {
 			for(int i=0; i<commitArr.size(); i++) {
 				
 				Commit commit = new Commit();
-		        commit.setSah(commitArr.get(i).getAsJsonObject().get("sha").getAsString());
+		        commit.setSha(commitArr.get(i).getAsJsonObject().get("sha").getAsString());
 		        commit.setCommitDate(commitArr.get(i).getAsJsonObject().get("commit").getAsJsonObject().get("author").getAsJsonObject().get("date").getAsString().substring(0, 10));
 				commit.setAuthor(commitArr.get(i).getAsJsonObject().get("commit").getAsJsonObject().get("author").getAsJsonObject().get("name").getAsString());
 		        commit.setMessage(commitArr.get(i).getAsJsonObject().get("commit").getAsJsonObject().get("message").getAsString());
 				
 	            JsonElement authorEl = commitArr.get(i).getAsJsonObject().get("author");
 	            if (authorEl == null || authorEl.isJsonNull()) {
-	                commit.setAvatarUrl("");
+	                commit.setAvatar("");
 	            } else {
-	            	commit.setAvatarUrl(commitArr.get(i).getAsJsonObject().get("author").getAsJsonObject().get("avatar_url").getAsString());
+	            	commit.setAvatar(commitArr.get(i).getAsJsonObject().get("author").getAsJsonObject().get("avatar_url").getAsString());
 	            }
 		        
 		        cList.add(commit);
@@ -88,16 +88,16 @@ public class CommitController {
 			for(int i=0; i<commitArr.size(); i++) {
 				
 				Commit commit = new Commit();
-		        commit.setSah(commitArr.get(i).getAsJsonObject().get("sha").getAsString());
+		        commit.setSha(commitArr.get(i).getAsJsonObject().get("sha").getAsString());
 		        commit.setCommitDate(commitArr.get(i).getAsJsonObject().get("commit").getAsJsonObject().get("author").getAsJsonObject().get("date").getAsString().substring(0, 10));
 				commit.setAuthor(commitArr.get(i).getAsJsonObject().get("commit").getAsJsonObject().get("author").getAsJsonObject().get("name").getAsString());
 		        commit.setMessage(commitArr.get(i).getAsJsonObject().get("commit").getAsJsonObject().get("message").getAsString());
 				
 	            JsonElement authorEl = commitArr.get(i).getAsJsonObject().get("author");
 	            if (authorEl == null || authorEl.isJsonNull()) {
-	                commit.setAvatarUrl("");
+	                commit.setAvatar("");
 	            } else {
-	            	commit.setAvatarUrl(commitArr.get(i).getAsJsonObject().get("author").getAsJsonObject().get("avatar_url").getAsString());
+	            	commit.setAvatar(commitArr.get(i).getAsJsonObject().get("author").getAsJsonObject().get("avatar_url").getAsString());
 	            }
 		        
 		        cList.add(commit);

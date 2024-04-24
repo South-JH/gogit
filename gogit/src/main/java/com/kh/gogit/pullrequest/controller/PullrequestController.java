@@ -14,6 +14,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.gogit.branch.model.vo.Branch;
+import com.kh.gogit.commit.model.vo.Commit;
 import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.pullrequest.model.service.PullrequestServiceImpl;
 import com.kh.gogit.pullrequest.model.vo.Pullrequest;
@@ -25,10 +26,10 @@ public class PullrequestController {
 	private PullrequestServiceImpl prqService;
 	
 	@RequestMapping("list.pullrq")
-	public String pullRequestList(String repoName, String visibility, HttpSession session, Model model) {
+	public String pullRequestList(String repoName, String visibility, String owner, HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		
-		String responseBody = prqService.getPullrequestList(loginUser, repoName);
+		String responseBody = prqService.getPullrequestList(loginUser, repoName, owner);
 		
 		JsonArray pullreqArr = JsonParser.parseString(responseBody).getAsJsonArray();
 		
@@ -38,11 +39,10 @@ public class PullrequestController {
 			JsonObject pullreq = pullreqArr.get(i).getAsJsonObject();
 			
 			Pullrequest prq = new Pullrequest();
-			prq.setPullTitle(pullreq.get("title").getAsString());
 			
-			if(!pullreq.get("body").isJsonNull()) {
-				prq.setPullContent(pullreq.get("body").getAsString());
-			}
+			prq.setPullNo(pullreq.get("number").getAsInt());
+			
+			prq.setPullTitle(pullreq.get("title").getAsString());
 			
 			prq.setPullWriter(pullreq.get("user").getAsJsonObject().get("login").getAsString());
 			
@@ -54,7 +54,7 @@ public class PullrequestController {
 				
 				String assignee = assigneesArr.get(j).getAsJsonObject().get("login").getAsString();
 				
-				String profile = prqService.getAssigneesProfile(loginUser, assignee);
+				String profile = assigneesArr.get(j).getAsJsonObject().get("avatar_url").getAsString();
 
 				if(j == assigneesArr.size() -1) {
 					assignees += assignee;
@@ -76,6 +76,7 @@ public class PullrequestController {
 		
 		model.addAttribute("repoName", repoName);
 		model.addAttribute("visibility", visibility);
+		model.addAttribute("owner", owner);
 		model.addAttribute("list", new Gson().toJson(list));
 		
 		return "pullrequest/pullRequestList";
@@ -125,7 +126,56 @@ public class PullrequestController {
 	}
 	
 	@RequestMapping("detail.pullrq")
-	public String detailPullRequest() {
+	public String detailPullRequest(String owner, String repoName, int pullNo, HttpSession session, Model model) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		String result = prqService.getPullrequest(loginUser, owner, repoName, pullNo);
+		
+		JsonObject pullrqObj = JsonParser.parseString(result).getAsJsonObject();
+		
+		Pullrequest pullrq = new Pullrequest();
+		
+		pullrq.setPullNo(pullrqObj.get("number").getAsInt());
+		pullrq.setPullTitle(pullrqObj.get("title").getAsString());
+		if(!pullrqObj.get("body").isJsonNull()) {
+			pullrq.setPullContent(pullrqObj.get("body").getAsString());
+		}
+		pullrq.setPullWriter(pullrqObj.get("user").getAsJsonObject().get("login").getAsString());
+		pullrq.setPullWriterProfile(pullrqObj.get("user").getAsJsonObject().get("avatar_url").getAsString());
+		pullrq.setBaseBranch(pullrqObj.get("base").getAsJsonObject().get("ref").getAsString());
+		pullrq.setCompareBranch(pullrqObj.get("head").getAsJsonObject().get("ref").getAsString());
+		pullrq.setRepoName(repoName);
+		pullrq.setRepoOwner(owner);
+		pullrq.setRepoVisibility(pullrqObj.get("base").getAsJsonObject().get("repo").getAsJsonObject().get("private").getAsString());
+		pullrq.setStatus(pullrqObj.get("state").getAsString());
+		pullrq.setCreateDate(pullrqObj.get("created_at").getAsString().split("T")[0]);
+
+		//===================================== 커밋 리스트 가져와 ==================================
+		String commitsUrl = pullrqObj.get("commits_url").getAsString();
+		String commitList = prqService.getCommitList(commitsUrl, loginUser);
+		
+		JsonArray commitArr = JsonParser.parseString(commitList).getAsJsonArray();
+		
+		ArrayList<Commit> list = new ArrayList<Commit>();
+		
+		for(int i = 0; i < commitArr.size(); i++) {
+			JsonObject commitObj = commitArr.get(i).getAsJsonObject();
+			
+			Commit c = new Commit();
+			
+			c.setSha(commitObj.get("sha").getAsString());
+			c.setAuthor(commitObj.get("commit").getAsJsonObject().get("author").getAsJsonObject().get("name").getAsString());
+			c.setCommitDate(commitObj.get("commit").getAsJsonObject().get("author").getAsJsonObject().get("date").getAsString().split("T")[0]);
+//			c.setAvatar(commitObj.get("author").getAsJsonObject().get("avatar_url").getAsString());
+			c.setMessage(commitObj.get("commit").getAsJsonObject().get("message").getAsString());
+			
+			list.add(c);
+		}
+		
+		
+		model.addAttribute("pullrq", pullrq);
+		model.addAttribute("list", list);
+		
 		return "pullrequest/pullRequestDetailView";
 	}
 

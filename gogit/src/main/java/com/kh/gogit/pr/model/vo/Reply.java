@@ -17,6 +17,7 @@ public class Reply {
 	private String memId;
 	private String repContent;
 	private String refPrNo;
+	private String refProjectNo;
 	private String repDate;
 	private String status;
 	private String gitNick;
