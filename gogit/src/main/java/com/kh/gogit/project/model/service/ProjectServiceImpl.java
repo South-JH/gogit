@@ -120,5 +120,20 @@ public class ProjectServiceImpl implements ProjectService{
 	public ArrayList<Reply> selectReplyList(int pno) {
 		return pDao.selectReplyList(sqlSession, pno);
 	}
+
+	@Override
+	public int deleteReply(int pno) {
+		return pDao.deleteReply(sqlSession, pno);
+	}
+
+	@Override
+	public int applycompleteListCount() {
+		return pDao.applycompleteListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Project> applycompleteList(PageInfo pi) {
+		return pDao.applycompleteList(sqlSession, pi);
+	}
 	
 }

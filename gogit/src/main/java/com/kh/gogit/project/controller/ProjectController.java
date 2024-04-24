@@ -187,6 +187,24 @@ public class ProjectController {
 		new Gson().toJson(map, response.getWriter());
 	}
 	
+	@RequestMapping(value="applycompleteList.pr", produces="application/json; charset=utf-8")
+	public void applycompleteList(@RequestParam (value="cpage", defaultValue = "1") int currentPage, HttpServletResponse response) throws JsonIOException, IOException {
+		int listCount = pService.applycompleteListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 3, 8);
+		
+		ArrayList<Project> list = pService.applycompleteList(pi);
+		ArrayList<Stack> stackList = pService.selectStackList();
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("pi", pi);
+		map.put("list", list);
+		map.put("stackList", stackList);
+		
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(map, response.getWriter());	
+	}
+	
 	@RequestMapping("updateForm.pr")
 	public String updateProjectEnrollForm(int pno, Model model) {
 		model.addAttribute("p", pService.selectDetailList(pno));	
@@ -218,6 +236,13 @@ public class ProjectController {
 	@RequestMapping(value="rinsert.pr")
 	public String ajaxInsertReply(Reply r) {
 		int result = pService.insertReply(r);
+		return result > 0 ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="prdelete.pr")
+	public String ajaxDeleteReply(int pno) {
+		int result = pService.deleteReply(pno);
 		return result > 0 ? "success" : "fail";
 	}
 }
