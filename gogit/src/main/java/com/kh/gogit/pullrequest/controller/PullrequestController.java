@@ -176,11 +176,25 @@ public class PullrequestController {
 			list.add(c);
 		}
 		
-		
 		model.addAttribute("pullrq", pullrq);
 		model.addAttribute("list", list);
 		
 		return "pullrequest/pullRequestDetailView";
+	}
+	
+	@RequestMapping("merge.pullrq")
+	public String mergePullrequest(Pullrequest pullrq, Commit commit, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		boolean result = prqService.createMerge(loginUser, pullrq, commit);
+		
+		if(result) {
+			session.setAttribute("alertMsg", "Success");
+		} else {
+			session.setAttribute("alertMsg", "Fail");
+		}
+		
+		return "redirect:detail.pullrq?owner=" + pullrq.getRepoOwner() + "&repoName=" + pullrq.getRepoName() + "&pullNo=" + pullrq.getPullNo();
 	}
 
 }
