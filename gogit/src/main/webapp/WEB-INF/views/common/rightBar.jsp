@@ -31,29 +31,24 @@
         <div class="sliderhight-div" style="background-color:#ffffff;">
             <div style="width: 300px; height: 300px;" class="teamlist">
                 <div class="teamMates" style="margin-bottom: 10px;"><b style="color: rgb(2 56 75);">TeamMates</b></div>
-                <div style="display: flex; margin-bottom: 5px;">
-                    <div class="proimg-div" style="width: 60px;"><img src="${loginUser.profile}"></div>
-                    <div>
-                        <b>hijimin hihihihihi</b>
-                        <div>@hijimin</div>
-                    </div>
-                </div>   
                 
                 <div style="display: flex; margin-bottom: 5px;">
                     <div class="proimg-div" style="width: 60px;"><img src="${loginUser.profile}"></div>
                     <div>
-                        <b>hijimin hihihihihi</b>
-                        <div>@hijimin</div>
+                        <b>${ loginUser.gitNick }</b><!-- 작성자 -->
+                        <div>@${ loginUser.gitNick }</div>
                     </div>
                 </div>
-
+                
+                <c:forEach var="p" items="${prMemberList }"><!-- 팀멤버 -->              
                 <div style="display: flex; margin-bottom: 5px;">
                     <div class="proimg-div" style="width: 60px;"><img src="${loginUser.profile}"></div>
                     <div>
-                        <b>hijimin hihihihihi</b>
-                        <div>@hijimin</div>
+                        <b>${ p.gitNick } </b>
+                        <div>@${p.gitNick }</div>
                     </div>
-                </div>  
+                </div>
+                </c:forEach>                                 
             </div>           
         </div>
         <!-- 복사해보기 -->

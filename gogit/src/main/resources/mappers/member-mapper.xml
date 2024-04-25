@@ -65,7 +65,8 @@
 	
 	<select id="selectProjectMemberList" resultMap="memberResult">
 			select
-		       git_nick
+		           git_nick
+		         , profile 
 		  from member m
 		  join project p on (mem_id = pro_writer)
 	     where p.pro_status = 'Y'

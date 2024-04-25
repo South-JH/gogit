@@ -31,7 +31,7 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectServiceImpl pService;
-
+	/*
 	@RequestMapping("list.pj")
 	public ModelAndView selectList(@RequestParam (value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		int listCount = pService.selectListCount();
@@ -42,9 +42,8 @@ public class ProjectController {
 		ArrayList<Stack> stackList = pService.selectStackList();
 		
 		// 여기서 rightbar에 담을 애들 조회해오기
-		ArrayList<Member> prMemberList = pService.selectProjectMemberList();
-		System.out.println(prMemberList);
-		
+		//ArrayList<Member> prMemberList = pService.selectProjectMemberList();
+		selectProMember();
 		mv.addObject("pi",pi)
 		  .addObject("list", list)
 		  .addObject("stackList", stackList)
@@ -52,6 +51,46 @@ public class ProjectController {
 		
 		return mv;
 	}
+	
+	
+	public String selectProMember(Model model) { 
+		ArrayList<Member> prMemberList = pService.selectProjectMemberList();					
+		
+	        model.addAttribute("prMemberList", prMemberList);
+	        return "common/rightBar";    
+	}
+	
+	*/
+	
+	@RequestMapping("list.pj")
+	public ModelAndView selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+	    int listCount = pService.selectListCount();
+	    
+	    PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 3, 8);
+	    
+	    ArrayList<Project> list = pService.selectList(pi);
+	    ArrayList<Stack> stackList = pService.selectStackList();
+	    
+	    // selectProMember() 메서드 호출하여 ModelAndView 객체 반환받기
+	    ModelAndView rightBarModelAndView = selectProMember();
+	    
+	    mv.addObject("pi", pi)
+	      .addObject("list", list)
+	      .addObject("stackList", stackList)
+	      .addAllObjects(rightBarModelAndView.getModel()) // rightBarModelAndView에서 모든 모델 속성 추가
+	      .setViewName("project/projectListView");
+	    
+	    return mv;
+	}
+
+	// selectProMember() 메서드 정의
+	public ModelAndView selectProMember() {
+	    ModelAndView modelAndView = new ModelAndView("common/rightBar");
+	    ArrayList<Member> prMemberList = pService.selectProjectMemberList(); // 데이터베이스에서 멤버 리스트를 가져와서
+	    modelAndView.addObject("prMemberList", prMemberList); // 모델에 추가
+	    return modelAndView; // 모델이 포함된 ModelAndView 객체 반환
+	}
+	
 	
 	@RequestMapping("enrollForm.pj")
 	public String enrollForm() {
