@@ -203,7 +203,7 @@
 															<button type="button" class="btn btn-dark" id="cancel-merge-btn" onclick="hideMergeForm();">Cancel</button>
 														</c:when>
 														<c:when test="${ pullrq.status eq 'open' and not pullrq.mergeable }">
-												  			<button type="button" class="btn btn-dark" disabled>Merge pull request</button>
+												  			<button type="button" class="btn btn-dark" onclick="window.open('https://github.com/${ pullrq.repoOwner }/${ pullrq.repoName }/pull/${ pullrq.pullNo }/conflicts')">Resolve conflicts</button>
 														</c:when>
 													</c:choose>
 												</div>
