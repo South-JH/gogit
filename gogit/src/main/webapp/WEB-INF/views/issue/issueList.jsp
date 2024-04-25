@@ -174,9 +174,9 @@
 	             							<tr>
 	             								<th><input type="checkbox"></th>
 	             								<th width="400">TITLE</th>
-	             								<th width="200">WRITER</th>
+	             								<th width="150">WRITER</th>
 	             								<th width="150">ASSIGNEE</th>
-	             								<th width="100">LABEL</th>
+	             								<th width="200">LABEL</th>
 	             								<th width="130">DATE</th>
 	             								<th width="60">COMMENT</th>
 	             							</tr>
@@ -185,11 +185,10 @@
 	             							<c:forEach var="is" items="${ list }">
 		             							<tr>
 		             								<td><input type="checkbox"></td>
-		             								<td><a href="detail.is">${ is.title }</a></td>
+		             								<td><a href="detail.is?title=${ is.title }&">${ is.title }</a></td>
 		             								<td>
 		             									<div class="td-flex-css">
 			             									<div class="img-flex-css"><img src="${ is.userAvatar }" width="20" height="20"></div>
-			             									<div>${ is.user }</div>
 		             									</div>
 		             								</td>
 	             									<td>
@@ -211,7 +210,8 @@
 	             											<c:choose>
 		             											<c:when test="${ not empty is.labelColors }">
 					             									<c:forEach var="c" items="${ is.labelColors }">
-					             										<div class="label-color" style="background-color:#${ c };"></div>
+					             										<div class="label-color" style="background-color:#${ c };">
+					             										</div>
 					             									</c:forEach>
 		             											</c:when>
 		             											<c:otherwise>
@@ -276,15 +276,14 @@
 						   + "<td>"
 						   + "<div class=\"td-flex-css\">"
 						   + "<div class=\"img-flex-css\"><img src=\"" + list[i].userAvatar + "\" width=\"20\" height=\"20\"></div>"
-						   + "<div>" + list[i].user + "</div>"
 						   + "</div>"
 						   + "</td>"
 						   + "<td>"
 						   + "<div class=\"td-flex-css\">"
 						   
-			   			if(list[i].assigneeAvatar != null){
-			   				for(let j in list[i].assigneeAvatar){
-			   					value += "<div class=\"img-flex-css\"><img src=\"" + list[i].assigneeAvatar[j] + "\" width=\"20\" height=\"20\"></div>"
+			   			if(list[i].assigneesAvatar != null){
+			   				for(let j in list[i].assigneesAvatar){
+			   					value += "<div class=\"img-flex-css\"><img src=\"" + list[i].assigneesAvatar[j] + "\" width=\"20\" height=\"20\"></div>"
 			   				}
 			   			}else{
 			   				value += "<div></div>"
@@ -295,9 +294,9 @@
 						   + "<td>"
 						   + "<div class=\"td-flex-css\">"
 						   
-						if(list[i].labelColor != null){
-							for(let j in list[i].labelColor){
-								value += "<div class=\"label-color\" style=\"background-color:#" + list[i].labelColor[j] + ";\"></div>"
+						if(list[i].labelColors != null){
+							for(let j in list[i].labelColors){
+								value += "<div class=\"label-color\" style=\"background-color:#" + list[i].labelColors[j] + ";\"></div>"
 							}
 						}else{
 							value += "<div></div>"

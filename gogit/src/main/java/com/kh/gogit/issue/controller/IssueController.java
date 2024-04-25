@@ -130,7 +130,14 @@ public class IssueController {
 				Issue is = new Issue();
 				is.setState(issueArr.get(i).getAsJsonObject().get("state").getAsString());
 				is.setTitle(issueArr.get(i).getAsJsonObject().get("title").getAsString());
-				is.setBody(issueArr.get(i).getAsJsonObject().get("body").getAsString());
+				
+	            JsonElement bodyEl = issueArr.get(i).getAsJsonObject().get("body");
+	            if (bodyEl == null || bodyEl.isJsonNull()) {
+	                is.setBody("");
+	            } else {
+	            	is.setBody(issueArr.get(i).getAsJsonObject().get("body").getAsString());
+	            }
+				
 				is.setUser(issueArr.get(i).getAsJsonObject().get("user").getAsJsonObject().get("login").getAsString());
 				
 				

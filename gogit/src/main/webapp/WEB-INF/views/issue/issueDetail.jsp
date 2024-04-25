@@ -13,73 +13,151 @@
 	padding: 10px 30px;
 	height: 710px;
 }
+
+.time-line *:not(svg) {
+	padding: 5px !important;
+	border: none;
+}
+.time-line tr {
+	border-left: 2px solid #e5e5e5;
+}
+.time-line svg {
+	margin-left: -14px;
+	background-color: white;
+}
+#contents .placeholder {
+	background-color: white;
+}
 </style>
 </head>
 <body>
 
-	<jsp:include page="../common/sideBar.jsp" />
-
-	<jsp:include page="../common/header.jsp" />
+    <jsp:include page="../common/sideBar.jsp" />
+    
+    <jsp:include page="../common/header.jsp" />
+    
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+      
+    	<!--  Main wrapper -->
+        <div class="body-wrapper">
+    
+        	<div class="container-fluid">
+            	<!--  Row 1 -->
+                <div class="row">
+                	<h1><span>이슈제목입니다</span></h1>
+                    <h4>
+                    	<c:choose>
+                    		<c:when test="">
+		                    	<span class="badge rounded-pill bg-success"><i class="ti ti-git-pull-request"></i>Open</span>
+                    		</c:when>
+                    		<c:otherwise>
+		                    	<span class="badge rounded-pill bg-danger"><i class="ti ti-git-pull-request"></i>Closed</span>
+                    		</c:otherwise>
+                    	</c:choose>
+                    </h4>
+                    <div class="conversation container">
+                    	<div class="col-8">
+                    		<div class="row" style="border-bottom: 2px solid lightgray; border-top: 2px solid lightgray; padding-top: 50px; margin-top: 20px;">
+	                    		<div class="col-1">
+	                    			<a href="#">
+										<img src="" alt="" width="35" height="35" class="rounded-circle">
+					                </a>
+	                    		</div>
+	                    		<div class="col">
+		                    		<div class="card" style="border: 1px solid #c1e3f7">
+										<div class="card-header" style="background: #d4eefd;">
+									  		<h6 class="d-inline p-1"></h6>
+									  		<span class="p-1">commented</span>
+									  		<span class="p-1"></span>
+									  	</div>
+									  	<div class="card-body" id="pullrequest-content-area">
+									  		<c:if test="">
+									  			No description
+									  		</c:if>
+									  		
+									  	</div>
+									</div>
+									<table class="time-line table .table-borderless .table-sm">
+										<colgroup>
+											<col width="5%">
+											<col>
+											<col width="10%">
+										</colgroup>
+										<tr>
+											<th>
+												<div class="rounded-circle" style="margin-left: -22px; background-color: #e5e5e5; width:32px;">
+													<svg style="margin-left: 3px; background: none;" "aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-repo-push">
+														<path d="M1 2.5A2.5 2.5 0 0 1 3.5 0h8.75a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0V1.5h-8a1 1 0 0 0-1 1v6.708A2.493 2.493 0 0 1 3.5 9h3.25a.75.75 0 0 1 0 1.5H3.5a1 1 0 0 0 0 2h5.75a.75.75 0 0 1 0 1.5H3.5A2.5 2.5 0 0 1 1 11.5Zm13.23 7.79h-.001l-1.224-1.224v6.184a.75.75 0 0 1-1.5 0V9.066L10.28 10.29a.75.75 0 0 1-1.06-1.061l2.505-2.504a.75.75 0 0 1 1.06 0L15.29 9.23a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018Z"></path>
+													</svg>
+												</div>
+											</th>
+											<th colspan="2"></th>
+										</tr>
+										<c:forEach var="c" items="">
+											<tr>
+												<td>
+													<svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-git-commit">
+												    	<path d="M11.93 8.5a4.002 4.002 0 0 1-7.86 0H.75a.75.75 0 0 1 0-1.5h3.32a4.002 4.002 0 0 1 7.86 0h3.32a.75.75 0 0 1 0 1.5Zm-1.43-.75a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z"></path>
+													</svg>
+												</td>
+												<td class="fs-2 align-bottom"></td>
+												<td></d>
+											</tr>
+										</c:forEach>
+									</table>
+	                    		</div>
+                    		</div>
+                    		<div class="row mt-3">
+	                    	</div>
+	                    	<div class="row">
+	                    		<div class="col-1">
+	                    			<a href="#">
+										<img src="" alt="" width="35" height="35" class="rounded-circle">
+					                </a>
+	                    		</div>
+		                    	<div class="col">
+		                    		<div class="content-input-area">
+			                    		<h5>Add a comment</h5>
+		                    		</div>
+		                    		<div id="contents">
+									</div>
+		                    	</div>
+	                    	</div>
+	                    	<div class="float-end mt-2">
+	                    		<button type="button" class="btn btn-light mr-1">
+	                    			<svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+									    <path d="M3.25 1A2.25 2.25 0 0 1 4 5.372v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.251 2.251 0 0 1 3.25 1Zm9.5 5.5a.75.75 0 0 1 .75.75v3.378a2.251 2.251 0 1 1-1.5 0V7.25a.75.75 0 0 1 .75-.75Zm-2.03-5.273a.75.75 0 0 1 1.06 0l.97.97.97-.97a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.97.97.97.97a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-.97-.97-.97.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l.97-.97-.97-.97a.75.75 0 0 1 0-1.06ZM2.5 3.25a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0ZM3.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm9.5 0a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z"></path>
+									</svg>
+	                    			Close pull request
+	                    		</button>
+	                    		<button type="button" class="btn btn-success">Comment</button>
+	                    	</div>
+                    	</div>
+                    	
+                    	<div class="col"></div>
+                    </div>
+                    <div class="commits">
+                    </div>
+                    <div class="checks">
+                    </div>
+                    <div class="files-changed">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 	
-   	<!-- toast -->
-	<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-	<!-- Editor's Style -->
-  	<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-
-	<div class="page-wrapper" id="main-wrapper" data-layout="vertical"
-		data-navbarbg="skin6" data-sidebartype="full"
-		data-sidebar-position="fixed" data-header-position="fixed">
-
-		<!--  Main wrapper -->
-		<div class="body-wrapper">
-
-			<div class="container-fluid">
-				<!--  Row 1 -->
-				<div class="row">
-
-					<jsp:include page="../repository/repositoryTab.jsp" />
-
-					<div class="issue-detail-wrap">
-						<div>
-							<div>
-								<div>
-									<div>제목</div>
-								</div>
-							</div>
-							<div>
-								<div>
-									<div>왼쪽컨텐츠</div>
-									<div>오른쪽컨텐츠</div>
-								</div>
-							</div>
-							<div>
-								<div>
-									<div id="content"></div>
-								</div>
-							</div>
-							<div>
-								<div>
-									<a href="">
-										<button>COMMENT</button>
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	
+</body>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <script>
 	const editor = new toastui.Editor({
-	    el: document.querySelector('#content'), // 에디터를 적용할 요소 (컨테이너)
-	    height: '400px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+	    el: document.querySelector('#contents'), // 에디터를 적용할 요소 (컨테이너)
+	    height: '200px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
 	    initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
 	    //initialValue: '내용을 입력해주세요.',   // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
-	    //previewStyle: 'vertical',             // 마크다운 프리뷰 스타일 (tab || vertical)
-	    breaks: true,
+// 	    previewStyle: 'vertical',             // 마크다운 프리뷰 스타일 (tab || vertical)
+// 	    breaks: true,
 	    toolbarItems: [
 	          ['heading', 'bold', 'italic', 'quote', 'code', 'link'],
 	          ['ol', 'ul', 'task'],
@@ -87,5 +165,4 @@
         ]
 	});
 </script>
-</body>
 </html>
