@@ -25,4 +25,6 @@ public interface PrService {
 	int updateMyPr(Pr p);
 	int deleteMyPr(int prNo);
 	ArrayList<Pr> prTopList();
+	String selectMyStack(int prNo);
+	ArrayList<Stack> myStackList(String[] myStackArr); 
 }

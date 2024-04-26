@@ -95,9 +95,11 @@
   	select mem_id
   	  from member
   	 where team = #{team}
+  	   and status = 'Y'
   </select>
   
   <select id="checkMemId" resultType="string">
+ 	<if test="#{}"></if>
   	select alarm_type
   	  from alarmlist
   	 where mem_id = #{memId}
@@ -109,6 +111,21 @@
   	select sum(alarm_yn)
   	  from alarmlist
   	 where rmem_id = #{memId}
+  	   and status = 'Y'
+  </select>
+  
+  <update id="prApplyCancel">
+  	update alarmlist
+  	   set status = 'N'
+  	 where mem_id = #{memId}
+  	   and rmem_id = #{rmemId}
+  	   and alarm_type = #{alarmType}
+  </update>
+  
+  <select id="checkInsert" resultType="_int">
+  	select count(*)
+  	  from alarmlist
+  	 where alarm_content_no = #{alarmContentNo}
   </select>
   
 </mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="CalendarMapper">
+  
+  <resultMap type="Calendar" id="CalendarResult">
+  	<result column="cal_no" property="calNo"/>
+  	<result column="cal_title" property="calTitle"/>
+  	<result column="start_date" property="startDate"/>
+  	<result column="end_date" property="endDate"/>
+  	<result column="groupid" property="groupId"/>
+  	<result column="background_col" property="backgroundCol"/>
+  	<result column="status" property="status"/>
+  </resultMap>
+
+	
+	<insert id="insertCalEvent">
+		insert
+		  into calendar
+		  (
+		  	cal_no
+		  , cal_title
+		  , start_date
+		  , end_date
+		  , groupid
+		  , background_col
+		  )
+		  values
+		  (
+		  	seq_cdno.nextval
+		  , #{calTitle}
+		  , #{startDate}
+		  , #{endDate}
+		  , #{groupId}
+		  , #{backgroundCol}
+		  )
+		  
+	</insert>
+	
+	<select id="selectCalEvent" resultMap="CalendarResult">
+		select
+			   cal_no
+			 , cal_title
+			 , (substr(start_date,0,10)||'T'||substr(start_date,12,8)) as start_date
+			 , (substr(end_date,0,10)||'T'||substr(end_date,12,8)) as end_date
+			 , groupid
+			 , background_col
+		  from calendar
+		 where status = 'Y'
+		   and groupid = #{groupId}
+		
+	</select>
+	
+	
+	<select id="checkInsert" resultType="_int">
+		select count(*)
+		  from calendar
+		 where cal_title=#{calTitle}
+		   and start_date=#{startDate}
+		   and end_date=#{endDate}
+		   and status='Y'
+	</select>
+	
+	
+	<update id="updateCalEvent">
+		update calendar
+		   set start_date=#{startDate}
+		   	 , end_date=#{endDate}
+		 where cal_no=#{calNo}
+	</update>
+	
+	<update id="deleteCalEvent">
+		update calendar
+		   set status='N'
+		 where cal_no=#{eNo}
+	</update>
+	
+	<select id="checkNo" resultType="_int">
+		select *
+		  from (select cal_no
+                  from calendar
+                 order
+                    by cal_no desc)
+         where rownum = 1
+	</select>
+</mapper>

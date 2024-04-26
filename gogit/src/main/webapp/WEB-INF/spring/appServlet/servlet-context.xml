@@ -25,6 +25,9 @@
 	
 	<websocket:handlers allowed-origin-patterns="*">
 		<websocket:mapping handler="myHandler" path="alarm.ws"/>
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
 		<websocket:sockjs websocket-enabled="true"/>
 	</websocket:handlers>
     <beans:bean id="myHandler" class="com.kh.gogit.common.websockethandler.handler.WebSocketHandler"/>
