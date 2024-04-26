@@ -39,7 +39,22 @@
                 <div class="row">
                 	<jsp:include page="../repository/repositoryTab.jsp"/>
                 
-                	<h1>${ pullrq.pullTitle } <span>#${ pullrq.pullNo }</span></h1>
+                	<h1 id="origin-title-area">
+                		${ pullrq.pullTitle } <span class="me-2 text-black-50 fw-light">#${ pullrq.pullNo }</span>
+                		<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit" style="cursor: pointer" onclick="modifyTitle();">
+	                		<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+	                		<path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+	                		<path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+	                		<path d="M16 5l3 3" />
+                		</svg>	
+               		</h1>
+               		<div id="new-title-area" class="mb-2">
+               			<form action="update.pullrq" method="post">
+	               			<input type="text" class="form-control form-control-lg w-50 me-1" id="newTitle" name="pullTitle" style="display: inline-block">
+	               			<button type="submit" class="btn btn-sm btn-primary">Save</button>
+	               			<button type="button" class="btn btn-sm btn-dark" onclick="cancelModifyTitle();">Cancel</button>
+               			</form>
+               		</div>
                     <h4>
                     	<c:choose>
                     		<c:when test="${ pullrq.status eq 'open' }">
@@ -267,6 +282,7 @@
 		$("#merge-form").css("display", "none");
 		$("#confirm-merge-btn").css("display", "none");
 		$("#cancel-merge-btn").css("display", "none");
+		$("#new-title-area").css("display", "none");
 	})
 	
 	function showMergeForm() {
@@ -302,6 +318,17 @@
 		} else {
 			$("input[name=message]").val($("textarea[name=commitMessage]").val());
 		}
+	}
+	
+	function modifyTitle() {
+		$("#origin-title-area").css("display", "none");
+		$("#new-title-area").css("display", "");
+		$("#new-title-area").val("${ pullrq.pullTitle }");
+	}
+	
+	function cancelModifyTitle() {
+		$("#new-title-area").css("display", "none");
+		$("#origin-title-area").css("display", "");
 	}
 </script>
 </html>
