@@ -21,7 +21,7 @@
     for (let i = 0; i < commitArr.length; i++) {
       events.push({
         title: commitmsgArr[i],
-        start: commitArr[i]
+        start: commitArr[i]      
       });
     }
 
@@ -30,7 +30,7 @@
       initialView: "dayGridMonth",
       height: "700px",
       slotMinTime: "08:00", // Day 캘린더에서 시작 시간
-      slotMaxTime: "20:00",
+      slotMaxTime: "23:00",
       navLinks: true,
       headerToolbar: {
         left: "prev,next today",
@@ -43,14 +43,6 @@
           dayMaxEventRows: 5, // 한 날짜에 표시할 이벤트 행의 최대 수
         }
       },
-    
-
-      eventRender: function (info) {
-          // 특정 날짜의 이벤트에만 클래스 추가
-          if (info.event.start === '2024-04-21') { // 특정 날짜
-            info.el.classList.add('fc-event'); // 원하는 클래스 추가
-          }
-        },
         
       locale: "ko",
       buttonText: {
@@ -69,7 +61,7 @@
       eventRemove: function (e) {
       },
       events: events,
-      select: function (selectDay) {
+      select: function (selectDay) {          
         $("#startDate").val(selectDay.startStr);
 
         $("#calendarModal").modal("show");
@@ -92,14 +84,13 @@
         });
       },
       eventClick: function (e) {
+    	  console.log(e)
         let con = confirm("이벤트 삭제 하시겠습니까?");
         if (con) {
           e.event.remove();
         }
       },
- 
     });   
-
     calendar.render();
   });
 </script>
@@ -130,7 +121,7 @@
              <c:forEach var="r" items="${rpList }">
              
 			  <li class="nav-item">
-			    <a class="nav-link active" aria-current="page" href="#">${r.repoName }</a>
+			    <a class="nav-link active" aria-current="page" href="commitcal.cl?owner=${ r.owner }&repoName=${r.repoName}">${r.repoName }</a>
 			  </li>
 			  
 <!-- 			  <li class="nav-item"> -->
