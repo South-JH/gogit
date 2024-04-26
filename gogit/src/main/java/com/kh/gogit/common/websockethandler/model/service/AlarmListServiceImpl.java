@@ -61,4 +61,10 @@ public class AlarmListServiceImpl implements AlarmListService{
 		return aDao.alCircle(sqlSession,memId);
 	}
 
+	@Override
+	public int prApplyCancel(AlarmList al) {
+		// TODO Auto-generated method stub
+		return aDao.prApplyCancel(sqlSession,al);
+	}
+
 }

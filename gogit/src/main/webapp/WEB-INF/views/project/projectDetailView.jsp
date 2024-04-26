@@ -268,7 +268,21 @@
                         							
                         						}
                         					});
-                                    	}                                  	                    
+                                    	}
+                                    	
+                                    	function deleteAlarm(){
+                                    		$.ajax({
+                                    			url:"alDelete.al",
+                                    			data:{
+                                    				memId:"${loginUser.memId}",
+                                    				rmemId:"${p.proWriter}",
+                                    				alarmType:"project",
+                                    			},
+                                    			success:function(data){
+                                    				console.log(data)
+                                    			}
+                                    		})
+                                    	}
                                     </script>
   
                                 </div>

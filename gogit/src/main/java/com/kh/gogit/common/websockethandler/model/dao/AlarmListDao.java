@@ -19,7 +19,15 @@ public class AlarmListDao {
 
 	public int insertAlarm(SqlSessionTemplate sqlSession, AlarmList al) {
 		// TODO Auto-generated method stub
-		return sqlSession.insert("alarmMapper.insertAlarm",al);
+		int result = sqlSession.selectOne("alarmMapper.checkInsert",al);
+		System.out.println(result);
+		if(result>0) {
+			return 0;
+		}else {
+			return sqlSession.insert("alarmMapper.insertAlarm",al);
+		}
+		
+		
 	}
 
 	public ArrayList<AlarmList> selectAlarmList(SqlSessionTemplate sqlSession, String memId) {
@@ -62,7 +70,22 @@ public class AlarmListDao {
 
 	public int alCircle(SqlSessionTemplate sqlSession, String memId) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("alarmMapper.alCircle",memId);
+		try {
+			return sqlSession.selectOne("alarmMapper.alCircle",memId);
+		} catch (NullPointerException e) {
+			return 0;
+		}
+		
+	}
+
+	public int prApplyCancel(SqlSessionTemplate sqlSession, AlarmList al) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("alarmMapper.prApplyCancel", al);
+	}
+
+	public int rinsertAlarm(SqlSessionTemplate sqlSession, AlarmList al) {
+		return sqlSession.insert("alarmMapper.insertAlarm",al);
+		
 	}
 
 }

@@ -114,6 +114,22 @@ public class PrServiceImpl implements PrService{
 
 
 
+	@Override
+	public String selectMyStack(int prNo) {
+		// TODO Auto-generated method stub
+		return pDao.selectMyStack(sqlSession,prNo);
+	}
+
+
+
+	@Override
+	public ArrayList<Stack> myStackList(String[] myStackArr) {
+		// TODO Auto-generated method stub
+		return pDao.myStackList(sqlSession,myStackArr);
+	}
+
+
+
 
 
 }

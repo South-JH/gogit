@@ -191,4 +191,12 @@ public class prListViewController {
 		return list;
 	}
 	
+	@ResponseBody
+	@RequestMapping("mystack.mp")
+	public ArrayList<Stack> selectMyStack(int prNo) {
+		String myStack = prService.selectMyStack(prNo);
+		String[] myStackArr = myStack.split(",");
+		ArrayList<Stack> list = prService.myStackList(myStackArr);
+		return list;
+	}
 }
