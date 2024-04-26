@@ -69,4 +69,12 @@ public class AlarmListController {
 		return result;
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping("alDelete.al")
+	public String prApplyCancel(AlarmList al) {
+		int result = aService.prApplyCancel(al);
+		return result>0?"success":"fail";
+	}
+
 }

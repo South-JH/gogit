@@ -94,6 +94,23 @@ public class PrDao {
 	}
 
 
+	public String selectMyStack(SqlSessionTemplate sqlSession, int prNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("prMapper.selectMyStack",prNo);
+	}
+
+
+	public ArrayList<Stack> myStackList(SqlSessionTemplate sqlSession, String[] myStackArr) {
+		// TODO Auto-generated method stub
+		ArrayList<Stack> list = new ArrayList<Stack>();
+		for(int i=0;i<myStackArr.length;i++) {
+			list.addAll((ArrayList)sqlSession.selectList("prMapper.myStackList",myStackArr[i]));
+		}
+		
+		return list;
+	}
+
+
 
 
 

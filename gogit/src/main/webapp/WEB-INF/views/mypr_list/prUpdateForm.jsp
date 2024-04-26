@@ -24,40 +24,25 @@
 		height: auto;
 		margin-top: 50px;
 	}
-	#stack-wrap li {
-        width: 120px;
+	 #stack-wrap li {
+        width: 50px;
         list-style-type: none;
         display: inline-block;
-        color: white;
-        font-size: 15px;
-        margin: 5px;
-        border-radius: 50%;
-        text-align: center;
+        margin:5px;
         cursor: pointer;
       }
-	#front li {
-        background-color: #0275d8;
-      }
-      #back li {
-        background-color: #5cb85c;
-      }
-      #mobile li {
-        background-color: #f0ad4e;
-      }
-      #etc li {
-        background-color: #d9534f;
-      }
+     
+
       #myStack li {
-        width: 120px;
+        width: 50px;
         list-style-type: none;
         display: inline-block;
-        color: white;
-        font-size: 15px;
-        margin: 5px;
-        border-radius: 50%;
-        text-align: center;
+        margin:5px;
         cursor: pointer;
-        background-color: #5bc0de;
+      }
+      
+      li>img{
+      	width: 50px;
       }
 </style>
 </head>
@@ -169,266 +154,200 @@
     </div>
     
     <script>
-	    
-	    let front = [];
-	    let back = [];
-	    let mobile = [];
-	    let etc = [];
-	    	
+    	let front=[];
+    	let back=[];
+    	let mobile=[];
+    	let etc=[];
+    	let frontImg = [];
+        let backImg = [];
+        let mobileImg = [];
+        let etcImg = [];
+        let stackArr=[];
+        let myfront=[];
+        let myback=[];
+        let mymobile=[];
+        let myetc=[];
     
-    	$(function(){
-    		$("#stackName").val(stackArr);
-    		selectStack();
-    		let myPrTime = new Date('${pr.prTime}');
+	    $(function(){	    	
+	    	myStackList()
+	    	$("#prTime").val('${pr.prTime}');
+	    })
+	    
+	    function allstackList(){
+    	  $.ajax({
+    		  url:"select.st",
+    		  success:function(data){
+    			  
+    			  for(let i in data){
+    				  switch (data[i].stackType) {
+					case "프론트엔드":
+						front.push(data[i].stackName);
+						frontImg.push(data[i].stackImg);
+						for(let i in myfront){
+							let num = front.indexOf(myfront[i])
+							if(num != -1){
+								front.splice(num,1);
+								frontImg.splice(num,1);
+							}
+						}
+						
+						break;
+					case "백엔드":
+						back.push(data[i].stackName);
+						backImg.push(data[i].stackImg);
+						for(let i in myback){
+							let num = back.indexOf(myback[i])
+							if(num != -1){
+								back.splice(num,1);
+								backImg.splice(num,1);
+							}
+						}
+						break;
+					case "모바일":
+						mobile.push(data[i].stackName);
+						mobileImg.push(data[i].stackImg);
+						for(let i in mymobile){
+							let num = mobile.indexOf(mymobile[i])
+							if(num != -1){
+								mobile.splice(num,1);
+								mobileImg.splice(num,1);
+							}
+						}
+						break;
 
-        	$("#prTime").val(myPrTime.toISOString().substring(0,10));
-        	
-        	$("#myfront").html(myfront);
-    		$("#myback").html(myback);
-    		$("#mymobile").html(mymobile);
-    		$("#myetc").html(myetc);
+					default:
+						etc.push(data[i].stackName);
+						etcImg.push(data[i].stackImg);
+						for(let i in myetc){
+							let num = etc.indexOf(myetc[i])
+							if(num != -1){
+								etc.splice(num,1);
+								etcImg.splice(num,1);
+							}
+						}
+						break;
+					}
+    			  }
+    		
+    			  
+    			   for(let i in front){
 
-    	})
-    	
-    	
-    	
-    	
-    	 function selectStack() {
-        let frontval = "";
-        let backval = "";
-        let mobileval = "";
-        let etcval = "";
-		let result = true;
-        $.ajax({
-          url: "select.st",
-          success: function (data) {
-            Alldata = data;
-            for (let i in data) {
-              switch (data[i].stackType) {
-                case "프론트엔드":
-                  front.push(data[i].stackName);
-                  break;
-                case "백엔드":
-                  back.push(data[i].stackName);
-                  break;
-                case "모바일":
-                  mobile.push(data[i].stackName);
-                  break;
-
-                default:
-                  etc.push(data[i].stackName);
-                  break;
-              }
-            }
-
-            for (let i in front) {
-            	for(let j in stackArr){
-            		if(front[i].indexOf(stackArr[j])!=-1){
-            			result = false;
-            		}
-            	}
-              if(result){
-            	  frontval += "<li>" + front[i] + "</li>";
-              }
-              result = true;
-            	 
-            }
-            $("#front").html(frontval);
-
-            for (let i in back) {
-            	for(let j in stackArr){
-            		if(back[i].indexOf(stackArr[j])!=-1){
-            			result = false;
-            		}
-            		
-            	}
-            	if(result){
-            	backval += "<li>" + back[i] + "</li>";
-            	
-            	}
-            	result = true;
-            }
-            $("#back").html(backval);
-
-            for (let i in mobile) {
-            	for(let j in stackArr){
-            		if(mobile[i].indexOf(stackArr[j])!=-1){
-            			result = false;
-            		}
-            		
-            	}
-            	if(result){
-        			mobileval += "<li>" + mobile[i] + "</li>";
-        		}
-        		result =true;
-            }
-            $("#mobile").html(mobileval);
-
-            for (let i in etc) {
-            	for(let j in stackArr){
-            		if(etc[i].indexOf(stackArr[j])!=-1){
-            			result = false;
-            		}
-            		
-            	}
-            	if(result){
-        			etcval += "<li>" + etc[i] + "</li>";
-        		}
-        		result = true;
-            }
-            $("#etc").html(etcval);
-          },
-        });
+    				  $("#front").append("<li><img src='"+frontImg[i]+"' title='"+front[i]+"'></li>")
+    			  }
+    			   for(let i in back){
+     				  $("#back").append("<li><img src='"+backImg[i]+"' title='"+back[i]+"'></li>")
+     			  }   	
+    			   for(let i in mobile){
+     				  $("#mobile").append("<li><img src='"+mobileImg[i]+"' title='"+mobile[i]+"'></li>")
+     			  }   	
+    			   for(let i in etc){
+     				  $("#etc").append("<li><img src='"+etcImg[i]+"' title='"+etc[i]+"'></li>")
+     			  }   	
+    		  }
+    	  })
       }
-    	
-    	
-    	let stackArr = '${ pr.stackName }'.split(",");
-    	let myfront = "";
-    	let myback= "";
-    	let mymobile = "";
-    	let myetc = "";
-    	
-    	let frontval="";
-    	let backval="";
-    	let mobileval="";
-    	let etcval="";
-    	
-    	let fval="";
-    	let bval="";
-    	let mval="";
-    	let eval="";
-    	
-    	for(let i in stackArr){
-    		switch (stackArr[i]) {
-			case "javascript":
-			case "typescript":
-			case "react":
-			case "vue":
-			case "svelte":
-			case "nextjs":
-				
-				myfront+="<li>"+stackArr[i]+"</li>"
-				break;
-			
-			case "java":
-			case "spring":
-			case "nodejs":
-			case "nestjs":
-			case "go":
-			case "kotlin":
-			case "express":
-			case "mysql":
-			case "mongodb":
-			case "python":
-			case "django":
-			case "php":
-			case "graphql":
-			case "firebase":
-				
-				myback+="<li>"+stackArr[i]+"</li>"
-				break;
-				
-			case "flutter":
-			case "swift":
-			case "eactnative":
-			case "unity":
-				
-				mymobile+="<li>"+stackArr[i]+"</li>"
-				break;
-				
-				
-				
-			default:
-				myetc+="<li>"+stackArr[i]+"</li>"
-				break;
-			}
-    		
-		}
-    	
-    	
-    	
-    	$("#myfront").on("click","li",function(){
-    		
-    		for(let i in stackArr){
-    			if(stackArr[i] == $(this).text()){
-    				stackArr.splice(i,1);
-    			}
-    		}
-    		$("#front").append("<li>"+ $(this).text()+"</li>")
-    		
-    		$(this).remove();
-    		$("#stackName").val(stackArr);
-    	})
-    	$("#myback").on("click","li",function(){
-    		
-    		for(let i in stackArr){
-    			if(stackArr[i] == $(this).text()){
-    				stackArr.splice(i,1);
-    			}
-    		}
-    		$("#back").append("<li>"+ $(this).text()+"</li>")
-    		$(this).remove();
-    		$("#stackName").val(stackArr);
-    	})
-    	$("#mymobile").on("click","li",function(){
-    		
-    		for(let i in stackArr){
-    			if(stackArr[i] == $(this).text()){
-    				stackArr.splice(i,1);
-    			}
-    		}
-    		$("#mobile").append("<li>"+ $(this).text()+"</li>")
-    		$(this).remove();
-    		$("#stackName").val(stackArr);
-    	})
-    	$("#myetc").on("click","li",function(){
-    		
-    		for(let i in stackArr){
-    			if(stackArr[i] == $(this).text()){
-    				stackArr.splice(i,1);
-    			}
-    		}
-    		$("#etc").append("<li>"+ $(this).text()+"</li>")
-    		$(this).remove();
-    		$("#stackName").val(stackArr);
-    	})
-    	
-    	
-    	$("#front").on("click", "li", function () {
-   			stackArr.push($(this).text());
-   			$("#myfront").append("<li>"+$(this).text()+"</li>")
-   			frontval="";
-   			
-   			$(this).remove();
-   			$("#stackName").val(stackArr);
+	    
+	    function myStackList(){
+	    	$.ajax({
+	    		url:"mystack.mp",
+	    		data:{
+	    			prNo:"${ pr.prNo }"
+	    		},
+	    		success:function(data){
+	    			for(let i in data){
+	    				switch (data[i].stackType) {
+						case "프론트엔드":
+							$("#myfront").append("<li><img src='"+data[i].stackImg+"' title='"+data[i].stackName+"'>")
+							stackArr.push(data[i].stackName)
+							myfront.push(data[i].stackName)
+							break;
+						case "백엔드":
+							$("#myback").append("<li><img src='"+data[i].stackImg+"' title='"+data[i].stackName+"'>")
+							stackArr.push(data[i].stackName)
+							myback.push(data[i].stackName)
+							break;
+						case "모바일":
+							$("#mymobile").append("<li><img src='"+data[i].stackImg+"' title='"+data[i].stackName+"'>")
+							stackArr.push(data[i].stackName)
+							mymobile.push(data[i].stackName)
+							break;
 
-        });
-        $("#back").on("click", "li", function () {
-        	stackArr.push($(this).text());
-        	$("#myback").append("<li>"+$(this).text()+"</li>")
-        	backval="";
-   			$(this).remove();
-   			$("#stackName").val(stackArr);
-   	
-        });
-        $("#mobile").on("click", "li", function () {
-        	stackArr.push($(this).text());
-        	$("#mymobile").append("<li>"+$(this).text()+"</li>")
-        	mobileval="";
-   			$(this).remove();
-   			$("#stackName").val(stackArr);
-   			
-        });
-        $("#etc").on("click", "li", function () {
-        	stackArr.push($(this).text());
-        	$("#myetc").append("<li>"+$(this).text()+"</li>")
-        	etcval="";
-   			$(this).remove();
-   			$("#stackName").val(stackArr);
-   		
-        });
-        
-        
+						default:
+							$("#myetc").append("<li><img src='"+data[i].stackImg+"' title='"+data[i].stackName+"'>")
+							stackArr.push(data[i].stackName)
+							myetc.push(data[i].stackName)
+							break;
+						}
+	    			}
+	    			allstackList()
+	    		}
+	    	})
+	    }
+	    
+	    $("#myfront").on("click","li",function(){
+	    	let num = stackArr.indexOf($(this).children().attr("title"))
+	    	if(num != -1){
+	    		stackArr.splice(num,1);
+	    	}
+	    	$("#front").append("<li>"+$(this).html()+"</li>")
+	    	$(this).remove();
+	    	$("#stackName").val(stackArr);
+	    })
+	    $("#myback").on("click","li",function(){
+	    	let num = stackArr.indexOf($(this).children().attr("title"))
+	    	if(num != -1){
+	    		stackArr.splice(num,1);
+	    	}
+	    	$("#back").append("<li>"+$(this).html()+"</li>");
+	    	$(this).remove();
+	    	$("#stackName").val(stackArr);
+	    })
+	    $("#mymobile").on("click","li",function(){
+	    	let num = stackArr.indexOf($(this).children().attr("title"))
+	    	if(num != -1){
+	    		stackArr.splice(num,1);
+	    	}
+	    	$("#mobile").append("<li>"+$(this).html()+"</li>");
+	    	$(this).remove();
+	    	$("#stackName").val(stackArr);
+	    })
+	    $("#myetc").on("click","li",function(){
+	    	let num = stackArr.indexOf($(this).children().attr("title"))
+	    	if(num != -1){
+	    		stackArr.splice(num,1);
+	    	}
+	    	$("#etc").append("<li>"+$(this).html()+"</li>");
+	    	$(this).remove();
+	    	$("#stackName").val(stackArr);
+	    })
+	    
+	    
+	    
+	    $("#front").on("click","li",function(){
+	    	stackArr.push($(this).children().attr("title"))
+	    	$("#myfront").append("<li>"+$(this).html()+"</li>")
+	    	$(this).remove();
+	    	$("#stackName").val(stackArr);
+	    })
+	    $("#back").on("click","li",function(){
+	    	stackArr.push($(this).children().attr("title"))
+	    	$("#myback").append("<li>"+$(this).html()+"</li>")
+	    	$(this).remove();
+	    	$("#stackName").val(stackArr);
+	    })
+	    $("#mobile").on("click","li",function(){
+	    	stackArr.push($(this).children().attr("title"))
+	    	$("#mymobile").append("<li>"+$(this).html()+"</li>")
+	    	$(this).remove();
+	    	$("#stackName").val(stackArr);
+	    })
+	    $("#etc").on("click","li",function(){
+	    	stackArr.push($(this).children().attr("title"))
+	    	$("#myetc").append("<li>"+$(this).html()+"</li>")
+	    	$(this).remove();
+	    	$("#stackName").val(stackArr);
+	    })
+	    
     </script>
 </body>
 </html>

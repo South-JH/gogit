@@ -15,6 +15,7 @@
 		<typeAlias type="com.kh.gogit.project.model.vo.Project" alias="Project"/>
 		<typeAlias type="com.kh.gogit.project.model.vo.Stack" alias="StackA"/>
 		<typeAlias type="com.kh.gogit.common.websockethandler.model.vo.AlarmList" alias="AlarmList"/>
+		<typeAlias type="com.kh.gogit.project.model.vo.Calendar" alias="Calendar"/>
 	</typeAliases>
 	
 	<mappers>
@@ -23,6 +24,7 @@
 		<mapper resource="/mappers/pr-mapper.xml"/>
 		<mapper resource="/mappers/project-mapper.xml"/>
 		<mapper resource="/mappers/alarm-mapper.xml"/>
+		<mapper resource="/mappers/calendar-mapper.xml"/>
 	</mappers>
 
 </configuration>

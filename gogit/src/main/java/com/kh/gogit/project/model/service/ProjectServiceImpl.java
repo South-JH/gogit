@@ -135,5 +135,10 @@ public class ProjectServiceImpl implements ProjectService{
 	public ArrayList<Project> applycompleteList(PageInfo pi) {
 		return pDao.applycompleteList(sqlSession, pi);
 	}
+
+	@Override
+	public ArrayList<Member> selectProjectMemberList() {
+		return pDao.selectProjectMemberList(sqlSession);
+	}
 	
 }

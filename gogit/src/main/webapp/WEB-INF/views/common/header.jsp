@@ -120,7 +120,7 @@
               <div>
               	<div class="header-searchbar">
               		<div>
-              			<i class="ti ti-search" onclick="searchjm();"></i>
+              			<i class="ti ti-search"></i>
               		</div>
                   <script>
                     function searchjm(){
@@ -288,14 +288,46 @@
 										
 							if(data[i].memId === data[i].rmemId){
 								value+="<button class='btn btn-secondary' style='width:120px'>"
-											+"<a href='"+data[i].alarmTitle+"' target='_blank'>회의생성</a>"
+											+"<a href='"+data[i].alarmTitle+"' target='_blank' onclick='zoUpdate("+data[i].alarmNo+");'>회의생성</a>"
 									  +"</button>"
 							}else{
-								value+="<button class='btn btn-success' style='width:120px'><a href='"+data[i].alarmTitle+"' target='_blank'>회의참가</a>"
+								value+="<button class='btn btn-success' style='width:120px'><a href='"+data[i].alarmTitle+"' target='_blank' onclick='zoUpdate("+data[i].alarmNo+");'>회의참가</a>"
 							}
 							value += "</div>";
 
 							break;
+						case "calendar":
+							value += "<div>";
+							if(data[i].alarmYn == 1){
+								value += "<li class='list-group-item active' onclick='readAl(this); zoUpdate("+data[i].alarmNo+");'>캘린더에 '"+data[i].alarmTitle+"' 일정이 등록 되었습니다.'";
+							}else{
+								value += "<li class='list-group-item' onclick='readAl(this); zoUpdate("+data[i].alarmNo+");'>캘린더에 '"+data[i].alarmTitle+"' 일정이 등록 되었습니다.'";
+							}
+							value +="<input type='hidden' value='"+data[i].memId+"'>"
+							+"<input type='hidden' value='"+data[i].alarmNo+"'> </li>"
+							break;
+						case "ucalendar":
+							value += "<div>";
+							if(data[i].alarmYn == 1){
+								value += "<li class='list-group-item active' onclick='readAl(this); zoUpdate("+data[i].alarmNo+");'>캘린더에 '"+data[i].alarmTitle+"' 일정이 수정 되었습니다.'";
+							}else{
+								value += "<li class='list-group-item' onclick='readAl(this); zoUpdate("+data[i].alarmNo+");'>캘린더에 '"+data[i].alarmTitle+"' 일정이 수정 되었습니다.'";
+							}
+							value +="<input type='hidden' value='"+data[i].memId+"'>"
+							+"<input type='hidden' value='"+data[i].alarmNo+"'> </li>"
+							break;
+
+						case "dcalendar":
+							value += "<div>";
+							if(data[i].alarmYn == 1){
+								value += "<li class='list-group-item active' onclick='readAl(this); zoUpdate("+data[i].alarmNo+");'>캘린더에 '"+data[i].alarmTitle+"' 일정이 삭제 되었습니다.'";
+							}else{
+								value += "<li class='list-group-item' onclick='readAl(this); zoUpdate("+data[i].alarmNo+");'>캘린더에 '"+data[i].alarmTitle+"' 일정이 삭제 되었습니다.'";
+							}
+							value +="<input type='hidden' value='"+data[i].memId+"'>"
+							+"<input type='hidden' value='"+data[i].alarmNo+"'> </li>"
+							break;
+
 						default:
 							break;
 						}
@@ -311,7 +343,15 @@
     	}
     	
     	
-    
+    	function zoUpdate(aNo){
+    		$.ajax({
+    			url:"delete.al",
+    			data:{alarmNo:aNo},
+    			success:function(data){
+    				console.log(data)
+    			}
+    		})
+    	}
     	
     	  function apply(num,e){
     		 $.ajax({
@@ -347,7 +387,7 @@
     	  }
     	  
     	  
-    	  function cancel(e){
+    	  function alcancel(e){
 
     		   $.ajax({
     			  url:"alcancel.pr",
@@ -404,7 +444,6 @@
     	socket = new SockJS("alarm.ws");
 
         socket.onopen = function () {
-          
 
         };
 
@@ -413,7 +452,7 @@
         };
 
         socket.onmessage = function onMessage(e) {
-        	alertify.alert(e.data);
+        	console.log(e.data)
         };
     </script>
   </body>
