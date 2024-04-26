@@ -28,9 +28,10 @@ public class CommitController {
 	private CommitServiceImpl cService;
 
 	@RequestMapping("view.cm")
-	public String commitListView(Model model, String repoName, String owner) {
+	public String commitListView(Model model, String repoName, String owner, String visibility) {
 		model.addAttribute("repoName", repoName);
 		model.addAttribute("owner", owner);
+		model.addAttribute("visibility", visibility);
 		return "commit/commitList";
 	}
 	
@@ -40,10 +41,11 @@ public class CommitController {
 		Member m = (Member)session.getAttribute("loginUser");
 		String commitList = cService.getCommitList(m, repoName, owner);
 		
-		JsonArray commitArr = JsonParser.parseString(commitList).getAsJsonArray();
 		ArrayList<Commit> cList = new ArrayList<Commit>();
 		
 		if(commitList != null) {
+			
+			JsonArray commitArr = JsonParser.parseString(commitList).getAsJsonArray();
 			
 			for(int i=0; i<commitArr.size(); i++) {
 				

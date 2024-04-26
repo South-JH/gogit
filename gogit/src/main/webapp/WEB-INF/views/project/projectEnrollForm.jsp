@@ -226,7 +226,7 @@
 									
 									editor.on('change', function() {
 										const contents = editor.getMarkdown(); // 에디터 내용 가져오기
-										document.querySelector('#contents').innerText = contents; // 화면에 보이는 div에 내용 업데이트
+										// document.querySelector('#contents').innerText = contents; // 화면에 보이는 div에 내용 업데이트
 										console.log(contents); // 콘솔에 내용 출력
 									});
 									
@@ -238,26 +238,12 @@
 									}
 								</script>
 
-
 								<div style="float: right;">
-									<button type="submit" class="btn btn-primary" style="background-color: rgb(2 56 75);" onclick="submitForm()">작성하기</button><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);">초기화</button><a class="btn btn-primary" style="background-color: rgb(4, 91, 122);" onclick="history.back();">이전으로</a>
+									<button type="submit" class="btn btn-primary" style="background-color: rgb(2 56 75);" onclick="submitForm()">작성하기</button><a class="btn btn-primary" style="background-color: rgb(4, 91, 122);" onclick="history.back();">이전으로</a>
 								</div>							
 							</div>
 						</form>	
 						</div>
-
-						<script>
-							
-
-
-
-
-						</script>
-
-
-
-
-
 						<jsp:include page="../common/rightBar.jsp"/>						
 					</div>
 	          </div>

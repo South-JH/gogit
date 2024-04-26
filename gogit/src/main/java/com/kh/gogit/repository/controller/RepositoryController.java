@@ -84,6 +84,7 @@ public class RepositoryController {
         	rp.setOpenIssue(repoArr.get(i).getAsJsonObject().get("open_issues_count").getAsString());
         	rp.setUpdateAt(repoArr.get(i).getAsJsonObject().get("updated_at").getAsString().substring(0, 10));
         	rp.setOwner(repoArr.get(i).getAsJsonObject().get("owner").getAsJsonObject().get("login").getAsString());
+        	rp.setPermission(repoArr.get(i).getAsJsonObject().get("permissions").getAsJsonObject().get("push").getAsString());
         	
         	rpList.add(rp);
         }
@@ -158,16 +159,15 @@ public class RepositoryController {
 	}
 	
 	@RequestMapping("detail.rp")
-	public String repoDetailView(Model model, HttpSession session, String repoName, String visibility, String owner) {
+	public String repoDetailView(Model model, HttpSession session, String repoName, String visibility, String owner, String permission) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		//System.out.println(repoName);
 		String repoContent = rService.repoDetailView(m, repoName, owner);
 		
-		JsonArray repoArr = JsonParser.parseString(repoContent).getAsJsonArray();
-		ArrayList<Repository> rpList = new ArrayList<Repository>();
-		
 		if(repoContent != null) {
+			JsonArray repoArr = JsonParser.parseString(repoContent).getAsJsonArray();
+			ArrayList<Repository> rpList = new ArrayList<Repository>();
 			
 			for(int i=0; i<repoArr.size(); i++) {
 				
@@ -181,32 +181,41 @@ public class RepositoryController {
 				rpList.add(rp);
 			}
 			
-			model.addAttribute("repoName", repoName);
-			model.addAttribute("visibility", visibility);
-			model.addAttribute("owner", owner);
 			model.addAttribute("rpList", rpList);
+			
 		} else {
 			System.out.println("컨텐츠없음!");
 		}
         
-        String collaboratorList = rService.collaboratorList(m, repoName, owner);
-        JsonArray colArr = JsonParser.parseString(collaboratorList).getAsJsonArray();
-        ArrayList<Repository> list = new ArrayList<Repository>();
-        
-        if(collaboratorList != null) {
-        	
-        	for(int i=0; i<colArr.size(); i++) {
-        		
-        		Repository rp = new Repository();
-        		rp.setCollaborator(colArr.get(i).getAsJsonObject().get("login").getAsString());
-        		rp.setAvatarUrl(colArr.get(i).getAsJsonObject().get("avatar_url").getAsString());
-        		
-        		list.add(rp);
-        		//System.out.println(list);
-        	}
-        } else {
-        	System.out.println("협업자없음!");
-        }
+		model.addAttribute("repoName", repoName);
+		model.addAttribute("visibility", visibility);
+		model.addAttribute("owner", owner);
+		model.addAttribute("permission", permission);
+		//System.out.println(permission);
+		
+		ArrayList<Repository> list = new ArrayList<Repository>();
+		if(permission.equals("true")) {
+			
+			String collaboratorList = rService.collaboratorList(m, repoName, owner);
+			
+			JsonArray colArr = JsonParser.parseString(collaboratorList).getAsJsonArray();
+			
+			if(collaboratorList != null) {
+				
+				for(int i=0; i<colArr.size(); i++) {
+					
+					Repository rp = new Repository();
+					rp.setCollaborator(colArr.get(i).getAsJsonObject().get("login").getAsString());
+					rp.setAvatar(colArr.get(i).getAsJsonObject().get("avatar_url").getAsString());
+					
+					list.add(rp);
+					//System.out.println(list);
+				}
+			} else {
+				System.out.println("협업자없음!");
+				return null;
+			}
+		}
 
         model.addAttribute("list", list);
         
@@ -214,45 +223,55 @@ public class RepositoryController {
 	}
 	
 	@RequestMapping(value="selectContent.rp", produces="application/json; charset=UTF-8")
-	public void getSubContent(HttpServletResponse response, HttpSession session, String repoName, String path, String owner) throws JsonIOException, IOException {
+	public void getSubContent(HttpServletResponse response, HttpSession session, String repoName, String path, String owner, String repoType) throws JsonIOException, IOException {
 		//System.out.println(owner);
+		//System.out.println(repoType);
 		Member m = (Member)session.getAttribute("loginUser");
 		String subContent = rService.getSubContent(m, repoName, path, owner);
 		
-		JsonElement element = JsonParser.parseString(subContent);
-		ArrayList<Repository> rpList = new ArrayList<Repository>();
-		
-		if(element.isJsonArray()) {
-			// 데이터가 배열인 경우, 배열로 처리
+		if("file".equals(repoType)) {
 			
-			JsonArray repoArr = JsonParser.parseString(subContent).getAsJsonArray();
-			
-			for(int i=0; i<repoArr.size(); i++) {
-				
-				Repository rp = new Repository();
-				populateSubContent(repoArr.get(i).getAsJsonObject(), rp);
-		        rpList.add(rp);
-				
-			}
-			
-		} else if(element.isJsonObject()) {
-			// 데이터가 객체인 경우, 객체로 처리
-			
-			Repository rp = new Repository();
-			populateSubContent(element.getAsJsonObject(), rp);
-		    rpList.add(rp);
+			response.setContentType("text/html; charset=utf-8");
+			response.getWriter().print(subContent);
 			
 		} else {
-			System.out.println("객체도 배열도 아니면 뭐냐");
+		
+			JsonElement element = JsonParser.parseString(subContent);
+			ArrayList<Repository> rpList = new ArrayList<Repository>();
+			
+			if(element.isJsonArray()) {
+				// 데이터가 배열인 경우, 배열로 처리
+				
+				JsonArray repoArr = JsonParser.parseString(subContent).getAsJsonArray();
+				
+				for(int i=0; i<repoArr.size(); i++) {
+					
+					Repository rp = new Repository();
+					populateSubContent(repoArr.get(i).getAsJsonObject(), rp);
+			        rpList.add(rp);
+					
+				}
+				
+			} else if(element.isJsonObject()) {
+				// 데이터가 객체인 경우, 객체로 처리
+				
+				Repository rp = new Repository();
+				populateSubContent(element.getAsJsonObject(), rp);
+			    rpList.add(rp);
+				
+			} else {
+				System.out.println("객체도 배열도 아니면 뭐냐");
+			}
+	        
+			HashMap<Object, Object> map = new HashMap<Object, Object>();
+			map.put("repoName", repoName);
+			map.put("rpList", rpList);
+			
+			response.setContentType("application/json; charset=utf-8");
+			
+			new Gson().toJson(map, response.getWriter());
+			
 		}
-        
-		HashMap<Object, Object> map = new HashMap<Object, Object>();
-		map.put("repoName", repoName);
-		map.put("rpList", rpList);
-		
-		response.setContentType("application/json; charset=utf-8");
-		
-		new Gson().toJson(map, response.getWriter());
 		
 	}
 	
@@ -441,6 +460,7 @@ public class RepositoryController {
 	        	rp.setOpenIssue(repoArr.get(i).getAsJsonObject().get("open_issues_count").getAsString());
 	        	rp.setUpdateAt(repoArr.get(i).getAsJsonObject().get("updated_at").getAsString().substring(0, 10));
 	        	rp.setOwner(repoArr.get(i).getAsJsonObject().get("owner").getAsJsonObject().get("login").getAsString());
+	        	rp.setPermission(repoArr.get(i).getAsJsonObject().get("permissions").getAsJsonObject().get("push").getAsString());
 	        	
 	        	rpList.add(rp);
 	        }
@@ -448,6 +468,37 @@ public class RepositoryController {
 		
 		response.setContentType("application/json; charset=utf-8");
 		new Gson().toJson(rpList, response.getWriter());
+		
+	}
+	
+	@RequestMapping("brnachContent.rp")
+	public void branchContent(HttpSession session, HttpServletResponse response, String repoName, String owner, String branch) throws JsonIOException, IOException {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		String bContent = rService.branchContent(m, repoName, owner, branch);
+		
+		ArrayList<Repository> list = new ArrayList<Repository>();
+		if(bContent != null) {
+			
+			JsonArray repoArr = JsonParser.parseString(bContent).getAsJsonArray();
+			
+			for(int i=0; i<repoArr.size(); i++) {
+				
+				Repository rp = new Repository();
+				
+				rp.setContentName(repoArr.get(i).getAsJsonObject().get("name").getAsString());
+				rp.setSha(repoArr.get(i).getAsJsonObject().get("sha").getAsString());
+				rp.setType(repoArr.get(i).getAsJsonObject().get("type").getAsString());
+				rp.setPath(repoArr.get(i).getAsJsonObject().get("path").getAsString());
+				list.add(rp);
+			}
+			
+		} else {
+			System.out.println("컨텐츠없음!");
+		}
+		
+		response.setContentType("application/json; charset=utf-8");
+		new Gson().toJson(list, response.getWriter());
 		
 	}
 	

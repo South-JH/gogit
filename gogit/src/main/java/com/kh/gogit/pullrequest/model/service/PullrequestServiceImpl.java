@@ -15,6 +15,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.JsonParser;
+import com.kh.gogit.commit.model.vo.Commit;
 import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.pullrequest.model.vo.Pullrequest;
 
@@ -138,6 +139,58 @@ public class PullrequestServiceImpl implements PullrequestService {
 			return response.getBody();
 		} else {
 			return null;
+		}
+		
+	}
+	
+	public boolean createMerge(Member loginUser, Pullrequest pullrq, Commit commit) {
+		
+		// https://api.github.com/repos/OWNER/REPO/pulls/PULL_NUMBER/merge
+		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/pulls/" + pullrq.getPullNo() + "/merge";
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(loginUser.getMemToken());
+		headers.set("Accept", "application/vnd.github+json");
+		
+		Map<String, String> body = new HashMap<String, String>();
+		body.put("commit_title", commit.getTitle());
+		body.put("commit_message", commit.getMessage());
+		
+		HttpEntity<Map<String, String>> request = new HttpEntity<Map<String,String>>(body, headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, request, String.class);
+		
+		if(response.getStatusCode() == HttpStatus.OK) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+	
+	public boolean updatePullrequest(Member loginUser, Pullrequest pullrq) {
+		
+		// https://api.github.com/repos/OWNER/REPO/pulls/PULL_NUMBER
+		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/pulls/" + pullrq.getPullNo();
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(loginUser.getMemToken());
+		headers.set("Accept", "application/vnd.github+json");
+		
+		Map<String, String> body = new HashMap<String, String>();
+		
+		HttpEntity<Map<String, String>> request = new HttpEntity<Map<String,String>>(body, headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PATCH, request, String.class);
+		
+		if(response.getStatusCode() == HttpStatus.OK) {
+			return true;
+		} else {
+			return false;
 		}
 		
 	}

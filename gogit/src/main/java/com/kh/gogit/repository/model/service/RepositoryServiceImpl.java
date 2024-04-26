@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.JsonElement;
@@ -157,6 +158,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 		headers.set("Accept", "Accept: application/vnd.github+json");
 		
 		HttpEntity<String> request = new HttpEntity<String>(headers);
+		/*
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
 		
 		String repoContent = "";
@@ -168,8 +170,27 @@ public class RepositoryServiceImpl implements RepositoryService {
 			System.out.println("content 조회 실패");
 			return null;
 		}
+		*/
 		
-		
+	    try {
+	        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+	        if (response.getStatusCode() == HttpStatus.OK && response.hasBody() && !response.getBody().isEmpty()) { // 상태코드가 200이고 데이터가 있으면
+	            return response.getBody();  
+	        } else if (response.getStatusCode() == HttpStatus.NO_CONTENT || response.getBody().isEmpty()) { // 데이터가 없으면
+	            return null;
+	        } else { // 그외에
+	            return null;
+	        }
+	    } catch (HttpClientErrorException ex) {
+	        if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
+//	            System.err.println("저장소 또는 리소스를 찾을 수 없습니다: " + ex.getResponseBodyAsString());
+	        	System.out.println("레파지토리 컨텐츠 없음!");
+	        } else {
+//	            System.err.println("클라이언트 오류: " + ex.getStatusCode() + " " + ex.getResponseBodyAsString());
+	        	System.out.println("뭔가가 오류났음!");
+	        }
+	        return null;
+	    }
 	}
 	
 	public String getSubContent(Member m, String repoName, String path, String owner) {
@@ -182,11 +203,21 @@ public class RepositoryServiceImpl implements RepositoryService {
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		
 		headers.set("Authorization", "Bearer " + m.getMemToken());
-		headers.set("Accept", "Accept: application/vnd.github+json");
+		headers.set("Accept", "Accept: application/vnd.github.html+json");
 		
 		HttpEntity<String> request = new HttpEntity<String>(headers);
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
 		
+		String subContent = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			//System.out.println(response.getBody());
+			subContent = response.getBody();
+			return subContent;
+		} else {
+			System.out.println("콘텐츠 못가져왔다");
+			return null;
+		}
+		/*
 		String subContent = "";
 		if(response.getStatusCode() == HttpStatus.OK) {
 			subContent = response.getBody();
@@ -218,7 +249,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 		
 		//System.out.println(subContent);
 		return subContent;
-		
+		*/
 	}
 	
 	private boolean isValidBase64(String str) {
@@ -426,6 +457,40 @@ public class RepositoryServiceImpl implements RepositoryService {
     		System.out.println("타입별 레파지토리 조회 실패");
     		return null;
     	}
+    	
+    }
+    
+    public String branchContent(Member m, String repoName, String owner, String branch) {
+    	
+    	String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/contents/?ref=" + branch;
+    	
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		headers.set("Authorization", "Bearer " + m.getMemToken());
+		headers.set("Accept", "Accept: application/vnd.github+json");
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		
+	    try {
+	        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+	        if (response.getStatusCode() == HttpStatus.OK && response.hasBody() && !response.getBody().isEmpty()) {
+	            return response.getBody();  
+	        } else if (response.getStatusCode() == HttpStatus.NO_CONTENT || response.getBody().isEmpty()) {
+	            return null;
+	        } else { // 그외에
+	            return null;
+	        }
+	    } catch (HttpClientErrorException ex) {
+	        if (ex.getStatusCode() == HttpStatus.NOT_FOUND) {
+	        	System.out.println("레파지토리 컨텐츠 없음!");
+	        } else {
+	        	System.out.println("뭔가가 오류났음!");
+	        }
+	        return null;
+	    }
     	
     }
     

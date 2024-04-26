@@ -15,6 +15,7 @@ public class Commit {
 	private String author;
 	private String commitDate;
 	private String avatar;
+	private String title;
 	private String message;
 	
 }

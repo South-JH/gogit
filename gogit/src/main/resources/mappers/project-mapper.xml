@@ -23,7 +23,16 @@
 		<result column="stack_name" property="stackName"/>
 		<result column="stack_img" property="stackImg"/>
 	</resultMap>
-
+	
+	<resultMap type="Reply" id="ReplyResult">
+		<result column="reply_no" property="replyNo" />
+		<result column="mem_id" property="memId" />
+		<result column="rep_content" property="repContent" />
+		<result column="REF_PROJECTNO" property="refProjectNo" />
+		<result column="rep_date" property="repDate" />
+		<result column="status" property="status" />
+		<result column="git_nick" property="gitNick"/>
+	</resultMap>
 	<select id="selectListCount" resultType="_int">
 	select
 	       count(*)
@@ -205,6 +214,13 @@
 		 where pro_status = 'Y'
 	</select>
 	
+	<select id="applycompleteListCount" resultType="_int">
+		select 
+		       count(*)
+		  from project
+		 where pro_status = 'N'
+	</select>
+	
 	<select id="applySelectList" resultMap="projectResult">
 	select
 	       pro_no
@@ -228,6 +244,28 @@
 	    by pro_no desc
 	</select>
 	
+	<select id="applycompleteList" resultMap="projectResult">
+		select
+	       pro_no
+	     , git_nick
+	     , pro_stack
+	     , pro_title
+	     , pro_content
+	     , pro_member
+	     , pro_period
+	     , to_char(pro_deadline, 'YYYY-MM-DD') as "pro_deadline"
+	     , to_char(pro_start_date, 'YYYY-MM-DD') as "pro_start_date"
+	     , pro_position
+	     , pro_status
+	     , count
+	     , p.create_date
+	  from project p
+	  join member on (pro_writer = mem_id)
+	 where p.pro_status = 'N'
+	 order
+	    by pro_no desc
+	</select>
+	
 	<update id="updateProject">
 		update
 		       project
@@ -243,9 +281,43 @@
 		 where pro_no = #{proNo}	
 	</update>
 	
+	<insert id="insertReply">
+		insert
+		  into reply
+		  (
+		    reply_no
+		  , rep_content
+		  , ref_projectno
+		  , mem_id
+		  , rep_date
+		  )
+		  values
+		  (
+		    seq_reno.nextval
+		  , #{repContent}
+		  , #{refProjectNo}
+		  , #{memId} 
+		  , SYSDATE
+		  )	
+	</insert>
 	
-
-
-
-
+	<select id="selectReplyList" resultMap="ReplyResult">
+		select
+		       reply_no
+		     , git_nick
+		     , rep_content
+		     , to_char(rep_date, 'YYYY-MM-DD') as "rep_date"
+		     , ref_projectno
+		     from reply r
+		     join member using (mem_id)
+		     where r.status = 'Y'
+		     and ref_projectno = #{pno}
+		     order by reply_no desc	
+	</select>
+	
+	<update id="deleteReply">
+		update reply
+		   set status = 'N'
+		 where reply_no = #{pno}	
+	</update>
 </mapper>

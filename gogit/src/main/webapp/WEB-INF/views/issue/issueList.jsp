@@ -66,12 +66,16 @@
     background: rgb(36, 87, 228);
 }
 
+.issue-list-status>div {
+	display: flex;
+}
+
 .issue-list-status button {
 	border: none;
 	background: white;
 }
 
-.issue-list-status button:hover {
+.issue-list-status>div:hover {
 	border-bottom: 2px solid gray;
 }
 
@@ -83,6 +87,29 @@
 
 .issue-list-table>tbody a {
 	color: var(--bs-body-color);
+}
+
+.td-flex-css {
+	display: flex;
+	align-items: center;
+}
+
+.td-flex-css>* {
+	padding: 0 2px;
+}
+
+.label-color {
+	width: 15px;
+	height: 15px;
+	border-radius: 100px;
+}
+
+.img-flex-css {
+	display:flex;
+}
+
+.img-flex-css>img {
+	border-radius: 100px;
 }
 </style>
 </head>
@@ -114,15 +141,19 @@
 	             	<div>
 	             		<div class="issue-header-area">
 	             			<div class="issue-list-header">
-	             				<div class="issue-list-status">
-	             					<div>
-	             						<button type="button">3 Open</button>	
-	             					</div>
-	             					<div>
-	             						<button type="button">1 Close</button>	
-	             					</div>
-	             				</div>
-	             				<div class="issue-modi-btns">
+									<div class="issue-list-status">
+									<input type="hidden" id="hidden-name" value="${ repoName }">
+									<input type="hidden" id="hidden-owner" value="${ owner }">
+										<div>
+											<div id="open-count">${ list.size() }</div>
+											<button type="button" onclick="issueStatus(this);">open</button>
+										</div>
+										<div>
+											<div id="close-count"></div>
+											<button type="button" onclick="issueStatus(this);">closed</button>
+										</div>
+									</div>
+									<div class="issue-modi-btns">
 	             					<div>
 	             						<select>
 	             							<option>OPEN</option>
@@ -130,7 +161,7 @@
 	             						</select>
 	             					</div>
 		             				<div class="issue-create-btn">
-		             					<a href="create.is"><b>New issue</b></a>
+		             					<a href="create.is?repoName=${ repoName }&owner=${ owner }"><b>New issue</b></a>
 		             				</div>
 		             			</div>
 	             			</div>
@@ -142,42 +173,57 @@
 	             						<thead>
 	             							<tr>
 	             								<th><input type="checkbox"></th>
-	             								<th>TITLE</th>
-	             								<th>WRITER</th>
-	             								<th>ASSIGNEE</th>
-	             								<th>LABEL</th>
-	             								<th>DATE</th>
+	             								<th width="400">TITLE</th>
+	             								<th width="200">WRITER</th>
+	             								<th width="150">ASSIGNEE</th>
+	             								<th width="100">LABEL</th>
+	             								<th width="130">DATE</th>
 	             								<th width="60">COMMENT</th>
 	             							</tr>
 	             						</thead>
 	             						<tbody>
-	             							<tr>
-	             								<td><input type="checkbox"></td>
-	             								<td><a href="detail.is">회원가입이 안돼요</a></td>
-	             								<td>crong9105</td>
-	             								<td>crong9105</td>
-	             								<td>bug good first issue</td>
-	             								<td>2024-04-14</td>
-	             								<td align="center">2</td>
-	             							</tr>
-	             							<tr>
-	             								<td><input type="checkbox"></td>
-	             								<td><a href="#">로그아웃이 안돼요</a></td>
-	             								<td>crong9105</td>
-	             								<td>crong9105</td>
-	             								<td>bug good first issue</td>
-	             								<td>2024-04-14</td>
-	             								<td align="center">3</td>
-	             							</tr>
-	             							<tr>
-	             								<td><input type="checkbox"></td>
-	             								<td><a href="#">로그인이안돼요</a></td>
-	             								<td>crong9105</td>
-	             								<td>crong9105</td>
-	             								<td>bug good first issue</td>
-	             								<td>2024-04-14</td>
-	             								<td align="center"></td>
-	             							</tr>
+	             							<c:forEach var="is" items="${ list }">
+		             							<tr>
+		             								<td><input type="checkbox"></td>
+		             								<td><a href="detail.is">${ is.title }</a></td>
+		             								<td>
+		             									<div class="td-flex-css">
+			             									<div class="img-flex-css"><img src="${ is.userAvatar }" width="20" height="20"></div>
+			             									<div>${ is.user }</div>
+		             									</div>
+		             								</td>
+	             									<td>
+	             										<div class="td-flex-css">
+		             										<c:choose>
+		             											<c:when test="${ not empty is.assigneeAvatar }">
+				             										<c:forEach var="a" items="${ is.assigneeAvatar }">
+				             											<div class="img-flex-css"><img src="${ a }" width="20" height="20"></div>
+				             										</c:forEach>
+		             											</c:when>
+			             										<c:otherwise>
+			             											<div></div>
+			             										</c:otherwise>
+		             										</c:choose>
+	             										</div>
+	             									</td>
+	             									<td>
+	             										<div class="td-flex-css">
+	             											<c:choose>
+		             											<c:when test="${ not empty is.labelColor }">
+					             									<c:forEach var="c" items="${ is.labelColor }">
+					             										<div class="label-color" style="background-color:#${ c };"></div>
+					             									</c:forEach>
+		             											</c:when>
+		             											<c:otherwise>
+		             												<div></div>
+		             											</c:otherwise>
+		             										</c:choose>
+	             										</div>
+	             									</td>
+		             								<td>${ is.createAt }</td>
+		             								<td align="center">${ is.comment }</td>
+		             							</tr>
+		             						</c:forEach>
 	             						</tbody>
 	             					</table>
 	             				</div>
@@ -191,4 +237,98 @@
         </div>
     </div>
 </body>
+
+<script>
+
+	$(function(){
+		$("#pull-request").attr("href", "list.pullrq?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }");
+		$("#code").attr("href", "detail.rp?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }&permission=${ permission }");
+		$("#issue").attr("href", "list.is?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }");
+	})
+
+	let repoName = $("#hidden-name").val();
+	let owner = $("#hidden-owner").val();
+	
+	function issueStatus(e){
+		
+		let status = $(e).text();
+		console.log(status);
+		console.log(repoName);
+		console.log(owner);
+		
+		$.ajax({
+			url:"getList.is",
+			data:{
+				repoName:repoName,
+				owner:owner,
+				status:status
+			},
+			success:function(list){
+				
+				$(".issue-list-table>tbody").text("");
+				let value = "";
+				
+				for(let i in list){
+					
+					value += "<tr>"
+						   + "<td><input type=\"checkbox\"></td>"
+						   + "<td><a href=\"detail.is\">" + list[i].title + "</a></td>"
+						   + "<td>"
+						   + "<div class=\"td-flex-css\">"
+						   + "<div class=\"img-flex-css\"><img src=\"" + list[i].userAvatar + "\" width=\"20\" height=\"20\"></div>"
+						   + "<div>" + list[i].user + "</div>"
+						   + "</div>"
+						   + "</td>"
+						   + "<td>"
+						   + "<div class=\"td-flex-css\">"
+						   
+			   			if(list[i].assigneeAvatar != null){
+			   				for(let j in list[i].assigneeAvatar){
+			   					value += "<div class=\"img-flex-css\"><img src=\"" + list[i].assigneeAvatar[j] + "\" width=\"20\" height=\"20\"></div>"
+			   				}
+			   			}else{
+			   				value += "<div></div>"
+			   			}
+						   
+					value += "</div>"
+						   + "</td>"
+						   + "<td>"
+						   + "<div class=\"td-flex-css\">"
+						   
+						if(list[i].labelColor != null){
+							for(let j in list[i].labelColor){
+								value += "<div class=\"label-color\" style=\"background-color:#" + list[i].labelColor[j] + ";\"></div>"
+							}
+						}else{
+							value += "<div></div>"
+						}
+						   
+					value += "</div>"
+						   + "</td>"
+						   
+						if(list[i].state === "open"){
+						   value += "<td>" + list[i].createAt + "</td>"
+						}else if(list[i].state === "closed"){
+							value += "<td>" + list[i].closeAt + "</td>"
+						}
+						
+					value += "<td align=\"center\">" + list[i].comment + "</td>"
+						   + "</tr>"
+				}
+				
+				$(".issue-list-table>tbody").html(value);
+				
+			},
+			error:function(){
+				console.log("커밋리스트조회 실패");
+			}
+		})
+			
+		
+	}
+		
+	
+
+</script>
+
 </html>

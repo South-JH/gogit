@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.kh.gogit.common.model.vo.PageInfo;
 import com.kh.gogit.member.model.vo.Member;
+import com.kh.gogit.pr.model.vo.Reply;
 import com.kh.gogit.project.model.dao.ProjectDao;
 import com.kh.gogit.project.model.vo.Project;
 import com.kh.gogit.project.model.vo.Stack;
@@ -108,6 +109,31 @@ public class ProjectServiceImpl implements ProjectService{
 	@Override
 	public int applyListCount() {
 		return pDao.applyListCount(sqlSession);
+	}
+
+	@Override
+	public int insertReply(Reply r) {
+		return pDao.insertReply(sqlSession, r);
+	}
+
+	@Override
+	public ArrayList<Reply> selectReplyList(int pno) {
+		return pDao.selectReplyList(sqlSession, pno);
+	}
+
+	@Override
+	public int deleteReply(int pno) {
+		return pDao.deleteReply(sqlSession, pno);
+	}
+
+	@Override
+	public int applycompleteListCount() {
+		return pDao.applycompleteListCount(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Project> applycompleteList(PageInfo pi) {
+		return pDao.applycompleteList(sqlSession, pi);
 	}
 	
 }

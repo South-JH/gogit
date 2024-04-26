@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.kh.gogit.common.model.vo.PageInfo;
 import com.kh.gogit.member.model.vo.Member;
+import com.kh.gogit.pr.model.vo.Reply;
 import com.kh.gogit.project.model.vo.Project;
 import com.kh.gogit.project.model.vo.Stack;
 
@@ -53,7 +54,22 @@ public interface ProjectService {
 	// 모집중만 조회
 	ArrayList<Project> applySelectList(PageInfo pi);
 	
+	// 모집완료만 조회
+	ArrayList<Project> applycompleteList(PageInfo pi);
+	
 	// 모집중 카운트 가져오기
 	int applyListCount();
+	
+	// 모집완료 카운트 가져오기
+	int applycompleteListCount();
+	
+	// 댓글 등록
+	int insertReply(Reply r);
+	
+	// 댓글 가져오기
+	ArrayList<Reply> selectReplyList(int pno);
+	
+	// 댓글 삭제
+	int deleteReply(int pno);
 
 }

@@ -27,6 +27,7 @@ public class Repository {
 	private String contentDesc; // 레파지토리 컨텐츠 내용
 	private String owner;
 	private String collaborator;
-	private String avatarUrl;
+	private String avatar;
+	private String permission; // 권한
 	
 }

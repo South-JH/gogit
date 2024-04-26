@@ -589,31 +589,6 @@ COMMENT ON COLUMN REPLY.REF_PROJECTNO IS 'PROJECT 참조 게시물';
 COMMENT ON COLUMN REPLY.REP_DATE IS '댓글 작성일';     
 COMMENT ON COLUMN REPLY.STATUS IS '댓글 삭제여부';     
 
-INSERT INTO 
-            REPLY
-     VALUES
-     (
-       SEQ_RENO.NEXTVAL
-     , '0000'
-     , '저도 참여하고 싶어요'
-     , 1
-     , SYSDATE
-     , DEFAULT
-     );
-    
-    
-INSERT INTO 
-            REPLY
-     VALUES
-     (
-       SEQ_RENO.NEXTVAL
-     , '11111'
-     , '대한의 건아!! 성실한 제가 한번 참여해보겠읍니다.'
-     , 1
-     , SYSDATE
-     , DEFAULT
-     );
-
 --------------------------------------------------
 --------------     MY_PR	------------------	
 --------------------------------------------------
@@ -1327,10 +1302,6 @@ INSERT INTO PULL_REVIEW (REVIEW_NO, REF_PULL, MEM_ID, REVIEW_CONTENT, CREATE_DAT
 INSERT INTO PULL_REVIEW (REVIEW_NO, REF_PULL, MEM_ID, REVIEW_CONTENT, CREATE_DATE) VALUES (SEQ_PRNO.NEXTVAL, 2, '22222', '유상무', DEFAULT);
 INSERT INTO PULL_REVIEW (REVIEW_NO, REF_PULL, MEM_ID, REVIEW_CONTENT, CREATE_DATE) VALUES (SEQ_PRNO.NEXTVAL, 3, '11111', '홍당무', DEFAULT);
 
-COMMIT;
-
-
-
 ------------------------------------------------------
 ------------------- ALARM -------------------------
 ------------------------------------------------------
@@ -1355,3 +1326,5 @@ COMMENT ON COLUMN ALARMLIST.ALARM_YN IS '알람확인여부';
 COMMENT ON COLUMN ALARMLIST.ALARM_DATE IS '알람등록일';
 COMMENT ON COLUMN ALARMLIST.ALARM_CONTENT_NO IS '알람내용물 번호(PRIMARY KEY)';
 COMMENT ON COLUMN ALARMLIST.STATUS IS '삭제여부';
+
+COMMIT;
