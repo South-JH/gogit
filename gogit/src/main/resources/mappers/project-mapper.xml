@@ -320,4 +320,6 @@
 		   set status = 'N'
 		 where reply_no = #{pno}	
 	</update>
+	
+	
 </mapper>

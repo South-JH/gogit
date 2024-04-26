@@ -120,7 +120,7 @@
               <div>
               	<div class="header-searchbar">
               		<div>
-              			<i class="ti ti-search" onclick="searchjm();"></i>
+              			<i class="ti ti-search"></i>
               		</div>
                   <script>
                     function searchjm(){

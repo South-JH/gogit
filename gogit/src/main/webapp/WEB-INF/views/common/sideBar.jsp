@@ -90,7 +90,7 @@
               <li class="sidebar-item">
                 <a
                   class="sidebar-link"
-                  href="./ui-alerts.html"
+                  href="commitcl.cl"
                   aria-expanded="false"
                 >
                   <span>
