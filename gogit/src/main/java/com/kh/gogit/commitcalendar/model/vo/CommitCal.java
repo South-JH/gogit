@@ -15,5 +15,6 @@ public class CommitCal {
 	
 	private String owner;
 	private String repoName;
+	private String commitDate;
 
 }

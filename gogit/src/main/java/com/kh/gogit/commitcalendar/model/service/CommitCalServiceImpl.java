@@ -37,4 +37,26 @@ public class CommitCalServiceImpl {
 		}
 		return repoList;		
 	}
+	
+	public String commitFirstList(Member loginUser, String firstOwner,String firstRepoName, int page) {
+		String url = "https://api.github.com/repos/"+ firstOwner +"/"+ firstRepoName +"/commits?per_page=100&page=" + page;
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		headers.set("Authorization", "Bearer " + loginUser.getMemToken());
+		headers.set("Accept", "Accept: application/vnd.github.html+json");
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+		
+		String firstCommit = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			firstCommit = response.getBody();
+		}else {
+			System.out.println("커밋리스트 가져오기 실패!");
+		}
+		return firstCommit;
+	}
 }
