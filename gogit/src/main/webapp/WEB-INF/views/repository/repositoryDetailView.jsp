@@ -369,6 +369,15 @@ thead {
 .repo-table>tbody>tr:hover {
 	background-color: #eee;
 }
+
+.ti-pencil {
+	font-size: 19px;
+}
+
+.repo-table>thead a {
+	width: 100%;
+	height: 100%;
+}
 </style>
 </head>
 <body>
@@ -623,7 +632,8 @@ thead {
 					
 				    hvalue += "<thead>"
 			           		+ "<tr>"
-			            	+ "<th colspan=\"4\">CODE</th>"
+			            	+ "<th colspan=\"3\" width=\"800\">" + fileName + "</th>"
+			            	+ "<th><a href=\"updateContentForm.rp?repoName=" + repoName + "&owner=" + owner + "&fileName=" + fileName + "&filePath=" + filePath + "&repoType=" + repoType + "\"><i class=\"ti ti-pencil\"></i></a></th>"
 			            	+ "</tr>"
 			            	+ "</thead>";
 			            	
@@ -947,6 +957,8 @@ thead {
 			}
 		})
 		*/
+		
+		
 	}
 	
 </script>

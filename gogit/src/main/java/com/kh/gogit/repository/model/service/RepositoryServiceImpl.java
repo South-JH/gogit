@@ -494,6 +494,33 @@ public class RepositoryServiceImpl implements RepositoryService {
     	
     }
     
+    public String contentUpdate(Member m, String repoName, String owner, String filePath) {
+    	
+    	String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/contents/" + filePath;
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		headers.set("Authorization", "Bearer " + m.getMemToken());
+		headers.set("Accept", "Accept: application/vnd.github.html+json");
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+		
+		String content = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			content = response.getBody();
+			System.out.println(content);
+			return content;
+		} else {
+			System.out.println("콘텐츠 조회 실패");
+			return null;
+		}
+		
+    }
+    
     
     
     

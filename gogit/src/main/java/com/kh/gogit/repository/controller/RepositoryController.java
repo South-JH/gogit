@@ -502,4 +502,33 @@ public class RepositoryController {
 		
 	}
 	
+	@RequestMapping("updateContentForm.rp")
+	public String contentUpdateForm(Model model, String repoName, String owner, String fileName, String filePath) {
+		
+		model.addAttribute("repoName", repoName);
+		model.addAttribute("owner", owner);
+		model.addAttribute("fileName", fileName);
+		model.addAttribute("filePath", filePath);
+		
+		return "repository/repositoryUpdateForm";
+	}
+	
+	@RequestMapping("updateContent.rp")
+	public void contentUpdate(HttpSession session, HttpServletResponse response, String repoName, String owner, String filePath, String repoType) throws IOException {
+
+		Member m = (Member)session.getAttribute("loginUser");
+		String content = rService.contentUpdate(m, repoName, owner, filePath);
+		System.out.println(repoType);
+		
+		if("file".equals(repoType)) {
+			
+			response.setContentType("text/html; charset=utf-8");
+			response.getWriter().print(content);
+			
+		} else {
+			System.out.println("컨텐츠 잘못옴");
+		}
+		
+	}
+	
 }
