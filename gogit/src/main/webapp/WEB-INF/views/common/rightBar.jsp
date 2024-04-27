@@ -68,5 +68,99 @@
             <div class="addbtn-div" style="margin-top: 5px;"><button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">팀원추가하기</button></div>
         </div>        
     </div>
+    
+    <script>
+    $(function(){
+		alarm();
+		alarmCircle();
+		setInterval(() => {
+			alarm();
+			alarmCircle();
+		}, 5000);
+	})	
+	function alarm(){
+    		$.ajax({
+    			url:"alarm.me",
+    			data:{
+    				memId:'${loginUser.memId}'
+    			},
+    			success:function(data){
+    				let value = "";
+    				
+    				for(let i in data){
+    					
+    					switch (data[i].alarmType) {
+						case "project":
+							value += "<div>";
+	    					if(data[i].alarmYn == 1){
+	    						value +="<li class='list-group-item active' onclick='readAl(this);'>"+data[i].gitNick+"님이 프로젝트("+data[i].alarmTitle+")에 참가 요청했습니다."
+	    					}else{
+	    						value +="<li class='list-group-item' onclick='readAl(this);'>"+data[i].gitNick+"님이 프로젝트("+data[i].alarmTitle+")에 참가 요청했습니다."
+	    					}
+	    					value += "<input type='hidden' value='"+data[i].memId+"'>"
+									+"<input type='hidden' value='"+data[i].alarmNo+"'> </li>"
+	    							+"<button class='btn btn-warning' onclick='apply("+data[i].alarmContentNo+",this)'>승인</button>"
+	    							+"<button class='btn btn-danger' onclick='cancel(this)'>거절</button>"
+	    							
+	    						+"</div>"
+							break;
+						default:
+							break;
+						}
+    				}
+    				$("#alarmList>ul").html(value);
+    			},
+    			error:function(){
+    				console.log("실패")
+    			}
+    		})
+    	}
+    
+    function apply(num,e){
+		 $.ajax({
+			url:"application.pr",
+			data:{
+				pNo:num,
+				memId:$(e).siblings("li").children("input:eq(0)").val()
+			},
+			success:function(data){
+				console.log(data)
+			}
+		})
+		
+		$.ajax({
+			url:"delete.al",
+			data:{
+				alarmNo:$(e).siblings("li").children("input:eq(1)").val()
+			},
+			success:function(data){
+				$(e).parent().remove();
+				console.log(data)
+			}
+		}) 
+	}  
+    
+    function alcancel(e){
+
+		   $.ajax({
+			  url:"alcancel.pr",
+			  data:{memId:$(e).siblings("li").children("input:eq(0)").val()},
+			  success:function(data){
+				  console.log(data);
+			  }
+		  })
+		  
+		  $.ajax({
+			url:"delete.al",
+			data:{
+				alarmNo:$(e).siblings("li").children("input:eq(1)").val()
+			},
+			success:function(data){
+				$(e).parent().remove();
+				console.log(data)
+			}
+		}) 
+	  }
+    </script>
 </body>
 </html>
