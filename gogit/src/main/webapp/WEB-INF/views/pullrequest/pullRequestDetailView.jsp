@@ -18,8 +18,15 @@
 	    	margin-left: -14px;
 	    	background-color: white;
 	    }
-		#comments .placeholder {
+		#comments .placeholder, #content-text-area .placeholder {
 			background-color: white;
+		}
+		.conversation blockquote {
+			background-color: #75757540;
+			padding: 10px;
+		}
+		.conversation blockquote>p {
+			margin: 0px;
 		}
     </style>
 </head>
@@ -46,12 +53,15 @@
 	                		<path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
 	                		<path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
 	                		<path d="M16 5l3 3" />
-                		</svg>	
+                		</svg>
                		</h1>
-               		<div id="new-title-area" class="mb-2">
+               		<div id="new-title-area" class="mb-2 d-none">
                			<form action="update.pullrq" method="post">
-	               			<input type="text" class="form-control form-control-lg w-50 me-1" id="newTitle" name="pullTitle" style="display: inline-block">
-	               			<button type="submit" class="btn btn-sm btn-primary">Save</button>
+               				<input type="hidden" name="repoOwner" value="${ pullrq.repoOwner }">
+               				<input type="hidden" name="repoName" value="${ pullrq.repoName }">
+               				<input type="hidden" name="pullNo" value="${ pullrq.pullNo }">
+	               			<input type="text" class="form-control form-control-lg w-50 me-1 d-inline" id="newTitle" name="pullTitle">
+	               			<button type="submit" class="btn btn-sm btn-primary" onclick="return validateTitle();">Save</button>
 	               			<button type="button" class="btn btn-sm btn-dark" onclick="cancelModifyTitle();">Cancel</button>
                			</form>
                		</div>
@@ -93,16 +103,37 @@
 	                    		</div>
 	                    		<div class="col">
 		                    		<div class="card">
-										<div class="card-header">
+										<div class="card-header position-relative">
+									  		<span class="position-absolute top-50 end-0 translate-middle-y">
+											  	<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit" style="cursor: pointer" onclick="modifyContent();">
+							                		<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+							                		<path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+							                		<path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+							                		<path d="M16 5l3 3" />
+						                		</svg>
+					                		</span>
 									  		<h6 class="d-inline p-1">${ pullrq.pullWriter }</h6>
 									  		<span class="p-1">commented</span>
 									  		<span class="p-1">${ pullrq.createDate }</span>
 									  	</div>
-									  	<div class="card-body" id="pullrequest-content-area">
+									  	<div class="card-body" id="origin-content-area">
 									  		<c:if test="${ empty pullrq.pullContent }">
 									  			No description
 									  		</c:if>
 									  		${ pullrq.pullContent }
+									  	</div>
+									  	<div class="card-body d-none" id="new-content-area">
+									  		<form action="update.pullrq" method="post">
+									  			<input type="hidden" name="repoOwner" value="${ pullrq.repoOwner }">
+					               				<input type="hidden" name="repoName" value="${ pullrq.repoName }">
+					               				<input type="hidden" name="pullNo" value="${ pullrq.pullNo }">
+					               				<input type="hidden" name="pullContent">
+										  		<div id="content-text-area"></div>
+										  		<div class="float-end mt-2">
+											  		<button type="submit" class="btn btn-primary me-1" onclick="return validateContent();">Save</button>
+											  		<button type="button" class="btn btn-dark" onclick="cancelModifyContent();">Cancel</button>
+										  		</div>
+									  		</form>
 									  	</div>
 									</div>
 									<table class="time-line table .table-borderless .table-sm">
@@ -136,7 +167,7 @@
 	                    		</div>
                     		</div>
                     		<c:if test="${ pullrq.status eq 'open' }">
-	                    		<div class="row mt-3">
+	                    		<div class="row mt-3" style="border-bottom: 1px solid lightgray;">
 	                    			<p style="margin-left:8.33333333%;">Add more commits by pushing to the ${ pullrq.compareBranch } branch on ${ pullrq.repoOwner }/${ pullrq.repoName }.</p>
 			                    	<div class="row">
 			                    		<div class="col-1">
@@ -164,7 +195,7 @@
 																	</div>
 																</div>
 
-																<div class="row" id="merge-form">
+																<div class="row d-none" id="merge-form">
 																	<div class="col-1 sucess-icon">
 																		<img src="${ loginUser.profile }" width="35" height="35" class="rounded-circle">
 																	</div>
@@ -207,15 +238,15 @@
 													<c:choose>
 														<c:when test="${ pullrq.status eq 'open' and pullrq.mergeable }">
 															<button type="button" class="btn btn-success" id="merge-btn" onclick="showMergeForm();">Merge pull request</button>
-															<form action="merge.pullrq" method="post" style="display: inline;">
+															<form action="merge.pullrq" method="post" class="d-inline">
 																<input type="hidden" name="pullNo" value="${ pullrq.pullNo }">
 																<input type="hidden" name="repoName" value="${ pullrq.repoName }">
 																<input type="hidden" name="repoOwner" value="${ pullrq.repoOwner }">
 																<input type="hidden" name="title">
 																<input type="hidden" name="message">
-																<button type="submit" class="btn btn-success" id="confirm-merge-btn" onclick="validateMerge();">Confirm merge</button>
+																<button type="submit" class="btn btn-success me-1 d-none" id="confirm-merge-btn" onclick="validateMerge();">Confirm merge</button>
 															</form>
-															<button type="button" class="btn btn-dark" id="cancel-merge-btn" onclick="hideMergeForm();">Cancel</button>
+															<button type="button" class="btn btn-dark d-none" id="cancel-merge-btn" onclick="hideMergeForm();">Cancel</button>
 														</c:when>
 														<c:when test="${ pullrq.status eq 'open' and not pullrq.mergeable }">
 												  			<button type="button" class="btn btn-dark" onclick="window.open('https://github.com/${ pullrq.repoOwner }/${ pullrq.repoName }/pull/${ pullrq.pullNo }/conflicts')">Resolve conflicts</button>
@@ -227,6 +258,30 @@
 		                    		</div>
 		                    	</div>
 	                    	</c:if>
+	                    	<c:forEach var="comment" items="${ comments }">
+		                    	<div class="row mt-3">
+		                    		<div class="col-1">
+		                    			<a href="#">
+											<img src="${ comment.commentWriterProfile }" alt="" width="35" height="35" class="rounded-circle">
+						                </a>
+		                    		</div>
+		                    		<div class="col">
+			                    		<div class="card">
+											<div class="card-header position-relative">
+										  		<h6 class="d-inline p-1">${ comment.commentWriter }</h6>
+										  		<span class="p-1">commented</span>
+										  		<span class="p-1">${ comment.createDate }</span>
+										  		<c:if test="${ comment.isAuthor }">
+										  			<span class="badge rounded-pill bg-primary float-end">Author</span>
+										  		</c:if>
+										  	</div>
+										  	<div class="card-body" id="origin-content-area">
+										  		${ comment.comment }
+										  	</div>
+									  	</div>
+								  	</div>
+		                    	</div>
+	                    	</c:forEach>
 	                    	<div class="row mt-3">
 	                    		<div class="col-1">
 	                    			<a href="#">
@@ -240,13 +295,39 @@
 		                    	</div>
 	                    	</div>
 	                    	<div class="float-end mt-2">
-	                    		<button type="button" class="btn btn-light mr-1">
-	                    			<svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
-									    <path d="M3.25 1A2.25 2.25 0 0 1 4 5.372v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.251 2.251 0 0 1 3.25 1Zm9.5 5.5a.75.75 0 0 1 .75.75v3.378a2.251 2.251 0 1 1-1.5 0V7.25a.75.75 0 0 1 .75-.75Zm-2.03-5.273a.75.75 0 0 1 1.06 0l.97.97.97-.97a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.97.97.97.97a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-.97-.97-.97.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l.97-.97-.97-.97a.75.75 0 0 1 0-1.06ZM2.5 3.25a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0ZM3.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm9.5 0a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z"></path>
-									</svg>
-	                    			Close pull request
-	                    		</button>
-	                    		<button type="button" class="btn btn-success">Comment</button>
+	                    		<form action="update.pullrq" method="post" class="d-inline">
+	                    			<input type="hidden" name="repoOwner" value="${ pullrq.repoOwner }">
+		               				<input type="hidden" name="repoName" value="${ pullrq.repoName }">
+		               				<input type="hidden" name="pullNo" value="${ pullrq.pullNo }">
+		               				<c:choose>
+			               				<c:when test="${ pullrq.status eq 'open' }">
+			               					<input type="hidden" name="status" value="closed">
+		               					</c:when>
+		               					<c:otherwise>
+			               					<input type="hidden" name="status" value="open">
+		               					</c:otherwise>
+	               					</c:choose>
+		                    		<button type="submit" class="btn btn-light me-1">
+										<c:choose>
+				               				<c:when test="${ pullrq.status eq 'open' }">
+					               				<svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true">
+											    	<path d="M3.25 1A2.25 2.25 0 0 1 4 5.372v5.256a2.251 2.251 0 1 1-1.5 0V5.372A2.251 2.251 0 0 1 3.25 1Zm9.5 5.5a.75.75 0 0 1 .75.75v3.378a2.251 2.251 0 1 1-1.5 0V7.25a.75.75 0 0 1 .75-.75Zm-2.03-5.273a.75.75 0 0 1 1.06 0l.97.97.97-.97a.748.748 0 0 1 1.265.332.75.75 0 0 1-.205.729l-.97.97.97.97a.751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018l-.97-.97-.97.97a.749.749 0 0 1-1.275-.326.749.749 0 0 1 .215-.734l.97-.97-.97-.97a.75.75 0 0 1 0-1.06ZM2.5 3.25a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0ZM3.25 12a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm9.5 0a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Z"></path>
+												</svg>
+				                    			Close pull request
+			               					</c:when>
+			               					<c:otherwise>
+				               					Reopen pull request
+			               					</c:otherwise>
+	               					</c:choose>
+		                    		</button>
+	                    		</form>
+	                    		<form action="comment.pullrq" method="post" class="d-inline">
+	                    			<input type="hidden" name="repoOwner" value="${ pullrq.repoOwner }">
+		               				<input type="hidden" name="repoName" value="${ pullrq.repoName }">
+		               				<input type="hidden" name="pullNo" value="${ pullrq.pullNo }">
+		               				<input type="hidden" name="comment">
+	                    			<button type="submit" class="btn btn-success" onclick="return validateComment();">Comment</button>
+	                    		</form>
 	                    	</div>
                     	</div>
                     	
@@ -270,40 +351,41 @@
 	$("#code").attr("href", "detail.rp?repoName=${ pullrq.repoName }&visibility=${ pullrq.repoVisibility }&owner=${ pullrq.repoOwner }&permission=${ permission }");
 	$("#issue").attr("href", "list.is?repoName=${ pullrq.repoName }&visibility=${ pullrq.repoVisibility }&owner=${ pullrq.repoOwner }");
 
-	const editor = new toastui.Editor({
+	const editor1 = new toastui.Editor({
 		el: document.querySelector('#comments'), // 에디터를 적용할 요소 (컨테이너)
 		height: '200px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
 		previewStyle: 'tab',
 		initialValue: '',
 		placeholder: 'add your comment here...'
 	});
-
-	$(function() {
-		$("#merge-form").css("display", "none");
-		$("#confirm-merge-btn").css("display", "none");
-		$("#cancel-merge-btn").css("display", "none");
-		$("#new-title-area").css("display", "none");
-	})
 	
-	function showMergeForm() {
-		$("#available-merge").css("display", "none");
-		$("#merge-btn").css("display", "none");
+	const editor2 = new toastui.Editor({
+		el: document.querySelector('#content-text-area'), // 에디터를 적용할 요소 (컨테이너)
+		height: '200px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+		previewStyle: 'tab',
+		initialValue: '',
+		placeholder: 'add your pull request body here...'
+	});
 
-		$("#merge-form").css("display", "");
-		$("#confirm-merge-btn").css("display", "");
-		$("#cancel-merge-btn").css("display", "");
+	function showMergeForm() {
+		$("#available-merge").addClass("d-none");
+		$("#merge-btn").addClass("d-none");
+
+		$("#merge-form").removeClass("d-none");
+		$("#confirm-merge-btn").removeClass("d-none");
+		$("#cancel-merge-btn").removeClass("d-none");
 
 		$("input[name=commitTitle]").val("Merge pull request #${ pullrq.pullNo } from ${ pullrq.pullWriter }/${ pullrq.compareBranch }");
 		$("textarea[name=commitMessage]").val("${ pullrq.pullTitle }");
 	}
 
 	function hideMergeForm() {
-		$("#merge-form").css("display", "none");
-		$("#confirm-merge-btn").css("display", "none");
-		$("#cancel-merge-btn").css("display", "none");
+		$("#merge-form").addClass("d-none");
+		$("#confirm-merge-btn").addClass("d-none");
+		$("#cancel-merge-btn").addClass("d-none");
 
-		$("#available-merge").css("display", "");
-		$("#merge-btn").css("display", "");
+		$("#available-merge").removeClass("d-none");
+		$("#merge-btn").removeClass("d-none");
 	}
 
 	function validateMerge() {
@@ -321,14 +403,51 @@
 	}
 	
 	function modifyTitle() {
-		$("#origin-title-area").css("display", "none");
-		$("#new-title-area").css("display", "");
-		$("#new-title-area").val("${ pullrq.pullTitle }");
+		$("#origin-title-area").addClass("d-none");
+		$("#new-title-area").removeClass("d-none");
+		$("#newTitle").val("${ pullrq.pullTitle }");
 	}
 	
 	function cancelModifyTitle() {
-		$("#new-title-area").css("display", "none");
-		$("#origin-title-area").css("display", "");
+		$("#new-title-area").addClass("d-none");
+		$("#origin-title-area").removeClass("d-none");
+	}
+
+	function validateTitle() {
+		if($("#newTitle").val() == "") {
+			alertify.alert("Pull request title을 작성해주세요.");
+			$("#newTitle").val("${ pullrq.pullTitle }");
+			return false;
+		}
+	}
+	
+	function modifyContent() {
+		$("#origin-content-area").addClass("d-none");
+		$("#new-content-area").removeClass("d-none");
+		editor2.setHTML(`${ pullrq.pullContent }`);
+	}
+	
+	function cancelModifyContent() {
+		$("#new-content-area").addClass("d-none");
+		$("#origin-content-area").removeClass("d-none");
+	}
+	
+	function validateContent() {
+		if(editor2.getMarkdown() == "") {
+			alertify.alert("Pull request content를 작성해주세요.");
+			return false;
+		}
+		
+		$("input[name=pullContent]").val(editor2.getHTML());
+	}
+	
+	function validateComment() {
+		if(editor1.getMarkdown() == "") {
+			$("#comments").focus();
+			return false;
+		}
+		
+		$("input[name=comment]").val(editor1.getHTML());
 	}
 </script>
 </html>
