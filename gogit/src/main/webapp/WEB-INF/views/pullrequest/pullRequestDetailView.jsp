@@ -37,7 +37,24 @@
         	<div class="container-fluid">
             	<!--  Row 1 -->
                 <div class="row">
-                	<h1>${ pullrq.pullTitle } <span>#${ pullrq.pullNo }</span></h1>
+                	<jsp:include page="../repository/repositoryTab.jsp"/>
+                
+                	<h1 id="origin-title-area">
+                		${ pullrq.pullTitle } <span class="me-2 text-black-50 fw-light">#${ pullrq.pullNo }</span>
+                		<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-edit" style="cursor: pointer" onclick="modifyTitle();">
+	                		<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+	                		<path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
+	                		<path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
+	                		<path d="M16 5l3 3" />
+                		</svg>	
+               		</h1>
+               		<div id="new-title-area" class="mb-2">
+               			<form action="update.pullrq" method="post">
+	               			<input type="text" class="form-control form-control-lg w-50 me-1" id="newTitle" name="pullTitle" style="display: inline-block">
+	               			<button type="submit" class="btn btn-sm btn-primary">Save</button>
+	               			<button type="button" class="btn btn-sm btn-dark" onclick="cancelModifyTitle();">Cancel</button>
+               			</form>
+               		</div>
                     <h4>
                     	<c:choose>
                     		<c:when test="${ pullrq.status eq 'open' }">
@@ -118,69 +135,102 @@
 									</table>
 	                    		</div>
                     		</div>
-                    		<div class="row mt-3">
-                    			<p style="margin-left:8.33333333%;">Add more commits by pushing to the ${ pullrq.compareBranch } branch on ${ pullrq.repoOwner }/${ pullrq.repoName }.</p>
-		                    	<div class="row">
-		                    		<div class="col-1">
-		                    			<svg aria-hidden="true" height="24" viewBox="0 0 24 24" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-merge">
-											<path d="M15 13.25a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm-12.5 6a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm0-14.5a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0ZM5.75 6.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 6.5Zm0 14.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 21Zm12.5-6a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 18.25 15Z"></path><path d="M6.5 7.25c0 2.9 2.35 5.25 5.25 5.25h4.5V14h-4.5A6.75 6.75 0 0 1 5 7.25Z"></path><path d="M5.75 16.75A.75.75 0 0 1 5 16V8a.75.75 0 0 1 1.5 0v8a.75.75 0 0 1-.75.75Z"></path>
-										</svg>
-		                    		</div>
-		                    		<div class="col">
-		                    			<div class="card">
-										  	<ul class="list-group list-group-flush">
-										    	<li class="list-group-item py-4">
-										    		<div class="row">
+                    		<c:if test="${ pullrq.status eq 'open' }">
+	                    		<div class="row mt-3">
+	                    			<p style="margin-left:8.33333333%;">Add more commits by pushing to the ${ pullrq.compareBranch } branch on ${ pullrq.repoOwner }/${ pullrq.repoName }.</p>
+			                    	<div class="row">
+			                    		<div class="col-1">
+			                    			<svg aria-hidden="true" height="24" viewBox="0 0 24 24" version="1.1" width="24" data-view-component="true" class="octicon octicon-git-merge">
+												<path d="M15 13.25a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm-12.5 6a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0Zm0-14.5a3.25 3.25 0 1 1 6.5 0 3.25 3.25 0 0 1-6.5 0ZM5.75 6.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 6.5Zm0 14.5a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 5.75 21Zm12.5-6a1.75 1.75 0 1 0-.001-3.501A1.75 1.75 0 0 0 18.25 15Z"></path><path d="M6.5 7.25c0 2.9 2.35 5.25 5.25 5.25h4.5V14h-4.5A6.75 6.75 0 0 1 5 7.25Z"></path><path d="M5.75 16.75A.75.75 0 0 1 5 16V8a.75.75 0 0 1 1.5 0v8a.75.75 0 0 1-.75.75Z"></path>
+											</svg>
+			                    		</div>
+			                    		<div class="col">
+			                    			<div class="card">
+											  	<ul class="list-group list-group-flush">
+											    	<li class="list-group-item py-4">
 														<c:choose>
-															<c:when test="${ pullrq.status eq 'open' and pullrq.mergeable }">
-																<div class="col-1 sucess-icon">
-																	<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
-																		<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-																		<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-																		<path d="M9 12l2 2l4 -4" />
-																	</svg>
+															<c:when test="${ pullrq.mergeable }">
+																<div class="row" id="available-merge">
+																	<div class="col-1 sucess-icon">
+																		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+																			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+																			<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+																			<path d="M9 12l2 2l4 -4" />
+																		</svg>
+																	</div>
+																	<div class="col">
+																		<h5>This branch has no conflicts with the base branch</h5>
+																		<p>Rulesets ensure specific people approve pull requests before they're merged.</p>
+																	</div>
 																</div>
-																<div class="col">
-																	<h5>This branch has no conflicts with the base branch</h5>
-																	<p>Rulesets ensure specific people approve pull requests before they're merged.</p>
+
+																<div class="row" id="merge-form">
+																	<div class="col-1 sucess-icon">
+																		<img src="${ loginUser.profile }" width="35" height="35" class="rounded-circle">
+																	</div>
+																	<div class="col">
+																		<div>
+																			<div class="mb-1">
+																				<span><strong>Commit Title</strong></span>
+																			</div>
+																			<input type="text" class="form-control" name="commitTitle" value="Merge pull request #${ pullrq.pullNo } from ${ pullrq.pullWriter }/${ pullrq.compareBranch }">
+																		</div>
+																		<div class="mt-4">
+																			<div class="mb-1">
+																				<span><strong>Commit Message</strong></span>
+																			</div>
+																			<textarea class="form-control" name="commitMessage" style="resize: none;">${ pullrq.pullTitle }</textarea>
+																		</div>
+																	</div>
 																</div>
 															</c:when>
-															<c:when test="${ pullrq.status eq 'open' and not pullrq.mergeable }">
-																<div class="col-1 conflict-icon">
-																	<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-triangle" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff4500" fill="none" stroke-linecap="round" stroke-linejoin="round">
-																		<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-																		<path d="M12 9v4" />
-																		<path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" />
-																		<path d="M12 16h.01" />
-																	</svg>
+															<c:otherwise>
+																<div class="row">
+																	<div class="col-1 conflict-icon">
+																		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-alert-triangle" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff4500" fill="none" stroke-linecap="round" stroke-linejoin="round">
+																			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+																			<path d="M12 9v4" />
+																			<path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z" />
+																			<path d="M12 16h.01" />
+																		</svg>
+																	</div>
+																	<div class="col">
+																		<h5>This branch has no conflicts with the base branch</h5>
+																		<p>Rulesets ensure specific people approve pull requests before they're merged.</p>
+																	</div>
 																</div>
-																<div class="col">
-																	<h5>This branch has no conflicts with the base branch</h5>
-																	<p>Rulesets ensure specific people approve pull requests before they're merged.</p>
-																</div>
-															</c:when>
+															</c:otherwise>
 														</c:choose>
-										    		</div>
-										    	</li>
-											</ul>
-											<div class="card-footer">
-												<c:choose>
-													<c:when test="${ pullrq.status eq 'open' and pullrq.mergeable }">
-											  			<button type="button" class="btn btn-success">Merge pull request</button>
-													</c:when>
-													<c:when test="${ pullrq.status eq 'open' and not pullrq.mergeable }">
-											  			<button type="button" class="btn btn-dark" disabled>Merge pull request</button>
-													</c:when>
-												</c:choose>
+											    	</li>
+												</ul>
+												<div class="card-footer">
+													<c:choose>
+														<c:when test="${ pullrq.status eq 'open' and pullrq.mergeable }">
+															<button type="button" class="btn btn-success" id="merge-btn" onclick="showMergeForm();">Merge pull request</button>
+															<form action="merge.pullrq" method="post" style="display: inline;">
+																<input type="hidden" name="pullNo" value="${ pullrq.pullNo }">
+																<input type="hidden" name="repoName" value="${ pullrq.repoName }">
+																<input type="hidden" name="repoOwner" value="${ pullrq.repoOwner }">
+																<input type="hidden" name="title">
+																<input type="hidden" name="message">
+																<button type="submit" class="btn btn-success" id="confirm-merge-btn" onclick="validateMerge();">Confirm merge</button>
+															</form>
+															<button type="button" class="btn btn-dark" id="cancel-merge-btn" onclick="hideMergeForm();">Cancel</button>
+														</c:when>
+														<c:when test="${ pullrq.status eq 'open' and not pullrq.mergeable }">
+												  			<button type="button" class="btn btn-dark" onclick="window.open('https://github.com/${ pullrq.repoOwner }/${ pullrq.repoName }/pull/${ pullrq.pullNo }/conflicts')">Resolve conflicts</button>
+														</c:when>
+													</c:choose>
+												</div>
 											</div>
-										</div>
-		                    		</div>
+			                    		</div>
+			                    	</div>
 		                    	</div>
-	                    	</div>
-	                    	<div class="row">
+	                    	</c:if>
+	                    	<div class="row mt-3">
 	                    		<div class="col-1">
 	                    			<a href="#">
-										<img src="${ pullrq.pullWriterProfile }" alt="" width="35" height="35" class="rounded-circle">
+										<img src="${ loginUser.profile }" width="35" height="35" class="rounded-circle">
 					                </a>
 	                    		</div>
 		                    	<div class="col">
@@ -216,6 +266,10 @@
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <script>
+	$("#pull-request").attr("href", "list.pullrq?repoName=${ pullrq.repoName }&visibility=${ pullrq.repoVisibility }&owner=${ pullrq.repoOwner }");
+	$("#code").attr("href", "detail.rp?repoName=${ pullrq.repoName }&visibility=${ pullrq.repoVisibility }&owner=${ pullrq.repoOwner }&permission=${ permission }");
+	$("#issue").attr("href", "list.is?repoName=${ pullrq.repoName }&visibility=${ pullrq.repoVisibility }&owner=${ pullrq.repoOwner }");
+
 	const editor = new toastui.Editor({
 		el: document.querySelector('#comments'), // 에디터를 적용할 요소 (컨테이너)
 		height: '200px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
@@ -223,5 +277,58 @@
 		initialValue: '',
 		placeholder: 'add your comment here...'
 	});
+
+	$(function() {
+		$("#merge-form").css("display", "none");
+		$("#confirm-merge-btn").css("display", "none");
+		$("#cancel-merge-btn").css("display", "none");
+		$("#new-title-area").css("display", "none");
+	})
+	
+	function showMergeForm() {
+		$("#available-merge").css("display", "none");
+		$("#merge-btn").css("display", "none");
+
+		$("#merge-form").css("display", "");
+		$("#confirm-merge-btn").css("display", "");
+		$("#cancel-merge-btn").css("display", "");
+
+		$("input[name=commitTitle]").val("Merge pull request #${ pullrq.pullNo } from ${ pullrq.pullWriter }/${ pullrq.compareBranch }");
+		$("textarea[name=commitMessage]").val("${ pullrq.pullTitle }");
+	}
+
+	function hideMergeForm() {
+		$("#merge-form").css("display", "none");
+		$("#confirm-merge-btn").css("display", "none");
+		$("#cancel-merge-btn").css("display", "none");
+
+		$("#available-merge").css("display", "");
+		$("#merge-btn").css("display", "");
+	}
+
+	function validateMerge() {
+		if($("input[name=commitTitle]").val() == "") {
+			$("input[name=title]").val("Merge pull request #${ pullrq.pullNo } from ${ pullrq.pullWriter }/${ pullrq.compareBranch }");
+		} else {
+			$("input[name=title]").val($("input[name=commitTitle]").val());
+		}
+
+		if($("textarea[name=commitMessage]").val() == "") {
+			$("input[name=message]").val("${ pullrq.pullTitle }");
+		} else {
+			$("input[name=message]").val($("textarea[name=commitMessage]").val());
+		}
+	}
+	
+	function modifyTitle() {
+		$("#origin-title-area").css("display", "none");
+		$("#new-title-area").css("display", "");
+		$("#new-title-area").val("${ pullrq.pullTitle }");
+	}
+	
+	function cancelModifyTitle() {
+		$("#new-title-area").css("display", "none");
+		$("#origin-title-area").css("display", "");
+	}
 </script>
 </html>

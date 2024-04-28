@@ -186,37 +186,34 @@ a {
                         <div>                         
                           <div>                            
                               <div>
-                                  <a>192 results</a>
+                                  <a>${ list[0].totalCount} results</a>
                               </div>
                           </div>
                         </div>
                       <!-- 목록 시작 -->
                       <div class="repo-list-total-wrap">
                           <div>
-                         
-                          
+
                           </div>
                           <div></div>
-                      
-                       
-                                <div class="repo-list-wrap">
-                                                            
-	                                <div class="repo-list-area">
-	                                	  <c:if test="${ not empty list }">
-	                                	  <c:forEach var="r" items="${list }">	                                	  
+
+                            <div id="testAbc" class="repo-list-wrap">                                                           
+	                             <div class="repo-list-area">
+	                                <c:if test="${ not empty list }">
+	                                	<c:forEach var="r" items="${list }">	                                	  
 	                                      <div class="repo-list-one" style="justify-content: space-between;">
 	                                          <div class="repo-list-one-area">
 	                                              <div style="display: flex;">
                                                         <div style="width: 30px;"><img src="${ r.avatarUrl }" width="20px" height="20px"></div>	                                               
                                                         <a href="detail.sr?nickName=${s.login}&avatar=${s.avatarUrl}">
                                                             <div>
-                                                                <a href="#">${ r.fullName }</a>
+                                                                <a href="permi.pr?repoName=${ r.name }&visibility=${ r.visibility }&owner=${ r.login }">${ r.fullName }</a>
                                                             </div>
                                                         </a>	                                                        
 	                                              </div>
 	                                          </div>    
                                               
-                                              <div>
+                                            <div>
                                                 <div>${ r.description }</div>                      
                                               
                                               <div>
@@ -237,96 +234,104 @@ a {
 	                                  <br> 
 	                                  
 	                                  </c:forEach>
-	                                  </c:if>                                                                                                  
-                              </div>                              
-                 <script>
-                let lastScroll = 0;
-                let count = 0;
-                let loading = false; // 추가된 부분: 호출 중인지 여부를 나타내는 변수
+	                                </c:if>                                                                                                  
+                              </div>  
 
-                $(document).scroll(function(e){
-                    var currentScroll = $(this).scrollTop();
-                    var documentHeight = $(document).height();
-                    var nowHeight = $(this).scrollTop() + $(window).height();
+                              <script>
+                              let lastScroll = 0;
+                              let count = 1;
+                              let loading = false; // 추가된 부분: 호출 중인지 여부를 나타내는 변수
 
-                    if(currentScroll > lastScroll && !loading){ // 변경된 부분: 호출 중인지 확인
-                        if(documentHeight < (nowHeight + (documentHeight * 0.1))){
-                            console.log("이제 여기서 데이터를 더 불러와 주면 된다.");
-                            loading = true; // 추가된 부분: 호출 중으로 표시
-                            ++count;
-                            loadMoreData(count);
-                        }
-                    }
-                    lastScroll = currentScroll;
-                });
+                                $(document).scroll(function(e){
+                                    var currentScroll = $(this).scrollTop();
+                                    var documentHeight = $(document).height();
+                                    var nowHeight = $(this).scrollTop() + $(window).height();
 
-			    function loadMoreData(count) {
-			        let keyword = document.getElementById('searchinput').value;
-			        let abc = document.getElementsByClassName('repo-list-wrap')[0].innerHTML;
-			        $.ajax({
-			            url: "searchrepo.jmm",
-			            data: {
-			                keyword: keyword,
-			                page: count
-			            },
-			            success: function(result){
-			                loading = false; // 추가된 부분: 호출 완료 후 상태 변경
-			                if(result != null){
-				                for (let i = 0; i < result.length; i++) {
-				                    let rv = result[i];
-				                    let avatarUrl = rv.avatarUrl;
-				                    let fullName = rv.fullName;
-				                    let description = rv.description;
-				                    let topics = rv.topics;
-				                    let topicsArray = topics.split(',');
-				                    let language = rv.language;
-				                    let pushedAt = rv.pushedAt;
-				
-				                    abc += "<div class='repo-list-area'>" +
-				                    "<div class=\"repo-list-one\" style=\"justify-content: space-between;\">" +
-				                    "<div class=\"repo-list-one-area\">" +
-				                    "<div style=\"display: flex;\">" +
-				                    "<div style=\"width: 30px;\"><img src=\"" + avatarUrl + "\" width=\"20px\" height=\"20px\"></div>" +                                               
-				                    "<a href=\"detail.sr?key=" + avatarUrl + "\">" +
-				                    "<div>" + fullName + "</div>" +
-				                    "</a>" +                                                        
-				                    "</div>" +
-				                    "</div>" +
-				                    "<div>" +
-				                    "<div>" + description + "</div>" +                                                  
-				                    "<div>"
-				                    
-				                    if (topicsArray == "") {
-								    	console.log("없어")
-								} else {
-								    for (let i = 0; i < topicsArray.length; i++) {
-								        abc += "<div class=\"testinline repo-public\">" + topicsArray[i].trim() + "</div>";
-								    }
-								}
-									   
-				                    abc += "</div>" +
-				                    "<div style=\"display: flex;\">" +
-				                    "<div>❤</div>" +
-				                    "<div style=\"display: inline-block;\">" + language + " · </div>" +
-				                    "<div>Update on " + pushedAt + "</div>" +
-				                    "</div>" +
-				                    "</div>" +
-				                    "</div>" +
-				                    "</div>";
-				                }		                	
-			                }else{
-			                	abc += "<div></div>" 
-			                	
-			                }
-			                $(".repo-list-wrap").append(abc);             
-			            },
-			            error: function(){
-			                console.log("ajax 통신 실패!");
-			                loading = false; // 추가된 부분: 호출 실패 시도로 간주하여 상태 변경
-			            }
-			        });
-			    }
-			</script>           
+                                    if(currentScroll > lastScroll && !loading){ // 변경된 부분: 호출 중인지 확인
+                                        if(documentHeight < (nowHeight + (documentHeight * 0.1))){
+                                            console.log("이제 여기서 데이터를 더 불러와 주면 된다.");
+                                            loading = true; // 추가된 부분: 호출 중으로 표시
+                                            ++count;
+                                            loadMoreData(count);
+                                        }
+                                    }
+                                    lastScroll = currentScroll;
+                                });
+
+                            function loadMoreData(count) {
+                                let keyword = document.getElementById('searchinput').value;
+                                let abc = $('#testAbc');
+                                $.ajax({
+                                    url: "searchrepo.jmm",
+                                    data: {
+                                        keyword: keyword,
+                                        page: count
+                                    },
+                                    success: function(result){
+                                        loading = false; // 추가된 부분: 호출 완료 후 상태 변경
+                                        let value = "";
+                                        if(result != null){
+                                            for (let i = 0; i < result.length; i++) {
+                                                let rv = result[i];
+                                                let avatarUrl = rv.avatarUrl;
+                                                let fullName = rv.fullName;
+                                                let description = rv.description;
+                                                let topics = rv.topics;
+                                                let topicsArray = topics.split(',');
+                                                let language = rv.language;
+                                                let pushedAt = rv.pushedAt;
+                                                let name = rv.name;
+                                                let visibility = rv.visibility;
+                                                let login = rv.login;
+                            
+                                                value += "<div class='repo-list-area'>" +
+                                                "<div class=\"repo-list-one\" style=\"justify-content: space-between;\">" +
+                                                "<div class=\"repo-list-one-area\">" +
+                                                "<div style=\"display: flex;\">" +
+                                                "<div style=\"width: 30px;\"><img src=\"" + avatarUrl + "\" width=\"20px\" height=\"20px\"></div>" +                                               
+                                                "<a href=\"detail.sr?key=" + avatarUrl + "\">" +
+                                                "<div>" + 
+                                                "<a href=\"permi.pr?repoName=" + name + "&visibility=" + visibility + "&owner=" + login +"\">" + fullName + 
+                                                "</a>" +
+                                                "</div>" +
+                                                "</a>" +                                                        
+                                                "</div>" +
+                                                "</div>" +
+                                                "<div>" +
+                                                "<div>" + description + "</div>" +                                                  
+                                                "<div>"
+                                                
+                                                if (topicsArray == "") {
+                                                    console.log("없어")
+                                            } else {
+                                                for (let i = 0; i < topicsArray.length; i++) {
+                                                    value += "<div class=\"testinline repo-public\">" + topicsArray[i].trim() + "</div>";
+                                                }
+                                            }
+                                                
+                                                value += "</div>" +
+                                                "<div style=\"display: flex;\">" +
+                                                "<div>❤</div>" +
+                                                "<div style=\"display: inline-block;\">" + language + " · </div>" +
+                                                "<div>Update on " + pushedAt + "</div>" +
+                                                "</div>" +
+                                                "</div>" +
+                                                "</div>" +
+                                                "</div>";
+                                            }		                	
+                                        }else{
+                                            value += "<div></div>" 
+                                            
+                                        }
+                                        abc.append(value);             
+                                    },
+                                    error: function(){
+                                        console.log("ajax 통신 실패!");
+                                        loading = false; // 추가된 부분: 호출 실패 시도로 간주하여 상태 변경
+                                    }
+                                });
+                            }
+			            </script>           
                       </div>
                       <!-- 목록 끝 -->
                     </div>

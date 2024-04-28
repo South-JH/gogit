@@ -268,7 +268,21 @@
                         							
                         						}
                         					});
-                                    	}                                  	                    
+                                    	}
+                                    	
+                                    	function deleteAlarm(){
+                                    		$.ajax({
+                                    			url:"alDelete.al",
+                                    			data:{
+                                    				memId:"${loginUser.memId}",
+                                    				rmemId:"${p.proWriter}",
+                                    				alarmType:"project",
+                                    			},
+                                    			success:function(data){
+                                    				console.log(data)
+                                    			}
+                                    		})
+                                    	}
                                     </script>
   
                                 </div>
@@ -395,10 +409,7 @@
 
                                             <div id="replyArea" class="reply-div">
                                                 <div style="display: flex; margin: auto; width: 600px;">
-<!--                                                     <div style="width: 150px;">testjimin</div> -->
-<!--                                                     <div style="width: 400px;">저 참여할게요!</div> -->
-<!--                                                     <div style="width: 200px;">2024-04-12</div> -->
-<!--                                                     <div style="width: 150px;"><button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">댓글삭제</button></div> -->
+                                                    
                                                 </div>
                                                 <hr style="width: 600px; margin: 0px auto;">
                                                 <br>
@@ -417,9 +428,7 @@
                                         					refProjectNo:${p.proNo},
                                         					repContent:$("#content").val(),
                                         					memId:'${loginUser.memId}'
-                                        				},success:function(status){
-                                        					console.log(status)
-                                        					
+                                        				},success:function(status){                                    					
                                         					if(status == "success"){
                                         						selectReplyList();
                                         						$("#content").val("");
@@ -453,9 +462,8 @@
                                         				             	//console.log(list[i].gitNick)
                                         				            	//console.log('${loginUser.gitNick}' == list[i].gitNick)
                                         				             if('${loginUser.gitNick}' == list[i].gitNick){
-                                        				            	value +=  "<button class=\"btn btn-primary btn-sm\" style=\"background-color: rgb(2, 56, 75);\">댓글삭제</button>"
-		                                    				             			
-                                        				             }
+                                        				            	    value += "<button id=\"deleterpbtn\" onclick=\"deleterp(" + list[i].replyNo + ")\" class=\"btn btn-primary btn-sm\" style=\"background-color: rgb(2, 56, 75);\">댓글삭제</button>";
+                                        				            	}
                                         				            value += "</div></div>" +
                              				             			"<hr style=\"width: 400px; margin: 0px auto;\">"+
                              				             			"<br>"
@@ -469,11 +477,26 @@
                                     			
                                         		});
                                         	}
+                                        	
+                                        	function deleterp(pno){
+                                        		console.log(pno)
+                                        		$.ajax({
+                                        			url:"prdelete.pr",
+                                        			data:{pno:pno},
+                                        			success:function(status){
+                                        				console.log(status)
+                                        				if(status == "success"){
+                                        					alertify.alert("댓글삭제가 성공적으로 완료되었습니다!");
+                                        					selectReplyList(${p.proNo});
+                                        				}
+                                        			}, error:function(){
+                                        				console.log("댓글삭제 실패!")
+                                        			}
+                                        		})
+                                        	}
                                         </script>
-
                                     </div>
                                 </div>
-
                                 <jsp:include page="../common/rightBar.jsp"/>            
                         </div>
                 </div>

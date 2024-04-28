@@ -214,6 +214,13 @@
 		 where pro_status = 'Y'
 	</select>
 	
+	<select id="applycompleteListCount" resultType="_int">
+		select 
+		       count(*)
+		  from project
+		 where pro_status = 'N'
+	</select>
+	
 	<select id="applySelectList" resultMap="projectResult">
 	select
 	       pro_no
@@ -233,6 +240,28 @@
 	  join member on (pro_writer = mem_id)
 	 where p.status = 'Y'
 	   and p.pro_status = 'Y'
+	 order
+	    by pro_no desc
+	</select>
+	
+	<select id="applycompleteList" resultMap="projectResult">
+		select
+	       pro_no
+	     , git_nick
+	     , pro_stack
+	     , pro_title
+	     , pro_content
+	     , pro_member
+	     , pro_period
+	     , to_char(pro_deadline, 'YYYY-MM-DD') as "pro_deadline"
+	     , to_char(pro_start_date, 'YYYY-MM-DD') as "pro_start_date"
+	     , pro_position
+	     , pro_status
+	     , count
+	     , p.create_date
+	  from project p
+	  join member on (pro_writer = mem_id)
+	 where p.pro_status = 'N'
 	 order
 	    by pro_no desc
 	</select>
@@ -278,6 +307,7 @@
 		     , git_nick
 		     , rep_content
 		     , to_char(rep_date, 'YYYY-MM-DD') as "rep_date"
+		     , ref_projectno
 		     from reply r
 		     join member using (mem_id)
 		     where r.status = 'Y'
@@ -285,9 +315,11 @@
 		     order by reply_no desc	
 	</select>
 	
+	<update id="deleteReply">
+		update reply
+		   set status = 'N'
+		 where reply_no = #{pno}	
+	</update>
 	
-
-
-
-
+	
 </mapper>

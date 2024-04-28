@@ -101,5 +101,24 @@ public class ProjectDao {
 		return (ArrayList)sqlSession.selectList("projectMapper.selectReplyList", pno);
 	}
 	
-
+	public int deleteReply(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.update("projectMapper.deleteReply", pno);
+	}
+	
+	public int applycompleteListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("projectMapper.applycompleteListCount");
+	}
+	
+	public ArrayList<Project> applycompleteList(SqlSessionTemplate sqlSession, PageInfo pi){
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("projectMapper.applycompleteList", null, rowBounds);
+	}
+	
+	public ArrayList<Member> selectProjectMemberList(SqlSessionTemplate sqlSession){
+		return (ArrayList)sqlSession.selectList("memberMapper.selectProjectMemberList");
+	}
 }

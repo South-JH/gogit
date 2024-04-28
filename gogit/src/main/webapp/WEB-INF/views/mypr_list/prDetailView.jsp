@@ -49,16 +49,16 @@
 		background-color: transparent;
 		border: none
 	}
-	#stack li{
-		width:120px;
-		list-style-type: none;
-		display:inline-block;
-		background-color: #0275d8;
-		color:white;
-		margin: 5px;
-		border-radius: 45%;
-		text-align: center;
-	}
+	 #stack li {
+        width: 50px;
+        list-style-type: none;
+        display: inline-block;
+        margin:5px;
+        cursor: pointer;
+      }
+      li>img{
+      	width: 50px;
+      }
 	#btn-wrap>button{
 		margin: 10px
 	}
@@ -236,69 +236,42 @@
     
     
     <script>
-    	let stackArr = '${ pr.stackName }'.split(",");
-    	let front = "";
-    	let back= "";
-    	let mobile = "";
-    	let etc = "";
-    	
-    	for(let i in stackArr){
-    		switch (stackArr[i]) {
-			case "javascript":
-			case "typescript":
-			case "react":
-			case "vue":
-			case "svelte":
-			case "nextjs":
-				
-				front+="<li>"+stackArr[i]+"</li>"
-				break;
-			
-			case "java":
-			case "spring":
-			case "nodejs":
-			case "nestjs":
-			case "go":
-			case "kotlin":
-			case "express":
-			case "mysql":
-			case "mongodb":
-			case "python":
-			case "django":
-			case "php":
-			case "graphql":
-			case "firebase":
-				
-				back+="<li>"+stackArr[i]+"</li>"
-				break;
-				
-			case "flutter":
-			case "swift":
-			case "eactnative":
-			case "unity":
-				
-				mobile+="<li>"+stackArr[i]+"</li>"
-				break;
-				
-				
-				
-			default:
-				etc+="<li>"+stackArr[i]+"</li>"
-				break;
-			}
-    		
-		}
+
     
     
     	$(function(){
-    		selectReply()
-    		/* $("#stack").html(stack); */
-    		$("#front").html(front);
-    		$("#back").html(back);
-    		$("#mobile").html(mobile);
-    		$("#etc").html(etc);
-    		
+    		myStackList()
+    		selectReply()	
     	})
+    	
+    	function myStackList(){
+	    	$.ajax({
+	    		url:"mystack.mp",
+	    		data:{
+	    			prNo:"${ pr.prNo }"
+	    		},
+	    		success:function(data){
+	    			for(let i in data){
+	    				switch (data[i].stackType) {
+						case "프론트엔드":
+							$("#front").append("<li><img src='"+data[i].stackImg+"' title='"+data[i].stackName+"'>")
+							break;
+						case "백엔드":
+							$("#back").append("<li><img src='"+data[i].stackImg+"' title='"+data[i].stackName+"'>")
+							break;
+						case "모바일":
+							$("#mobile").append("<li><img src='"+data[i].stackImg+"' title='"+data[i].stackName+"'>")
+							break;
+
+						default:
+							$("#etc").append("<li><img src='"+data[i].stackImg+"' title='"+data[i].stackName+"'>")
+							break;
+						}
+	    			}
+	    		}
+	    	})
+	    }
+    	
     	
     	function insertReply(){
     		if($("#reply-wrap>textarea").val().trim().length != 0){

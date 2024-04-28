@@ -246,4 +246,20 @@
 		            by p.count desc)
 		where rownum between 1 and 5
   	</select>
+  	
+  	
+  	<select id="selectMyStack" resultType="string">
+  		select stack_name
+  		  from my_pr
+  		 where pr_no = #{prNo}
+  		   and status = 'Y'
+  	</select>
+  	
+  	<select id="myStackList" resultMap="StackResult">
+  		select stack_name
+  		     , stack_type
+  		     , stack_img
+  		  from stack
+  		 where stack_name = #{myStackArr}
+  	</select>
 </mapper>

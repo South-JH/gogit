@@ -206,21 +206,19 @@ a {
 
                       <!-- 목록 시작 -->
                       <div class="repo-list-total-wrap">
-                          <div>
+                          	<div>
                          
                           
-                          </div>
-                          <div></div>
+                          	</div>
+                          	<div></div>
                       
                        
-                                <div class="repo-list-wrap">
-                                
+                          	<div id="testAbc" class="repo-list-wrap">                              
                                 <c:forEach var="s" items="${ seList }">
 	                                <div class="repo-list-area">
 	                                      <div class="repo-list-one">
 	                                          <div class="repo-list-one-area">
-	                                              <div>
-	                                               <!--<img src="resources/images/repo-img.png" width="60px" height="60px">-->
+	                                              <div>	                                               
 	                                                  <img src="${ s.avatarUrl }" width="60px" height="60px">
 	                                              </div>
 	                                              <div class="repo-title-area">
@@ -228,83 +226,82 @@ a {
 	                                                      <div>
 	                                                          <h3>${ s.login }</h3>
 	                                                      </div>
-	                                                  </a>
-	                                                  
-	                                              </div>
-	                                              
+	                                                  </a>	                                                  
+	                                              </div>	                                              
 	                                          </div>         
 	                                      </div>                                  
 	                                  </div>                              
                                 </c:forEach>
-                              </div>   
-                              
-                 <script>
-		    let lastScroll = 0;
-		    let count = 0;
-		    let loading = false; // 추가된 부분: 호출 중인지 여부를 나타내는 변수
-		
-		    $(document).scroll(function(e){
-		        var currentScroll = $(this).scrollTop();
-		        var documentHeight = $(document).height();
-		        var nowHeight = $(this).scrollTop() + $(window).height();
-		
-		        if(currentScroll > lastScroll && !loading){ // 변경된 부분: 호출 중인지 확인
-		            if(documentHeight < (nowHeight + (documentHeight * 0.1))){
-		                console.log("이제 여기서 데이터를 더 불러와 주면 된다.");
-		                loading = true; // 추가된 부분: 호출 중으로 표시
-		                ++count;
-		                loadMoreData(count);
-		            }
-		        }
-		        lastScroll = currentScroll;
-		    });
+                            </div> 
 
-			    function loadMoreData(count) {
-			        console.log("여기임"+count);
-			        let keyword = document.getElementById('searchinput').value;
-			        let abc = document.getElementsByClassName('repo-list-wrap')[0].innerHTML;
-			        $.ajax({
-			            url: "search.jmm",
-			            data: {
-			                keyword: keyword,
-			                page: count
-			            },
-			            success: function(result){
-			                loading = false; // 추가된 부분: 호출 완료 후 상태 변경
-			                
-			                for (let i = 0; i < result.length; i++) {
-			                    let rv = result[i];
-			                    let login = rv.login;
-			                    let avatarUrl = rv.avatarUrl;                 
-			
-			                abc += "<div class='repo-list-area'>" +
-			                "<div class='repo-list-one'>" + 
-			                "<div class='repo-list-one-area'>" +
-			                "<div>" +
-			                "<img src='" + avatarUrl + "' width='60px' height='60px'>" +
-			                "</div>" + 
-			                "<div class='repo-title-area'>" +
-			                "<a href='detail.sr'>" +
-			                "<div>" +
-			                "<h3>" + login + "</h3>" +
-			                "</div>" +
-			                "</a>" +
-			                "</div>" +
-			                "<div>" + 			                
-			                "</div>" +
-			                "</div>" +
-			                "</div>" +
-			                "</div>";
-			                }
-			                $(".repo-list-wrap").append(abc);             
-			            },
-			            error: function(){
-			                console.log("ajax 통신 실패!");
-			                loading = false; // 추가된 부분: 호출 실패 시도로 간주하여 상태 변경
-			            }
-			        });
-			    }
-			</script>           
+                              
+                 			<script>
+
+								let lastScroll = 0;
+								let count = 1;
+								let loading = false; // 추가된 부분: 호출 중인지 여부를 나타내는 변수
+		
+								$(document).scroll(function(e){
+									var currentScroll = $(this).scrollTop();
+									var documentHeight = $(document).height();
+									var nowHeight = $(this).scrollTop() + $(window).height();
+							
+									if(currentScroll > lastScroll && !loading){ // 변경된 부분: 호출 중인지 확인
+										if(documentHeight < (nowHeight + (documentHeight * 0.1))){
+											console.log("이제 여기서 데이터를 더 불러와 주면 된다.");
+											loading = true; // 추가된 부분: 호출 중으로 표시
+											++count;
+											loadMoreData(count);
+										}
+									}
+									lastScroll = currentScroll;
+								});
+
+			    			function loadMoreData(count) {						
+			        		let keyword = document.getElementById('searchinput').value;
+			        		let abc = $('#testAbc');
+							$.ajax({
+								url: "search.jmm",
+								data: {
+									keyword: keyword,
+									page: count
+								},
+								success: function(result){
+									loading = false; // 추가된 부분: 호출 완료 후 상태 변경
+									let value = "";
+									for (let i = 0; i < result.length; i++) {
+										let rv = result[i];
+										let login = rv.login;
+										let avatarUrl = rv.avatarUrl;                 
+					
+									value += "<div class='repo-list-area'>" +
+									"<div class='repo-list-one'>" + 
+									"<div class='repo-list-one-area'>" +
+									"<div>" +
+									"<img src='" + avatarUrl + "' width='60px' height='60px'>" +
+									"</div>" + 
+									"<div class='repo-title-area'>" +
+									"<a href='detail.sr'>" +
+									"<div>" +
+									"<h3>" + login + "</h3>" +
+									"</div>" +
+									"</a>" +
+									"</div>" +
+									"<div>" + 			                
+									"</div>" +
+									"</div>" +
+									"</div>" +
+									"</div>";
+									}
+									abc.append(value);             
+								},
+								error: function(){
+									console.log("ajax 통신 실패!");
+									loading = false; // 추가된 부분: 호출 실패 시도로 간주하여 상태 변경
+								}
+							});
+			    			}
+							</script>           
                       </div>
                       <!-- 목록 끝 -->
                     </div>

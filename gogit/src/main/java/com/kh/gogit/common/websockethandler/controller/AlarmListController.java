@@ -45,7 +45,7 @@ public class AlarmListController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="cancel.pr")
+	@RequestMapping(value="alcancel.pr")
 	public String cancelProject(String memId) {
 		String resultMemId = aService.selectMemId(memId);
 		int result = aService.cancelProject(resultMemId);
@@ -69,4 +69,12 @@ public class AlarmListController {
 		return result;
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping("alDelete.al")
+	public String prApplyCancel(AlarmList al) {
+		int result = aService.prApplyCancel(al);
+		return result>0?"success":"fail";
+	}
+
 }
