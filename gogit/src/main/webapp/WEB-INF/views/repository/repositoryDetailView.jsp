@@ -414,6 +414,7 @@ thead {
 		          			</div>
 		          			<div class="repo-detail-public">
 		          				<div>${ visibility }</div>
+		          				<input type="hidden" value="${ permission }">
 		          			</div>
 		          		</div>
 		          		<div>
@@ -586,6 +587,8 @@ thead {
 	
 	const repoName = $(".repo-detail-public-area h4").text();
 	const owner = $(".repo-detail-public-area input").val();
+	const visibility = $(".repo-detail-public>div").text();
+	const permission = $(".repo-detail-public>input").val();
 	
 	function subContent(e){
 		//console.log($(e).children("div").text());
@@ -633,7 +636,7 @@ thead {
 				    hvalue += "<thead>"
 			           		+ "<tr>"
 			            	+ "<th colspan=\"3\" width=\"800\">" + fileName + "</th>"
-			            	+ "<th><a href=\"updateContentForm.rp?repoName=" + repoName + "&owner=" + owner + "&fileName=" + fileName + "&filePath=" + filePath + "&repoType=" + repoType + "\"><i class=\"ti ti-pencil\"></i></a></th>"
+			            	+ "<th><a href=\"updateContentForm.rp?repoName=" + repoName + "&visibility=" + visibility + "&owner=" + owner + "&fileName=" + fileName + "&filePath=" + filePath + "&permission=" + permission + "\"><i class=\"ti ti-pencil\"></i></a></th>"
 			            	+ "</tr>"
 			            	+ "</thead>";
 			            	
@@ -659,16 +662,16 @@ thead {
 					$(".repo-table").text("");
 					//console.log(list);
 					
-					let hasContentDesc = list.some(item => item.contentDesc !== undefined);
+// 					let hasContentDesc = list.some(item => item.contentDesc !== undefined);
 					
-					if (hasContentDesc) {
-					    // 하나라도 contentDesc가 정의된 경우
-					    hvalue += "<thead>"
-					            + "<tr>"
-					            + "<th colspan=\"4\">CODE</th>"
-					            + "</tr>"
-					            + "</thead>";
-					} else {
+// 					if (hasContentDesc) {
+// 					    // 하나라도 contentDesc가 정의된 경우
+// 					    hvalue += "<thead>"
+// 					            + "<tr>"
+// 					            + "<th colspan=\"4\">CODE</th>"
+// 					            + "</tr>"
+// 					            + "</thead>";
+// 					} else {
 					    // 모든 항목의 contentDesc가 undefined인 경우
 					    hvalue += "<thead>"
 					            + "<tr>"
@@ -678,7 +681,7 @@ thead {
 					            + "<th width=\"130\">DATE</th>"
 					            + "</tr>"
 					            + "</thead>";
-					}
+// 					}
 					
 
 					if(filePath != ""){

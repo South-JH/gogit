@@ -59,6 +59,10 @@ h4 {
 	width: 100px;
 	height: 40px;
 }
+
+.fileName-area>input {
+	border: none;
+}
 </style>
 </head>
 <body>
@@ -86,28 +90,36 @@ h4 {
 	          	<jsp:include page="repositoryTab.jsp" />
 	          	
 	          	<div class="repo-wrap">
-	          		<div>
-		          		<div class="detail-top-area">
-		          			<div class="repo-detail-public-area">
+	          		<form id="repoUpdateForm" action="updateDesc.rp" method="post">
+		          		<div>
+			          		<div class="detail-top-area">
+			          			<div class="repo-detail-public-area">
+				          			<div>
+				          				<h4>${ repoName }</h4>
+				          				<input type="hidden" name="repoName" value="${ repoName }">
+				          				<input type="hidden" name="visibility" value="${ visibility }">
+				          				<input type="hidden" name="owner" value="${ owner }">
+				          				<input type="hidden" name="filePath" value="${ filePath }">
+				          				<input type="hidden" name="permission" value="${ permission }">
+				          				<input type="hidden" name="content" id="repo-desc">
+				          			</div>
+				          			<div>
+				          				<div class="fileName-area">
+				          					<input type="text" name="fileName" value="${ fileName }">
+				          				</div>
+				          			</div>
+				          		</div>
 			          			<div>
-			          				<h4>${ repoName }</h4>
-			          				<input type="hidden" value="${ owner }">
-			          			</div>
-			          			<div>
-			          				<div>${ fileName }</div>
+			          				<button type="submit" onclick="submitBtn();">Update</button>
 			          			</div>
 			          		</div>
-		          			<div>
-		          				<button>Update</button>
-		          			</div>
-		          		</div>
-			          	<div>
-			          		<div class="repo-detail-left-area">
-			          			<div id="editor"></div>
-			          		</div>
+				          	<div>
+				          		<div class="repo-detail-left-area">
+				          			<div id="editor"></div>
+				          		</div>
+				          	</div>
 			          	</div>
-		          	</div>
-		          	
+		          	</form>
 		          </div>
 	          
 	          </div>
@@ -120,22 +132,9 @@ h4 {
 <!-- Editor's Style -->
  <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
 <script>
-
-	const editor = new toastui.Editor({
-	    el: document.querySelector('#editor'), // 에디터를 적용할 요소 (컨테이너)
-	    height: '400px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
-	    initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
- 	    //initialValue: '내용을 입력해주세요.',   // 내용의 초기 값으로, 반드시 마크다운 문자열 형태여야 함
-	    //previewStyle: 'vertical',             // 마크다운 프리뷰 스타일 (tab || vertical)
-	    breaks: true,
-	    toolbarItems: [
-	          ['heading', 'bold', 'italic', 'quote', 'code', 'link'],
-	          ['ol', 'ul', 'task'],
-	          ['image'],
-	    ]
-	});
 	
 	$(function(){
+		
 		$("#pull-request").attr("href", "list.pullrq?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }");
 		$("#code").attr("href", "detail.rp?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }&permission=${ permission }");
 		$("#issue").attr("href", "list.is?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }");
@@ -144,31 +143,49 @@ h4 {
 		const owner = "${ owner }";
 		const fileName = "${ fileName }";
 		const filePath = "${ filePath }";
-		const repoType = "${ repoType }";
+		
 		
 		$.ajax({
-			url:"updateContent.rp",
+			url:"getContentDesc.rp",
 			data:{
 				repoName:repoName,
 				owner:owner,
 				filePath:filePath,
-				repoType:repoType
 			},
 			success:function(content){
-				console.log(content);
+				//console.log(content);
+				editor.setMarkdown(content);
 			},
 			error:function(){
-				console.log("컨텐츠 수정 ajax 실패");
+				editor.setMarkdown('내용을 불러오는데 실패했습니다.');
 			}
 		})
 		
-		
-		
-		
 	})
-
 	
+	const editor = new toastui.Editor({
+	    el: document.querySelector('#editor'), // 에디터를 적용할 요소 (컨테이너)
+	    height: '400px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
+	    initialEditType: 'markdown',            // 최초로 보여줄 에디터 타입 (markdown || wysiwyg)
+	    breaks: true,
+	    toolbarItems: [
+	          ['heading', 'bold', 'italic', 'quote', 'code', 'link'],
+	          ['ol', 'ul', 'task'],
+	          ['image'],
+	    ]
+	});
 
+	editor.on('change', function() {
+	let contents = editor.getMarkdown(); // 에디터 내용 가져오기
+	console.log(contents); // 콘솔에 내용 출력
+		
+	});
+	
+	function submitBtn(){
+		let contents = editor.getMarkdown();
+		$("#repo-desc").val(contents);
+		$("#repoUpdateForm").submit();
+	}
 	
 </script>
 </html>

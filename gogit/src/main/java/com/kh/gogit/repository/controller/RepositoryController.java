@@ -503,30 +503,52 @@ public class RepositoryController {
 	}
 	
 	@RequestMapping("updateContentForm.rp")
-	public String contentUpdateForm(Model model, String repoName, String owner, String fileName, String filePath) {
+	public String contentUpdateForm(Model model, String repoName, String visibility, String owner, String fileName, String filePath, String permission) {
 		
 		model.addAttribute("repoName", repoName);
+		model.addAttribute("visibility", visibility);
 		model.addAttribute("owner", owner);
 		model.addAttribute("fileName", fileName);
 		model.addAttribute("filePath", filePath);
+		model.addAttribute("permission", permission);
 		
 		return "repository/repositoryUpdateForm";
 	}
 	
-	@RequestMapping("updateContent.rp")
-	public void contentUpdate(HttpSession session, HttpServletResponse response, String repoName, String owner, String filePath, String repoType) throws IOException {
+	@RequestMapping("getContentDesc.rp")
+	public void getContentDesc(HttpSession session, HttpServletResponse response, String repoName, String owner, String filePath) throws IOException {
 
 		Member m = (Member)session.getAttribute("loginUser");
-		String content = rService.contentUpdate(m, repoName, owner, filePath);
-		System.out.println(repoType);
+		String content = rService.getContentDesc(m, repoName, owner, filePath);
 		
-		if("file".equals(repoType)) {
+		if(content != null) {
 			
 			response.setContentType("text/html; charset=utf-8");
 			response.getWriter().print(content);
 			
 		} else {
 			System.out.println("컨텐츠 잘못옴");
+		}
+		
+	}
+	
+	@RequestMapping("updateDesc.rp")
+	public String repoUpdateDesc(HttpSession session, Model model, String repoName, String visibility, String owner, String filePath, String permission, String content) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		String result = rService.repoUpdateDesc(m, repoName, owner, filePath, content);
+		
+		model.addAttribute("repoName", repoName);
+		model.addAttribute("visibility", visibility);
+		model.addAttribute("owner", owner);
+		model.addAttribute("permission", permission);
+		
+		if(result != null) {
+			session.setAttribute("alertMsg", "컨텐츠 수정 완");
+			return "redirect:detail.rp";
+		} else {
+			session.setAttribute("alertMsg", "컨텐츠 수정 실패...");
+			return "redirect:detail.rp";
 		}
 		
 	}

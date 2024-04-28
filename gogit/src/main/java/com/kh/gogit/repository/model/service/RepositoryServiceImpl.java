@@ -494,7 +494,7 @@ public class RepositoryServiceImpl implements RepositoryService {
     	
     }
     
-    public String contentUpdate(Member m, String repoName, String owner, String filePath) {
+    public String getContentDesc(Member m, String repoName, String owner, String filePath) {
     	
     	String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/contents/" + filePath;
     	
@@ -512,13 +512,44 @@ public class RepositoryServiceImpl implements RepositoryService {
 		String content = "";
 		if(response.getStatusCode() == HttpStatus.OK) {
 			content = response.getBody();
-			System.out.println(content);
 			return content;
 		} else {
 			System.out.println("콘텐츠 조회 실패");
 			return null;
 		}
 		
+    }
+    
+    public String repoUpdateDesc(Member m, String repoName, String owner, String filePath, String content) {
+    	
+    	String url = "https://api.github.com/repos/" + owner +  "/" + repoName + "/contents/" + filePath;
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		headers.set("Authorization", "Bearer " + m.getMemToken());
+		headers.set("Accept", "Accept: application/vnd.github.html+json");
+		
+		String encodedContent = Base64.getEncoder().encodeToString(content.getBytes());
+		
+		Map<String, String> map = new HashMap<>();
+        map.put("message", "update"); 
+        map.put("content", encodedContent); 
+        
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(map, headers);
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, request, String.class);
+		
+		String result = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			content = response.getBody();
+			return result;
+		} else {
+			System.out.println("내용 수정 실패");
+			return null;
+		}
+    	
     }
     
     
