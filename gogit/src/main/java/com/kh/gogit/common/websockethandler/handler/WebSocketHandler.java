@@ -126,7 +126,17 @@ public class WebSocketHandler extends TextWebSocketHandler {
 				aDao.rinsertAlarm(sqlSession, al);
 
 			}
-		}
+		} else if(arr[4].equals("applyPr") && arr[4].equals("applyPr")) {
+			AlarmList al = new AlarmList();
+			
+			al.setMemId(arr[0]);
+			al.setAlarmTitle(arr[1]);
+			al.setRmemId(arr[2]);
+			al.setAlarmContentNo(Integer.parseInt(arr[3]));
+			al.setAlarmType(arr[4]);
+			aDao.rinsertAlarm(sqlSession, al);
+			
+		} 
 	}
 
 	@Override
