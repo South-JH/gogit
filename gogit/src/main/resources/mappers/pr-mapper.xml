@@ -262,4 +262,11 @@
   		  from stack
   		 where stack_name = #{myStackArr}
   	</select>
+  	
+  	<select id="checkInsertPr" resultType="_int">
+  		select count(*)
+  		from my_pr
+  		where mem_id = #{memId}
+  		  and status = 'Y'
+  	</select>
 </mapper>

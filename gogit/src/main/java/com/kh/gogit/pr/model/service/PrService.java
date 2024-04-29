@@ -27,4 +27,5 @@ public interface PrService {
 	ArrayList<Pr> prTopList();
 	String selectMyStack(int prNo);
 	ArrayList<Stack> myStackList(String[] myStackArr); 
+	int checkInsertPr(String memId);
 }

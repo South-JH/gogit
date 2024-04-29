@@ -61,24 +61,20 @@
             <br>
 
             <div style="border: 1px solid gray; height: 30px;">
-                <input type="checkbox" id="vehicle1" name="nickName" value="hijimin">
-                  <label for="vehicle1"> hijimin </label><br>
+            	<ul id="joinMember">
+            		      		
+            	</ul>                
             </div>
             
-            <div id="addbtn" class="addbtn-div" style="margin-top: 5px;"><button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">팀원추가하기</button></div>
+            <!-- <div id="addbtn" class="addbtn-div" style="margin-top: 5px;"><button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">팀원추가하기</button></div> -->
         </div>        
     </div>
     
     <script>
     $(function(){
-		alarm();
-		alarmCircle();
-		setInterval(() => {
-			alarm();
-			alarmCircle();
-		}, 5000);
+    	alarm123();
 	})	
-	function alarm(){
+	function alarm123(){
     		$.ajax({
     			url:"alarm.me",
     			data:{
@@ -91,24 +87,24 @@
     					
     					switch (data[i].alarmType) {
 						case "project":
-							value += "<div>";
-	    					if(data[i].alarmYn == 1){
-	    						value +="<li class='list-group-item active' onclick='readAl(this);'>"+data[i].gitNick+"님이 프로젝트("+data[i].alarmTitle+")에 참가 요청했습니다."
-	    					}else{
-	    						value +="<li class='list-group-item' onclick='readAl(this);'>"+data[i].gitNick+"님이 프로젝트("+data[i].alarmTitle+")에 참가 요청했습니다."
-	    					}
-	    					value += "<input type='hidden' value='"+data[i].memId+"'>"
-									+"<input type='hidden' value='"+data[i].alarmNo+"'> </li>"
-	    							+"<button class='btn btn-warning' onclick='apply("+data[i].alarmContentNo+",this)'>승인</button>"
-	    							+"<button class='btn btn-danger' onclick='cancel(this)'>거절</button>"
-	    							
-	    						+"</div>"
+								value += "<li>"
+											+"<input type='checkbox' name='nickName' value='"+data[i].gitNick+"'>"
+											+"<label> "+data[i].gitNick+" </label>"
+											+"<button class='btn btn-primary' onclick='apply123(this)'>수락</button>"
+					            			+"<button class='btn btn-danger' onclick='alcancel123(this)'>거절</button>"
+					            			+"<input type='hidden' value='"+data[i].memId+"'>"
+					            			+"<input type='hidden' value='"+data[i].alarmNo+"'>"
+					            		+"</li>";
+					            		
+							$("#joinMember").append(value)				
+											
+								
 							break;
 						default:
 							break;
 						}
     				}
-    				$("#alarmList>ul").html(value);
+    				
     			},
     			error:function(){
     				console.log("실패")
@@ -116,12 +112,11 @@
     		})
     	}
     
-    function apply(num,e){
+    function apply123(e){
 		 $.ajax({
 			url:"application.pr",
 			data:{
-				pNo:num,
-				memId:$(e).siblings("li").children("input:eq(0)").val()
+				memId:$(e).siblings("li").children("input:eq(1)").val()
 			},
 			success:function(data){
 				console.log(data)
@@ -131,7 +126,7 @@
 		$.ajax({
 			url:"delete.al",
 			data:{
-				alarmNo:$(e).siblings("li").children("input:eq(1)").val()
+				alarmNo:$(e).siblings("li").children("input:eq(2)").val()
 			},
 			success:function(data){
 				$(e).parent().remove();
@@ -140,11 +135,11 @@
 		}) 
 	}  
     
-    function alcancel(e){
+    function alcancel123(e){
 
 		   $.ajax({
 			  url:"alcancel.pr",
-			  data:{memId:$(e).siblings("li").children("input:eq(0)").val()},
+			  data:{memId:$(e).siblings("li").children("input:eq(1)").val()},
 			  success:function(data){
 				  console.log(data);
 			  }
@@ -153,7 +148,7 @@
 		  $.ajax({
 			url:"delete.al",
 			data:{
-				alarmNo:$(e).siblings("li").children("input:eq(1)").val()
+				alarmNo:$(e).siblings("li").children("input:eq(2)").val()
 			},
 			success:function(data){
 				$(e).parent().remove();

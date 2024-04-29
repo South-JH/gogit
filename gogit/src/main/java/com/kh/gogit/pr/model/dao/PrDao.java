@@ -111,6 +111,12 @@ public class PrDao {
 	}
 
 
+	public int checkInsertPr(SqlSessionTemplate sqlSession, String memId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("prMapper.checkInsertPr",memId);
+	}
+
+
 
 
 

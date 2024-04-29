@@ -84,7 +84,7 @@
 		             		<!-- <button type="button" class="searchBtn btn btn-primary"  onclick="searchPr(1);">검색</button> -->
 	             		
              		</div>
-             		<button class="btn btn-sm btn-primary" style="float: right;" onclick="location.href='insertForm.mp'">나의 PR 등록</button>
+             		<button id="myPrInsert" class="btn btn-sm btn-primary" style="float: right;" onclick="location.href='insertForm.mp'">나의 PR 등록</button>
 	             	<table class="table">
 	             		<thead>
 		             		<tr>
@@ -114,8 +114,25 @@
     	$(function(){
     		
     		searchPr(1);
-
+    		checkInsertPr()
     	})
+    	
+    	 function checkInsertPr(){
+    		$.ajax({
+    			url:"checkInsertPr",
+    			data:{
+    				memId:"${loginUser.memId}"
+    			},
+    			success:function(data){
+    				if(data > 0){
+    					$("#myPrInsert").attr("disabled",true)
+    				}else{
+    					$("#myPrInsert").attr("disabled",false)
+    				}
+    				
+    			}
+    		})
+    	} 
     	
     	
     	function detail(data){

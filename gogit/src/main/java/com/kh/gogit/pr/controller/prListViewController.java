@@ -199,4 +199,13 @@ public class prListViewController {
 		ArrayList<Stack> list = prService.myStackList(myStackArr);
 		return list;
 	}
+	
+	
+	@ResponseBody
+	@RequestMapping("checkInsertPr")
+	public int checkInsertPr(String memId) {
+		int result = prService.checkInsertPr(memId);
+		
+		return result;
+	}
 }
