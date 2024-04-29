@@ -166,8 +166,7 @@ h2 {
 					<div class="UJ-menu">
 
 
-						<br>
-						<br>
+						<br> <br>
 						<!-- table hover -->
 						<div class="table-responsive">
 
@@ -192,68 +191,68 @@ h2 {
 										<div class="modal-header">
 											<h4 class="modal-title" id="myModalLabel33">친구 찾기</h4>
 											<button type="button" class="close" data-bs-dismiss="modal"
-												aria-label="Close" background-color:white;">
+												aria-label="Close"background-color:white;">
 												<i data-feather="x"></i>
 											</button>
 										</div>
 
 
 										<!-- 모달 폼!!!! -->
-										
-
-											<!-- 모달 내용 작성하는 부분 -->
-											<div class="modal-body" style="height: 800px;">
-												<div class="col-md-6 mb-1" style="width: 100%;">
-													<div class="input-group mb-3">
-														<span class="input-group-text" id="basic-addon1"><i
-															class="bi bi-search"></i></span> <input type="text"
-															class="form-control" style="width: 200px;"
-															placeholder="검색할 친구의 닉네임을 검색하세요."
-															aria-label="Recipient's username"
-															aria-describedby="button-addon2" id="searchBar">
-														<button class="btn btn-outline-secondary" type="button"
-															style="width: 70px;" id="button-addon2">검색</button>
-													</div>
-
-													<div>
 
 
-														<table class="table mb-0" id="modalTable">
-															<thead>
-																<tr>
-																	<th>ID</th>
-																	<th style="text-align: center;">Name</th>
-																	<th>&nbsp;&nbsp;&nbsp; Status</th>
-
-																	<th></th>
-
-																</tr>
-															</thead>
-															<tbody>
-																<!-- ajax로 조회한 내용 여기에 그릴거임 -->
-															</tbody>
-														</table>
-													</div>
-													<br>
+										<!-- 모달 내용 작성하는 부분 -->
+										<div class="modal-body" style="height: 800px;">
+											<div class="col-md-6 mb-1" style="width: 100%;">
+												<div class="input-group mb-3">
+													<span class="input-group-text" id="basic-addon1"><i
+														class="bi bi-search"></i></span> <input type="text"
+														class="form-control" style="width: 200px;"
+														placeholder="검색할 친구의 닉네임을 검색하세요."
+														aria-label="Recipient's username"
+														aria-describedby="button-addon2" id="searchBar">
+													<button class="btn btn-outline-secondary" type="button"
+														style="width: 70px;" id="button-addon2">검색</button>
 												</div>
 
+												<div>
 
+
+													<table class="table mb-0" id="modalTable">
+														<thead>
+															<tr>
+																<th>ID</th>
+																<th style="text-align: center;">Name</th>
+																<th>&nbsp;&nbsp;&nbsp; Status</th>
+
+																<th></th>
+
+															</tr>
+														</thead>
+														<tbody>
+															<!-- ajax로 조회한 내용 여기에 그릴거임 -->
+														</tbody>
+													</table>
+												</div>
+												<br>
 											</div>
-											<!--모달 내용 작성하는 부분 끝-->
 
 
-											<div class="modal-footer">
+										</div>
+										<!--모달 내용 작성하는 부분 끝-->
+
+
+										<div class="modal-footer">
 
 
 
-												<button type="button" class="btn btn-primary"
-													data-bs-dismiss="modal">
-													<i class="bx bx-x d-block d-sm-none"></i> <span
-														class="d-none d-sm-block">Close</span>
-												</button>
+											<button type="button" class="btn btn-primary"
+												data-bs-dismiss="modal">
+												<i class="bx bx-x d-block d-sm-none"></i> <span
+													class="d-none d-sm-block">Close</span>
+											</button>
 
-											</div>
-										
+										</div>
+
 									</div>
 								</div>
 							</div>
@@ -268,7 +267,7 @@ h2 {
 
 								<thead>
 									<tr>
-										<th>&nbsp;&nbsp;No.</th>
+										<th>&nbsp;&nbsp;ID</th>
 										<th>Nickname</th>
 										<th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Status</th>
 
@@ -428,8 +427,7 @@ h2 {
 							</table>
 
 
-							<br>
-							<br>
+							<br> <br>
 
 							<!-- 페이징바  // 페이징바 작동 잘 안함.....ㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠㅠ -->
 							<!--  <nav aria-label="Page navigation example">
@@ -482,15 +480,8 @@ h2 {
 
 
 
-						<br>
-						<br> <br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
-						<br>
+						<br> <br> <br> <br> <br> <br> <br>
+						<br> <br> <br>
 
 
 
@@ -516,7 +507,7 @@ h2 {
 
 	<script type="text/javascript">
 
-		/*
+		
 		$(function(){
 			selectMyFriend();
 		})
@@ -674,7 +665,7 @@ h2 {
 			})
 			
 			
-		}*/
+		}
 	
 	
                        $("#selectFriBTN").click(function(){
