@@ -140,5 +140,7 @@ public class ProjectServiceImpl implements ProjectService{
 	public ArrayList<Member> selectProjectMemberList(String nickName) {
 		return pDao.selectProjectMemberList(sqlSession, nickName);
 	}
+
+	
 	
 }

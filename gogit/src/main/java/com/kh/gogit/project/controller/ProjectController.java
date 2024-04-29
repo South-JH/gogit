@@ -123,6 +123,7 @@ public class ProjectController {
 				
 		if(result > 0) {
 			session.setAttribute("alertMsg", "성공적으로 프로젝트 작성이 완료되었습니다!");
+			
 			return "redirect:list.pj";
 		}else {
 			model.addAttribute("errorMsg", "프로젝트 작성 실패!");

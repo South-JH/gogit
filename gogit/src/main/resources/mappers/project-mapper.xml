@@ -321,5 +321,13 @@
 		 where reply_no = #{pno}	
 	</update>
 	
+	<update id="updateWriter">
+	update
+	      member
+	   set team = seq_pno.currval,
+	   team_status = 'Y'
+	 where mem_id = #{proWriter}	
+	</update>
+	
 	
 </mapper>

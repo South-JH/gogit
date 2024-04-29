@@ -30,7 +30,13 @@ public class ProjectDao {
 	}
 	
 	public int insertProject(SqlSessionTemplate sqlSession, Project p) {
-		return sqlSession.insert("projectMapper.insertProject", p);
+		int result = sqlSession.insert("projectMapper.insertProject", p);
+		if(result > 0) {
+			return sqlSession.update("projectMapper.updateWriter", p);
+		}else {
+			return 0;
+		}
+		
 	}
 	
 	public ArrayList<Stack> selectStackList(SqlSessionTemplate sqlSession){
