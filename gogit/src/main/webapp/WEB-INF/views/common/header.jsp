@@ -324,10 +324,10 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     "<input type='hidden' value='" +
                     data[i].alarmNo +
                     "'> </li>" +
-                    "<button class='btn btn-warning' onclick='apply(" +
+                    "<button class='btn btn-warning' onclick='alapply(" +
                     data[i].alarmContentNo +
                     ",this)'>승인</button>" +
-                    "<button class='btn btn-danger' onclick='cancel(this)'>거절</button>" +
+                    "<button class='btn btn-danger' onclick='alcancel(this)'>거절</button>" +
                     "</div>";
                   break;
                 case "zoom":
@@ -466,7 +466,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         });
       }
 
-      function apply(num, e) {
+      function alapply(num, e) {
         $.ajax({
           url: "application.pr",
           data: {
@@ -474,9 +474,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
             memId: $(e).siblings("li").children("input:eq(0)").val(),
           },
           success: function (data) {
-            if(socket){
+             if(socket){
             	socket.send("${loginUser.memId},프로젝트 참여 수락되었습니다.,"+$(e).siblings("li").children("input:eq(0)")+","+$(e).siblings('li').children('input:eq(1)').val()+",applyPr")
-            }
+            } 
           },
         });
 
@@ -508,7 +508,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           success: function (data) {
         	  if(socket){
               	socket.send("${loginUser.memId},프로젝트 참여 거절되었습니다.,"+$(e).siblings("li").children("input:eq(0)")+","+$(e).siblings('li').children('input:eq(1)').val()+",cancelPr")
-              }
+              } 
           },
         });
 
