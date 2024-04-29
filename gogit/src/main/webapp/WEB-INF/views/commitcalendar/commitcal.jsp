@@ -117,20 +117,7 @@
              <!--  Row 1 -->
              <div class="row">
              
-<!--              <ul class="nav nav-tabs"> -->
-<%--              <c:forEach var="r" items="${rpList }"> --%>
-             
-<!-- 			  <li class="nav-item"> -->
-<%-- 			    <a class="nav-link active" aria-current="page" href="commitcal.cl?owner=${ r.owner }&repoName=${r.repoName}">${r.repoName }</a> --%>
-<!-- 			  </li> -->
-			  
-<!-- <!-- 			  <li class="nav-item"> --> -->
-<%-- <%-- 			    <a class="nav-link" href="#">${r.repoName }</a> --%> --%>
-<!-- <!-- 			  </li> --> -->
-			  
-<%-- 			  </c:forEach> --%>
-			  
-<!-- 			</ul> -->
+
 
 			<select id="reporepo" onchange="testcommitcal(this);" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
 			  <c:forEach var="r" items="${rpList }">

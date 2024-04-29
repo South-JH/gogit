@@ -65,7 +65,7 @@
                   <label for="vehicle1"> hijimin </label><br>
             </div>
             
-            <div class="addbtn-div" style="margin-top: 5px;"><button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">팀원추가하기</button></div>
+            <div id="addbtn" class="addbtn-div" style="margin-top: 5px;"><button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">팀원추가하기</button></div>
         </div>        
     </div>
     
