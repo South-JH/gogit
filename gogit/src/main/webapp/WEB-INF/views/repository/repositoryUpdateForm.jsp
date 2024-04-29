@@ -101,6 +101,7 @@ h4 {
 				          				<input type="hidden" name="owner" value="${ owner }">
 				          				<input type="hidden" name="filePath" value="${ filePath }">
 				          				<input type="hidden" name="permission" value="${ permission }">
+				          				<input type="hidden" name="repoSha" value="${ repoSha }">
 				          				<input type="hidden" name="content" id="repo-desc">
 				          			</div>
 				          			<div>

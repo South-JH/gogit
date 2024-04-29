@@ -503,7 +503,7 @@ public class RepositoryController {
 	}
 	
 	@RequestMapping("updateContentForm.rp")
-	public String contentUpdateForm(Model model, String repoName, String visibility, String owner, String fileName, String filePath, String permission) {
+	public String contentUpdateForm(Model model, String repoName, String visibility, String owner, String fileName, String filePath, String permission, String repoSha) {
 		
 		model.addAttribute("repoName", repoName);
 		model.addAttribute("visibility", visibility);
@@ -511,6 +511,7 @@ public class RepositoryController {
 		model.addAttribute("fileName", fileName);
 		model.addAttribute("filePath", filePath);
 		model.addAttribute("permission", permission);
+		model.addAttribute("repoSha", repoSha);
 		
 		return "repository/repositoryUpdateForm";
 	}
@@ -533,10 +534,10 @@ public class RepositoryController {
 	}
 	
 	@RequestMapping("updateDesc.rp")
-	public String repoUpdateDesc(HttpSession session, Model model, String repoName, String visibility, String owner, String filePath, String permission, String content) {
+	public String repoUpdateDesc(HttpSession session, Model model, String repoName, String visibility, String owner, String filePath, String permission, String repoSha, String content) {
 		
 		Member m = (Member)session.getAttribute("loginUser");
-		String result = rService.repoUpdateDesc(m, repoName, owner, filePath, content);
+		String result = rService.repoUpdateDesc(m, repoName, owner, filePath, repoSha, content);
 		
 		model.addAttribute("repoName", repoName);
 		model.addAttribute("visibility", visibility);

@@ -520,7 +520,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 		
     }
     
-    public String repoUpdateDesc(Member m, String repoName, String owner, String filePath, String content) {
+    public String repoUpdateDesc(Member m, String repoName, String owner, String filePath, String repoSha, String content) {
     	
     	String url = "https://api.github.com/repos/" + owner +  "/" + repoName + "/contents/" + filePath;
     	
@@ -536,7 +536,8 @@ public class RepositoryServiceImpl implements RepositoryService {
 		
 		Map<String, String> map = new HashMap<>();
         map.put("message", "update"); 
-        map.put("content", encodedContent); 
+        map.put("content", encodedContent);
+        map.put("sha", repoSha);
         
         HttpEntity<Map<String, String>> request = new HttpEntity<>(map, headers);
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, request, String.class);
