@@ -86,7 +86,6 @@ public class CommitCalendarController {
 			String message = commitArr.get(i).getAsJsonObject().get("commit").getAsJsonObject().get("message").getAsString().replace("\n", "");
 			commitmesObj[i] = message; // 배열에 0번째에는 commitArr의 0번째의 값이 들어갈꺼임				
 		}
-		
 		model.addAttribute("rpList", rpList)
 		     .addAttribute("commitObj", Arrays.toString(commitObj))
 		     .addAttribute("commitmesObj", Arrays.toString(commitmesObj));

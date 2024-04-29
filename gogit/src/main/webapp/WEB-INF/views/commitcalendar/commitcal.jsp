@@ -117,20 +117,31 @@
              <!--  Row 1 -->
              <div class="row">
              
-             <ul class="nav nav-tabs">
-             <c:forEach var="r" items="${rpList }">
-             
-			  <li class="nav-item">
-			    <a class="nav-link active" aria-current="page" href="commitcal.cl?owner=${ r.owner }&repoName=${r.repoName}">${r.repoName }</a>
-			  </li>
-			  
-<!-- 			  <li class="nav-item"> -->
-<%-- 			    <a class="nav-link" href="#">${r.repoName }</a> --%>
-<!-- 			  </li> -->
-			  
+
+
+			<select id="reporepo" onchange="testcommitcal(this);" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+			  <c:forEach var="r" items="${rpList }">
+			  	<option value="${r.repoName }" data-owner="${r.owner}">${r.repoName }</option>
 			  </c:forEach>
-			  
-			</ul>
+			</select>
+			
+			<script>
+			  // 스크립트가 페이지 로드 이후에 실행되도록 하기 위해 $(document).ready() 사용
+			  $(document).ready(function(){
+			    window.testcommitcal = function(select){ // 함수를 전역 스코프에 정의
+			    // select 매개변수는 <select> 요소
+			      
+			    var owner = select.options[select.selectedIndex].getAttribute('data-owner');
+				 // 선택된 <option> 요소에서 'data-owner' 속성 값을 가져와서 owner 변수에 할당
+			    var repoName = select.value;			
+			    	console.log(owner);
+			    	console.log(repoName);
+			    	location.href = "commitcal.cl?owner=" + owner + "&repoName=" + repoName;
+			    }
+			  });
+			</script>
+
+
              <div id="calendar"></div>      
              
              
