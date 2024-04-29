@@ -73,6 +73,6 @@ public interface ProjectService {
 	int deleteReply(int pno);
 	
 	// 프로젝트 멤버들 가져오기
-	ArrayList<Member> selectProjectMemberList();
+	ArrayList<Member> selectProjectMemberList(String nickName);
 
 }

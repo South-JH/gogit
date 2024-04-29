@@ -63,7 +63,7 @@ public class ProjectController {
 	*/
 	
 	@RequestMapping("list.pj")
-	public ModelAndView selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+	public ModelAndView selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, HttpSession session) {
 	    int listCount = pService.selectListCount();
 	    
 	    PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 3, 8);
@@ -71,8 +71,9 @@ public class ProjectController {
 	    ArrayList<Project> list = pService.selectList(pi);
 	    ArrayList<Stack> stackList = pService.selectStackList();
 	    
+	    String nickName = ((Member)session.getAttribute("loginUser")).getGitNick();
 	    // selectProMember() 메서드 호출하여 ModelAndView 객체 반환받기
-	    ModelAndView rightBarModelAndView = selectProMember();
+	    ModelAndView rightBarModelAndView = selectProMember(nickName);
 	    
 	    mv.addObject("pi", pi)
 	      .addObject("list", list)
@@ -84,9 +85,10 @@ public class ProjectController {
 	}
 
 	// selectProMember() 메서드 정의
-	public ModelAndView selectProMember() {
+	public ModelAndView selectProMember(String nickName) {
 	    ModelAndView modelAndView = new ModelAndView("common/rightBar");
-	    ArrayList<Member> prMemberList = pService.selectProjectMemberList(); // 데이터베이스에서 멤버 리스트를 가져와서
+	    
+	    ArrayList<Member> prMemberList = pService.selectProjectMemberList(nickName); // 데이터베이스에서 멤버 리스트를 가져와서
 	    modelAndView.addObject("prMemberList", prMemberList); // 모델에 추가
 	    return modelAndView; // 모델이 포함된 ModelAndView 객체 반환
 	}
