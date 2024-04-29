@@ -272,7 +272,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         setInterval(() => {
           alarm();
           alarmCircle();
-        }, 5000);
+        }, 1000);
       });
 
       function alarmCircle() {
@@ -487,9 +487,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           },
           success: function (data) {
             $(e).parent().remove();
-            if(socket){
-            	socket.send("${loginUser.memId},프로젝트 참여 거절되었습니다.,"+$(e).siblings("li").children("input:eq(0)")+","+$(e).siblings('li').children('input:eq(1)').val()+",cancelPr")
-            }
+            
             
           },
         });
@@ -508,7 +506,9 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           url: "alcancel.pr",
           data: { memId: $(e).siblings("li").children("input:eq(0)").val() },
           success: function (data) {
-            console.log(data);
+        	  if(socket){
+              	socket.send("${loginUser.memId},프로젝트 참여 거절되었습니다.,"+$(e).siblings("li").children("input:eq(0)")+","+$(e).siblings('li').children('input:eq(1)').val()+",cancelPr")
+              }
           },
         });
 
