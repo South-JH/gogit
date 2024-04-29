@@ -19,14 +19,9 @@ public class AlarmListDao {
 
 	public int insertAlarm(SqlSessionTemplate sqlSession, AlarmList al) {
 		// TODO Auto-generated method stub
-		int result = sqlSession.selectOne("alarmMapper.checkInsert",al);
-		if(result>0) {
-			return 0;
-		}else {
+		
 			return sqlSession.insert("alarmMapper.insertAlarm",al);
-		}
-		
-		
+	
 	}
 
 	public ArrayList<AlarmList> selectAlarmList(SqlSessionTemplate sqlSession, String memId) {
@@ -80,6 +75,8 @@ public class AlarmListDao {
 
 	public int prApplyCancel(SqlSessionTemplate sqlSession, AlarmList al) {
 		// TODO Auto-generated method stub
+		String gitNick = al.getRmemId();
+		al.setRmemId((String)sqlSession.selectOne("alarmMapper.selectMemId",gitNick));
 		return sqlSession.update("alarmMapper.prApplyCancel", al);
 	}
 
@@ -87,4 +84,6 @@ public class AlarmListDao {
 		return sqlSession.insert("alarmMapper.insertAlarm",al);
 		
 	}
+
+
 }
