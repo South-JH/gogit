@@ -443,6 +443,17 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                     data[i].alarmNo +
                     "'> </li>";
                   break;
+                  
+                case "applyPr":
+                	value += "<li>"
+                				+ data[i].alarmTitle
+                			+"</li>"
+                	break;
+				case "cancelPr":
+					value += "<li>"
+		        				+ data[i].alarmTitle
+		        			+"</li>"
+                	break;	
 
                 default:
                   break;
