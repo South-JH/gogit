@@ -234,14 +234,15 @@
                         							  userId:${loginUser.memId}},
                         						success:function(result){
                         							if(result > 0){
-                        								drawApplyBtn();                       								
+                        								drawApplyBtn();  
+                        								deleteAlarm();
                         							}                           							
                         						}, error:function(){
                         							
                         						}
                         					});
-                                    	
                                     		
+                                    	
                                     	}                                  	
                                     	
                                     	function projectEnd(){ // 프로젝트 마감일때(모집자입장)
@@ -251,10 +252,12 @@
                         							  userId:${loginUser.memId}},
                         						success:function(result){
                         							drawProjectApplyRestart();
+                        							 
                         						}, error:function(){
                         							
                         						}
                         					});
+                                    	
                                     	}     
                                     	
                                     	function projectstart(){ // 프로젝트 모집재개(모집자입장)

@@ -128,4 +128,5 @@
   	 where alarm_content_no = #{alarmContentNo}
   </select>
   
+
 </mapper>

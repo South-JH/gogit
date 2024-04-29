@@ -76,5 +76,7 @@ public class AlarmListController {
 		int result = aService.prApplyCancel(al);
 		return result>0?"success":"fail";
 	}
+	
+
 
 }

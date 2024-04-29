@@ -33,7 +33,7 @@
                 <div class="teamMates" style="margin-bottom: 10px;"><b style="color: rgb(2 56 75);">TeamMates</b></div>
                 
                 <div style="display: flex; margin-bottom: 5px;">
-                
+
                 </div>
                 
                 <c:forEach var="p" items="${prMemberList }"><!-- 팀멤버 -->              
