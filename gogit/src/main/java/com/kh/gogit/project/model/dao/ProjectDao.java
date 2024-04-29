@@ -118,7 +118,7 @@ public class ProjectDao {
 		return (ArrayList)sqlSession.selectList("projectMapper.applycompleteList", null, rowBounds);
 	}
 	
-	public ArrayList<Member> selectProjectMemberList(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("memberMapper.selectProjectMemberList");
+	public ArrayList<Member> selectProjectMemberList(SqlSessionTemplate sqlSession, String nickName){
+		return (ArrayList)sqlSession.selectList("memberMapper.selectProjectMemberList", nickName);
 	}
 }

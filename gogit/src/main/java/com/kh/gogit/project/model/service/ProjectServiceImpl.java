@@ -137,8 +137,8 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 
 	@Override
-	public ArrayList<Member> selectProjectMemberList() {
-		return pDao.selectProjectMemberList(sqlSession);
+	public ArrayList<Member> selectProjectMemberList(String nickName) {
+		return pDao.selectProjectMemberList(sqlSession, nickName);
 	}
 	
 }
