@@ -20,7 +20,6 @@ public class AlarmListDao {
 	public int insertAlarm(SqlSessionTemplate sqlSession, AlarmList al) {
 		// TODO Auto-generated method stub
 		int result = sqlSession.selectOne("alarmMapper.checkInsert",al);
-		System.out.println(result);
 		if(result>0) {
 			return 0;
 		}else {
@@ -45,6 +44,7 @@ public class AlarmListDao {
 		Project p = new Project();
 		p.setProNo(pNo);
 		p.setProWriter(memId);
+		System.out.println(p);
 		return sqlSession.update("alarmMapper.applyProject",p);
 	}
 
