@@ -53,7 +53,7 @@ public class ZoomController {
 		MultiValueMap<String, String> body1 = new LinkedMultiValueMap<String, String>();
 		body1.add("grant_type", "authorization_code");
 		body1.add("code", code);
-		body1.add("redirect_uri", "http://localhost:8052/gogit/zoomCreate");
+		body1.add("redirect_uri", "http://192.168.20.38:8052/gogit/zoomCreate");
 
 		HttpEntity<MultiValueMap<String, String>> request1 = new HttpEntity<MultiValueMap<String, String>>(body1,
 				headers1);
