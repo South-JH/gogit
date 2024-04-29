@@ -71,6 +71,6 @@
 			 where team = (select team
 			                from member
 			                where git_nick = #{nickName}
-			                and team_status = 'Y')
+			                and team_status in ('Y','S'))
 	</select>
 </mapper>

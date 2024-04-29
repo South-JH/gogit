@@ -329,5 +329,12 @@
 	 where mem_id = #{proWriter}	
 	</update>
 	
+	<update id="updateMemStatus">
+		update
+	      member
+	   set team_status = 'Y'
+	 where team = #{pno}
+	</update>
+	
 	
 </mapper>

@@ -76,7 +76,12 @@ public class ProjectDao {
 	}
 	
 	public int updateCompleteProject(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
-		return sqlSession.update("projectMapper.updateCompleteProject", map);
+		int result = sqlSession.update("projectMapper.updateCompleteProject", map);
+		if(result > 0) {
+			return sqlSession.update("projectMapper.updateMemStatus", map);	
+		}else {
+			return 0;
+		}
 	}
 	
 	public int updateRestartProject(SqlSessionTemplate sqlSession, HashMap<String, String> map) {

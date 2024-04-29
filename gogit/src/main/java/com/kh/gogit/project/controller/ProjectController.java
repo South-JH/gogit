@@ -100,24 +100,27 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("detail.pr")
-	public String detailView(int pno, Model model) {
+	public ModelAndView detailView(int pno, HttpSession session, ModelAndView mv) {
 		int result = pService.increaseCount(pno);
+		String nickName = ((Member)session.getAttribute("loginUser")).getGitNick();
+		ModelAndView rightBarModelAndView = selectProMember(nickName);
 		
 		if(result > 0) {
 			Project p = pService.selectDetailList(pno);
 			ArrayList<Stack> stackList = pService.selectStackList();
 			
-			model.addAttribute("p",p).addAttribute("stackList",stackList);
+			mv.addObject("p",p).addObject("stackList",stackList).addAllObjects(rightBarModelAndView.getModel()).setViewName("project/projectDetailView");
 					
-			return "project/projectDetailView";
-		} else {
-			return "common/errorPage";
-		}		
+			return mv;
+		}else {
+			return null;
+		}
 	}
 	
 	@RequestMapping("insert.pr")
 	public String insertProject(Project p, Model model, HttpSession session) {
 		p.setProWriter(((Member)session.getAttribute("loginUser")).getMemId());
+		System.out.println(p);
 		
 		int result = pService.insertProject(p);
 				

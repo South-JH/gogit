@@ -33,21 +33,12 @@
                 <div class="teamMates" style="margin-bottom: 10px;"><b style="color: rgb(2 56 75);">TeamMates</b></div>
                 
                 <div style="display: flex; margin-bottom: 5px;">
-                <c:forEach var="p" items="${ list }">
-                    	<c:if test="${ loginUser.gitNick eq p.proWriter}">
-                    <div class="proimg-div" style="width: 60px;"><img src="${loginUser.profile}"></div>
-                    <div>
-                    	
-                        <b>${ loginUser.gitNick }</b><!-- 작성자 -->
-                        <div>@${ loginUser.gitNick }</div>
-                    </div>
-                        </c:if>
-                        </c:forEach>
+                
                 </div>
                 
                 <c:forEach var="p" items="${prMemberList }"><!-- 팀멤버 -->              
                 <div style="display: flex; margin-bottom: 5px;">
-                    <div class="proimg-div" style="width: 60px;"><img src="${loginUser.profile}"></div>
+                    <div class="proimg-div" style="width: 60px;"><img src="${p.profile}"></div>
                     <div>
                         <b>${ p.gitNick } </b>
                         <div>@${p.gitNick }</div>
