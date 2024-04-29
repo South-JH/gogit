@@ -80,7 +80,7 @@
   
   <update id="cancelProject">
   	update member
-  	   set team='0'
+  	   set team=0
   	     , team_status='N'
   	 where mem_id=#{proWriter}
   </update>
