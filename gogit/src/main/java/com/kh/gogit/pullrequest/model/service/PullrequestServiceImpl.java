@@ -230,8 +230,8 @@ public class PullrequestServiceImpl implements PullrequestService {
 	
 	public boolean createComment(Member loginUser, Pullrequest pullrq, Comment comment) {
 		
-		// https://api.github.com/repos/OWNER/REPO/pulls/PULL_NUMBER/comments
-		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/pulls/" + pullrq.getPullNo() + "/comments";
+		// https://api.github.com/repos/OWNER/REPO/issues/ISSUE_NUMBER/comments
+		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/issues/" + pullrq.getPullNo() + "/comments";
 		
 		RestTemplate restTemplate = new RestTemplate();
 		
@@ -245,7 +245,7 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
 		
-		if(response.getStatusCode() == HttpStatus.OK) {
+		if(response.getStatusCode() == HttpStatus.CREATED) {
 			return true;
 		} else {
 			return false;

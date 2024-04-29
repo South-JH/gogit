@@ -146,6 +146,8 @@ public class PullrequestController {
 		pullrq.setPullWriterProfile(pullrqObj.get("user").getAsJsonObject().get("avatar_url").getAsString());
 		pullrq.setBaseBranch(pullrqObj.get("base").getAsJsonObject().get("ref").getAsString());
 		pullrq.setCompareBranch(pullrqObj.get("head").getAsJsonObject().get("ref").getAsString());
+		pullrq.setCommits(pullrqObj.get("commits").getAsInt());
+		pullrq.setChangedFiles(pullrqObj.get("changed_files").getAsInt());
 		pullrq.setRepoName(repoName);
 		pullrq.setRepoOwner(owner);
 		pullrq.setRepoVisibility(pullrqObj.get("base").getAsJsonObject().get("repo").getAsJsonObject().get("private").getAsString());
