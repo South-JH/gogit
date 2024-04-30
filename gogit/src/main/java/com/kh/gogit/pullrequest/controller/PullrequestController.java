@@ -150,7 +150,7 @@ public class PullrequestController {
 		pullrq.setChangedFiles(pullrqObj.get("changed_files").getAsInt());
 		pullrq.setRepoName(repoName);
 		pullrq.setRepoOwner(owner);
-		pullrq.setRepoVisibility(pullrqObj.get("base").getAsJsonObject().get("repo").getAsJsonObject().get("private").getAsString());
+		pullrq.setRepoVisibility(pullrqObj.get("base").getAsJsonObject().get("repo").getAsJsonObject().get("visibility").getAsString());
 		if(!pullrqObj.get("mergeable").isJsonNull()) {
 			pullrq.setMergeable(pullrqObj.get("mergeable").getAsBoolean());
 		}
