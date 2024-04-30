@@ -73,6 +73,7 @@
   		 , alarm_content_no
   	  from alarmlist
   	  where mem_id = #{memId}
+  	    and status = 'N'
   </select>
   
   <update id="updateAlarm">

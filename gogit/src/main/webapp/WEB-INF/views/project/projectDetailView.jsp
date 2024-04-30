@@ -133,32 +133,38 @@
                                                         
                                     <script>
                                     $(function(){
-                                    	setInterval(()=>{
-                                    		testCircle();
-                                    		alarmTest();
-                                    	}, 3000);
+                                    	alarmTest();
+
                                     });
                                     
-                                            let value = true;
+                                            
                                     function alarmTest() {
+                                    	let value = false;
                                         $.ajax({
                                           url: "alarmTest.me",
                                           data: {memId: "${loginUser.memId}"},
                                           success: function (data) {
+                                        	  console.log(data)
                                             for (let i in data) {
                                               switch (data[i].alarmType) {
                                                 case "project":
                                                 	if(data[i].alarmContentNo == ${p.proNo}){
-                                                		value = false; // 없을때
+                                                		value = true; // 없을때
                                                 		break;
                                                 	}else{
-                                                		value = true; // 있을때
+                                                		value = false; // 있을때
+                                                		
                                                 	}
-                                                	if(value){
-                                                		rejectbtn();                                                 		
-                                                	}
+                                                	
                                               }
                                             }
+                                        	  if(value){
+                                          		rejectbtn();                                                 		
+                                          	}else{
+                                          		if('${loginUser.gitNick}' != '${p.proWriter}'){
+                                          		drawApplyBtn();
+                                          		}
+                                          	}
                                           },
                                           error: function () {
                                             console.log("실패");
@@ -166,7 +172,7 @@
                                         });
                                       }
                                     
-                                    function testCircle(value){
+                                    /* function testCircle(value){
                                     	$.ajax({
                                     		url:"teCircle.pr",
                                     		data:{pno:${p.proNo}},
@@ -176,10 +182,10 @@
                                     			if(data.team == value){
                                     			rejectbtn();                                    				
                                     			}
-                                    			tata.teamStatus
+                                    			
                                     		}
                                     	})
-                                    }
+                                    } */
                                     // 내가 프로젝트 작성자가 아니고, teamStatus가 No, 그리고 프로젝트 모집상태가 모집중일때(걍 신청자)
                                    // alert("script read!");
                                     
@@ -510,7 +516,7 @@
                                         			url:"rlist.pr",
                                         			data:{pno:${p.proNo}},
                                         			success:function(list){
-                                        				console.log(list)
+                                        				
                                         				
                                         				let value = "";
                                         				

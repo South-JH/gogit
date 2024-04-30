@@ -80,7 +80,7 @@
 	     , team  
 	     , team_status
 	   from member
-	   where team_status = 'Y'
+	   where team_status = 'N'
 	    and TEAM = #{pno}
 	</select>
 </mapper>
