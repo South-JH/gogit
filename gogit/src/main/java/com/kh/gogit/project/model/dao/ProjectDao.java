@@ -134,7 +134,12 @@ public class ProjectDao {
 	}
 	
 	public int deleteProject(SqlSessionTemplate sqlSession, int pno) {
-		return sqlSession.update("projectMapper.deleteProject", pno);
+		int result = sqlSession.update("projectMapper.deleteProject", pno);
+		if(result > 0) {
+			return sqlSession.update("memberMapper.deleteProjectStatus", pno);
+		}else {
+			return 0;			
+		}
 	}
 	
 	public ArrayList<Member> selectCircle(SqlSessionTemplate sqlSession, int pno){
