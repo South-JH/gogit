@@ -214,6 +214,51 @@ public class PullrequestController {
 		}
 		pullrq.setStatus(pullrqObj.get("merged").getAsBoolean() ? "Merged" : pullrqObj.get("state").getAsString());
 		pullrq.setCreateDate(pullrqObj.get("created_at").getAsString().split("T")[0]);
+		
+		JsonArray assigneesArr = pullrqObj.get("assignees").getAsJsonArray();
+		
+		String assignees = "";
+		String assigneesProfiles = "";
+		for(int j = 0; j < assigneesArr.size(); j++) {
+			
+			String assignee = assigneesArr.get(j).getAsJsonObject().get("login").getAsString();
+			
+			String assigneesProfile = assigneesArr.get(j).getAsJsonObject().get("avatar_url").getAsString();
+
+			if(j == assigneesArr.size() -1) {
+				assignees += assignee;
+				assigneesProfiles += assigneesProfile;
+			} else {
+				assignees += assignee + ",";
+				assigneesProfiles += assigneesProfile + ",";
+			}
+			
+		}
+		
+		pullrq.setPullManager(assignees);
+		pullrq.setPullManagerProfile(assigneesProfiles);
+		
+		JsonArray reviewersArr = pullrqObj.get("requested_reviewers").getAsJsonArray();
+		
+		String reviewers = "";
+		String reviewersProfiles = "";
+		for(int j = 0; j < reviewersArr.size(); j++) {
+			
+			String reviewer = reviewersArr.get(j).getAsJsonObject().get("login").getAsString();
+			String reviewersProfile = reviewersArr.get(j).getAsJsonObject().get("avatar_url").getAsString();
+			
+			if(j == reviewersArr.size() -1) {
+				reviewers += reviewer;
+				reviewersProfiles += reviewersProfile;
+			} else {
+				reviewers += reviewer + ",";
+				reviewersProfiles += reviewersProfile + ",";
+			}
+			
+		}
+		
+		pullrq.setPullReviewer(reviewers);
+		pullrq.setPullReviewerProfile(reviewersProfiles);
 
 		//===================================== 커밋 리스트 가져와 ==================================
 		String commitsUrl = pullrqObj.get("commits_url").getAsString();
