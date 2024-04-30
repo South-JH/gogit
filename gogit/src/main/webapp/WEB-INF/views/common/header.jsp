@@ -214,7 +214,7 @@
     			  memId:"${loginUser.memId}"
     		  },
     		  success:function(){
-    			  console.log("${loginUser}")
+    			 
     		  }
     	  })
       }

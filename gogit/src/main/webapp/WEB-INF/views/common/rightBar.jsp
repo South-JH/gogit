@@ -23,6 +23,15 @@
         border-radius: 10px;
         border: 1px solid #d4d2d2;
     }  
+    #joinMember label{
+    	margin-left: 5px;
+    }
+    #joinMember button{
+    	display:inline-block;
+    	height: 30px;
+    	margin-left: 4px;
+    	float: right;
+    }
 </style>
 </head>
 <body>
@@ -69,6 +78,9 @@
     <script>
     $(function(){
     	alarm123();
+    	setInterval(() => {
+    		alarm123();
+		},1000);
 	})	
 	function alarm123(){
     		$.ajax({
@@ -86,8 +98,8 @@
 								value += "<li>"
 											+"<input type='checkbox' name='nickName' value='"+data[i].gitNick+"'>"
 											+"<label> "+data[i].gitNick+" </label>"
-											+"<button class='btn btn-primary' onclick='apply123('"+data[i].alarmContentNo+"',this)'>수락</button>"
-					            			+"<button class='btn btn-danger' onclick='alcancel123(this)'>거절</button>"
+											+"<button class='btn btn-danger' onclick='alcancel123(this)'>거절</button>"
+											+"<button class='btn btn-primary' onclick='apply123("+data[i].alarmContentNo+",this)'>수락</button>"
 					            			+"<input type='hidden' value='"+data[i].memId+"'>"
 					            			+"<input type='hidden' value='"+data[i].alarmNo+"'>"
 					            		+"</li>";
@@ -113,7 +125,7 @@
 			url:"application.pr",
 			data:{
 				pNo: num,
-				memId:$(e).siblings("li").children("input:eq(1)").val()
+				memId:$(e).siblings("input:eq(1)").val()
 			},
 			success:function(data){
 				console.log(data)
@@ -124,7 +136,7 @@
 			url:"delete.al",
 			data:{
 				pno:"${loginUser.team}",
-				alarmNo:$(e).siblings("li").children("input:eq(2)").val()
+				alarmNo:$(e).siblings("input:eq(2)").val()
 			},
 			success:function(data){
 				$(e).parent().remove();
@@ -137,7 +149,7 @@
 
 		   $.ajax({
 			  url:"alcancel.pr",
-			  data:{memId:$(e).siblings("li").children("input:eq(1)").val()},
+			  data:{memId:$(e).siblings("input:eq(1)").val()},
 			  success:function(data){
 				  console.log(data);
 			  }
@@ -146,7 +158,7 @@
 		  $.ajax({
 			url:"delete.al",
 			data:{
-				alarmNo:$(e).siblings("li").children("input:eq(2)").val()
+				alarmNo:$(e).siblings("input:eq(2)").val()
 			},
 			success:function(data){
 				$(e).parent().remove();
