@@ -208,7 +208,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" id="Prdelete">삭제</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        id="close">취소</button>
+                        id="delprclose">취소</button>
                 </div>
     
             </div>
@@ -227,10 +227,12 @@
     		$("#Prdelete").click(function(){
     			location.href="delete.mp?prNo=${pr.prNo}";
     		})
-    		 $("#close").on("click",function(){
- 				$("#deletePr").modal("hide");
- 			}) 
+    		
+ 			
     	}
+    	 $("#delprclose").on("click",function(){
+			 $("#deletePr").modal("hide");
+		 })
     
     </script>
     

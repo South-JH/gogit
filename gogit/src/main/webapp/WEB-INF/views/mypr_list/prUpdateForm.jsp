@@ -92,7 +92,7 @@
              			</tr>
              			<tr>
              				<td>${ pr.prNo } </td>
-             				<td colspan="3"><input class="form-control" type="text" id="prTitle" name="prTitle" value="${ pr.prTitle }">  </td>
+             				<td colspan="3"><input class="form-control" type="text" id="prTitle" name="prTitle" value="${ pr.prTitle }" required>  </td>
              				<td>${ pr.createDate } </td>
              			</tr>
              			<tr>
@@ -129,19 +129,19 @@
              				<th colspan="5">프로젝트 가능시간</th>
              			</tr>
              			<tr>
-             				<td colspan="5"><input class="form-control" type="date" id="prTime" name="prTime"></td>
+             				<td colspan="5"><input class="form-control" type="date" id="prTime" name="prTime" required></td>
              			</tr>
 
              			<tr>
              				<td colspan="5">
-             					<textarea class="form-control" rows="5" cols="100" name="prContent" style="resize: none; border: none">${ pr.prContent }</textarea>
+             					<textarea class="form-control" rows="5" cols="100" name="prContent" style="resize: none; border: none" required>${ pr.prContent }</textarea>
              				</td>
              			</tr>
              			<input type="hidden" id="prNo" name="prNo" value="${ pr.prNo }">
              			<input type="hidden" id="stackName" name="stackName">
              		</table>
              		<div id="btn-wrap">
-	             		   	<button type="submit" class="btn btn-warning">수정하기</button>
+	             		   	<button id="updatePr" type="submit" class="btn btn-warning">수정하기</button>
 	             			<button type="button" class="btn btn-danger" onclick="location.href='detail.mp?bno=${pr.prNo}'">취소하기</button>
 	             		</div>
 	             		
@@ -289,60 +289,88 @@
 	    	if(num != -1){
 	    		stackArr.splice(num,1);
 	    	}
+			if(stackArr.length == 0){
+	    		$("#updatePr").attr("disabled",true)
+	    	}
 	    	$("#front").append("<li>"+$(this).html()+"</li>")
 	    	$(this).remove();
 	    	$("#stackName").val(stackArr);
+	    	
 	    })
 	    $("#myback").on("click","li",function(){
 	    	let num = stackArr.indexOf($(this).children().attr("title"))
 	    	if(num != -1){
 	    		stackArr.splice(num,1);
 	    	}
+			if(stackArr.length == 0){
+	    		$("#updatePr").attr("disabled",true)
+	    	}
 	    	$("#back").append("<li>"+$(this).html()+"</li>");
 	    	$(this).remove();
 	    	$("#stackName").val(stackArr);
+	    	
 	    })
 	    $("#mymobile").on("click","li",function(){
 	    	let num = stackArr.indexOf($(this).children().attr("title"))
 	    	if(num != -1){
 	    		stackArr.splice(num,1);
 	    	}
+			if(stackArr.length == 0){
+	    		$("#updatePr").attr("disabled",true)
+	    	}
 	    	$("#mobile").append("<li>"+$(this).html()+"</li>");
 	    	$(this).remove();
 	    	$("#stackName").val(stackArr);
+	    	
 	    })
 	    $("#myetc").on("click","li",function(){
 	    	let num = stackArr.indexOf($(this).children().attr("title"))
 	    	if(num != -1){
 	    		stackArr.splice(num,1);
 	    	}
+			if(stackArr.length == 0){
+	    		$("#updatePr").attr("disabled",true)
+	    	}
 	    	$("#etc").append("<li>"+$(this).html()+"</li>");
 	    	$(this).remove();
 	    	$("#stackName").val(stackArr);
+	    	
 	    })
 	    
 	    
 	    
 	    $("#front").on("click","li",function(){
 	    	stackArr.push($(this).children().attr("title"))
+			if(stackArr.length != 0){
+	    		$("#updatePr").attr("disabled",false)
+	    	}
 	    	$("#myfront").append("<li>"+$(this).html()+"</li>")
 	    	$(this).remove();
 	    	$("#stackName").val(stackArr);
 	    })
 	    $("#back").on("click","li",function(){
 	    	stackArr.push($(this).children().attr("title"))
+			if(stackArr.length != 0){
+	    		$("#updatePr").attr("disabled",false)
+	    	}
 	    	$("#myback").append("<li>"+$(this).html()+"</li>")
 	    	$(this).remove();
 	    	$("#stackName").val(stackArr);
 	    })
 	    $("#mobile").on("click","li",function(){
 	    	stackArr.push($(this).children().attr("title"))
+			if(stackArr.length != 0){
+	    		$("#updatePr").attr("disabled",false)
+	    	}
 	    	$("#mymobile").append("<li>"+$(this).html()+"</li>")
 	    	$(this).remove();
 	    	$("#stackName").val(stackArr);
 	    })
 	    $("#etc").on("click","li",function(){
 	    	stackArr.push($(this).children().attr("title"))
+			if(stackArr.length != 0){
+	    		$("#updatePr").attr("disabled",false)
+	    	}
 	    	$("#myetc").append("<li>"+$(this).html()+"</li>")
 	    	$(this).remove();
 	    	$("#stackName").val(stackArr);

@@ -19,21 +19,20 @@ uri="http://java.sun.com/jsp/jstl/core" %>
         width: 50px;
         list-style-type: none;
         display: inline-block;
-        margin:5px;
+        margin: 5px;
         cursor: pointer;
       }
-     
 
       #myStack li {
         width: 50px;
         list-style-type: none;
         display: inline-block;
-        margin:5px;
+        margin: 5px;
         cursor: pointer;
       }
-      
-      li>img{
-      	width: 50px;
+
+      li > img {
+        width: 50px;
       }
     </style>
   </head>
@@ -155,7 +154,6 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                   <button id="reset" type="reset" class="btn btn-warning">
                     취소하기
                   </button>
-             
                 </div>
               </form>
             </div>
@@ -173,136 +171,151 @@ uri="http://java.sun.com/jsp/jstl/core" %>
       let backImg = [];
       let mobileImg = [];
       let etcImg = [];
-      let stackArr=[];
-      
-      $(function(){
-    	  stackList()
-    	  
-      })
-      
-      function stackList(){
-    	  $.ajax({
-    		  url:"select.st",
-    		  success:function(data){
-    			  
-    			  for(let i in data){
-    				  switch (data[i].stackType) {
-					case "프론트엔드":
-						front.push(data[i].stackName);
-						frontImg.push(data[i].stackImg);
-						break;
-					case "백엔드":
-						back.push(data[i].stackName);
-						backImg.push(data[i].stackImg);
-						break;
-					case "모바일":
-						mobile.push(data[i].stackName);
-						mobileImg.push(data[i].stackImg);
-						break;
+      let stackArr = [];
 
-					default:
-						etc.push(data[i].stackName);
-						etcImg.push(data[i].stackImg);
-						break;
-					}
-    			  }
-    		
-    			  
-    			   for(let i in front){
+      $(function () {
+        stackList();
+      });
 
-    				  $("#front>ul").append("<li><img src='"+frontImg[i]+"' title='"+front[i]+"'></li>")
-    			  }
-    			   for(let i in back){
-     				  $("#back>ul").append("<li><img src='"+backImg[i]+"' title='"+back[i]+"'></li>")
-     			  }   	
-    			   for(let i in mobile){
-     				  $("#mobile>ul").append("<li><img src='"+mobileImg[i]+"' title='"+mobile[i]+"'></li>")
-     			  }   	
-    			   for(let i in etc){
-     				  $("#etc>ul").append("<li><img src='"+etcImg[i]+"' title='"+etc[i]+"'></li>")
-     			  }   	
-    		  }
-    	  })
+      function stackList() {
+        $.ajax({
+          url: "select.st",
+          success: function (data) {
+            for (let i in data) {
+              switch (data[i].stackType) {
+                case "프론트엔드":
+                  front.push(data[i].stackName);
+                  frontImg.push(data[i].stackImg);
+                  break;
+                case "백엔드":
+                  back.push(data[i].stackName);
+                  backImg.push(data[i].stackImg);
+                  break;
+                case "모바일":
+                  mobile.push(data[i].stackName);
+                  mobileImg.push(data[i].stackImg);
+                  break;
+
+                default:
+                  etc.push(data[i].stackName);
+                  etcImg.push(data[i].stackImg);
+                  break;
+              }
+            }
+
+            for (let i in front) {
+              $("#front>ul").append(
+                "<li><img src='" +
+                  frontImg[i] +
+                  "' title='" +
+                  front[i] +
+                  "'></li>"
+              );
+            }
+            for (let i in back) {
+              $("#back>ul").append(
+                "<li><img src='" +
+                  backImg[i] +
+                  "' title='" +
+                  back[i] +
+                  "'></li>"
+              );
+            }
+            for (let i in mobile) {
+              $("#mobile>ul").append(
+                "<li><img src='" +
+                  mobileImg[i] +
+                  "' title='" +
+                  mobile[i] +
+                  "'></li>"
+              );
+            }
+            for (let i in etc) {
+              $("#etc>ul").append(
+                "<li><img src='" + etcImg[i] + "' title='" + etc[i] + "'></li>"
+              );
+            }
+          },
+        });
       }
-      
-      $("#front>ul").on("click","li",function(){
-    	  stackArr.push($(this).children("img").attr("title"));
-    	  $("#myfront").append("<li>"+$(this).html()+"</li>");
-    	  $(this).remove();
-		  $("#stackName").val(stackArr);
-		  $("#insertBtn").attr("disabled",false);
-      })
-      $("#back>ul").on("click","li",function(){
-    	  stackArr.push($(this).children("img").attr("title"));
-    	  $("#myback").append("<li>"+$(this).html()+"</li>");
-    	  $(this).remove();
-    	  $("#stackName").val(stackArr);
-    	  $("#insertBtn").attr("disabled",false);
-      })
-      $("#mobile>ul").on("click","li",function(){
-    	  stackArr.push($(this).children("img").attr("title"));
-    	  $("#mymobile").append("<li>"+$(this).html()+"</li>");
-    	  $(this).remove();
-    	  $("#stackName").val(stackArr);
-    	  $("#insertBtn").attr("disabled",false);
-      })
-      $("#etc>ul").on("click","li",function(){
-    	  stackArr.push($(this).children("img").attr("title"));
-    	  $("#myetc").append("<li>"+$(this).html()+"</li>");
-    	  $(this).remove();
-    	  $("#stackName").val(stackArr);
-    	  $("#insertBtn").attr("disabled",false);
-      })
-      
-      $("#myfront").on("click","li",function(){
-    	  let num = stackArr.indexOf($(this).children("img").attr("title"));
-    	  if(num != -1){
-    		  stackArr.splice(num,1);
-    	  }
-    	  $("#front>ul").append("<li>"+$(this).html()+"</li>");
-    	  $(this).remove();
-    	  $("#stackName").val(stackArr);  	
-    	  if(stackArr.length == 0){
-    		  $("#insertBtn").attr("disabled",true);
-    	  }
-      })
-      $("#myback").on("click","li",function(){
-    	  let num = stackArr.indexOf($(this).children("img").attr("title"));
-    	  if(num != -1){
-    		  stackArr.splice(num,1);
-    	  }
-    	  $("#back>ul").append("<li>"+$(this).html()+"</li>");
-    	  $(this).remove();
-    	  $("#stackName").val(stackArr);
-    	  if(stackArr.length == 0){
-    		  $("#insertBtn").attr("disabled",true);
-    	  }
-      })
-      $("#mymobile").on("click","li",function(){
-    	  let num = stackArr.indexOf($(this).children("img").attr("title"));
-    	  if(num != -1){
-    		  stackArr.splice(num,1);
-    	  }
-    	  $("#mobile>ul").append("<li>"+$(this).html()+"</li>");
-    	  $(this).remove();
-    	  $("#stackName").val(stackArr);
-    	  if(stackArr.length == 0){
-    		  $("#insertBtn").attr("disabled",true);
-    	  }
-      })
-      $("#myetc").on("click","li",function(){
-    	  let num = stackArr.indexOf($(this).children("img").attr("title"));
-    	  if(num != -1){
-    		  stackArr.splice(num,1);
-    	  }
-    	  $("#etc>ul").append("<li>"+$(this).html()+"</li>");
-    	  $(this).remove();
-    	  $("#stackName").val(stackArr);
-    	  if(stackArr.length == 0){
-    		  $("#insertBtn").attr("disabled",true);
-    	  }
-      })
-      
+
+      $("#front>ul").on("click", "li", function () {
+        stackArr.push($(this).children("img").attr("title"));
+        $("#myfront").append("<li>" + $(this).html() + "</li>");
+        $(this).remove();
+        $("#stackName").val(stackArr);
+        $("#insertBtn").attr("disabled", false);
+      });
+      $("#back>ul").on("click", "li", function () {
+        stackArr.push($(this).children("img").attr("title"));
+        $("#myback").append("<li>" + $(this).html() + "</li>");
+        $(this).remove();
+        $("#stackName").val(stackArr);
+        $("#insertBtn").attr("disabled", false);
+      });
+      $("#mobile>ul").on("click", "li", function () {
+        stackArr.push($(this).children("img").attr("title"));
+        $("#mymobile").append("<li>" + $(this).html() + "</li>");
+        $(this).remove();
+        $("#stackName").val(stackArr);
+        $("#insertBtn").attr("disabled", false);
+      });
+      $("#etc>ul").on("click", "li", function () {
+        stackArr.push($(this).children("img").attr("title"));
+        $("#myetc").append("<li>" + $(this).html() + "</li>");
+        $(this).remove();
+        $("#stackName").val(stackArr);
+        $("#insertBtn").attr("disabled", false);
+      });
+
+      $("#myfront").on("click", "li", function () {
+        let num = stackArr.indexOf($(this).children("img").attr("title"));
+        if (num != -1) {
+          stackArr.splice(num, 1);
+        }
+        $("#front>ul").append("<li>" + $(this).html() + "</li>");
+        $(this).remove();
+        $("#stackName").val(stackArr);
+        if (stackArr.length == 0) {
+          $("#insertBtn").attr("disabled", true);
+        }
+      });
+      $("#myback").on("click", "li", function () {
+        let num = stackArr.indexOf($(this).children("img").attr("title"));
+        if (num != -1) {
+          stackArr.splice(num, 1);
+        }
+        $("#back>ul").append("<li>" + $(this).html() + "</li>");
+        $(this).remove();
+        $("#stackName").val(stackArr);
+        if (stackArr.length == 0) {
+          $("#insertBtn").attr("disabled", true);
+        }
+      });
+      $("#mymobile").on("click", "li", function () {
+        let num = stackArr.indexOf($(this).children("img").attr("title"));
+        if (num != -1) {
+          stackArr.splice(num, 1);
+        }
+        $("#mobile>ul").append("<li>" + $(this).html() + "</li>");
+        $(this).remove();
+        $("#stackName").val(stackArr);
+        if (stackArr.length == 0) {
+          $("#insertBtn").attr("disabled", true);
+        }
+      });
+      $("#myetc").on("click", "li", function () {
+        let num = stackArr.indexOf($(this).children("img").attr("title"));
+        if (num != -1) {
+          stackArr.splice(num, 1);
+        }
+        $("#etc>ul").append("<li>" + $(this).html() + "</li>");
+        $(this).remove();
+        $("#stackName").val(stackArr);
+        if (stackArr.length == 0) {
+          $("#insertBtn").attr("disabled", true);
+        }
+      });
     </script>
   </body>
 </html>
