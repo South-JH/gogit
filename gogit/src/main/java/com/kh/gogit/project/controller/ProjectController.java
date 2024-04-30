@@ -306,13 +306,4 @@ public class ProjectController {
 		int result = pService.deleteReply(pno);
 		return result > 0 ? "success" : "fail";
 	}
-	
-	@ResponseBody
-	@RequestMapping(value="teCircle.pr")
-	public String ajaxproCircle(int pno) {
-		System.out.println(pno);
-		ArrayList<Member> circleMember = pService.selectCircle(pno);
-		
-		return new Gson().toJson(circleMember);
-	}
 }

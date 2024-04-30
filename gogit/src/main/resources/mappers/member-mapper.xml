@@ -73,14 +73,4 @@
 			                where git_nick = #{nickName}
 			                and team_status in ('Y','S'))
 	</select>
-	
-	<select id="selectCircle" resultMap="memberResult">
-	select 
-	       mem_id
-	     , team  
-	     , team_status
-	   from member
-	   where team_status = 'Y'
-	    and TEAM = #{pno}
-	</select>
 </mapper>

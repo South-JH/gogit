@@ -165,21 +165,7 @@
                                           },
                                         });
                                       }
-                                    
-                                    function testCircle(value){
-                                    	$.ajax({
-                                    		url:"teCircle.pr",
-                                    		data:{pno:${p.proNo}},
-                                    		success:function(data){
-                                    			console.log(data)
-                                    			data.memId
-                                    			if(data.team == value){
-                                    			rejectbtn();                                    				
-                                    			}
-                                    			tata.teamStatus
-                                    		}
-                                    	})
-                                    }
+                             
                                     // 내가 프로젝트 작성자가 아니고, teamStatus가 No, 그리고 프로젝트 모집상태가 모집중일때(걍 신청자)
                                    // alert("script read!");
                                     
