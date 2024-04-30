@@ -19,6 +19,8 @@ import com.kh.gogit.commit.model.vo.Commit;
 import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.pullrequest.model.service.PullrequestServiceImpl;
 import com.kh.gogit.pullrequest.model.vo.Pullrequest;
+import com.kh.gogit.repository.model.service.RepositoryServiceImpl;
+import com.kh.gogit.repository.model.vo.Repository;
 
 @Controller
 public class PullrequestController {
@@ -75,10 +77,10 @@ public class PullrequestController {
 			list.add(prq);
 		}
 		
-		model.addAttribute("repoName", repoName);
-		model.addAttribute("visibility", visibility);
-		model.addAttribute("owner", owner);
-		model.addAttribute("list", new Gson().toJson(list));
+		model.addAttribute("repoName", repoName)
+			 .addAttribute("visibility", visibility)
+			 .addAttribute("owner", owner)
+			 .addAttribute("list", new Gson().toJson(list));
 		
 		return "pullrequest/pullRequestList";
 	}
@@ -105,8 +107,24 @@ public class PullrequestController {
 			}
 		}
 		
-		model.addAttribute("pullrq", pullrq);
-		model.addAttribute("list", list);
+		// collaborators 조회
+		String collaborators = new RepositoryServiceImpl().collaboratorList(loginUser, pullrq.getRepoName(), pullrq.getRepoOwner());
+		
+		JsonArray colArr = JsonParser.parseString(collaborators).getAsJsonArray();
+		
+		ArrayList<Repository> collaboratorList = new ArrayList<Repository>();
+		
+		for(int i = 0; i < colArr.size(); i++) {
+			Repository r = new Repository();
+			r.setCollaborator(colArr.get(i).getAsJsonObject().get("login").getAsString());
+			r.setAvatar(colArr.get(i).getAsJsonObject().get("avatar_url").getAsString());
+			
+			collaboratorList.add(r);
+		}
+		
+		model.addAttribute("pullrq", pullrq)
+			 .addAttribute("list", list)
+			 .addAttribute("collaboratorList", collaboratorList);
 		
 		return "pullrequest/pullRequestEnroll";
 	}
@@ -115,10 +133,27 @@ public class PullrequestController {
 	public String createPullRequest(Pullrequest pullrq, HttpSession session) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		
-		boolean result = prqService.createPullRequest(loginUser, pullrq);
+		String result = prqService.createPullRequest(loginUser, pullrq);
 		
-		if(result) {
-			session.setAttribute("alertMsg", "pull request가 생성되었습니다.");
+		if(result != null) {
+			pullrq.setPullNo(JsonParser.parseString(result).getAsJsonObject().get("number").getAsInt());
+			
+			boolean managerResult = true;
+			
+			if(pullrq.getPullManager() != null) {
+				managerResult = prqService.addAssignees(loginUser, pullrq);
+			}
+			
+			if(pullrq.getPullReviewer() != null) {
+				managerResult = prqService.addReviewers(loginUser, pullrq);
+			}
+			
+			if(managerResult) {
+				session.setAttribute("alertMsg", "pull request가 생성되었습니다.");
+			} else {
+				session.setAttribute("alertMsg", "Assignees / Reviewers 추가를 실패했습니다.");
+			}
+			
 		} else {
 			session.setAttribute("alertMsg", "pull request 생성을 실패했습니다.");
 		}
@@ -201,9 +236,9 @@ public class PullrequestController {
 			comments.add(c);
 		}
 		
-		model.addAttribute("pullrq", pullrq);
-		model.addAttribute("list", list);
-		model.addAttribute("comments", comments);
+		model.addAttribute("pullrq", pullrq)
+			 .addAttribute("list", list)
+			 .addAttribute("comments", comments);
 		
 		return "pullrequest/pullRequestDetailView";
 	}

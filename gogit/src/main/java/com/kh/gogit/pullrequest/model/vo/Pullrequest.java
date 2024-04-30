@@ -18,6 +18,8 @@ public class Pullrequest {
 	private String pullWriterProfile;
 	private String pullManager;
 	private String pullManagerProfile;
+	private String pullReviewer;
+	private String pullReviewerProfile;
 	private String baseBranch;
 	private String compareBranch;
 	private int commits;
