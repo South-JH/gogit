@@ -1,5 +1,6 @@
 package com.kh.gogit.pullrequest.model.service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,11 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
 import com.kh.gogit.comment.model.vo.Comment;
 import com.kh.gogit.commit.model.vo.Commit;
@@ -39,12 +40,8 @@ public class PullrequestServiceImpl implements PullrequestService {
         
         ResponseEntity<String> response = restTemplate.exchange(requestUrl, HttpMethod.GET, request, String.class);
         
-        if(response.getStatusCode() == HttpStatus.OK) {
-        	return response.getBody();
-        	
-        } else {
-        	return null;
-        }
+        return response.getStatusCode() == HttpStatus.OK ? response.getBody() : null;
+
 	}
 	
 	public String getBranchList(Member loginUser, Pullrequest pullrq) {
@@ -62,15 +59,11 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
 		
-		if(response.getStatusCode() == HttpStatus.OK) {
-			return response.getBody();
-		} else {
-			return null;
-		}
+		return response.getStatusCode() == HttpStatus.OK ? response.getBody() : null;
 		
 	}
 	
-	public boolean createPullRequest(Member loginUser, Pullrequest pullrq) {
+	public String createPullRequest(Member loginUser, Pullrequest pullrq) {
 		
 		// https://api.github.com/repos/OWNER/REPO/pulls
 		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/pulls";
@@ -91,13 +84,52 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 		try {
 			ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
-			return response.getStatusCode() == HttpStatus.CREATED ? true : false;
+			return response.getStatusCode() == HttpStatus.CREATED ? response.getBody() : null;
 			
 		} catch (HttpClientErrorException e1) {
 			System.out.println(e1);
-			return false;
+			return null;
 		}
 		
+	}
+	
+	public boolean addAssignees(Member loginUser, Pullrequest pullrq) {
+		
+		// https://api.github.com/repos/OWNER/REPO/issues/ISSUE_NUMBER/assignees
+		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/issues/" + pullrq.getPullNo() + "/assignees";
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(loginUser.getMemToken());
+		
+		String body = "{\"assignees\":" + new Gson().toJson(pullrq.getPullManager().split(",")) + "}";
+		
+		HttpEntity<String> request = new HttpEntity<String>(body, headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+		
+		return response.getStatusCode() == HttpStatus.CREATED ? true : false;
+		
+	}
+	
+	public boolean addReviewers(Member loginUser, Pullrequest pullrq) {
+		
+		// https://api.github.com/repos/OWNER/REPO/pulls/PULL_NUMBER/requested_reviewers
+		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/pulls/" + pullrq.getPullNo() + "/requested_reviewers";
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(loginUser.getMemToken());
+		
+		String body = "{\"reviewers\":" + new Gson().toJson(pullrq.getPullReviewer().split(",")) + "}";
+		
+		HttpEntity<String> request = new HttpEntity<String>(body, headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+		
+		return response.getStatusCode() == HttpStatus.CREATED ? true : false;
 		
 	}
 	
@@ -116,12 +148,7 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
 		
-		if(response.getStatusCode() == HttpStatus.OK) {
-			return response.getBody();
-			
-		} else {
-			return null;
-		}
+		return response.getStatusCode() == HttpStatus.OK ? response.getBody() : null; 
 		
 	}
 	
@@ -137,11 +164,7 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
 		
-		if(response.getStatusCode() == HttpStatus.OK) {
-			return response.getBody();
-		} else {
-			return null;
-		}
+		return response.getStatusCode() == HttpStatus.OK ? response.getBody() : null;
 		
 	}
 	
@@ -157,11 +180,7 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
 		
-		if(response.getStatusCode() == HttpStatus.OK) {
-			return response.getBody();
-		} else {
-			return null;
-		}
+		return response.getStatusCode() == HttpStatus.OK ? response.getBody() : null;
 		
 	}
 	
@@ -184,11 +203,7 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, request, String.class);
 		
-		if(response.getStatusCode() == HttpStatus.OK) {
-			return true;
-		} else {
-			return false;
-		}
+		return response.getStatusCode() == HttpStatus.OK ? true : false;
 		
 	}
 	
@@ -220,11 +235,7 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PATCH, request, String.class);
 		
-		if(response.getStatusCode() == HttpStatus.OK) {
-			return true;
-		} else {
-			return false;
-		}
+		return response.getStatusCode() == HttpStatus.OK ? true : false;
 		
 	}
 	
@@ -245,11 +256,7 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
 		
-		if(response.getStatusCode() == HttpStatus.CREATED) {
-			return true;
-		} else {
-			return false;
-		}
+		return response.getStatusCode() == HttpStatus.CREATED ? true : false;
 		
 	}
 
