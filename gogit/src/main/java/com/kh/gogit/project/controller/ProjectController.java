@@ -123,7 +123,7 @@ public class ProjectController {
 	@RequestMapping("insert.pr")
 	public String insertProject(String memId,Project p, Model model, HttpSession session) {
 		p.setProWriter(((Member)session.getAttribute("loginUser")).getMemId());
-		System.out.println(p);
+		
 		
 		int result = pService.insertProject(p);
 				

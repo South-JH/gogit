@@ -198,6 +198,7 @@
 
 	<script>
       $(function () {
+    	  newSession()
         alarm();
         alarmCircle();
         setInterval(() => {
@@ -205,6 +206,18 @@
           alarmCircle();
         }, 1000);
       });
+      
+      function newSession(){
+    	  $.ajax({
+    		  url:"newSession.me",
+    		  data:{
+    			  memId:"${loginUser.memId}"
+    		  },
+    		  success:function(){
+    			  console.log("${loginUser}")
+    		  }
+    	  })
+      }
 
       function alarmCircle() {
         $.ajax({
