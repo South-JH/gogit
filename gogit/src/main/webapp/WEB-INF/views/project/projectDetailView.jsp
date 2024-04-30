@@ -134,12 +134,14 @@
                                     <script>
                                     $(function(){
                                     	alarmTest();
-
+										setInterval(() => {
+											alarmTest();
+										}, 1000);
                                     });
                                     
                                             
                                     function alarmTest() {
-                                    	let value = false;
+                                    	
                                         $.ajax({
                                           url: "alarmTest.me",
                                           data: {memId: "${loginUser.memId}"},
@@ -147,24 +149,14 @@
                                         	  console.log(data)
                                             for (let i in data) {
                                               switch (data[i].alarmType) {
-                                                case "project":
+                                                case "cancelPr":
                                                 	if(data[i].alarmContentNo == ${p.proNo}){
-                                                		value = true; // 없을때
-                                                		break;
-                                                	}else{
-                                                		value = false; // 있을때
-                                                		
+                                                		rejectbtn();
                                                 	}
                                                 	
                                               }
                                             }
-                                        	  if(value){
-                                          		rejectbtn();                                                 		
-                                          	}else{
-                                          		if('${loginUser.gitNick}' != '${p.proWriter}'){
-                                          		drawApplyBtn();
-                                          		}
-                                          	}
+                                        	  
                                           },
                                           error: function () {
                                             console.log("실패");

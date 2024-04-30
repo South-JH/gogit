@@ -317,18 +317,12 @@ uri="http://java.sun.com/jsp/jstl/core" %>
                       data[i].alarmTitle +
                       ")에 참가 요청했습니다.";
                   }
-                  value +=
-                    "<input type='hidden' value='" +
-                    data[i].memId +
-                    "'>" +
-                    "<input type='hidden' value='" +
-                    data[i].alarmNo +
-                    "'> </li>" +
-                    "<button class='btn btn-warning' onclick='alapply(" +
-                    data[i].alarmContentNo +
-                    ",this)'>승인</button>" +
-                    "<button class='btn btn-danger' onclick='alcancel(this)'>거절</button>" +
-                    "</div>";
+                  value +="<input type='hidden' value='" +data[i].memId +"'>"
+                    +"<input type='hidden' value='" +data[i].alarmNo +"'>"
+                    +"<input type='hidden' value='" +data[i].alarmContentNo +"'></li>"
+                    +"<button class='btn btn-warning' onclick='alapply(" +data[i].alarmContentNo +",this)'>승인</button>"
+                    +"<button class='btn btn-danger' onclick='alcancel(this)'>거절</button>"
+                    +"</div>";
                   break;
                 case "zoom":
                   value += "<div>";
@@ -486,7 +480,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           },
           success: function (data) {
              if(socket){
-            	socket.send("${loginUser.memId},프로젝트 참여 수락되었습니다.,"+$(e).siblings("li").children("input:eq(0)").val()+","+$(e).siblings('li').children('input:eq(1)').val()+",applyPr")
+            	socket.send("${loginUser.memId},프로젝트 참여 수락되었습니다.,"+$(e).siblings("li").children("input:eq(0)").val()+","+$(e).siblings('li').children('input:eq(2)').val()+",applyPr")
             	
             } 
           },
@@ -519,7 +513,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           data: { memId: $(e).siblings("li").children("input:eq(0)").val() },
           success: function (data) {
         	  if(socket){
-              	socket.send("${loginUser.memId},프로젝트 참여 거절되었습니다.,"+$(e).siblings("li").children("input:eq(0)").val()+","+$(e).siblings('li').children('input:eq(1)').val()+",cancelPr")
+              	socket.send("${loginUser.memId},프로젝트 참여 거절되었습니다.,"+$(e).siblings("li").children("input:eq(0)").val()+","+$(e).siblings('li').children('input:eq(2)').val()+",cancelPr")
               } 
           },
         });
