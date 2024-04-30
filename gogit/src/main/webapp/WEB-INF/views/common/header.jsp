@@ -467,22 +467,28 @@ uri="http://java.sun.com/jsp/jstl/core"%>
                 case "applyPr":
                   if (data[i].alarmYn == 1) {
                     value +=
-                      "<li class='list-group-item active' onclick='readAl(this)>";
+                      "<li class='list-group-item active' onclick='readAl(this); zoUpdate(" +data[i].alarmNo +");'>";
                   } else {
                     value +=
-                      "<li class='list-group-item' onclick='readAl(this)>";
+                      "<li class='list-group-item' onclick='readAl(this); zoUpdate(" +data[i].alarmNo +");'>";
                   }
-                  value += data[i].alarmTitle + "</li>";
+                  value += data[i].alarmTitle 
+                  +"<input type='hidden' value='"+ data[i].memId +"'>"
+                  + "<input type='hidden' value='" + data[i].alarmNo  +"'>"  
+                  + "</li>";
                   break;
                 case "cancelPr":
                   if (data[i].alarmYn == 1) {
                     value +=
-                      "<li class='list-group-item active' onclick='readAl(this)>";
+                      "<li class='list-group-item active' onclick='readAl(this); zoUpdate(" +data[i].alarmNo +");'>";
                   } else {
                     value +=
-                      "<li class='list-group-item' onclick='readAl(this)>";
+                      "<li class='list-group-item' onclick='readAl(this); zoUpdate(" +data[i].alarmNo +");'>";
                   }
-                  value += data[i].alarmTitle + "</li>";
+                  value += data[i].alarmTitle 
+                  +"<input type='hidden' value='"+ data[i].memId +"'>"
+                  + "<input type='hidden' value='" + data[i].alarmNo  +"'>"  
+                  + "</li>";
                   break;
 
                 default:
