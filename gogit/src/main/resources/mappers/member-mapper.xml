@@ -73,4 +73,12 @@
 			                where git_nick = #{nickName}
 			                and team_status in ('Y','S'))
 	</select>
+	
+	<update id="deleteProjectStatus">
+		update
+		       member
+		   set  team = 0
+		      , team_status = 'N'
+		  where team = #{pno}
+	</update>
 </mapper>
