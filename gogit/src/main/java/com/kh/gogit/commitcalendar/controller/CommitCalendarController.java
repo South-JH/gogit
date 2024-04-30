@@ -55,7 +55,7 @@ public class CommitCalendarController {
 		    // 페이지 데이터를 repoList에 추가
 
 		    
-		    if(pageData.length() == 2) {
+		    if(pageData.length() == 2) { // [] 이면 포문나감
 		    	break;
 		    }
 		    if (i == 1) {

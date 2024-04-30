@@ -27,6 +27,18 @@ public class AlarmListController {
 	}
 	
 	@ResponseBody
+	@RequestMapping("alarmTest.me")
+	public ArrayList<AlarmList> selectAlarmListTest() {
+		
+		ArrayList<AlarmList> list = aService.selectAlarmListTest();
+		
+		
+		return list;
+	}
+	
+	
+	
+	@ResponseBody
 	@RequestMapping(value="update.al",produces = "text/html; charset=utf-8")
 	
 	public String updateAlarm(int alarmNo) {

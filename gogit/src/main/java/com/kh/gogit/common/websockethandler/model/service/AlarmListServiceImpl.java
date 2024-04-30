@@ -67,4 +67,19 @@ public class AlarmListServiceImpl implements AlarmListService{
 		return aDao.prApplyCancel(sqlSession,al);
 	}
 
+	@Override
+	public int updateCalAlarm(int alarmNo) {
+		return 0;
+	}
+
+	@Override
+	public int deleteCalAlarm(int alarmNo) {
+		return 0;
+	}
+
+	@Override
+	public ArrayList<AlarmList> selectAlarmListTest() {
+		 return aDao.selectAlarmListTest(sqlSession);
+	}
+
 }
