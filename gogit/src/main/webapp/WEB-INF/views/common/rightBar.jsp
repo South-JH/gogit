@@ -96,15 +96,16 @@
     					switch (data[i].alarmType) {
 						case "project":
 								value += "<div>"
-										+"<li>"
-											+"<input type='checkbox' name='nickName' value='"+data[i].gitNick+"'>"
-											+"<label> "+data[i].gitNick+" </label>"
-											+"<button class='btn btn-danger' onclick='alcancel123(this)'>거절</button>"
-											+"<button class='btn btn-primary' onclick='apply123("+data[i].alarmContentNo+",this)'>수락</button>"
-					            			+"<input type='hidden' value='"+data[i].memId+"'>"
-					            			+"<input type='hidden' value='"+data[i].alarmContentNo+"'>"
-					            		+"</li>"
-					            		+"</div>";
+											+"<li>"
+												+"<input type='checkbox' name='nickName' value='"+data[i].gitNick+"'>"
+												+"<label> "+data[i].gitNick+" </label>"
+												+"<button class='btn btn-danger' onclick='alcancel123(this)'>거절</button>"
+												+"<button class='btn btn-primary' onclick='apply123("+data[i].alarmContentNo+",this)'>수락</button>"
+						            			+"<input type='hidden' value='"+data[i].memId+"'>"
+						            			+"<input type='hidden' value='"+data[i].alarmNo+"'>"
+						            		+"</li>"
+						            	+"</div>";
+					            		
 					            		
 							$("#joinMember").html(value)			
 											
@@ -131,7 +132,7 @@
 			},
 			success:function(data){
 				 if(socket){
-		            	socket.send("${loginUser.memId},프로젝트 참여 수락되었습니다.,"+$(e).siblings("input:eq(1)").val()+","+$(e).siblings("input:eq(2)").val()",applyPr")
+		            	socket.send("${loginUser.memId},프로젝트 참여 수락되었습니다.,"+$(e).siblings("input:eq(1)").val()+","+$(e).siblings("input:eq(2)").val()+",applyPr")
 		             } 
 			}
 		})
@@ -156,7 +157,7 @@
 			  data:{memId:$(e).siblings("input:eq(1)").val()},
 			  success:function(data){
 				  if(socket){
-					  socket.send("${loginUser.memId},프로젝트 참여 거절되었습니다.,"+$(e).siblings("input:eq(1)").val()+","+$(e).siblings("input:eq(2)").val()",cancelPr")
+					  socket.send("${loginUser.memId},프로젝트 참여 거절되었습니다.,"+$(e).siblings("input:eq(1)").val()+","+$(e).siblings("input:eq(2)").val()+",cancelPr")
 		              } 
 			  }
 		  })
