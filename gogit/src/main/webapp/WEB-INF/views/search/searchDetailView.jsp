@@ -85,7 +85,55 @@
 								<br>
                                 <div class="nickName-div">${nickName}</div>
                                 <br>
-                                <div><input type="submit" value="Follow" class="btn1 btn-block" ></div>
+                                <div>
+                                	<c:choose>
+	                                	<c:when test="${ isFollow }">
+	                                		<input type="button" value="Unfollow" class="btn1 btn-block" onclick="unfollow();">
+	                                	</c:when>
+	                                	<c:otherwise>
+	                                		<input type="button" value="Follow" class="btn1 btn-block" onclick="follow();">
+	                                	</c:otherwise>
+                                	</c:choose>
+                                	<script>
+                                		function follow() {
+                                			$.ajax({
+                                				url: 'follow.me',
+                                				data: {nickname: '${nickName}'},
+                                				success: function(result) {
+                                					if(result) {
+                                						$('input[value=Follow]').attr('onclick', 'unfollow();');
+                                						$('input[value=Follow]').val('Unfollow');
+                                						
+                                					} else {
+                                						alertify.alert('Follow 실패');
+                                					}
+                                				},
+                                				error: function() {
+                                					console.log('follow ajax 호출 실패');
+                                				}
+                                			});
+                                		}
+                                		
+                                		function unfollow() {
+                                			$.ajax({
+                                				url: 'unfollow.me',
+                                				data: {nickname: '${nickName}'},
+                                				success: function(result) {
+                                					if(result) {
+                                						$('input[value=Unfollow]').attr('onclick', 'follow();');
+                                						$('input[value=Unfollow]').val('Follow');
+                                						
+                                					} else {
+                                						alertify.alert('Unfollow 실패');
+                                					}
+                                				},
+                                				error: function() {
+                                					console.log('unfollow ajax 호출 실패');
+                                				}
+                                			});
+                                		}
+                               		</script>
+                               	</div>
                                 <div>
                                     <a href="#">🚻1 follwer ·</a>
                                     <a href="#">0 following</a>                                     

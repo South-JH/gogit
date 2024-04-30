@@ -18,6 +18,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.kh.gogit.member.model.service.MemberServiceImpl;
 import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.repository.model.vo.Repository;
 import com.kh.gogit.search.model.service.SearchServiceImpl;
@@ -192,11 +193,14 @@ public class SearchController {
 				se.setDescription(objuser.get("description").isJsonNull() ? "" : objuser.get("description").getAsString());
 		        list.add(se);
 		    }
-		}		
+		}
+		
+		boolean isFollow = new MemberServiceImpl().checkFollow(m, nickName);
 
 		model.addAttribute("nickName", nickName)
 		.addAttribute("avatar", avatar)
-		.addAttribute("list",list) ;
+		.addAttribute("list",list)
+		.addAttribute("isFollow", isFollow);
 		return "search/searchDetailView";
 	}
 	
