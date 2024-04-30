@@ -143,7 +143,7 @@
                                     function alarmTest() {
                                         $.ajax({
                                           url: "alarmTest.me",
-                                          data: {},
+                                          data: {memId: "${loginUser.memId}"},
                                           success: function (data) {
                                             for (let i in data) {
                                               switch (data[i].alarmType) {
