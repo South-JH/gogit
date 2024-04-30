@@ -104,7 +104,7 @@
 					            			+"<input type='hidden' value='"+data[i].alarmNo+"'>"
 					            		+"</li>";
 					            		
-							$("#joinMember").append(value)				
+							$("#joinMember").html(value)			
 											
 								
 							break;
