@@ -39,7 +39,6 @@ public class AlarmListDao {
 		Project p = new Project();
 		p.setProNo(pNo);
 		p.setProWriter(memId);
-		System.out.println(p);
 		return sqlSession.update("alarmMapper.applyProject",p);
 	}
 

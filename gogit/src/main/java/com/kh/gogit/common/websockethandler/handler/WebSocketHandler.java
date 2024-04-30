@@ -51,7 +51,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {// 메시지
 
 		String[] arr = (message.getPayload()).split(",");
-
+		System.out.println(arr);
 		if (arr[4].equals("project")) {
 			String rmemId = aDao.selectMemid(sqlSession, arr[2]);
 			AlarmList al = new AlarmList();
@@ -60,7 +60,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			al.setRmemId(rmemId);
 			al.setAlarmContentNo(Integer.parseInt(arr[3]));
 			al.setAlarmType(arr[4]);
-
+			
 			aDao.insertAlarm(sqlSession, al);
 		} else if (arr[4].equals("zoom")) {
 
@@ -126,7 +126,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 				aDao.rinsertAlarm(sqlSession, al);
 
 			}
-		} else if(arr[4].equals("applyPr") || arr[4].equals("applyPr")) {
+		} else if(arr[4].equals("applyPr") || arr[4].equals("cancelPr")) {
 			AlarmList al = new AlarmList();
 			
 			al.setMemId(arr[0]);

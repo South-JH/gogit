@@ -486,7 +486,8 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           },
           success: function (data) {
              if(socket){
-            	socket.send("${loginUser.memId},프로젝트 참여 수락되었습니다.,"+$(e).siblings("li").children("input:eq(0)")+","+$(e).siblings('li').children('input:eq(1)').val()+",applyPr")
+            	socket.send("${loginUser.memId},프로젝트 참여 수락되었습니다.,"+$(e).siblings("li").children("input:eq(0)").val()+","+$(e).siblings('li').children('input:eq(1)').val()+",applyPr")
+            	
             } 
           },
         });
@@ -518,7 +519,7 @@ uri="http://java.sun.com/jsp/jstl/core" %>
           data: { memId: $(e).siblings("li").children("input:eq(0)").val() },
           success: function (data) {
         	  if(socket){
-              	socket.send("${loginUser.memId},프로젝트 참여 거절되었습니다.,"+$(e).siblings("li").children("input:eq(0)")+","+$(e).siblings('li').children('input:eq(1)').val()+",cancelPr")
+              	socket.send("${loginUser.memId},프로젝트 참여 거절되었습니다.,"+$(e).siblings("li").children("input:eq(0)").val()+","+$(e).siblings('li').children('input:eq(1)').val()+",cancelPr")
               } 
           },
         });

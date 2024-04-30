@@ -2,6 +2,8 @@ package com.kh.gogit.common.websockethandler.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,12 +11,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.gogit.common.websockethandler.model.service.AlarmListServiceImpl;
 import com.kh.gogit.common.websockethandler.model.vo.AlarmList;
+import com.kh.gogit.member.model.service.MemberService;
+import com.kh.gogit.member.model.service.MemberServiceImpl;
+import com.kh.gogit.member.model.vo.Member;
 
 @Controller
 public class AlarmListController {
 
 	@Autowired
 	private AlarmListServiceImpl aService;
+	
+	@Autowired
+	private MemberServiceImpl mService;
 	
 	@ResponseBody
 	@RequestMapping("alarm.me")
@@ -36,19 +44,17 @@ public class AlarmListController {
 	
 	@ResponseBody
 	@RequestMapping(value="application.pr")
-	public String applyProject(int pNo,String memId) {
-		
-		String resultMemId = aService.selectMemId(memId);
-		
-		int result = aService.applyProject(pNo, resultMemId);
+	public String applyProject(int pNo,String memId,HttpSession session) {
+	
+		int result = aService.applyProject(pNo, memId);
 		return result>0?"success":"fail";
 	}
 	
 	@ResponseBody
 	@RequestMapping(value="alcancel.pr")
-	public String cancelProject(String memId) {
-		String resultMemId = aService.selectMemId(memId);
-		int result = aService.cancelProject(resultMemId);
+	public String cancelProject(String memId,HttpSession session) {
+
+		int result = aService.cancelProject(memId);
 		return result>0?"success":"fail";
 	}
 	
