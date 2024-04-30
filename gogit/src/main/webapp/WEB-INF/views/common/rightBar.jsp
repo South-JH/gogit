@@ -86,7 +86,7 @@
 								value += "<li>"
 											+"<input type='checkbox' name='nickName' value='"+data[i].gitNick+"'>"
 											+"<label> "+data[i].gitNick+" </label>"
-											+"<button class='btn btn-primary' onclick='apply123(this)'>수락</button>"
+											+"<button class='btn btn-primary' onclick='apply123('"+data[i].alarmContentNo+"',this)'>수락</button>"
 					            			+"<button class='btn btn-danger' onclick='alcancel123(this)'>거절</button>"
 					            			+"<input type='hidden' value='"+data[i].memId+"'>"
 					            			+"<input type='hidden' value='"+data[i].alarmNo+"'>"
@@ -108,10 +108,11 @@
     		})
     	}
     
-    function apply123(e){
+    function apply123(num,e){
 		 $.ajax({
 			url:"application.pr",
 			data:{
+				pNo: num,
 				memId:$(e).siblings("li").children("input:eq(1)").val()
 			},
 			success:function(data){
