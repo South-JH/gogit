@@ -52,25 +52,48 @@ public class PullrequestController {
 			JsonArray assigneesArr = pullreq.get("assignees").getAsJsonArray();
 			
 			String assignees = "";
-			String profiles = "";
+			String assigneesProfiles = "";
 			for(int j = 0; j < assigneesArr.size(); j++) {
 				
 				String assignee = assigneesArr.get(j).getAsJsonObject().get("login").getAsString();
 				
-				String profile = assigneesArr.get(j).getAsJsonObject().get("avatar_url").getAsString();
+				String assigneesProfile = assigneesArr.get(j).getAsJsonObject().get("avatar_url").getAsString();
 
 				if(j == assigneesArr.size() -1) {
 					assignees += assignee;
-					profiles += profile;
+					assigneesProfiles += assigneesProfile;
 				} else {
 					assignees += assignee + ",";
-					profiles += profile + ",";
+					assigneesProfiles += assigneesProfile + ",";
 				}
 				
 			}
 			
 			prq.setPullManager(assignees);
-			prq.setPullManagerProfile(profiles);
+			prq.setPullManagerProfile(assigneesProfiles);
+			
+			JsonArray reviewersArr = pullreq.get("requested_reviewers").getAsJsonArray();
+			
+			String reviewers = "";
+			String reviewersProfiles = "";
+			for(int j = 0; j < reviewersArr.size(); j++) {
+				
+				String reviewer = reviewersArr.get(j).getAsJsonObject().get("login").getAsString();
+				String reviewersProfile = reviewersArr.get(j).getAsJsonObject().get("avatar_url").getAsString();
+				
+				if(j == reviewersArr.size() -1) {
+					reviewers += reviewer;
+					reviewersProfiles += reviewersProfile;
+				} else {
+					reviewers += reviewer + ",";
+					reviewersProfiles += reviewersProfile + ",";
+				}
+				
+			}
+			
+			prq.setPullReviewer(reviewers);
+			prq.setPullReviewerProfile(reviewersProfiles);
+			
 			prq.setStatus(pullreq.get("state").getAsString());
 			prq.setCreateDate(pullreq.get("created_at").getAsString());
 			

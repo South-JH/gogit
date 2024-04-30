@@ -225,6 +225,7 @@
 											<th>Pull request Title</th>
 											<th>Author</th>
 											<th>Assignees</th>
+											<th>Reviewers</th>
 											<th>Create Date</th>
 										</tr>
 									</thead>
@@ -281,14 +282,16 @@
 			let tbody = "";
 			
 			for(let i in list) {
-				const no = list[i].pullNo;
-				const title = list[i].pullTitle;
-				const content = list[i].pullContent;
-				const writer = list[i].pullWriter;
-				const assignees = list[i].pullManager;
-				const profiles = list[i].pullManagerProfile;
-				const status = list[i].status;
-				const createDate = list[i].createDate.split('T')[0];
+				let no = list[i].pullNo;
+				let title = list[i].pullTitle;
+				let content = list[i].pullContent;
+				let writer = list[i].pullWriter;
+				let assignees = list[i].pullManager;
+				let assigneesProfiles = list[i].pullManagerProfile;
+				let reviewers = list[i].pullReviewer;
+				let reviewersProfiles = list[i].pullReviewerProfile;
+				let status = list[i].status;
+				let createDate = list[i].createDate.split('T')[0];
 
 				tbody += `<tr onclick="location.href='detail.pullrq?owner=${owner}&repoName=${repoName}&pullNo=\${ no }'">
 							<td>\${ title }</td>
@@ -297,12 +300,26 @@
 						`;
 				
 				if(assignees != "") {
-					let assigneeArr = assignees.split(','); // [south-jh,crong,jimin]
-					let profileArr = profiles.split(',');
+					let assigneeArr = assignees.split(',');
+					let assigneeProfileArr = assigneesProfiles.split(',');
 
-					for(let i = 0; i < profileArr.length; i++) {
+					for(let i = 0; i < assigneeArr.length; i++) {
 						tbody += `<span tooltip="\${ assigneeArr[i] }" flow="down">
-									<img class="profile" src="\${ profileArr[i] }" style="width: 25px; height: 25px; border-radius: 100%;">
+									<img class="profile" src="\${ assigneeProfileArr[i] }" style="width: 25px; height: 25px; border-radius: 100%;">
+								</span>
+								`;
+					}
+				}
+				
+				tbody += `</td><td>`;
+				
+				if(reviewers != "") {
+					let reviewerArr = reviewers.split(',');
+					let reviewerProfileArr = reviewersProfiles.split(',');
+					
+					for(let i = 0; i < reviewerArr.length; i++) {
+						tbody += `<span tooltip="\${ reviewerArr[i] }" flow="down">
+									<img class="profile" src="\${ reviewerProfileArr[i] }" style="width: 25px; height: 25px; border-radius: 100%;">
 								</span>
 								`;
 					}
