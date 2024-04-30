@@ -85,7 +85,7 @@ public class AlarmListDao {
 		
 	}
 	
-	public ArrayList<AlarmList> selectAlarmListTest(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("alarmMapper.selectAlarmListTest");
+	public ArrayList<AlarmList> selectAlarmListTest(SqlSessionTemplate sqlSession, String memId){
+		return (ArrayList)sqlSession.selectList("alarmMapper.selectAlarmListTest", memId);
 	}
 }

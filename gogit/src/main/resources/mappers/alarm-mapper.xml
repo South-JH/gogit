@@ -68,10 +68,11 @@
   <select id="selectAlarmListTest" resultMap="AlarmListResult">
   	select 
   		   alarm_no
-  		 , a.mem_id
+  		 , mem_id
   		 , alarm_type
   		 , alarm_content_no
   	  from alarmlist
+  	  where mem_id = #{memId}
   </select>
   
   <update id="updateAlarm">

@@ -28,9 +28,9 @@ public class AlarmListController {
 	
 	@ResponseBody
 	@RequestMapping("alarmTest.me")
-	public ArrayList<AlarmList> selectAlarmListTest() {
+	public ArrayList<AlarmList> selectAlarmListTest(String memId) {
 		
-		ArrayList<AlarmList> list = aService.selectAlarmListTest();
+		ArrayList<AlarmList> list = aService.selectAlarmListTest(memId);
 		
 		
 		return list;

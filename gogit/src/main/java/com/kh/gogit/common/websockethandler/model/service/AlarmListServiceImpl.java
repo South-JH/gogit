@@ -78,8 +78,8 @@ public class AlarmListServiceImpl implements AlarmListService{
 	}
 
 	@Override
-	public ArrayList<AlarmList> selectAlarmListTest() {
-		 return aDao.selectAlarmListTest(sqlSession);
+	public ArrayList<AlarmList> selectAlarmListTest(String memId) {
+		 return aDao.selectAlarmListTest(sqlSession, memId);
 	}
 
 }
