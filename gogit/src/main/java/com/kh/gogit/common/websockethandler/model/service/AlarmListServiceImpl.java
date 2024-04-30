@@ -69,15 +69,17 @@ public class AlarmListServiceImpl implements AlarmListService{
 
 	@Override
 	public int updateCalAlarm(int alarmNo) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
 	public int deleteCalAlarm(int alarmNo) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	@Override
+	public ArrayList<AlarmList> selectAlarmListTest(String memId) {
+		 return aDao.selectAlarmListTest(sqlSession, memId);
+	}
 
 }

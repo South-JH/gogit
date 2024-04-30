@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonParser;
 import com.kh.gogit.issue.model.service.IssueServiceImpl;
@@ -49,7 +50,14 @@ public class IssueController {
 				Issue is = new Issue();
 				is.setState(issueArr.get(i).getAsJsonObject().get("state").getAsString());
 				is.setTitle(issueArr.get(i).getAsJsonObject().get("title").getAsString());
-				is.setBody(issueArr.get(i).getAsJsonObject().get("body").getAsString());
+				
+	            JsonElement bodyEl = issueArr.get(i).getAsJsonObject().get("body");
+	            if (bodyEl == null || bodyEl.isJsonNull()) {
+	                is.setBody("");
+	            } else {
+	            	is.setBody(issueArr.get(i).getAsJsonObject().get("body").getAsString());
+	            }
+				
 				is.setUser(issueArr.get(i).getAsJsonObject().get("user").getAsJsonObject().get("login").getAsString());
 				
 				
@@ -66,8 +74,8 @@ public class IssueController {
 					
 				}
 				
-				is.setLabelName(laName);
-				is.setLabelColor(laColor);
+				is.setLabels(laName);
+				is.setLabelColors(laColor);
 				
 				JsonArray assiArr = issueArr.get(i).getAsJsonObject().get("assignees").getAsJsonArray();
 				String[] assi = new String[assiArr.size()];
@@ -80,8 +88,8 @@ public class IssueController {
 					
 				}
 				
-				is.setAssignee(assi);
-				is.setAssigneeAvatar(assiAva);
+				is.setAssignees(assi);
+				is.setAssigneesAvatar(assiAva);
 					
 				is.setComment(issueArr.get(i).getAsJsonObject().get("comments").getAsString());
 				is.setCreateAt(issueArr.get(i).getAsJsonObject().get("created_at").getAsString().substring(0, 10));
@@ -122,7 +130,14 @@ public class IssueController {
 				Issue is = new Issue();
 				is.setState(issueArr.get(i).getAsJsonObject().get("state").getAsString());
 				is.setTitle(issueArr.get(i).getAsJsonObject().get("title").getAsString());
-				is.setBody(issueArr.get(i).getAsJsonObject().get("body").getAsString());
+				
+	            JsonElement bodyEl = issueArr.get(i).getAsJsonObject().get("body");
+	            if (bodyEl == null || bodyEl.isJsonNull()) {
+	                is.setBody("");
+	            } else {
+	            	is.setBody(issueArr.get(i).getAsJsonObject().get("body").getAsString());
+	            }
+				
 				is.setUser(issueArr.get(i).getAsJsonObject().get("user").getAsJsonObject().get("login").getAsString());
 				
 				
@@ -139,8 +154,8 @@ public class IssueController {
 					
 				}
 				
-				is.setLabelName(laName);
-				is.setLabelColor(laColor);
+				is.setLabels(laName);
+				is.setLabelColors(laColor);
 				
 				JsonArray assiArr = issueArr.get(i).getAsJsonObject().get("assignees").getAsJsonArray();
 				String[] assi = new String[assiArr.size()];
@@ -153,8 +168,8 @@ public class IssueController {
 					
 				}
 				
-				is.setAssignee(assi);
-				is.setAssigneeAvatar(assiAva);
+				is.setAssignees(assi);
+				is.setAssigneesAvatar(assiAva);
 					
 				is.setComment(issueArr.get(i).getAsJsonObject().get("comments").getAsString());
 				is.setCreateAt(issueArr.get(i).getAsJsonObject().get("created_at").getAsString().substring(0, 10));
@@ -178,13 +193,72 @@ public class IssueController {
 		
 	}
 	
-	@RequestMapping("create.is")
-	public String createIssue(Model model, String repoName, String owner) {
+	@RequestMapping("enrollForm.is")
+	public String issueEnrollForm(HttpSession session, Model model, String repoName, String owner, String visibility) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		String assignees = iService.assigneesList(m, repoName, owner);
+		ArrayList<Issue> aList = new ArrayList<Issue>();
+		ArrayList<Issue> lList = new ArrayList<Issue>();
+		
+		if(assignees != null) {
+			
+			JsonArray assiArr = JsonParser.parseString(assignees).getAsJsonArray();
+			
+			for(int i=0; i<assiArr.size(); i++) {
+				
+				Issue is = new Issue();
+				is.setAssignee(assiArr.get(i).getAsJsonObject().get("login").getAsString());
+				is.setAssigneeAvatar(assiArr.get(i).getAsJsonObject().get("avatar_url").getAsString());
+				
+				aList.add(is);
+			}
+		}
+		
+		String label = iService.labelList(m, repoName, owner);
+		
+		if(label != null) {
+			
+			JsonArray labelArr = JsonParser.parseString(label).getAsJsonArray();
+			
+			for(int i=0; i<labelArr.size(); i++) {
+				
+				Issue is = new Issue();
+				is.setLabel(labelArr.get(i).getAsJsonObject().get("name").getAsString());
+				is.setLabelColor(labelArr.get(i).getAsJsonObject().get("color").getAsString());
+				is.setLabelDesc(labelArr.get(i).getAsJsonObject().get("description").getAsString());
+				
+				lList.add(is);
+			}
+		}
 		
 		model.addAttribute("repoName", repoName);
+		model.addAttribute("visibility", visibility);
 		model.addAttribute("owner", owner);
-		
+		model.addAttribute("aList", aList);
+		model.addAttribute("lList", lList);
 		return "issue/issueEnroll";
+	}
+	
+	@RequestMapping("create.is")
+	public String createIssue(Model model, HttpSession session, String repoName, String visibility, String owner, String title, String body, String[] assignees, String[] labels) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		String createIs = iService.createIssue(m, repoName, owner, title, body, assignees, labels);
+		
+		if(createIs != null) {
+			model.addAttribute("repoName", repoName);
+			model.addAttribute("visibility", visibility);
+			model.addAttribute("owner", owner);
+			
+			session.setAttribute("alertMsg", "이슈를 등록했습니다.");
+			return "redirect:list.is";
+		} else {
+			System.out.println("이슈등록실패");
+			return null;
+		}
+		
 	}
 	
 	@RequestMapping("detail.is")

@@ -132,4 +132,12 @@ public class ProjectDao {
 	public ArrayList<Member> selectProjectMemberList(SqlSessionTemplate sqlSession, String nickName){
 		return (ArrayList)sqlSession.selectList("memberMapper.selectProjectMemberList", nickName);
 	}
+	
+	public int deleteProject(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.update("projectMapper.deleteProject", pno);
+	}
+	
+	public ArrayList<Member> selectCircle(SqlSessionTemplate sqlSession, int pno){
+		return (ArrayList)sqlSession.selectList("memberMapper.selectCircle", pno);
+	}
 }

@@ -420,7 +420,7 @@ thead {
 					}
 						   
 					value += "<td>" + cList[i].commitDate + "</td>"
-						   + "<td>" + cList[i].sah + "</td>"
+						   + "<td>" + cList[i].sha + "</td>"
 						   + "</tr>";
 				}
 				
@@ -467,7 +467,7 @@ thead {
 					}
 						   
 					value += "<td>" + cList[i].commitDate + "</td>"
-						   + "<td>" + cList[i].sah + "</td>"
+						   + "<td>" + cList[i].sha + "</td>"
 						   + "</tr>";
 				}
 				

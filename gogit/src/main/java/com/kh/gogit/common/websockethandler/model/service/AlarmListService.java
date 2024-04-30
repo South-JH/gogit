@@ -15,5 +15,5 @@ public interface AlarmListService {
 	int prApplyCancel(AlarmList al);
 	int updateCalAlarm(int alarmNo);
 	int deleteCalAlarm(int alarmNo);
-
+	ArrayList<AlarmList> selectAlarmListTest(String memId);
 }

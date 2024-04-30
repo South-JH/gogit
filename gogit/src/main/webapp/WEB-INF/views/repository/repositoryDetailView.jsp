@@ -369,6 +369,15 @@ thead {
 .repo-table>tbody>tr:hover {
 	background-color: #eee;
 }
+
+.ti-pencil {
+	font-size: 19px;
+}
+
+.repo-table>thead a {
+	width: 100%;
+	height: 100%;
+}
 </style>
 </head>
 <body>
@@ -405,6 +414,7 @@ thead {
 		          			</div>
 		          			<div class="repo-detail-public">
 		          				<div>${ visibility }</div>
+		          				<input type="hidden" value="${ permission }">
 		          			</div>
 		          		</div>
 		          		<div>
@@ -468,7 +478,7 @@ thead {
 												</div>
 												<div>
 													<a href="view.cm?repoName=${ repoName }&visibility=${ visibility }&owner=${ owner }">
-														<b>61 Commits</b>
+														<b>Commits</b>
 													</a>	
 												</div>
 											</div>
@@ -480,9 +490,9 @@ thead {
 												<thead>
 													<tr>
 														<th width="330">NAME</th>
-														<th>RECENT COMMIT</th>
-														<th width="130">AUTHOR</th>
-														<th width="130">DATE</th>
+<!-- 														<th>RECENT COMMIT</th> -->
+<!-- 														<th width="130">AUTHOR</th> -->
+														<th width="50"></th>
 													</tr>
 												</thead>
 												<tbody>
@@ -490,6 +500,7 @@ thead {
 														<tr>
 															<td onclick="subContent(this);" class="repoTitle">
 															<input class="hidden-repo-type" type="hidden" value="${ rp.type }">
+															<input class="hidden-repo-sha" type="hidden" value="${ rp.sha }">
 																<c:choose>
 																	<c:when test="${ rp.type eq 'file' }">
 																		<i class="ti ti-file"></i>
@@ -502,9 +513,9 @@ thead {
 																<input type="hidden" value="${ rp.contentName }" id="rpContentName">
 																<input type="hidden" value="${ rp.path }" id="rpPath">
 															</td>
-															<td>Update RepositoryController.java</td>
-															<td><img src="resources/images/repo-img.png" width="20" height="20">crong9105</td>
-															<td>2024-04-14</td>
+<!-- 															<td>Update RepositoryController.java</td> -->
+<!-- 															<td><img src="resources/images/repo-img.png" width="20" height="20">crong9105</td> -->
+															<td></td>
 														</tr>
 													</c:forEach>
 												</tbody>
@@ -577,6 +588,8 @@ thead {
 	
 	const repoName = $(".repo-detail-public-area h4").text();
 	const owner = $(".repo-detail-public-area input").val();
+	const visibility = $(".repo-detail-public>div").text();
+	const permission = $(".repo-detail-public>input").val();
 	
 	function subContent(e){
 		//console.log($(e).children("div").text());
@@ -586,7 +599,9 @@ thead {
 		const newFileName = $(e).children("#rpPath").val().split("/").slice(-2, -1)[0];
 		const newFilePath = $(e).children("#rpPath").val().split("/").slice(0, -1).join("/");
 		let repoType = $(e).children(".hidden-repo-type").val();
+		let repoSha = $(e).children(".hidden-repo-sha").val();
 		console.log(repoType);
+		console.log(repoSha);
 		
 		/*
 		// 새로운 파일 이름은 상위 폴더의 이름으로 설정
@@ -598,10 +613,10 @@ thead {
 		const newFilePath = folders.slice(0, -1).join("/");
 		*/
 		
-		console.log("파일이름", fileName);
-		console.log("파일경로", filePath);
-		console.log("새로운파일이름:", newFileName);
-		console.log("새로운파일경로:", newFilePath);
+// 		console.log("파일이름", fileName);
+// 		console.log("파일경로", filePath);
+// 		console.log("새로운파일이름:", newFileName);
+// 		console.log("새로운파일경로:", newFilePath);
 		
 		$.ajax({
 			url:"selectContent.rp",
@@ -623,7 +638,9 @@ thead {
 					
 				    hvalue += "<thead>"
 			           		+ "<tr>"
-			            	+ "<th colspan=\"4\">CODE</th>"
+// 			            	+ "<th colspan=\"3\" width=\"800\">" + fileName + "</th>"
+			            	+ "<th width=\"900\">" + fileName + "</th>"
+			            	+ "<th><a href=\"updateContentForm.rp?repoName=" + repoName + "&visibility=" + visibility + "&owner=" + owner + "&fileName=" + fileName + "&filePath=" + filePath + "&permission=" + permission + "&repoSha=" + repoSha + "\"><i class=\"ti ti-pencil\"></i></a></th>"
 			            	+ "</tr>"
 			            	+ "</thead>";
 			            	
@@ -635,12 +652,13 @@ thead {
 							   + "<input type=\"hidden\" value=\"" + newFileName + "\" id=\"rpContentName\">"
 							   + "<input type=\"hidden\" value=\"" + newFilePath + "\" id=\"rpPath\">"
 							   + "</td>"
-							   + "<td colspan=\"3\"></td>"
+// 							   + "<td colspan=\"3\"></td>"
+							   + "<td></td>"
 							   + "</tr>";
 					}
 			            	
 					value += "<tr>"
-					 	   + "<td colspan=\"4\">" + result + "</td>"
+					 	   + "<td colspan=\"2\">" + result + "</td>"
 						   + "</tr>";
 					
 				}else {
@@ -649,26 +667,26 @@ thead {
 					$(".repo-table").text("");
 					//console.log(list);
 					
-					let hasContentDesc = list.some(item => item.contentDesc !== undefined);
+// 					let hasContentDesc = list.some(item => item.contentDesc !== undefined);
 					
-					if (hasContentDesc) {
-					    // 하나라도 contentDesc가 정의된 경우
-					    hvalue += "<thead>"
-					            + "<tr>"
-					            + "<th colspan=\"4\">CODE</th>"
-					            + "</tr>"
-					            + "</thead>";
-					} else {
+// 					if (hasContentDesc) {
+// 					    // 하나라도 contentDesc가 정의된 경우
+// 					    hvalue += "<thead>"
+// 					            + "<tr>"
+// 					            + "<th colspan=\"4\">CODE</th>"
+// 					            + "</tr>"
+// 					            + "</thead>";
+// 					} else {
 					    // 모든 항목의 contentDesc가 undefined인 경우
 					    hvalue += "<thead>"
 					            + "<tr>"
 					            + "<th width=\"330\">NAME</th>"
-					            + "<th>RECENT COMMIT</th>"
-					            + "<th width=\"130\">AUTHOR</th>"
-					            + "<th width=\"130\">DATE</th>"
+// 					            + "<th>RECENT COMMIT</th>"
+// 					            + "<th width=\"130\">AUTHOR</th>"
+					            + "<th width=\"50\"></th>"
 					            + "</tr>"
 					            + "</thead>";
-					}
+// 					}
 					
 
 					if(filePath != ""){
@@ -679,7 +697,8 @@ thead {
 							   + "<input type=\"hidden\" value=\"" + newFileName + "\" id=\"rpContentName\">"
 							   + "<input type=\"hidden\" value=\"" + newFilePath + "\" id=\"rpPath\">"
 							   + "</td>"
-							   + "<td colspan=\"3\"></td>"
+// 							   + "<td colspan=\"3\"></td>"
+							   + "<td></td>"
 							   + "</tr>";
 					}
 					
@@ -690,6 +709,7 @@ thead {
 							value += "<tr>"
 								   + "<td onclick=\"subContent(this);\" class=\"repoTitle\">"
 								   + "<input class=\"hidden-repo-type\" type=\"hidden\" value=\"" + list[i].type + "\">"
+								   + "<input class=\"hidden-repo-sha\" type=\"hidden\" value=\"" + list[i].sha + "\">"
 								   
 								    if(list[i].type === "file"){
 								        value += "<i class=\"ti ti-file\"></i>"
@@ -701,15 +721,16 @@ thead {
 								   + "<input type=\"hidden\" value=\"" + list[i].contentName + "\" id=\"rpContentName\">"
 								   + "<input type=\"hidden\" value=\"" + list[i].path + "\" id=\"rpPath\">"
 								   + "</td>"
-								   + "<td>" + "나중에여기다가 뭘쓰지...?" + "</td>"
-								   + "<td>" + "<img src=\"" + "resources/images/repo-img.png" + "\" width=\"20\" height=\"20\">" + "작성자이름" + "</td>"
-								   + "<td>" + "2024-04-20" + "</td>"
+// 								   + "<td>" + "나중에여기다가 뭘쓰지...?" + "</td>"
+// 								   + "<td>" + "<img src=\"" + "resources/images/repo-img.png" + "\" width=\"20\" height=\"20\">" + "작성자이름" + "</td>"
+								   + "<td></td>"
 								   + "</tr>";
 								   
 						} else {
 							// contentDesc가 undefined인 경우 == 내용이 있는 경우
 							value += "<tr>"
-							 	   + "<td colspan=\"4\">" + list[i].contentDesc + "</td>"
+// 							 	   + "<td colspan=\"4\">" + list[i].contentDesc + "</td>"
+							 	   + "<td colspan=\"2\">" + list[i].contentDesc + "</td>"
 								   + "</tr>";
 								
 						}
@@ -792,9 +813,9 @@ thead {
 						   + "<input type=\"hidden\" value=\"" + list[i].contentName + "\" id=\"rpContentName\">"
 						   + "<input type=\"hidden\" value=\"" + list[i].path + "\" id=\"rpPath\">"
 						   + "</td>"
-						   + "<td>" + "나중에여기다가 뭘쓰지...?" + "</td>"
-						   + "<td>" + "<img src=\"" + "resources/images/repo-img.png" + "\" width=\"20\" height=\"20\">" + "작성자이름" + "</td>"
-						   + "<td>" + "2024-04-20" + "</td>"
+// 						   + "<td>" + "나중에여기다가 뭘쓰지...?" + "</td>"
+// 						   + "<td>" + "<img src=\"" + "resources/images/repo-img.png" + "\" width=\"20\" height=\"20\">" + "작성자이름" + "</td>"
+						   + "<td></td>"
 						   + "</tr>";
 				}
 				
@@ -947,6 +968,8 @@ thead {
 			}
 		})
 		*/
+		
+		
 	}
 	
 </script>

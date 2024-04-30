@@ -502,4 +502,56 @@ public class RepositoryController {
 		
 	}
 	
+	@RequestMapping("updateContentForm.rp")
+	public String contentUpdateForm(Model model, String repoName, String visibility, String owner, String fileName, String filePath, String permission, String repoSha) {
+		
+		model.addAttribute("repoName", repoName);
+		model.addAttribute("visibility", visibility);
+		model.addAttribute("owner", owner);
+		model.addAttribute("fileName", fileName);
+		model.addAttribute("filePath", filePath);
+		model.addAttribute("permission", permission);
+		model.addAttribute("repoSha", repoSha);
+		
+		return "repository/repositoryUpdateForm";
+	}
+	
+	@RequestMapping("getContentDesc.rp")
+	public void getContentDesc(HttpSession session, HttpServletResponse response, String repoName, String owner, String filePath) throws IOException {
+
+		Member m = (Member)session.getAttribute("loginUser");
+		String content = rService.getContentDesc(m, repoName, owner, filePath);
+		
+		if(content != null) {
+			
+			response.setContentType("text/html; charset=utf-8");
+			response.getWriter().print(content);
+			
+		} else {
+			System.out.println("컨텐츠 잘못옴");
+		}
+		
+	}
+	
+	@RequestMapping("updateDesc.rp")
+	public String repoUpdateDesc(HttpSession session, Model model, String repoName, String visibility, String owner, String filePath, String permission, String repoSha, String content) {
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		String result = rService.repoUpdateDesc(m, repoName, owner, filePath, repoSha, content);
+		
+		model.addAttribute("repoName", repoName);
+		model.addAttribute("visibility", visibility);
+		model.addAttribute("owner", owner);
+		model.addAttribute("permission", permission);
+		
+		if(result != null) {
+			session.setAttribute("alertMsg", "컨텐츠 수정 완");
+			return "redirect:detail.rp";
+		} else {
+			session.setAttribute("alertMsg", "컨텐츠 수정 실패...");
+			return "redirect:detail.rp";
+		}
+		
+	}
+	
 }

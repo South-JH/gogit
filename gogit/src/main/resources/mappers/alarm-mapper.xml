@@ -65,6 +65,16 @@
   	    by alarm_no desc
   </select>
   
+  <select id="selectAlarmListTest" resultMap="AlarmListResult">
+  	select 
+  		   alarm_no
+  		 , mem_id
+  		 , alarm_type
+  		 , alarm_content_no
+  	  from alarmlist
+  	  where rmem_id = #{memId}
+  </select>
+  
   <update id="updateAlarm">
   	update alarmlist
   	   set alarm_yn = 0

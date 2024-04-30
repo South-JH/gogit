@@ -494,6 +494,65 @@ public class RepositoryServiceImpl implements RepositoryService {
     	
     }
     
+    public String getContentDesc(Member m, String repoName, String owner, String filePath) {
+    	
+    	String url = "https://api.github.com/repos/" + owner + "/" + repoName + "/contents/" + filePath;
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		headers.set("Authorization", "Bearer " + m.getMemToken());
+		headers.set("Accept", "Accept: application/vnd.github.html+json");
+		
+		HttpEntity<String> request = new HttpEntity<String>(headers);
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+		
+		String content = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			content = response.getBody();
+			return content;
+		} else {
+			System.out.println("콘텐츠 조회 실패");
+			return null;
+		}
+		
+    }
+    
+    public String repoUpdateDesc(Member m, String repoName, String owner, String filePath, String repoSha, String content) {
+    	
+    	String url = "https://api.github.com/repos/" + owner +  "/" + repoName + "/contents/" + filePath;
+    	
+    	RestTemplate restTemplate = new RestTemplate();
+    	
+    	HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		headers.set("Authorization", "Bearer " + m.getMemToken());
+		headers.set("Accept", "Accept: application/vnd.github.html+json");
+		
+		String encodedContent = Base64.getEncoder().encodeToString(content.getBytes());
+		
+		Map<String, String> map = new HashMap<>();
+        map.put("message", "update"); 
+        map.put("content", encodedContent);
+        map.put("sha", repoSha);
+        
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(map, headers);
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PUT, request, String.class);
+		
+		String result = "";
+		if(response.getStatusCode() == HttpStatus.OK) {
+			content = response.getBody();
+			return result;
+		} else {
+			System.out.println("내용 수정 실패");
+			return null;
+		}
+    	
+    }
+    
     
     
     

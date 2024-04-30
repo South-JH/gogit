@@ -39,7 +39,6 @@ public class AlarmListDao {
 		Project p = new Project();
 		p.setProNo(pNo);
 		p.setProWriter(memId);
-		System.out.println(p);
 		return sqlSession.update("alarmMapper.applyProject",p);
 	}
 
@@ -84,6 +83,8 @@ public class AlarmListDao {
 		return sqlSession.insert("alarmMapper.insertAlarm",al);
 		
 	}
-
-
+	
+	public ArrayList<AlarmList> selectAlarmListTest(SqlSessionTemplate sqlSession, String memId){
+		return (ArrayList)sqlSession.selectList("alarmMapper.selectAlarmListTest", memId);
+	}
 }

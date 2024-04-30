@@ -132,6 +132,38 @@
                                     
                                                         
                                     <script>
+                                    $(function(){
+                                    	alarmTest();
+										setInterval(() => {
+											alarmTest();
+										}, 1000);
+                                    });
+                                    
+                                            
+                                    function alarmTest() {
+                                    	
+                                        $.ajax({
+                                          url: "alarmTest.me",
+                                          data: {memId: "${loginUser.memId}"},
+                                          success: function (data) {
+                                        	  console.log(data)
+                                            for (let i in data) {
+                                              switch (data[i].alarmType) {
+                                                case "cancelPr":
+                                                	if(data[i].alarmContentNo == ${p.proNo}){
+                                                		rejectbtn();
+                                                	}
+                                                	
+                                              }
+                                            }
+                                        	  
+                                          },
+                                          error: function () {
+                                            console.log("실패");
+                                          },
+                                        });
+                                      }
+                             
                                     // 내가 프로젝트 작성자가 아니고, teamStatus가 No, 그리고 프로젝트 모집상태가 모집중일때(걍 신청자)
                                    // alert("script read!");
                                     
@@ -159,6 +191,13 @@
                                     	}else{ // 모집마감일때, 모집재개
                                     		drawProjectApplyRestart();
                                     	}	
+                                    }
+                                    
+                                    function rejectbtn(){
+                                    	$("#applybtn").html('<button id="eventbtn" class="btn btn-primary btn-sm" style="background-color: rgb(2, 56, 75);"></button>')
+                                    	$("#eventbtn").text("신청 불가합니다.");
+                                    	$("#eventbtn").attr("disabled", true);
+                                    	$("#markImg").html('<img src="https://holaworld.io/images/info/bookmark_filled.png" style="float:right; padding-right: 20px;" class="bookmark">');
                                     }
                                     
                                     function drawProjectApplyRestart(){
@@ -381,7 +420,7 @@
                                 <div>
                                     <div style="float: right;"><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);" onclick="history.back();">뒤로가기</button></div>
                                 		<c:if test="${ loginUser.gitNick eq p.proWriter }">
-                                     	<div style="float: right;"><button onclick="updatePr();" type="button" class="btn btn-warning" style="background-color: rgb(2 56 75);">수정하기</button></div>
+                                     	<div style="float: right;"><button onclick="deleteprj();" type="button" class="btn btn-warning" style="background-color: rgb(2 56 75);">삭제하기</button><button onclick="updatePr();" type="button" class="btn btn-warning" style="background-color: rgb(2 56 75);">수정하기</button></div>
                                      	</c:if>
                                 </div>                        
                                 <br>
@@ -391,6 +430,11 @@
                                 	function updatePr(){
                                 		location.href="updateForm.pr?pno=${p.proNo}"
                                 	}
+                                	function deleteprj(){
+                                		location.href="deleteprj.pr?pno=${p.proNo}"
+                                	}
+                                	
+                                	
                                 </script>
 
                                 <div class="replyAll-div">
@@ -450,7 +494,7 @@
                                         			url:"rlist.pr",
                                         			data:{pno:${p.proNo}},
                                         			success:function(list){
-                                        				console.log(list)
+                                        				
                                         				
                                         				let value = "";
                                         				
