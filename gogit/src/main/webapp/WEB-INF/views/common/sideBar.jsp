@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -150,7 +151,7 @@
                 </a>
               </li>
               
-              
+              <c:if test="${ loginUser.team != 0 }">
                <li class="nav-small-cap">
                 <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                 <span class="hide-menu">MEETING</span>
@@ -166,7 +167,7 @@
                   </span>
                   <span class="hide-menu" >zoom</span>
                 </a>
-              
+              </c:if>
             </ul>
             
             <%-- <div
