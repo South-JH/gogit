@@ -29,6 +29,12 @@
 		.conversation blockquote>p {
 			margin: 0px;
 		}
+		.conversation .select2-container {
+			display: none;
+		}
+		.conversation .select2-container--default.select2-container--focus .select2-selection--multiple {
+			border-color: #aec3ff;
+		} 		
     </style>
 </head>
 <body>
@@ -339,28 +345,66 @@
                     	</div>
                     	<div class="col-4 ps-5 pt-2">
                     		<div class="row mb-4 offset-md-1" id="reviewers">
-                    			<h5>Reviewers</h6>
+                    			<h5>Reviewers
+                    				<button class="float-end btn btn-sm" onclick="openReviewers('reviewers')"><i class="ti ti-plus"></i></button>
+                    				<button class="float-end btn btn-sm d-none" onclick="closeReviewers('reviewers')"><i class="ti ti-minus"></i></button>
+                    				</h5>
                     			<div class="mt-1">
+                    				<select class="form-select" name="selectedReviewer" multiple>
+										<c:forEach var="collaborator" items="${ collaboratorList }">
+											<c:if test="${ pullrq.pullWriter ne collaborator.collaborator }">
+												<c:choose>
+													<c:when test="${ fn:contains(pullrq.pullReviewer, collaborator.collaborator) }">
+														<option selected>${ collaborator.collaborator }</option>
+													</c:when>
+													<c:otherwise>
+														<option>${ collaborator.collaborator }</option>
+													</c:otherwise>
+												</c:choose>
+											</c:if>
+										</c:forEach>
+									</select>
                     				<c:set var="reviewers" value="${ fn:split(pullrq.pullReviewer, ',') }"/>
                     				<c:set var="reviewersProfiles" value="${ fn:split(pullrq.pullReviewerProfile, ',') }"/>
-                    				<c:forEach var="reviewer" items="${ reviewers }" varStatus="status">
-                    					<div class="mb-2">
-	                    					<img class="profile" src="${ reviewersProfiles[status.index] }" style="width: 25px; height: 25px; border-radius: 100%;">
-	                    					${ reviewer }
-                    					</div>
-                    				</c:forEach>
+                    				<div id="reviewer-area">
+	                    				<c:forEach var="reviewer" items="${ reviewers }" varStatus="status">
+	                    					<c:if test="${ not empty reviewersProfiles[status.index] }">
+		                    					<div class="mt-2">
+			                    					<img class="profile" src="${ reviewersProfiles[status.index] }" style="width: 25px; height: 25px; border-radius: 100%;">
+			                    					${ reviewer }
+		                    					</div>
+	                    					</c:if>
+	                    				</c:forEach>
+                    				</div>
                     			</div>
                     		</div>
-                    		<div class="row offset-md-1" id="assignees">
-                    			<h5>Assignees</h6>
-                    			<div class="mt-1">
+                    		<div class="row offset-md-1" id="assignees" style="border-top: 1px solid lightgray;">
+                    			<h5 class="mt-2">Assignees
+                    				<button class="float-end btn btn-sm" onclick="openReviewers('assignees')"><i class="ti ti-plus"></i></button>
+                    				<button class="float-end btn btn-sm d-none" onclick="closeReviewers('assignees')"><i class="ti ti-minus"></i></button>
+                    			</h5>
+                   				<select class="form-select" name="selectedAssignees" multiple>
+									<c:forEach var="collaborator" items="${ collaboratorList }">
+										<c:choose>
+											<c:when test="${ fn:contains(pullrq.pullManager, collaborator.collaborator) }">
+												<option selected>${ collaborator.collaborator }</option>
+											</c:when>
+											<c:otherwise>
+												<option>${ collaborator.collaborator }</option>
+											</c:otherwise>
+										</c:choose>
+									</c:forEach>
+								</select>
+                    			<div class="mt-2">
                     				<c:set var="assignees" value="${ fn:split(pullrq.pullManager, ',') }"/>
                     				<c:set var="assigneesProfiles" value="${ fn:split(pullrq.pullManagerProfile, ',') }"/>
                     				<c:forEach var="assignee" items="${ assignees }" varStatus="status">
-                    					<div class="mb-2">
-	                    					<img class="profile" src="${ assigneesProfiles[status.index] }" style="width: 25px; height: 25px; border-radius: 100%;">
-	                    					${ assignee }
-                    					</div>
+                    					<c:if test="${ not empty assigneesProfiles[status.index] }">
+	                    					<div class="mb-2">
+		                    					<img class="profile" src="${ assigneesProfiles[status.index] }" style="width: 25px; height: 25px; border-radius: 100%;">
+		                    					${ assignee }
+	                    					</div>
+                    					</c:if>
                     				</c:forEach>
                     			</div>
                     		</div>
@@ -379,11 +423,15 @@
 </body>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
 	$("#pull-request").attr("href", "list.pullrq?repoName=${ pullrq.repoName }&visibility=${ pullrq.repoVisibility }&owner=${ pullrq.repoOwner }");
 	$("#code").attr("href", "detail.rp?repoName=${ pullrq.repoName }&visibility=${ pullrq.repoVisibility }&owner=${ pullrq.repoOwner }&permission=${ permission }");
 	$("#issue").attr("href", "list.is?repoName=${ pullrq.repoName }&visibility=${ pullrq.repoVisibility }&owner=${ pullrq.repoOwner }");
-
+	$("select[name=selectedReviewer]").select2();
+	$("select[name=selectedAssignees]").select2();
+	
 	const editor1 = new toastui.Editor({
 		el: document.querySelector('#comments'), // 에디터를 적용할 요소 (컨테이너)
 		height: '200px',                        // 에디터 영역의 높이 값 (OOOpx || auto)
@@ -482,5 +530,87 @@
 		
 		$("input[name=comment]").val(editor1.getHTML());
 	}
+	
+	function openReviewers(id) {
+		$("#"+id+" .select2-container").show();
+		$("#"+id+" .ti-plus").parent().addClass("d-none");
+		$("#"+id+" .ti-minus").parent().removeClass("d-none");
+	}
+	
+	function closeReviewers(id) {
+		$("#"+id+" .select2-container").hide();
+		$("#"+id+" .ti-plus").parent().removeClass("d-none");
+		$("#"+id+" .ti-minus").parent().addClass("d-none");
+	}
+	
+	$("select[name=selectedReviewer]").change(function() {
+		console.log($("select[name=selectedReviewer]").val());
+		$.ajax({
+			url: 'addReviewer.pullrq',
+			data: {
+				repoOwner: '${ pullrq.repoOwner }',
+				repoName: '${ pullrq.repoName }',
+				pullNo: ${ pullrq.pullNo },
+				pullReviewer: '${ pullrq.pullReviewer }',
+				newReviewer: $("select[name=selectedReviewer]").val()
+			},
+			success: function(result) {
+				if(result) {
+					$.ajax({
+						url: 'selectReviewer.pullrq',
+						data: {
+							repoOwner: '${ pullrq.repoOwner }',
+							repoName: '${ pullrq.repoName }',
+							pullNo: ${ pullrq.pullNo }
+						},
+						success: function(result) {
+							let reviewers = result.pullReviewer;
+							let reviewersProfiles = result.pullReviewerProfile;
+
+							let value = '';
+							if(reviewers != '') {
+								for(let i = 0; i < reviewers.split(',').length; i++) {
+									value += `
+											<div class="mt-2">
+	                							<img class="profile" src="\${reviewersProfiles.split(',')[i]}" style="width: 25px; height: 25px; border-radius: 100%;">
+	                							\${reviewers.split(',')[i]}
+	            							</div>
+											`;
+								}
+							}
+							
+							$('#reviewer-area').html(value);
+						},
+						error: function() {
+							console.log('Reviewer 재조회 ajax 호출 실패');
+						}
+					});
+					
+				} else {
+					alertify.alert('Reviewer 수정 실패');
+				}
+			},
+			error: function() {
+				console.log('Reviewer 추가/삭제 ajax 호출 실패');
+			}
+			
+		});
+	});
+	
+	$("select[name=selectedAssignees]").change(function() {
+		console.log($("select[name=selectedAssignees]").val());
+		$.ajax({
+			url: '',
+			data: {},
+			success: function(result) {
+				console.log(result);
+			},
+			error: function() {
+				console.log(' ajax 호출 실패');
+			}
+			
+		});
+	});
+	
 </script>
 </html>

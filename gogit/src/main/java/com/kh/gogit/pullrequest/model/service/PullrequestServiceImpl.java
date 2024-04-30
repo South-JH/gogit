@@ -1,6 +1,5 @@
 package com.kh.gogit.pullrequest.model.service;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,8 +14,6 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
 import com.kh.gogit.comment.model.vo.Comment;
 import com.kh.gogit.commit.model.vo.Commit;
 import com.kh.gogit.member.model.vo.Member;
@@ -130,6 +127,26 @@ public class PullrequestServiceImpl implements PullrequestService {
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
 		
 		return response.getStatusCode() == HttpStatus.CREATED ? true : false;
+		
+	}
+	
+	public boolean removeReviewers(Member loginUser, Pullrequest pullrq) {
+		
+		// https://api.github.com/repos/OWNER/REPO/pulls/PULL_NUMBER/requested_reviewers
+		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/pulls/" + pullrq.getPullNo() + "/requested_reviewers";
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(loginUser.getMemToken());
+		
+		String body = "{\"reviewers\":" + new Gson().toJson(pullrq.getPullReviewer().split(",")) + "}";
+		
+		HttpEntity<String> request = new HttpEntity<String>(body, headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, request, String.class);
+		
+		return response.getStatusCode() == HttpStatus.OK ? true : false;
 		
 	}
 	

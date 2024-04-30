@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -304,9 +305,25 @@ public class PullrequestController {
 			comments.add(c);
 		}
 		
+		//=================================== collaborator 가져와 ==================================
+		String collaborators = new RepositoryServiceImpl().collaboratorList(loginUser, repoName, owner);
+		
+		JsonArray colArr = JsonParser.parseString(collaborators).getAsJsonArray();
+		
+		ArrayList<Repository> collaboratorList = new ArrayList<Repository>();
+		
+		for(int i = 0; i < colArr.size(); i++) {
+			Repository r = new Repository();
+			r.setCollaborator(colArr.get(i).getAsJsonObject().get("login").getAsString());
+			r.setAvatar(colArr.get(i).getAsJsonObject().get("avatar_url").getAsString());
+			
+			collaboratorList.add(r);
+		}
+		
 		model.addAttribute("pullrq", pullrq)
 			 .addAttribute("list", list)
-			 .addAttribute("comments", comments);
+			 .addAttribute("comments", comments)
+			 .addAttribute("collaboratorList", collaboratorList);
 		
 		return "pullrequest/pullRequestDetailView";
 	}
@@ -358,6 +375,61 @@ public class PullrequestController {
 		}
 		
 		return "redirect:detail.pullrq?owner=" + pullrq.getRepoOwner() + "&repoName=" + pullrq.getRepoName() + "&pullNo=" + pullrq.getPullNo();
+	}
+	
+	@ResponseBody
+	@RequestMapping("addReviewer.pullrq")
+	public boolean AddReviewer(Pullrequest pullrq, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+
+		boolean removeResult = prqService.removeReviewers(loginUser, pullrq);
+		
+		if(removeResult) {
+			pullrq.setPullReviewer(pullrq.getNewReviewer());
+			
+			if(pullrq.getPullReviewer() != null) {
+				return prqService.addReviewers(loginUser, pullrq);
+			} else {
+				return true;
+			}
+			
+		} else {
+			return false;
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "selectReviewer.pullrq", produces = "application/json; charset=utf-8")
+	public String getReviewer(Pullrequest pull, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		String result = prqService.getPullrequest(loginUser, pull.getRepoOwner(), pull.getRepoName(), pull.getPullNo());
+		
+		JsonArray reviewersArr = JsonParser.parseString(result).getAsJsonObject().get("requested_reviewers").getAsJsonArray();
+		
+		Pullrequest pullrq = new Pullrequest();
+		
+		String reviewers = "";
+		String reviewersProfiles = "";
+		for(int j = 0; j < reviewersArr.size(); j++) {
+			
+			String reviewer = reviewersArr.get(j).getAsJsonObject().get("login").getAsString();
+			String reviewersProfile = reviewersArr.get(j).getAsJsonObject().get("avatar_url").getAsString();
+			
+			if(j == reviewersArr.size() -1) {
+				reviewers += reviewer;
+				reviewersProfiles += reviewersProfile;
+			} else {
+				reviewers += reviewer + ",";
+				reviewersProfiles += reviewersProfile + ",";
+			}
+			
+		}
+		
+		pullrq.setPullReviewer(reviewers);
+		pullrq.setPullReviewerProfile(reviewersProfiles);
+		
+		return new Gson().toJson(pullrq);
 	}
 
 }
