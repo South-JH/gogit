@@ -95,14 +95,16 @@
     					
     					switch (data[i].alarmType) {
 						case "project":
-								value += "<li>"
+								value += "<div>"
+										+"<li>"
 											+"<input type='checkbox' name='nickName' value='"+data[i].gitNick+"'>"
 											+"<label> "+data[i].gitNick+" </label>"
 											+"<button class='btn btn-danger' onclick='alcancel123(this)'>거절</button>"
 											+"<button class='btn btn-primary' onclick='apply123("+data[i].alarmContentNo+",this)'>수락</button>"
 					            			+"<input type='hidden' value='"+data[i].memId+"'>"
 					            			+"<input type='hidden' value='"+data[i].alarmContentNo+"'>"
-					            		+"</li>";
+					            		+"</li>"
+					            		+"</div>";
 					            		
 							$("#joinMember").html(value)			
 											
