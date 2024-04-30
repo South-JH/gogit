@@ -37,7 +37,7 @@
 	</insert>
 	
 	<select id="selectCalEvent" resultMap="CalendarResult">
-		select
+		select DISTINCT
 			   cal_no
 			 , cal_title
 			 , (substr(start_date,0,10)||'T'||substr(start_date,12,8)) as start_date

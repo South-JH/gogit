@@ -63,7 +63,7 @@ pageEncoding="UTF-8"%>
                 success: function (data) {
                   if (data != "") {
                     alertify.alert(data);
-                    //location.href="main"
+                    location.href="main"
                   }
                 },
                 error: function () {},
@@ -141,6 +141,7 @@ pageEncoding="UTF-8"%>
             },
 
             select: function (e) {
+			  
               let num;
               $.ajax({
                 url: "checkNo.cal",
@@ -148,12 +149,13 @@ pageEncoding="UTF-8"%>
                   num = data;
                 },
               });
-
+			               
               $("#startDate").val(e.startStr);
 
               $("#calendarModal").modal("show");
 
-              $("#addEvent").on("click", function () {
+              $("#addEvent").on("click", function () {	  
+            	 
                 calendar.addEvent({
                   id: num,
                   title: $("#content").val(),
@@ -174,7 +176,7 @@ pageEncoding="UTF-8"%>
 	                  );
 	                }
 				}
-
+            	  
                 $("#calendarModal").modal("hide");
                 $("#content").val("");
                 $("#startDate").val("");
@@ -194,21 +196,25 @@ pageEncoding="UTF-8"%>
             dayMaxEvents: true,
             selectable: true,
           });
+          
+          
           $.ajax({
             url: "select.cal",
             data: {
               groupId: "${loginUser.team}",
             },
             success: function (data) {
+            	
               for (let i in data) {
-                calendar.addEvent({
-                  id: data[i].calNo,
-                  groupId: data[i].groupId,
-                  start: data[i].startDate,
-                  end: data[i].endDate,
-                  title: data[i].calTitle,
-                  backgroundColor: data[i].backgroundCol,
-                });
+            	 
+        		calendar.addEvent({
+                     id: data[i].calNo,
+                     groupId: data[i].groupId,
+                     start: data[i].startDate,
+                     end: data[i].endDate,
+                     title: data[i].calTitle,
+                     backgroundColor: data[i].backgroundCol,
+                   });
               }
             },
           });

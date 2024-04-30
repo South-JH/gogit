@@ -80,7 +80,7 @@
     	alarm123();
     	setInterval(() => {
     		alarm123();
-		},1000);
+		},3000);
 	})	
 	function alarm123(){
     		$.ajax({
@@ -103,6 +103,7 @@
 												+"<button class='btn btn-primary' onclick='apply123("+data[i].alarmContentNo+",this)'>수락</button>"
 						            			+"<input type='hidden' value='"+data[i].memId+"'>"
 						            			+"<input type='hidden' value='"+data[i].alarmNo+"'>"
+						            			+"<input type='hidden' value='"+data[i].alarmContentNo+"'>"
 						            		+"</li>"
 						            	+"</div>";
 					            		
@@ -132,7 +133,7 @@
 			},
 			success:function(data){
 				 if(socket){
-		            	socket.send("${loginUser.memId},프로젝트 참여 수락되었습니다.,"+$(e).siblings("input:eq(1)").val()+","+$(e).siblings("input:eq(2)").val()+",applyPr")
+		            	socket.send("${loginUser.memId},프로젝트 참여 수락되었습니다.,"+$(e).siblings("input:eq(1)").val()+","+$(e).siblings("input:eq(3)").val()+",applyPr")
 		             } 
 			}
 		})
@@ -157,7 +158,7 @@
 			  data:{memId:$(e).siblings("input:eq(1)").val()},
 			  success:function(data){
 				  if(socket){
-					  socket.send("${loginUser.memId},프로젝트 참여 거절되었습니다.,"+$(e).siblings("input:eq(1)").val()+","+$(e).siblings("input:eq(2)").val()+",cancelPr")
+					  socket.send("${loginUser.memId},프로젝트 참여 거절되었습니다.,"+$(e).siblings("input:eq(1)").val()+","+$(e).siblings("input:eq(3)").val()+",cancelPr")
 		              } 
 			  }
 		  })

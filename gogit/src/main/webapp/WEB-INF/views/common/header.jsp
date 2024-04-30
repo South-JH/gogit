@@ -277,7 +277,7 @@ uri="http://java.sun.com/jsp/jstl/core"%>
         setInterval(() => {
           alarm();
           alarmCircle();
-        }, 1000);
+        }, 3000);
       });
 
       function newSession() {
