@@ -14,6 +14,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kh.gogit.branch.model.vo.Branch;
+import com.kh.gogit.comment.model.vo.Comment;
 import com.kh.gogit.commit.model.vo.Commit;
 import com.kh.gogit.member.model.vo.Member;
 import com.kh.gogit.pullrequest.model.service.PullrequestServiceImpl;
@@ -145,6 +146,8 @@ public class PullrequestController {
 		pullrq.setPullWriterProfile(pullrqObj.get("user").getAsJsonObject().get("avatar_url").getAsString());
 		pullrq.setBaseBranch(pullrqObj.get("base").getAsJsonObject().get("ref").getAsString());
 		pullrq.setCompareBranch(pullrqObj.get("head").getAsJsonObject().get("ref").getAsString());
+		pullrq.setCommits(pullrqObj.get("commits").getAsInt());
+		pullrq.setChangedFiles(pullrqObj.get("changed_files").getAsInt());
 		pullrq.setRepoName(repoName);
 		pullrq.setRepoOwner(owner);
 		pullrq.setRepoVisibility(pullrqObj.get("base").getAsJsonObject().get("repo").getAsJsonObject().get("private").getAsString());
@@ -176,8 +179,31 @@ public class PullrequestController {
 			list.add(c);
 		}
 		
+		//==================================== 댓글 리스트 가져와 ====================================
+		String commentsUrl = pullrqObj.get("_links").getAsJsonObject().get("comments").getAsJsonObject().get("href").getAsString();
+		String commentsList = prqService.getCommentsList(commentsUrl, loginUser);
+		
+		JsonArray commentArr = JsonParser.parseString(commentsList).getAsJsonArray();
+		
+		ArrayList<Comment> comments = new ArrayList<Comment>();
+		
+		for(int i = 0; i< commentArr.size(); i++) {
+			JsonObject commentObj = commentArr.get(i).getAsJsonObject();
+			
+			Comment c = new Comment();
+			
+			c.setComment(commentObj.get("body_html").getAsString());
+			c.setCommentWriter(commentObj.get("user").getAsJsonObject().get("login").getAsString());
+			c.setCommentWriterProfile(commentObj.get("user").getAsJsonObject().get("avatar_url").getAsString());
+			c.setIsAuthor(commentObj.get("author_association").getAsString().equals("OWNER"));
+			c.setCreateDate(commentObj.get("created_at").getAsString().split("T")[0]);
+			
+			comments.add(c);
+		}
+		
 		model.addAttribute("pullrq", pullrq);
 		model.addAttribute("list", list);
+		model.addAttribute("comments", comments);
 		
 		return "pullrequest/pullRequestDetailView";
 	}
@@ -198,10 +224,37 @@ public class PullrequestController {
 	}
 	
 	@RequestMapping("update.pullrq")
-	public void updatePullrequest(Pullrequest pullrq, HttpSession session) {
+	public String updatePullrequest(Pullrequest pullrq, HttpSession session) throws InterruptedException {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		
 		boolean result = prqService.updatePullrequest(loginUser, pullrq);
+		
+		if(result) {
+			session.setAttribute("alertMsg", "Pull request 수정이 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "Pull request 수정을 실패했습니다.");
+		}
+		
+		// pull request 상태 업데이트 후, mergeable 속성 업데이트까지 시간이 좀 소요됨.
+		// reopen한 후에 바로 조회하면 mergeable 속성이 null로 들어와서 1초 대기 후 조회하도록
+		Thread.sleep(500); // 500ms 대기
+		
+		return "redirect:detail.pullrq?owner=" + pullrq.getRepoOwner() + "&repoName=" + pullrq.getRepoName() + "&pullNo=" + pullrq.getPullNo();
+	}
+	
+	@RequestMapping("comment.pullrq")
+	public String createComment(Pullrequest pullrq, Comment comment, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		boolean result = prqService.createComment(loginUser, pullrq, comment);
+		
+		if(result) {
+			session.setAttribute("alertMsg", "Review 등록 완료되었습니다.");
+		} else {
+			session.setAttribute("alertMsg", "Review 등록 실패했습니다.");
+		}
+		
+		return "redirect:detail.pullrq?owner=" + pullrq.getRepoOwner() + "&repoName=" + pullrq.getRepoName() + "&pullNo=" + pullrq.getPullNo();
 	}
 
 }

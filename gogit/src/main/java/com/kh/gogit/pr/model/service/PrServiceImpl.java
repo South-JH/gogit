@@ -130,6 +130,14 @@ public class PrServiceImpl implements PrService{
 
 
 
+	@Override
+	public int checkInsertPr(String memId) {
+		// TODO Auto-generated method stub
+		return pDao.checkInsertPr(sqlSession,memId);
+	}
+
+
+
 
 
 }

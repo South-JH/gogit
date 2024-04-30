@@ -33,16 +33,12 @@
                 <div class="teamMates" style="margin-bottom: 10px;"><b style="color: rgb(2 56 75);">TeamMates</b></div>
                 
                 <div style="display: flex; margin-bottom: 5px;">
-                    <div class="proimg-div" style="width: 60px;"><img src="${loginUser.profile}"></div>
-                    <div>
-                        <b>${ loginUser.gitNick }</b><!-- 작성자 -->
-                        <div>@${ loginUser.gitNick }</div>
-                    </div>
+
                 </div>
                 
                 <c:forEach var="p" items="${prMemberList }"><!-- 팀멤버 -->              
                 <div style="display: flex; margin-bottom: 5px;">
-                    <div class="proimg-div" style="width: 60px;"><img src="${loginUser.profile}"></div>
+                    <div class="proimg-div" style="width: 60px;"><img src="${p.profile}"></div>
                     <div>
                         <b>${ p.gitNick } </b>
                         <div>@${p.gitNick }</div>
@@ -61,12 +57,102 @@
             <br>
 
             <div style="border: 1px solid gray; height: 30px;">
-                <input type="checkbox" id="vehicle1" name="nickName" value="hijimin">
-                  <label for="vehicle1"> hijimin </label><br>
+            	<ul id="joinMember">
+            		      		
+            	</ul>                
             </div>
             
-            <div class="addbtn-div" style="margin-top: 5px;"><button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">팀원추가하기</button></div>
+            <!-- <div id="addbtn" class="addbtn-div" style="margin-top: 5px;"><button class="btn btn-primary btn-sm" style="background-color: rgb(2 56 75);">팀원추가하기</button></div> -->
         </div>        
     </div>
+    
+    <script>
+    $(function(){
+    	alarm123();
+	})	
+	function alarm123(){
+    		$.ajax({
+    			url:"alarm.me",
+    			data:{
+    				memId:'${loginUser.memId}'
+    			},
+    			success:function(data){
+    				let value = "";
+    				
+    				for(let i in data){
+    					
+    					switch (data[i].alarmType) {
+						case "project":
+								value += "<li>"
+											+"<input type='checkbox' name='nickName' value='"+data[i].gitNick+"'>"
+											+"<label> "+data[i].gitNick+" </label>"
+											+"<button class='btn btn-primary' onclick='apply123(this)'>수락</button>"
+					            			+"<button class='btn btn-danger' onclick='alcancel123(this)'>거절</button>"
+					            			+"<input type='hidden' value='"+data[i].memId+"'>"
+					            			+"<input type='hidden' value='"+data[i].alarmNo+"'>"
+					            		+"</li>";
+					            		
+							$("#joinMember").append(value)				
+											
+								
+							break;
+						default:
+							break;
+						}
+    				}
+    				
+    			},
+    			error:function(){
+    				console.log("실패")
+    			}
+    		})
+    	}
+    
+    function apply123(e){
+		 $.ajax({
+			url:"application.pr",
+			data:{
+				memId:$(e).siblings("li").children("input:eq(1)").val()
+			},
+			success:function(data){
+				console.log(data)
+			}
+		})
+		
+		$.ajax({
+			url:"delete.al",
+			data:{
+				pno:"${loginUser.team}",
+				alarmNo:$(e).siblings("li").children("input:eq(2)").val()
+			},
+			success:function(data){
+				$(e).parent().remove();
+				console.log(data)
+			}
+		}) 
+	}  
+    
+    function alcancel123(e){
+
+		   $.ajax({
+			  url:"alcancel.pr",
+			  data:{memId:$(e).siblings("li").children("input:eq(1)").val()},
+			  success:function(data){
+				  console.log(data);
+			  }
+		  })
+		  
+		  $.ajax({
+			url:"delete.al",
+			data:{
+				alarmNo:$(e).siblings("li").children("input:eq(2)").val()
+			},
+			success:function(data){
+				$(e).parent().remove();
+				console.log(data)
+			}
+		}) 
+	  }
+    </script>
 </body>
 </html>

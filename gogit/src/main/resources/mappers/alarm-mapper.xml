@@ -65,6 +65,15 @@
   	    by alarm_no desc
   </select>
   
+  <select id="selectAlarmListTest" resultMap="AlarmListResult">
+  	select 
+  		   alarm_no
+  		 , a.mem_id
+  		 , alarm_type
+  		 , alarm_content_no
+  	  from alarmlist
+  </select>
+  
   <update id="updateAlarm">
   	update alarmlist
   	   set alarm_yn = 0
@@ -80,7 +89,7 @@
   
   <update id="cancelProject">
   	update member
-  	   set team='0'
+  	   set team=0
   	     , team_status='N'
   	 where mem_id=#{proWriter}
   </update>
@@ -128,4 +137,5 @@
   	 where alarm_content_no = #{alarmContentNo}
   </select>
   
+
 </mapper>

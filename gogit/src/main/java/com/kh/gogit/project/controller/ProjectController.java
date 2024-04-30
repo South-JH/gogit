@@ -63,7 +63,7 @@ public class ProjectController {
 	*/
 	
 	@RequestMapping("list.pj")
-	public ModelAndView selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
+	public ModelAndView selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv, HttpSession session) {
 	    int listCount = pService.selectListCount();
 	    
 	    PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 3, 8);
@@ -71,8 +71,9 @@ public class ProjectController {
 	    ArrayList<Project> list = pService.selectList(pi);
 	    ArrayList<Stack> stackList = pService.selectStackList();
 	    
+	    String nickName = ((Member)session.getAttribute("loginUser")).getGitNick();
 	    // selectProMember() 메서드 호출하여 ModelAndView 객체 반환받기
-	    ModelAndView rightBarModelAndView = selectProMember();
+	    ModelAndView rightBarModelAndView = selectProMember(nickName);
 	    
 	    mv.addObject("pi", pi)
 	      .addObject("list", list)
@@ -84,9 +85,10 @@ public class ProjectController {
 	}
 
 	// selectProMember() 메서드 정의
-	public ModelAndView selectProMember() {
+	public ModelAndView selectProMember(String nickName) {
 	    ModelAndView modelAndView = new ModelAndView("common/rightBar");
-	    ArrayList<Member> prMemberList = pService.selectProjectMemberList(); // 데이터베이스에서 멤버 리스트를 가져와서
+	    
+	    ArrayList<Member> prMemberList = pService.selectProjectMemberList(nickName); // 데이터베이스에서 멤버 리스트를 가져와서
 	    modelAndView.addObject("prMemberList", prMemberList); // 모델에 추가
 	    return modelAndView; // 모델이 포함된 ModelAndView 객체 반환
 	}
@@ -98,29 +100,33 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("detail.pr")
-	public String detailView(int pno, Model model) {
+	public ModelAndView detailView(int pno, HttpSession session, ModelAndView mv) {
 		int result = pService.increaseCount(pno);
+		String nickName = ((Member)session.getAttribute("loginUser")).getGitNick();
+		ModelAndView rightBarModelAndView = selectProMember(nickName);
 		
 		if(result > 0) {
 			Project p = pService.selectDetailList(pno);
 			ArrayList<Stack> stackList = pService.selectStackList();
 			
-			model.addAttribute("p",p).addAttribute("stackList",stackList);
+			mv.addObject("p",p).addObject("stackList",stackList).addAllObjects(rightBarModelAndView.getModel()).setViewName("project/projectDetailView");
 					
-			return "project/projectDetailView";
-		} else {
-			return "common/errorPage";
-		}		
+			return mv;
+		}else {
+			return null;
+		}
 	}
 	
 	@RequestMapping("insert.pr")
 	public String insertProject(Project p, Model model, HttpSession session) {
 		p.setProWriter(((Member)session.getAttribute("loginUser")).getMemId());
+		System.out.println(p);
 		
 		int result = pService.insertProject(p);
 				
 		if(result > 0) {
 			session.setAttribute("alertMsg", "성공적으로 프로젝트 작성이 완료되었습니다!");
+			
 			return "redirect:list.pj";
 		}else {
 			model.addAttribute("errorMsg", "프로젝트 작성 실패!");
@@ -267,6 +273,18 @@ public class ProjectController {
 		}	
 	}
 	
+	@RequestMapping("deleteprj.pr")
+	public String deleteProject(int pno, Model model, HttpSession session) {
+		System.out.println(pno);
+		int result = pService.deleteProject(pno);
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 게시글 삭제되었습니다.");
+			return "redirect:list.pj";
+		}else {
+			return "common/errorPage";
+		}
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="rlist.pr", produces="application/json; charset=utf-8")
 	public String ajaxSelectReplyList(int pno) {
@@ -287,5 +305,14 @@ public class ProjectController {
 	public String ajaxDeleteReply(int pno) {
 		int result = pService.deleteReply(pno);
 		return result > 0 ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="teCircle.pr")
+	public String ajaxproCircle(int pno) {
+		System.out.println(pno);
+		ArrayList<Member> circleMember = pService.selectCircle(pno);
+		
+		return new Gson().toJson(circleMember);
 	}
 }

@@ -20,6 +20,8 @@ public class Pullrequest {
 	private String pullManagerProfile;
 	private String baseBranch;
 	private String compareBranch;
+	private int commits;
+	private int changedFiles;
 	private String repoName;
 	private String repoOwner;
 	private String repoVisibility;

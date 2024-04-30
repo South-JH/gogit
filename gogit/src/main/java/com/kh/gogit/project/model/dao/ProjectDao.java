@@ -30,7 +30,13 @@ public class ProjectDao {
 	}
 	
 	public int insertProject(SqlSessionTemplate sqlSession, Project p) {
-		return sqlSession.insert("projectMapper.insertProject", p);
+		int result = sqlSession.insert("projectMapper.insertProject", p);
+		if(result > 0) {
+			return sqlSession.update("projectMapper.updateWriter", p);
+		}else {
+			return 0;
+		}
+		
 	}
 	
 	public ArrayList<Stack> selectStackList(SqlSessionTemplate sqlSession){
@@ -70,7 +76,12 @@ public class ProjectDao {
 	}
 	
 	public int updateCompleteProject(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
-		return sqlSession.update("projectMapper.updateCompleteProject", map);
+		int result = sqlSession.update("projectMapper.updateCompleteProject", map);
+		if(result > 0) {
+			return sqlSession.update("projectMapper.updateMemStatus", map);	
+		}else {
+			return 0;
+		}
 	}
 	
 	public int updateRestartProject(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
@@ -118,7 +129,15 @@ public class ProjectDao {
 		return (ArrayList)sqlSession.selectList("projectMapper.applycompleteList", null, rowBounds);
 	}
 	
-	public ArrayList<Member> selectProjectMemberList(SqlSessionTemplate sqlSession){
-		return (ArrayList)sqlSession.selectList("memberMapper.selectProjectMemberList");
+	public ArrayList<Member> selectProjectMemberList(SqlSessionTemplate sqlSession, String nickName){
+		return (ArrayList)sqlSession.selectList("memberMapper.selectProjectMemberList", nickName);
+	}
+	
+	public int deleteProject(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.update("projectMapper.deleteProject", pno);
+	}
+	
+	public ArrayList<Member> selectCircle(SqlSessionTemplate sqlSession, int pno){
+		return (ArrayList)sqlSession.selectList("memberMapper.selectCircle", pno);
 	}
 }

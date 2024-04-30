@@ -159,7 +159,7 @@
                 <a
                   class="sidebar-link"
                   aria-expanded="false"
-				  href="https://zoom.us/oauth/authorize?response_type=code&client_id=qpGjOpDZQ5OWjpuP4j8IQ&redirect_uri=http://localhost:8052/gogit/zoomCreate"
+				  href="https://zoom.us/oauth/authorize?response_type=code&client_id=qpGjOpDZQ5OWjpuP4j8IQ&redirect_uri=http://192.168.20.38:8052/gogit/zoomCreate"
                 >
                   <span>
                     <i class="ti ti-brand-finder"></i>

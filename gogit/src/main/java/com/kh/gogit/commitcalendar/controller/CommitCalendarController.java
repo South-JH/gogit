@@ -55,7 +55,7 @@ public class CommitCalendarController {
 		    // 페이지 데이터를 repoList에 추가
 
 		    
-		    if(pageData.length() == 2) {
+		    if(pageData.length() == 2) { // [] 이면 포문나감
 		    	break;
 		    }
 		    if (i == 1) {
@@ -86,7 +86,6 @@ public class CommitCalendarController {
 			String message = commitArr.get(i).getAsJsonObject().get("commit").getAsJsonObject().get("message").getAsString().replace("\n", "");
 			commitmesObj[i] = message; // 배열에 0번째에는 commitArr의 0번째의 값이 들어갈꺼임				
 		}
-		
 		model.addAttribute("rpList", rpList)
 		     .addAttribute("commitObj", Arrays.toString(commitObj))
 		     .addAttribute("commitmesObj", Arrays.toString(commitmesObj));

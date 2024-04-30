@@ -65,12 +65,22 @@
 	
 	<select id="selectProjectMemberList" resultMap="memberResult">
 			select
-		           git_nick
-		         , profile 
-		  from member m
-		  join project p on (mem_id = pro_writer)
-	     where p.pro_status = 'Y'
-	       and team_status = 'Y'
-	       and pro_no = team
+			       git_nick
+			     , profile
+			  from member
+			 where team = (select team
+			                from member
+			                where git_nick = #{nickName}
+			                and team_status in ('Y','S'))
+	</select>
+	
+	<select id="selectCircle" resultMap="memberResult">
+	select 
+	       mem_id
+	     , team  
+	     , team_status
+	   from member
+	   where team_status = 'Y'
+	    and TEAM = #{pno}
 	</select>
 </mapper>
