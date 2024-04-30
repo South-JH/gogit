@@ -95,6 +95,11 @@ public class AlarmListController {
 		return result>0?"success":"fail";
 	}
 	
-
-
+	@ResponseBody
+	@RequestMapping("newSession.me")
+	public String newSession(String memId,HttpSession sesssion) {
+		Member loginUser = mService.loginMember(memId);
+		sesssion.setAttribute("loginUser", loginUser);
+		return "sdf";
+	}
 }

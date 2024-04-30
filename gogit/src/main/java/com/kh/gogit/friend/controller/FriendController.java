@@ -40,7 +40,7 @@ private FriendServiceImpl fService;
       Friend f = new Friend(bfTaker, bfGiver);
      
       
-      System.out.println(f);
+     
       int result = fService.addFriend(f);
       if(result > 0){
          session.setAttribute("alert", "dff");

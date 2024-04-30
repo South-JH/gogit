@@ -85,6 +85,7 @@
 									<div class="left-div" style="margin-right: 15px;">
 										<form action="insert.pr" method="post" id="myForm">	
 											<input type="hidden" id="proContent" name="proContent">
+											<input type="hidden" id="memId" name="memId" value="${loginUser.memId }">
 										<div class="form-group" style="margin-top: 10px;">										
 											<div>
 												<label for="sel1">모집인원</label>
