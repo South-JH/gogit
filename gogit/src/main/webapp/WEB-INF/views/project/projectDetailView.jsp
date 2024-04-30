@@ -431,7 +431,7 @@
                                 		location.href="updateForm.pr?pno=${p.proNo}"
                                 	}
                                 	function deleteprj(){
-                                		location.href="deleteprj.pr?pno=${p.proNo}"
+                                		location.href="deleteprj.pr?pno=${p.proNo}&memId=${loginUser.memId}"
                                 	}
                                 	
                                 	

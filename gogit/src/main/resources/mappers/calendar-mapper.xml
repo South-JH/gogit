@@ -44,9 +44,12 @@
 			 , (substr(end_date,0,10)||'T'||substr(end_date,12,8)) as end_date
 			 , groupid
 			 , background_col
-		  from calendar
-		 where status = 'Y'
-		   and groupid = #{groupId}
+		  from calendar c
+		  join member m
+		    on c.groupid = m.team
+		 where c.status = 'Y'
+		   and c.groupid = #{groupId}
+		   and m.team_status = 'Y'
 		
 	</select>
 	

@@ -39,7 +39,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		sessions.add(session);
-		// System.out.println("시작 :" +session);
+		
 		Map<String, Object> httpSession = session.getAttributes();
 		m = (Member) httpSession.get("loginUser");
 
@@ -51,7 +51,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {// 메시지
 
 		String[] arr = (message.getPayload()).split(",");
-		System.out.println(arr);
+		
 		if (arr[4].equals("project")) {
 			String rmemId = aDao.selectMemid(sqlSession, arr[2]);
 			AlarmList al = new AlarmList();

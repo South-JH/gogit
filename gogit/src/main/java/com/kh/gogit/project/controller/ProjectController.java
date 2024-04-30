@@ -31,6 +31,9 @@ public class ProjectController {
 	
 	@Autowired
 	private ProjectServiceImpl pService;
+	
+	@Autowired
+	private MemberServiceImpl mService;
 	/*
 	@RequestMapping("list.pj")
 	public ModelAndView selectList(@RequestParam (value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
@@ -118,13 +121,16 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("insert.pr")
-	public String insertProject(Project p, Model model, HttpSession session) {
+	public String insertProject(String memId,Project p, Model model, HttpSession session) {
 		p.setProWriter(((Member)session.getAttribute("loginUser")).getMemId());
 		System.out.println(p);
 		
 		int result = pService.insertProject(p);
 				
 		if(result > 0) {
+			Member loginUser = mService.loginMember(memId);
+			
+			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("alertMsg", "성공적으로 프로젝트 작성이 완료되었습니다!");
 			
 			return "redirect:list.pj";
@@ -274,10 +280,12 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("deleteprj.pr")
-	public String deleteProject(int pno, Model model, HttpSession session) {
+	public String deleteProject(int pno,String memId, Model model, HttpSession session) {
 		System.out.println(pno);
 		int result = pService.deleteProject(pno);
 		if(result>0) {
+			Member loginUser = mService.loginMember(memId);
+			session.setAttribute("loginUser", loginUser);
 			session.setAttribute("alertMsg", "성공적으로 게시글 삭제되었습니다.");
 			return "redirect:list.pj";
 		}else {

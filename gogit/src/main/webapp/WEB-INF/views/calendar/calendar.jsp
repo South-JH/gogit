@@ -48,7 +48,9 @@ pageEncoding="UTF-8"%>
               } else {
                 end = e.event.endStr;
               }
-
+			  
+              let team = "${loginUser.team}";
+              if(team != 0){
               $.ajax({
                 url: "insert.cal",
                 data: {
@@ -66,6 +68,7 @@ pageEncoding="UTF-8"%>
                 },
                 error: function () {},
               });
+              }
             },
 
             eventChange: function (e) {
@@ -87,9 +90,9 @@ pageEncoding="UTF-8"%>
                   if (data != "") {
                     alertify.alert(data);
                   }
-
+                  if("${loginUser.team}" != 0){
                   if (socket) {
-                    console.log(e);
+                    
                     socket.send(
                       "${loginUser.memId}," +
                         e.event._def.title +
@@ -98,6 +101,7 @@ pageEncoding="UTF-8"%>
                         ",ucalendar"
                     );
                     location.href = "main";
+                  }
                   }
                 },
                 error: function () {},
@@ -119,6 +123,7 @@ pageEncoding="UTF-8"%>
                   if (data != "") {
                     alertify.alert(data);
                   }
+                  if("${loginUser.team}" != 0){
                   if (socket) {
                     socket.send(
                       "${loginUser.memId}," +
@@ -128,6 +133,7 @@ pageEncoding="UTF-8"%>
                         ",dcalendar"
                     );
                     location.href = "main";
+                  }
                   }
                 },
                 error: function () {},
@@ -157,16 +163,17 @@ pageEncoding="UTF-8"%>
                   backgroundColor: $("#eventColor").val(),
                   groupId: "${loginUser.team}",
                 });
-
-                if (socket) {
-                  socket.send(
-                    "${loginUser.memId}," +
-                      $("#content").val() +
-                      ",${loginUser.team}," +
-                      num +
-                      ",calendar"
-                  );
-                }
+				if("${loginUser.team}" != 0){
+	                if (socket) {
+	                  socket.send(
+	                    "${loginUser.memId}," +
+	                      $("#content").val() +
+	                      ",${loginUser.team}," +
+	                      num +
+	                      ",calendar"
+	                  );
+	                }
+				}
 
                 $("#calendarModal").modal("hide");
                 $("#content").val("");
