@@ -336,5 +336,13 @@
 	 where team = #{pno}
 	</update>
 	
+	<update id="deleteProject">
+	update
+	       project
+	   set status = 'N'
+	 where pro_no = #{pno}
+	
+	</update>
+	
 	
 </mapper>

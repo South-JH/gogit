@@ -141,6 +141,16 @@ public class ProjectServiceImpl implements ProjectService{
 		return pDao.selectProjectMemberList(sqlSession, nickName);
 	}
 
+	@Override
+	public int deleteProject(int pno) {
+		return pDao.deleteProject(sqlSession, pno);
+	}
+
+	@Override
+	public ArrayList<Member> selectCircle(int pno) {
+		return pDao.selectCircle(sqlSession, pno);
+	}
+
 	
 	
 }

@@ -273,6 +273,18 @@ public class ProjectController {
 		}	
 	}
 	
+	@RequestMapping("deleteprj.pr")
+	public String deleteProject(int pno, Model model, HttpSession session) {
+		System.out.println(pno);
+		int result = pService.deleteProject(pno);
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 게시글 삭제되었습니다.");
+			return "redirect:list.pj";
+		}else {
+			return "common/errorPage";
+		}
+	}
+	
 	@ResponseBody
 	@RequestMapping(value="rlist.pr", produces="application/json; charset=utf-8")
 	public String ajaxSelectReplyList(int pno) {
@@ -293,5 +305,14 @@ public class ProjectController {
 	public String ajaxDeleteReply(int pno) {
 		int result = pService.deleteReply(pno);
 		return result > 0 ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="teCircle.pr")
+	public String ajaxproCircle(int pno) {
+		System.out.println(pno);
+		ArrayList<Member> circleMember = pService.selectCircle(pno);
+		
+		return new Gson().toJson(circleMember);
 	}
 }

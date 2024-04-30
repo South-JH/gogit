@@ -75,5 +75,9 @@ public interface ProjectService {
 	// 프로젝트 멤버들 가져오기
 	ArrayList<Member> selectProjectMemberList(String nickName);
 	
+	// 프로젝트 작성글 삭제
+	int deleteProject(int pno);
+	
+	ArrayList<Member> selectCircle(int pno);
 
 }
