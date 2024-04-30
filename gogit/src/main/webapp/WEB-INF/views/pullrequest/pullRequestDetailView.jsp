@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,8 +97,8 @@
 					    	<a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Files changed</a>
 					  	</li>
 					</ul>
-                    <div class="conversation container">
-                    	<div class="col-8">
+                    <div class="conversation container row">
+                    	<div class="col-8 p-1">
                     		<div class="row" style="border-bottom: 1px solid lightgray;">
 	                    		<div class="col-1">
 	                    			<a href="#">
@@ -336,8 +337,34 @@
 	                    		</form>
 	                    	</div>
                     	</div>
-                    	
-                    	<div class="col"></div>
+                    	<div class="col-4 ps-5 pt-2">
+                    		<div class="row mb-4 offset-md-1" id="reviewers">
+                    			<h5>Reviewers</h6>
+                    			<div class="mt-1">
+                    				<c:set var="reviewers" value="${ fn:split(pullrq.pullReviewer, ',') }"/>
+                    				<c:set var="reviewersProfiles" value="${ fn:split(pullrq.pullReviewerProfile, ',') }"/>
+                    				<c:forEach var="reviewer" items="${ reviewers }" varStatus="status">
+                    					<div class="mb-2">
+	                    					<img class="profile" src="${ reviewersProfiles[status.index] }" style="width: 25px; height: 25px; border-radius: 100%;">
+	                    					${ reviewer }
+                    					</div>
+                    				</c:forEach>
+                    			</div>
+                    		</div>
+                    		<div class="row offset-md-1" id="assignees">
+                    			<h5>Assignees</h6>
+                    			<div class="mt-1">
+                    				<c:set var="assignees" value="${ fn:split(pullrq.pullManager, ',') }"/>
+                    				<c:set var="assigneesProfiles" value="${ fn:split(pullrq.pullManagerProfile, ',') }"/>
+                    				<c:forEach var="assignee" items="${ assignees }" varStatus="status">
+                    					<div class="mb-2">
+	                    					<img class="profile" src="${ assigneesProfiles[status.index] }" style="width: 25px; height: 25px; border-radius: 100%;">
+	                    					${ assignee }
+                    					</div>
+                    				</c:forEach>
+                    			</div>
+                    		</div>
+                    	</div>
                     </div>
                     <div class="commits">
                     </div>
