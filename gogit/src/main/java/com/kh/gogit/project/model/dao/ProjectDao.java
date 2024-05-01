@@ -92,6 +92,8 @@ public class ProjectDao {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		
+		System.out.println(offset + "!!!" +  limit);
+		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return (ArrayList)sqlSession.selectList("projectMapper.applySelectList", null, rowBounds);
 	}

@@ -191,7 +191,7 @@
 							<div class="topmenu-div" style="display:flex;">
 								<div style="width: 90px;" class="testtest"><a onclick="allbtn()" style="color: rgb(2 56 75);">전체</a></div>					
 								<div style="width: 100px;" class="applying"><a onclick="applying(1)" id="applyingId" style="color: lightgray; cursor: pointer;">모집 중</a></div>
-								<div style="width: 120px;" class="applycomplete"><a onclick="applycomplete()" style="color: lightgray; cursor: pointer;">모집 완료</a></div>
+								<div style="width: 120px;" class="applycomplete"><a onclick="applycomplete(1)" style="color: lightgray; cursor: pointer;">모집 완료</a></div>
 							</div>
 							<br>
 							<br>
@@ -214,7 +214,8 @@
 										data:{cpage:p},
 										success:function(map){
 											//console.log(map)
-											let pi = map.pi;			
+											let pi = map.pi;	
+											console.log(pi)
 					                        let currentPage = pi.currentPage;
 					                        let startPage = pi.startPage;
 					                        let endPage = pi.endPage;
@@ -275,15 +276,15 @@
 														value += '</div>'
 														      + '<div><hr></div>'
 															  + '<div>조회수:'+ count +'</div>'
-															  + '<div>작성자:${ loginUser.gitNick }</div>'		
+															  + '<div>작성자:'+ result[i].proWriter + '</div>'		
 														  	  + '</div>'																			                        	
 						                        		}
 					                        
 					                        $("#content2_3").html(value);
 					                        //console.log("------")
 					                        //console.log(currentPage);
-					                        //console.log(startPage);
-					                        //console.log(endPage);
+					                       //console.log(startPage);
+					                       //console.log(endPage);
 					                        
 					                        if (currentPage != 1) {				                        	
 						                        $paging.append(				                               
@@ -379,7 +380,7 @@
 														value += '</div>'
 														      + '<div><hr></div>'
 															  + '<div>조회수:'+ count +'</div>'
-															  + '<div>작성자:${ loginUser.gitNick }</div>'		
+															  + '<div>작성자:'+ result[i].proWriter + '</div>'		
 														  	  + '</div>'																			                        	
 						                        		}
 					                        
@@ -387,23 +388,23 @@
 					                        
 					                        if (currentPage != 1) {				                        	
 						                        $paging.append(				                               
-						                                "<li class='page-item'><a class='page-link' onclick=applying(" + (currentPage - 1) + ")>Previous</a></li>"
+						                                "<li class='page-item'><a class='page-link' onclick=applycomplete(" + (currentPage - 1) + ")>Previous</a></li>"
 						                            );
 						                        }
 						                        
 						                        for (let p = startPage; p <= endPage; p++) {
 						                            if (p == currentPage) {
-						                              $paging.append("<li class='page-item active'><a class='page-link' onclick=applying(" + p  + ")>" + p + "</a></li>");
+						                              $paging.append("<li class='page-item active'><a class='page-link' onclick=applycomplete(" + p  + ")>" + p + "</a></li>");
 						                            }else{
-						                              $paging.append("<li class='page-item'><a class='page-link' onclick=applying(" + p  + ")>" + p + "</a></li>");
+						                              $paging.append("<li class='page-item'><a class='page-link' onclick=applycomplete(" + p  + ")>" + p + "</a></li>");
 						                            }
 						                          } 
 						                        
-						                        if (currentPage != maxPage) {
-						                        	console.log("야되냐3");
-						                        	$paging.append(
-						                        		    "<li class='page-item'><a class='page-link' onclick=applying(" + (currentPage + 1) + ")>Next</a></li>");
-						                          }											
+						                        if (currentPage != maxPage && maxPage > 0) {
+						                            $paging.append(
+						                                "<li class='page-item'><a class='page-link' onclick=applycomplete(" + (currentPage + 1) + ")>Next</a></li>"
+						                            );
+						                        }	
 										},error:function(){
 											
 										}
@@ -513,7 +514,7 @@
 															value += '</div>'
 															      + '<div><hr></div>'
 																  + '<div>조회수:'+ count +'</div>'
-																  + '<div>작성자:${ loginUser.gitNick }</div>'		
+																  + '<div>작성자:'+ result[i].proWriter + '</div>'		
 															  	  + '</div>'																			                        	
 							                        		}							                        	
 							                        

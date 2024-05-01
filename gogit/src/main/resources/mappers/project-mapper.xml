@@ -212,6 +212,7 @@
 		       count(*)
 		  from project
 		 where pro_status = 'Y'
+		   and status = 'Y'
 	</select>
 	
 	<select id="applycompleteListCount" resultType="_int">
