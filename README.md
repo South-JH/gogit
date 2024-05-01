@@ -1,4 +1,6 @@
 <img src="https://capsule-render.vercel.app/api?type=waving&&color=0:EEFF00,100:a82da8&height=200&section=header&text=Welcome%20to%20GoGit🫶&fontSize=40&fontAlign=75" />
+<br/>
+
 # 📌프로젝트 소개 
 
 깃허브를 이용할수있게 도움을 주는 사이트이다.
