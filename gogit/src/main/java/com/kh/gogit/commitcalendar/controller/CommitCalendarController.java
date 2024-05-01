@@ -152,7 +152,7 @@ public class CommitCalendarController {
 		
 		model.addAttribute("rpList", rpList)
 		     .addAttribute("commitObj", Arrays.toString(commitObj))
-		     .addAttribute("commitmesObj", Arrays.toString(commitmesObj));
+		     .addAttribute("commitmesObj", Arrays.toString(commitmesObj)).addAttribute("selectedRepo", repoName);
 		return "commitcalendar/commitcal";
 	}	
 }
