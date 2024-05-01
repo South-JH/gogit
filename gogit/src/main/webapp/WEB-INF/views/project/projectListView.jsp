@@ -275,7 +275,7 @@
 														value += '</div>'
 														      + '<div><hr></div>'
 															  + '<div>조회수:'+ count +'</div>'
-															  + '<div>작성자:${ loginUser.gitNick }</div>'		
+															  + '<div>작성자:'+ result[i].proWriter + '</div>'		
 														  	  + '</div>'																			                        	
 						                        		}
 					                        
@@ -513,7 +513,7 @@
 															value += '</div>'
 															      + '<div><hr></div>'
 																  + '<div>조회수:'+ count +'</div>'
-																  + '<div>작성자:${ loginUser.gitNick }</div>'		
+																  + '<div>작성자:'+ result[i].proWriter + '</div>'		
 															  	  + '</div>'																			                        	
 							                        		}							                        	
 							                        
