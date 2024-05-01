@@ -125,7 +125,7 @@ pageEncoding="UTF-8"%>
                       <div>
                         <div class="github-login-btn">
                           <a
-                            href="http://github.com/login/oauth/authorize?client_id=bafc4109aa5941b24ce1&scope=repo user project delete_repo"
+                            href="http://github.com/login/oauth/authorize?client_id=4f2d7f7f95a1e0e30876&scope=repo user project delete_repo"
                           >
                             <div>
                               <img

@@ -12,8 +12,8 @@ public class GitHubAuthService {
 	public String getGitHubAccessToken(String code) {
 		
         String accessTokenUrl = "https://github.com/login/oauth/access_token";
-        String clientId = "bafc4109aa5941b24ce1";
-        String clientSecret = "9c96eb4cc8f4d2afb9e1e747c2e25b6e4bef5837";
+        String clientId = "4f2d7f7f95a1e0e30876";
+        String clientSecret = "ccf988e5f3d6789af646557a3ff3bd94343bce88";
 
         RestTemplate restTemplate = new RestTemplate();
 

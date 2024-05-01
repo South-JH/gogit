@@ -143,6 +143,11 @@ public class RepositoryController {
 
 		if(createRepo != null) {
 			
+		    if(gitStr.equals("")) {
+		        session.setAttribute("alertMsg", "레파지토리를 생성했습니다");
+		        return "redirect:list.rp";
+		    }
+			
 			String createGit = rService.createGitignore(m, repoName, gitStr);
 			
 			if(createGit != null) {
@@ -152,6 +157,7 @@ public class RepositoryController {
 				System.out.println("깃이그노어 생성 실패");
 				return null;
 			}
+			
 		} else {
 			System.out.println("레파지토리 생성 실패");
 			return null;

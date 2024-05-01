@@ -309,7 +309,7 @@ thead {
 															<th width="80">NO.</th>
 															<th>MESSAGE</th>
 															<th width="150">AUTHOR</th>
-															<th width="120">DATE</th>
+															<th width="130">DATE</th>
 															<th width="300">SHA</th>
 														</tr>
 													</thead>
@@ -410,7 +410,7 @@ thead {
 				for(let i=0; i<cList.length; i++){
 					
 					value += "<tr>"
-						   + "<td>" + (i+1) + "</td>"
+						   + "<td>" + (cList.length - i) + "</td>"
 						   + "<td>" + cList[i].message + "</td>"
 						   
 					if(cList[i].avatalUrl !== ""){
