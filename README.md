@@ -61,11 +61,9 @@
 <br/>
 
 🤎 조원 : 양동건
-   - 캘린더
-   - 뭐시기
-   - 
-   - 
-   - 
+   - 프로젝트 캘린더
+   - 마이 PR
+   - 줌 회의
 <br/><br/>
 
 # ⚙ 개발환경
@@ -136,11 +134,56 @@ ERD Cloud :
 ### 🤎 조원 : 양동건
 
 - 캘린더 <br/>
-여기다 사진넣으셈
+![고깃메인일정등록](https://github.com/crong9105/gogit/assets/151509533/2345ca91-e4b1-4ffe-a9b0-502c25aae05a)
+### 캘린더 일정 등록
+<br/><br/>
 
 
-  
-     
+![고깃메인일정수정](https://github.com/crong9105/gogit/assets/151509533/609170a3-a5aa-4924-a910-1a78c4171b32)
+### 캘린더 일정 수정
+<br/><br/>
+
+
+![고깃메인일정삭제](https://github.com/crong9105/gogit/assets/151509533/1d39404c-dcbd-44d4-b8bc-6232f907023e)
+### 캘린더 일정 삭제
+<br/><br/>
+
+
+![고깃메인피알탑](https://github.com/crong9105/gogit/assets/151509533/04038ebe-eaa0-42b3-af64-6a46c256cf8e)
+### 메인화면 PR TOP 5
+<br/><br/>
+
+![고깃피알검색](https://github.com/crong9105/gogit/assets/151509533/29f244ff-ec35-47fe-af6f-fd9a07952d7a)
+### PR 검색
+<br/><br/>
+
+![고깃피알댓글](https://github.com/crong9105/gogit/assets/151509533/b9cc2a9a-58d3-49bc-9834-62e5d6aa0ea4)
+### PR 댓글
+<br/><br/>
+
+
+![고깃피알등록](https://github.com/crong9105/gogit/assets/151509533/1d9ccbb4-633e-4a95-86ba-f95971d4a5cd)
+### PR 등록
+<br/><br/>
+
+
+![고깃피알수정](https://github.com/crong9105/gogit/assets/151509533/16c01155-fed0-4a97-8e45-8e205e05a677)
+### PR 수정
+<br/><br/>
+
+
+![고깃피알삭제](https://github.com/crong9105/gogit/assets/151509533/4ecb22da-8362-4f1b-8819-fa4a1cccc14a)
+### PR 삭제
+<br/><br/>
+
+
+![고깃줌](https://github.com/crong9105/gogit/assets/151509533/b352cfc5-2e95-4411-9f85-98af52c2a6f3)
+### 줌 회의 생성
+<br/><br/>
+
+
+
+    
 <br/><br/>
 
 # 📚 최종보고서
