@@ -227,9 +227,11 @@ public class ProjectController {
 	@RequestMapping(value="applyingList.pr", produces="application/json; charset=utf-8")
 	public void applySelectList(@RequestParam (value="cpage", defaultValue ="1" ) int currentPage, HttpServletResponse response) throws JsonIOException, IOException {
 		int listCount = pService.applyListCount();
+		System.out.println(listCount);
 	
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 3, 8);
 		ArrayList<Project> list = pService.applySelectList(pi);
+		System.out.println(list);
 		
 		ArrayList<Stack> stackList = pService.selectStackList();
 		
