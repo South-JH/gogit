@@ -30,6 +30,7 @@ public class Pullrequest {
 	private boolean mergeable;
 	private String status;
 	private String createDate;
+	private String newManager;
 	private String newReviewer;
 
 }

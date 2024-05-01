@@ -366,7 +366,7 @@
 									</select>
                     				<c:set var="reviewers" value="${ fn:split(pullrq.pullReviewer, ',') }"/>
                     				<c:set var="reviewersProfiles" value="${ fn:split(pullrq.pullReviewerProfile, ',') }"/>
-                    				<div id="reviewer-area">
+                    				<div id="reviewers-area">
 	                    				<c:forEach var="reviewer" items="${ reviewers }" varStatus="status">
 	                    					<c:if test="${ not empty reviewersProfiles[status.index] }">
 		                    					<div class="mt-2">
@@ -398,14 +398,16 @@
                     			<div class="mt-2">
                     				<c:set var="assignees" value="${ fn:split(pullrq.pullManager, ',') }"/>
                     				<c:set var="assigneesProfiles" value="${ fn:split(pullrq.pullManagerProfile, ',') }"/>
-                    				<c:forEach var="assignee" items="${ assignees }" varStatus="status">
-                    					<c:if test="${ not empty assigneesProfiles[status.index] }">
-	                    					<div class="mb-2">
-		                    					<img class="profile" src="${ assigneesProfiles[status.index] }" style="width: 25px; height: 25px; border-radius: 100%;">
-		                    					${ assignee }
-	                    					</div>
-                    					</c:if>
-                    				</c:forEach>
+                    				<div id="assignees-area">
+	                    				<c:forEach var="assignee" items="${ assignees }" varStatus="status">
+	                    					<c:if test="${ not empty assigneesProfiles[status.index] }">
+		                    					<div class="mb-2">
+			                    					<img class="profile" src="${ assigneesProfiles[status.index] }" style="width: 25px; height: 25px; border-radius: 100%;">
+			                    					${ assignee }
+		                    					</div>
+	                    					</c:if>
+	                    				</c:forEach>
+                    				</div>
                     			</div>
                     		</div>
                     	</div>
@@ -532,19 +534,20 @@
 	}
 	
 	function openReviewers(id) {
-		$("#"+id+" .select2-container").show();
-		$("#"+id+" .ti-plus").parent().addClass("d-none");
-		$("#"+id+" .ti-minus").parent().removeClass("d-none");
+		$("#" + id + " .select2-container").show();
+		$("#" + id + " .ti-plus").parent().addClass("d-none");
+		$("#" + id + " .ti-minus").parent().removeClass("d-none");
+		$("#" + id + "-area").addClass("mt-4");
 	}
 	
 	function closeReviewers(id) {
-		$("#"+id+" .select2-container").hide();
-		$("#"+id+" .ti-plus").parent().removeClass("d-none");
-		$("#"+id+" .ti-minus").parent().addClass("d-none");
+		$("#" + id + " .select2-container").hide();
+		$("#" + id + " .ti-plus").parent().removeClass("d-none");
+		$("#" + id + " .ti-minus").parent().addClass("d-none");
+		$("#" + id + "-area").removeClass("mt-4");
 	}
 	
 	$("select[name=selectedReviewer]").change(function() {
-		console.log($("select[name=selectedReviewer]").val());
 		$.ajax({
 			url: 'addReviewer.pullrq',
 			data: {
@@ -579,7 +582,7 @@
 								}
 							}
 							
-							$('#reviewer-area').html(value);
+							$('#reviewers-area').html(value);
 						},
 						error: function() {
 							console.log('Reviewer 재조회 ajax 호출 실패');
@@ -598,15 +601,53 @@
 	});
 	
 	$("select[name=selectedAssignees]").change(function() {
-		console.log($("select[name=selectedAssignees]").val());
 		$.ajax({
-			url: '',
-			data: {},
+			url: 'addAssignee.pullrq',
+			data: {
+				repoOwner: '${ pullrq.repoOwner }',
+				repoName: '${ pullrq.repoName }',
+				pullNo: ${ pullrq.pullNo },
+				pullManager: '${ pullrq.pullManager }',
+				newManager: $("select[name=selectedAssignees]").val()
+			},
 			success: function(result) {
-				console.log(result);
+				if(result) {
+					$.ajax({
+						url: 'selectAssignee.pullrq',
+						data: {
+							repoOwner: '${ pullrq.repoOwner }',
+							repoName: '${ pullrq.repoName }',
+							pullNo: ${ pullrq.pullNo }
+						},
+						success: function(result) {
+							let assignees = result.pullManager;
+							let assigneesProfiles = result.pullManagerProfile;
+
+							let value = '';
+							if(assignees != '') {
+								for(let i = 0; i < assignees.split(',').length; i++) {
+									value += `
+											<div class="mt-2">
+	                							<img class="profile" src="\${assigneesProfiles.split(',')[i]}" style="width: 25px; height: 25px; border-radius: 100%;">
+	                							\${assignees.split(',')[i]}
+	            							</div>
+											`;
+								}
+							}
+							
+							$('#assignees-area').html(value);
+						},
+						error: function() {
+							console.log('Assignee 재조회 ajax 호출 실패');
+						}
+					});
+					
+				} else {
+					alertify.alert('Assignee 수정 실패');
+				}
 			},
 			error: function() {
-				console.log(' ajax 호출 실패');
+				console.log('Assignee 추가/삭제 ajax 호출 실패');
 			}
 			
 		});

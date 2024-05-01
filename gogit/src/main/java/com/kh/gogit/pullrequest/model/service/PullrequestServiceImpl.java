@@ -110,6 +110,26 @@ public class PullrequestServiceImpl implements PullrequestService {
 		
 	}
 	
+	public boolean removeAssignees(Member loginUser, Pullrequest pullrq) {
+		
+		// https://api.github.com/repos/OWNER/REPO/issues/ISSUE_NUMBER/assignees
+		String url = "https://api.github.com/repos/" + pullrq.getRepoOwner() + "/" + pullrq.getRepoName() + "/issues/" + pullrq.getPullNo() + "/assignees";
+		
+		RestTemplate restTemplate = new RestTemplate();
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBearerAuth(loginUser.getMemToken());
+		
+		String body = "{\"assignees\":" + new Gson().toJson(pullrq.getPullManager().split(",")) + "}";
+		
+		HttpEntity<String> request = new HttpEntity<String>(body, headers);
+		
+		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.DELETE, request, String.class);
+		
+		return response.getStatusCode() == HttpStatus.OK ? true : false;
+		
+	}
+	
 	public boolean addReviewers(Member loginUser, Pullrequest pullrq) {
 		
 		// https://api.github.com/repos/OWNER/REPO/pulls/PULL_NUMBER/requested_reviewers

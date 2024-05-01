@@ -379,7 +379,7 @@ public class PullrequestController {
 	
 	@ResponseBody
 	@RequestMapping("addReviewer.pullrq")
-	public boolean AddReviewer(Pullrequest pullrq, HttpSession session) {
+	public boolean addReviewer(Pullrequest pullrq, HttpSession session) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 
 		boolean removeResult = prqService.removeReviewers(loginUser, pullrq);
@@ -428,6 +428,61 @@ public class PullrequestController {
 		
 		pullrq.setPullReviewer(reviewers);
 		pullrq.setPullReviewerProfile(reviewersProfiles);
+		
+		return new Gson().toJson(pullrq);
+	}
+	
+	@ResponseBody
+	@RequestMapping("addAssignee.pullrq")
+	public boolean addAssignee(Pullrequest pullrq, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+
+		boolean removeResult = prqService.removeAssignees(loginUser, pullrq);
+		
+		if(removeResult) {
+			pullrq.setPullManager(pullrq.getNewManager());
+			
+			if(pullrq.getPullManager() != null) {
+				return prqService.addAssignees(loginUser, pullrq);
+			} else {
+				return true;
+			}
+			
+		} else {
+			return false;
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "selectAssignee.pullrq", produces = "application/json; charset=utf-8")
+	public String getAssignee (Pullrequest pull, HttpSession session) {
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		String result = prqService.getPullrequest(loginUser, pull.getRepoOwner(), pull.getRepoName(), pull.getPullNo());
+		
+		JsonArray assigneesArr = JsonParser.parseString(result).getAsJsonObject().get("assignees").getAsJsonArray();
+		
+		Pullrequest pullrq = new Pullrequest();
+		
+		String assignees = "";
+		String assigneesProfiles = "";
+		for(int j = 0; j < assigneesArr.size(); j++) {
+			
+			String assignee = assigneesArr.get(j).getAsJsonObject().get("login").getAsString();
+			String assigneesProfile = assigneesArr.get(j).getAsJsonObject().get("avatar_url").getAsString();
+			
+			if(j == assigneesArr.size() -1) {
+				assignees += assignee;
+				assigneesProfiles += assigneesProfile;
+			} else {
+				assignees += assignee + ",";
+				assigneesProfiles += assigneesProfile + ",";
+			}
+			
+		}
+		
+		pullrq.setPullManager(assignees);
+		pullrq.setPullManagerProfile(assigneesProfiles);
 		
 		return new Gson().toJson(pullrq);
 	}
