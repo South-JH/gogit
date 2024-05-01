@@ -349,10 +349,16 @@ public class PullrequestController {
 		
 		boolean result = prqService.updatePullrequest(loginUser, pullrq);
 		
+		
 		if(result) {
 			session.setAttribute("alertMsg", "Pull request 수정이 완료되었습니다.");
+			
 		} else {
-			session.setAttribute("alertMsg", "Pull request 수정을 실패했습니다.");
+			if(pullrq.getStatus() != null) {
+				session.setAttribute("alertMsg", "Reopen 할 수 없는 pull request입니다.");
+			} else {
+				session.setAttribute("alertMsg", "Pull request 수정을 실패했습니다.");
+			}
 		}
 		
 		// pull request 상태 업데이트 후, mergeable 속성 업데이트까지 시간이 좀 소요됨.

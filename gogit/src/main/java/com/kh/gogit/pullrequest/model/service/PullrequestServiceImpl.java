@@ -269,10 +269,20 @@ public class PullrequestServiceImpl implements PullrequestService {
 		}
 		
 		HttpEntity<Map<String, String>> request = new HttpEntity<Map<String,String>>(body, headers);
-		
-		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PATCH, request, String.class);
-		
-		return response.getStatusCode() == HttpStatus.OK ? true : false;
+		try {
+			ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.PATCH, request, String.class);
+			
+			if(response.getStatusCode() == HttpStatus.OK) {
+				return true;
+			} else {
+				System.out.println("pullrequest 수정 중 발생한 예외 상황. 확인 필요");
+				return false;
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			return false;
+		}
 		
 	}
 	

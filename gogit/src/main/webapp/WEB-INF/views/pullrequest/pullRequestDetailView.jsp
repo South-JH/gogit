@@ -34,7 +34,22 @@
 		}
 		.conversation .select2-container--default.select2-container--focus .select2-selection--multiple {
 			border-color: #aec3ff;
-		} 		
+		}
+		#success-badge {
+			background-color: #198754 !important;
+		}
+		#danger-badge {
+			background-color: #dc3545!important;
+		}
+		#merge-btn, #confirm-merge-btn, #comment-btn {
+			background-color: #198754;
+			border: none;
+		}
+		#author-badge {
+		    background-color: #fafafb !important;
+		    color: gray;
+		    border: 1px solid gray;
+		}
     </style>
 </head>
 <body>
@@ -75,13 +90,13 @@
                     <h4>
                     	<c:choose>
                     		<c:when test="${ pullrq.status eq 'open' }">
-		                    	<span class="badge rounded-pill bg-success"><i class="ti ti-git-pull-request"></i>Open</span>
+		                    	<span class="badge rounded-pill bg-success" id="success-badge"><i class="ti ti-git-pull-request"></i>Open</span>
                     		</c:when>
                     		<c:when test="${ pullrq.status eq 'closed' }">
-		                    	<span class="badge rounded-pill bg-danger"><i class="ti ti-git-pull-request"></i>Closed</span>
+		                    	<span class="badge rounded-pill bg-danger" id="danger-badge"><i class="ti ti-git-pull-request"></i>Closed</span>
                     		</c:when>
                     		<c:otherwise>
-		                    	<span class="badge rounded-pill" style="background-color: purple;"><i class="ti ti-git-pull-request"></i>${ pullrq.status }</span>
+		                    	<span class="badge rounded-pill" style="background-color: #8250df;"><i class="ti ti-git-pull-request"></i>${ pullrq.status }</span>
                     		</c:otherwise>
                     	</c:choose>
                     	${ pullrq.pullWriter } wants to merge ${ list.size() } commits into ${ pullrq.baseBranch } from ${ pullrq.compareBranch }
@@ -192,8 +207,8 @@
 														<c:choose>
 															<c:when test="${ pullrq.mergeable }">
 																<div class="row" id="available-merge">
-																	<div class="col-1 sucess-icon">
-																		<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#00b341" fill="none" stroke-linecap="round" stroke-linejoin="round">
+																	<div class="col-1 success-icon">
+																		<svg  xmlns="http://www.w3.org/2000/svg"  width="44"  height="44"  viewBox="0 0 24 24"  fill="none"  stroke="#198754"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-circle-check">
 																			<path stroke="none" d="M0 0h24v24H0z" fill="none"/>
 																			<path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
 																			<path d="M9 12l2 2l4 -4" />
@@ -206,7 +221,7 @@
 																</div>
 
 																<div class="row d-none" id="merge-form">
-																	<div class="col-1 sucess-icon">
+																	<div class="col-1 success-icon">
 																		<img src="${ loginUser.profile }" width="35" height="35" class="rounded-circle">
 																	</div>
 																	<div class="col">
@@ -282,7 +297,7 @@
 										  		<span class="p-1">commented</span>
 										  		<span class="p-1">${ comment.createDate }</span>
 										  		<c:if test="${ comment.isAuthor }">
-										  			<span class="badge rounded-pill bg-primary float-end">Author</span>
+										  			<span class="badge rounded-pill bg-primary float-end" id="author-badge">Author</span>
 										  		</c:if>
 										  	</div>
 										  	<div class="card-body" id="origin-content-area">
@@ -327,6 +342,7 @@
 				                    		</button>
 		               					</c:when>
 		               					<c:when test="${ pullrq.status eq 'closed' and pullrq.mergeable }">
+		               						<p>${ pullrq.mergeable }</p>
 				                    		<button type="submit" class="btn btn-light me-1">Reopen pull request</button>
 		               					</c:when>
 		               					<c:when test="${ pullrq.status eq 'closed' and not pullrq.mergeable }">
@@ -339,7 +355,7 @@
 		               				<input type="hidden" name="repoName" value="${ pullrq.repoName }">
 		               				<input type="hidden" name="pullNo" value="${ pullrq.pullNo }">
 		               				<input type="hidden" name="comment">
-	                    			<button type="submit" class="btn btn-success" onclick="return validateComment();">Comment</button>
+	                    			<button type="submit" class="btn btn-success" id="comment-btn" onclick="return validateComment();">Comment</button>
 	                    		</form>
 	                    	</div>
                     	</div>
