@@ -281,7 +281,6 @@ public class ProjectController {
 	
 	@RequestMapping("deleteprj.pr")
 	public String deleteProject(int pno,String memId, Model model, HttpSession session) {
-		System.out.println(pno);
 		int result = pService.deleteProject(pno);
 		if(result>0) {
 			Member loginUser = mService.loginMember(memId);
