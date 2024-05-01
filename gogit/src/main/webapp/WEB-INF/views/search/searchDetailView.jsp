@@ -133,11 +133,7 @@
                                 			});
                                 		}
                                		</script>
-                               	</div>
-                                <div>
-                                    <a href="#">🚻1 follwer ·</a>
-                                    <a href="#">0 following</a>                                     
-                                </div>
+                               	</div>                              
                             </div>
                             <div style="margin-left: 20px;">
                                 <div><h2>Popular repositiry</h2></div>
