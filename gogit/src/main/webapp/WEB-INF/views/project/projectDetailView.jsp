@@ -146,20 +146,18 @@
                                           url: "alarmTest.me",
                                           data: {memId: "${loginUser.memId}"},
                                           success: function (data) {
-                                        	  console.log(data)
                                             for (let i in data) {
                                               switch (data[i].alarmType) {
                                                 case "cancelPr":
                                                 	if(data[i].alarmContentNo == ${p.proNo}){
                                                 		rejectbtn();
-                                                	}
-                                                	
+                                                	}	
                                               }
                                             }
                                         	  
                                           },
                                           error: function () {
-                                            console.log("실패");
+                                        	  console.log("ajax 통신실패!");
                                           },
                                         });
                                       }
@@ -255,14 +253,13 @@
                         								drawCancleBtn();							
                         							}                   					
                         						}, error:function(){
-                        							
+                        							console.log("ajax 통신실패!");
                         						}
                         					});       
                                     	
                                     		if(socket){
                                     			socket.send("${loginUser.memId},${ p.proContent },${p.proWriter},${p.proNo},project");
                                     		}
-                                    	
                                     	}
                                     	
                                     	function cancel(){ // 신청취소(신청자입장)
@@ -277,11 +274,9 @@
                         								deleteAlarm();
                         							}                           							
                         						}, error:function(){
-                        							
+                        							console.log("ajax 통신실패!");
                         						}
                         					});
-                                    		
-                                    	
                                     	}                                  	
                                     	
                                     	function projectEnd(){ // 프로젝트 마감일때(모집자입장)
@@ -293,10 +288,9 @@
                         							drawProjectApplyRestart();
                         							 
                         						}, error:function(){
-                        							
+                        							console.log("ajax 통신실패!");
                         						}
-                        					});
-                                    	
+                        					});                                 	
                                     	}     
                                     	
                                     	function projectstart(){ // 프로젝트 모집재개(모집자입장)
@@ -420,7 +414,7 @@
                                 <div>
                                     <div style="float: right;"><button class="btn btn-primary" style="background-color: rgb(4, 91, 122);" onclick="history.back();">뒤로가기</button></div>
                                 		<c:if test="${ loginUser.gitNick eq p.proWriter }">
-                                     	<div style="float: right;"><button onclick="deleteprj();" type="button" class="btn btn-warning" style="background-color: rgb(2 56 75);">삭제하기</button><button onclick="updatePr();" type="button" class="btn btn-warning" style="background-color: rgb(2 56 75);">수정하기</button></div>
+                                     	<div style="float: right;"><button onclick="testdeleteprj();" type="button" class="btn btn-warning" style="background-color: rgb(2 56 75);">삭제하기</button><button onclick="updatePr();" type="button" class="btn btn-warning" style="background-color: rgb(2 56 75);">수정하기</button></div>
                                      	</c:if>
                                 </div>                        
                                 <br>
@@ -429,6 +423,15 @@
                                 <script>
                                 	function updatePr(){
                                 		location.href="updateForm.pr?pno=${p.proNo}"
+                                	}
+                                	
+                                	function testdeleteprj(){
+                                		let result = confirm("정말 삭제하시겠습니까?");
+                                		if(result){
+                                			deleteprj();
+                                		}else{
+                                			alertify.alert("프로젝트 모집글 삭제 실패!")
+                                		}                                   	
                                 	}
                                 	function deleteprj(){
                                 		location.href="deleteprj.pr?pno=${p.proNo}&memId=${loginUser.memId}"
@@ -509,31 +512,40 @@
                                         				             	//console.log(list[i].gitNick)
                                         				            	//console.log('${loginUser.gitNick}' == list[i].gitNick)
                                         				             if('${loginUser.gitNick}' == list[i].gitNick){
-                                        				            	    value += "<button id=\"deleterpbtn\" onclick=\"deleterp(" + list[i].replyNo + ")\" class=\"btn btn-primary btn-sm\" style=\"background-color: rgb(2, 56, 75);\">댓글삭제</button>";
+                                        				            	    value += "<button id=\"deleterpbtn\" onclick=\"testdeleterp(" + list[i].replyNo + ")\" class=\"btn btn-primary btn-sm\" style=\"background-color: rgb(2, 56, 75);\">댓글삭제</button>";
                                         				            	}
                                         				            value += "</div></div>" +
                              				             			"<hr style=\"width: 400px; margin: 0px auto;\">"+
                              				             			"<br>"
+                             				             			
                                         				             $("#replyArea").html(value);
                                         				             $("#rcount").text(list.length);
 
                                         				}
                                         			}, error:function(){
                                         				console.log("댓글 리스트 조회용 ajax 통신 실패!");
-                                        			}
-                                    			
+                                        			}                                 			
                                         		});
                                         	}
                                         	
+                                        	function testdeleterp(pno){
+                                        		let result = confirm("정말 삭제하시겠습니까?");
+                                        		if(result){
+                                        			deleterp(pno);
+                                        		}else{
+                                        			alertify.alert("댓글삭제 실패!")
+                                        		}                                   	
+                                        	}
+                                        	
                                         	function deleterp(pno){
-                                        		console.log(pno)
                                         		$.ajax({
                                         			url:"prdelete.pr",
                                         			data:{pno:pno},
                                         			success:function(status){
-                                        				console.log(status)
                                         				if(status == "success"){
                                         					alertify.alert("댓글삭제가 성공적으로 완료되었습니다!");
+                                        					$("#replyArea").html("");
+                                        					$("#rcount").empty();
                                         					selectReplyList(${p.proNo});
                                         				}
                                         			}, error:function(){
