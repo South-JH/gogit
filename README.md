@@ -17,7 +17,6 @@
 ◽ 2024.04.11 ~ 2024.04.26 프로젝트 구현 및 디버깅 <br/>
 ◽ 2024.04.29 ~ 2024.05.01 베타 테스트, 최종 발표자료 준비 <br/>
 <br/><br/> 
-![image](https://github.com/jeongmingg/ssemi_project/assets/151510057/aa9d6705-414d-46b6-8929-eb02892b8070)
 
 
 <br/>
