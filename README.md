@@ -66,12 +66,10 @@
 
 <br/>
 
-# 💡 사용한 API
-- REST API
-- 
-- 
-- 
-- 
+# 💡 사용한 REST API
+- 깃허브 API
+- 줌 API
+- gitignore.io API
 
 <br/><br/>
 
