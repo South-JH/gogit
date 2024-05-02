@@ -101,23 +101,23 @@ ERD Cloud :
 
 - 프로젝트(모집자) <br/>
    ◽ 프로젝트 모집글 작성 <br />
-     ![모집글작성](https://github.com/hijimin/puppyFriends/assets/147786615/28e02f2e-cbe0-4ef8-87c8-e9bedbbfccb2) <br />
+     ![모집글작성](https://github.com/hijimin/puppyFriends/assets/147786615/28e02f2e-cbe0-4ef8-87c8-e9bedbbfccb2) <br /><br />
    ◽ 프로젝트 모집글 수정 <br />
-     ![모집글수정](https://github.com/hijimin/puppyFriends/assets/147786615/810b1dab-2e12-4def-b949-d2558a78e859) <br />
+     ![모집글수정](https://github.com/hijimin/puppyFriends/assets/147786615/810b1dab-2e12-4def-b949-d2558a78e859) <br /><br />
    ◽ 프로젝트 모집글 삭제 <br />
-     ![모집글삭제](https://github.com/hijimin/puppyFriends/assets/147786615/3710a695-9567-424a-ba30-90cf9c5911f2) <br />
+     ![모집글삭제](https://github.com/hijimin/puppyFriends/assets/147786615/3710a695-9567-424a-ba30-90cf9c5911f2) <br /><br />
    ◽ 프로젝트 모집마감 <br />
-     ![모집마감](https://github.com/hijimin/puppyFriends/assets/147786615/61d21da1-87ec-49ed-945f-760e7aeae38c) <br />
+     ![모집마감](https://github.com/hijimin/puppyFriends/assets/147786615/61d21da1-87ec-49ed-945f-760e7aeae38c) <br /><br />
 
 - 프로젝트(신청자) <br/>
    ◽ 프로젝트 신청 <br />
-     ![프로젝트신청중복불가](https://github.com/hijimin/puppyFriends/assets/147786615/f1aaeb2b-b34d-4f04-8a4d-f1067eac8b7f) <br />
+     ![프로젝트신청중복불가](https://github.com/hijimin/puppyFriends/assets/147786615/f1aaeb2b-b34d-4f04-8a4d-f1067eac8b7f) <br /><br />
    ◽ 프로젝트 신청해제 <br />
-     ![프로젝트신청해제](https://github.com/hijimin/puppyFriends/assets/147786615/b599a2e9-c483-430f-bb76-65bc24ce6e09) <br />
+     ![프로젝트신청해제](https://github.com/hijimin/puppyFriends/assets/147786615/b599a2e9-c483-430f-bb76-65bc24ce6e09) <br /><br />
    ◽ 프로젝트 거절 당했을 시 <br />
-     ![모집자에게거절](https://github.com/hijimin/puppyFriends/assets/147786615/5c35408e-e6ee-4704-bb8d-f1d848cb9a41) <br />
+     ![모집자에게거절](https://github.com/hijimin/puppyFriends/assets/147786615/5c35408e-e6ee-4704-bb8d-f1d848cb9a41) <br /><br />
    ◽ 프로젝트 모집자가 수락 했을 시 <br />
-     ![모집자수락](https://github.com/hijimin/puppyFriends/assets/147786615/362640fb-1f6a-46b8-acde-2abc2fb24123) <br />
+     ![모집자수락](https://github.com/hijimin/puppyFriends/assets/147786615/362640fb-1f6a-46b8-acde-2abc2fb24123) <br /><br />
      
 - 프로젝트 댓글 <br/>
 ![댓글](https://github.com/hijimin/puppyFriends/assets/147786615/808ba3e7-3916-43a8-b01e-a11b46402eeb)
