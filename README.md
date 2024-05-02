@@ -123,6 +123,24 @@ ERD Cloud :
 ![댓글](https://github.com/hijimin/puppyFriends/assets/147786615/808ba3e7-3916-43a8-b01e-a11b46402eeb)
 - 프로젝트 모집중 & 모집완료 조회 <br/>
 ![모집중모집완료](https://github.com/hijimin/puppyFriends/assets/147786615/403c1f90-6037-49fb-bec2-10956485108e)
+<br />
+
+- 프로젝트 키워드 검색 <br/>
+![키워드조회](https://github.com/hijimin/puppyFriends/assets/147786615/670e6891-8c40-4f34-9e1e-8ee8a251a138)
+<br />
+
+- 커밋 내역 조회 캘린더 <br/>
+![커밋캘린더](https://github.com/hijimin/puppyFriends/assets/147786615/dba8afce-2dfe-4f77-9088-44a417329857)
+<br />
+
+- 깃허브 전체 USER 검색 <br/>
+![유저검색](https://github.com/hijimin/puppyFriends/assets/147786615/c62ed1a8-4773-4dc8-bbce-6705c149b064)
+<br />
+
+- 깃허브 전체 REPOSITORY 검색 <br/>
+![레파지토리검색](https://github.com/hijimin/puppyFriends/assets/147786615/f2476f28-0c83-42c2-bdba-2ae41922b5ed)
+<br />
+
 
 
 <br/>
