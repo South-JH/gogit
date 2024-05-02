@@ -121,7 +121,14 @@
 
 			<select id="reporepo" onchange="testcommitcal(this);" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
 			  <c:forEach var="r" items="${rpList }">
-			  	<option value="${r.repoName }" data-owner="${r.owner}">${r.repoName }</option>
+			  <c:choose>
+			  	<c:when test="${selectedRepo eq r.repoName }">			  	
+			  		<option value="${r.repoName }" data-owner="${r.owner}" selected>${r.repoName }</option>
+			  	</c:when>
+			  	<c:otherwise>
+			  		<option value="${r.repoName }" data-owner="${r.owner}">${r.repoName }</option>
+			  	</c:otherwise>
+			  	</c:choose>
 			  </c:forEach>
 			</select>
 			
@@ -138,7 +145,7 @@
 			    	console.log(repoName);
 			    	location.href = "commitcal.cl?owner=" + owner + "&repoName=" + repoName;
 			    }
-			  });
+			  });			 
 			</script>
 
 

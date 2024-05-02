@@ -50,6 +50,9 @@
 		    color: gray;
 		    border: 1px solid gray;
 		}
+		#newTitle-btn, #newContent-btn {
+			background-color: #0d6efd!important;
+		}
     </style>
 </head>
 <body>
@@ -83,7 +86,7 @@
                				<input type="hidden" name="repoName" value="${ pullrq.repoName }">
                				<input type="hidden" name="pullNo" value="${ pullrq.pullNo }">
 	               			<input type="text" class="form-control form-control-lg w-50 me-1 d-inline" id="newTitle" name="pullTitle">
-	               			<button type="submit" class="btn btn-sm btn-primary" onclick="return validateTitle();">Save</button>
+	               			<button type="submit" class="btn btn-sm btn-primary" id="newTitle-btn" onclick="return validateTitle();">Save</button>
 	               			<button type="button" class="btn btn-sm btn-dark" onclick="cancelModifyTitle();">Cancel</button>
                			</form>
                		</div>
@@ -155,7 +158,7 @@
 					               				<input type="hidden" name="pullContent">
 										  		<div id="content-text-area"></div>
 										  		<div class="float-end mt-2">
-											  		<button type="submit" class="btn btn-primary me-1" onclick="return validateContent();">Save</button>
+											  		<button type="submit" class="btn btn-primary me-1" id="newContent-btn" onclick="return validateContent();">Save</button>
 											  		<button type="button" class="btn btn-dark" onclick="cancelModifyContent();">Cancel</button>
 										  		</div>
 									  		</form>
@@ -341,12 +344,8 @@
 			                    				Close pull request
 				                    		</button>
 		               					</c:when>
-		               					<c:when test="${ pullrq.status eq 'closed' and pullrq.mergeable }">
-		               						<p>${ pullrq.mergeable }</p>
+		               					<c:when test="${ pullrq.status eq 'closed' }">
 				                    		<button type="submit" class="btn btn-light me-1">Reopen pull request</button>
-		               					</c:when>
-		               					<c:when test="${ pullrq.status eq 'closed' and not pullrq.mergeable }">
-				                    		<button type="submit" class="btn btn-light me-1" disabled>Reopen pull request</button>
 		               					</c:when>
                						</c:choose>
 	                    		</form>
