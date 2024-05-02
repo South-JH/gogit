@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+<script src="https://gcore.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     let commitArr = "${commitObj}";

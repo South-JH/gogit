@@ -6,7 +6,7 @@
   <img alt="downloads" src="https://img.shields.io/npm/dm/apexcharts.svg"/>
   <a href="https://www.npmjs.com/package/apexcharts"><img src="https://img.shields.io/npm/v/apexcharts.svg" alt="ver"></a>
   <img alt="size" src="https://badgen.net/bundlephobia/min/apexcharts?label=size">
-  <a href="https://cdn.jsdelivr.net/npm/apexcharts@3.12.0/types/apexcharts.d.ts"><img src="https://badgen.net/npm/types/apexcharts"/></a>
+  <a href="https://gcore.jsdelivr.net/npm/apexcharts@3.12.0/types/apexcharts.d.ts"><img src="https://badgen.net/npm/types/apexcharts"/></a>
   <a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square" alt="prettier"></a>
   <a href="https://www.jsdelivr.com/package/npm/apexcharts"><img src="https://data.jsdelivr.com/v1/package/npm/apexcharts/badge" alt="jsdelivr" /></a>
   <a href="https://codeclimate.com/github/apexcharts/apexcharts.js"><img src="https://badgen.net/codeclimate/maintainability/apexcharts/apexcharts.js" /></a>
@@ -41,7 +41,7 @@ npm install apexcharts --save
 ##### Direct &lt;script&gt; include
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://gcore.jsdelivr.net/npm/apexcharts"></script>
 ```
 
 ## Wrappers for Vue/React/Angular/Stencil
@@ -184,10 +184,10 @@ apexcharts/
 
 If you need to make it work with IE11, you need to include these polyfills before including ApexCharts
 
-- [promise-polyfill](https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js)
-- [classlist.js](https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill)
-- [ResizeObserver polyfill](https://cdn.jsdelivr.net/npm/@juggle/resize-observer)
-- [findIndex](https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn) - You will need this only if you require timeline/rangebar charts
+- [promise-polyfill](https://gcore.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js)
+- [classlist.js](https://gcore.jsdelivr.net/npm/eligrey-classlist-js-polyfill)
+- [ResizeObserver polyfill](https://gcore.jsdelivr.net/npm/@juggle/resize-observer)
+- [findIndex](https://gcore.jsdelivr.net/npm/findindex_polyfill_mdn) - You will need this only if you require timeline/rangebar charts
 - [canvg](https://unpkg.com/canvg@3.0.4/lib/umd.js) - You will need this only if you require PNG download of your charts
 
 ## Development
