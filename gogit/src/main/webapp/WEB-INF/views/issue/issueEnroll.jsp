@@ -183,7 +183,7 @@
 																<label for="asscheck${ as.index }" class="select-area-name">
 																	<div>
 																		<div>
-																			<input type="checkbox" id="asscheck${ as.index }" name="assignees" class="asscheck" value="${ a.assignees }">
+																			<input type="checkbox" id="asscheck${ as.index }" name="assignees" class="asscheck" value="${ a.assignee }">
 																		</div>
 																	</div>
 																	<div class="name-select-btn">
