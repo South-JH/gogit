@@ -344,12 +344,8 @@
 			                    				Close pull request
 				                    		</button>
 		               					</c:when>
-		               					<c:when test="${ pullrq.status eq 'closed' and pullrq.mergeable }">
-		               						<p>${ pullrq.mergeable }</p>
+		               					<c:when test="${ pullrq.status eq 'closed' }">
 				                    		<button type="submit" class="btn btn-light me-1">Reopen pull request</button>
-		               					</c:when>
-		               					<c:when test="${ pullrq.status eq 'closed' and not pullrq.mergeable }">
-				                    		<button type="submit" class="btn btn-light me-1" disabled>Reopen pull request</button>
 		               					</c:when>
                						</c:choose>
 	                    		</form>
