@@ -136,13 +136,6 @@ public class IssueServiceImpl {
 		map.put("title", title);
 		map.put("body", body);
 		
-//		String desc = "";
-//		if(body != null) {
-//			map.put("body", body);
-//		} else {
-//			map.put("body", desc);
-//		}
-		
 		if(assignees != null && assignees.length > 0) {
 			map.put("assignees", assignees);
 		} else {

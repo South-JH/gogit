@@ -245,6 +245,10 @@ public class IssueController {
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		
+		for(String s : assignees) {
+			System.out.println("assignees:" + s);
+		}
+		
 		String createIs = iService.createIssue(m, repoName, owner, title, body, assignees, labels);
 		
 		if(createIs != null) {
