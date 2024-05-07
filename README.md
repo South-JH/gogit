@@ -101,6 +101,7 @@ ERD Cloud :
      ![브랜치별 커밋리스트 조회](https://github.com/crong9105/git-pr/assets/151510160/37e897f8-6608-42cf-b0b7-b1516ab9b7ee) <br /><br />
 
 - 이슈 관리 <br/>
+
    ◽ 이슈 리스트 조회 <br />
      ![이슈내역조회](https://github.com/crong9105/git-pr/assets/151510160/1f50449b-ef80-4fc7-8529-83b55ec378b5) <br /><br />
    ◽ 이슈 생성 <br />
