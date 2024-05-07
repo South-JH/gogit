@@ -26,9 +26,9 @@ SimpleBar is meant to be as easy to use as possible and lightweight. If you want
 <!-- or -->
 <link
   rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css"
+  href="https://gcore.jsdelivr.net/npm/simplebar@latest/dist/simplebar.css"
 />
-<script src="https://cdn.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
+<script src="https://gcore.jsdelivr.net/npm/simplebar@latest/dist/simplebar.min.js"></script>
 ```
 
 note: you should replace `@latest` to the latest version (ex `@5.3.3`), if you want to lock to a specific version.

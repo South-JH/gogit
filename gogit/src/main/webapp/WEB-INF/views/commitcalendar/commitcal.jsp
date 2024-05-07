@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+<script src="https://gcore.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     let commitArr = "${commitObj}";
@@ -121,7 +121,14 @@
 
 			<select id="reporepo" onchange="testcommitcal(this);" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
 			  <c:forEach var="r" items="${rpList }">
-			  	<option value="${r.repoName }" data-owner="${r.owner}">${r.repoName }</option>
+			  <c:choose>
+			  	<c:when test="${selectedRepo eq r.repoName }">			  	
+			  		<option value="${r.repoName }" data-owner="${r.owner}" selected>${r.repoName }</option>
+			  	</c:when>
+			  	<c:otherwise>
+			  		<option value="${r.repoName }" data-owner="${r.owner}">${r.repoName }</option>
+			  	</c:otherwise>
+			  	</c:choose>
 			  </c:forEach>
 			</select>
 			
@@ -138,7 +145,7 @@
 			    	console.log(repoName);
 			    	location.href = "commitcal.cl?owner=" + owner + "&repoName=" + repoName;
 			    }
-			  });
+			  });			 
 			</script>
 
 
