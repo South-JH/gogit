@@ -86,11 +86,25 @@ ERD Cloud :
 - 레파지토리 관리 <br/>
 
    ◽ 레파지토리 리스트 조회 <br />
-     ![레파지토리리스트조회](https://github.com/crong9105/git-pr/assets/151510160/f3b4ff8d-b1fb-42f8-abae-e49fe9e3a127) <br />
+     ![레파지토리리스트조회](https://github.com/crong9105/git-pr/assets/151510160/f3b4ff8d-b1fb-42f8-abae-e49fe9e3a127) <br /><br />
    ◽ 레파지토리 생성 <br />
-     ![레파지토리생성](https://github.com/crong9105/git-pr/assets/151510160/d14bdb42-4284-4e70-8250-4585299216ac) <br />
-      ▪ 기능 <br />
-      여기다 사진 넣으셈<br />
+     ![레파지토리생성](https://github.com/crong9105/git-pr/assets/151510160/d14bdb42-4284-4e70-8250-4585299216ac) <br /><br />
+   ◽ 레파지토리 사용자 초대 <br />
+     ![레파지토리초대](https://github.com/crong9105/git-pr/assets/151510160/b4659d85-d04d-4ad6-9733-27c1e414c2c6) <br /><br />
+   ◽ 레파지토리 수정 <br />
+     ![레파지토리수정](https://github.com/crong9105/git-pr/assets/151510160/0ee2faa7-408b-4e39-af21-5da986d87189) <br /><br />
+   ◽ 레파지토리 삭제 <br />
+     ![레파지토리삭제](https://github.com/crong9105/git-pr/assets/151510160/982068b9-9810-4efa-824f-ab8372a3e2dc) <br /><br />
+   ◽ 레파지토리 컨텐츠 조회 <br />
+     ![레파지토리컨텐츠조회](https://github.com/crong9105/git-pr/assets/151510160/fc5d63df-2396-4a16-a14c-5ed70da152d4) <br /><br />
+   ◽ 브랜치별 커밋 리스트 조회 <br />
+     ![브랜치별 커밋리스트 조회](https://github.com/crong9105/git-pr/assets/151510160/37e897f8-6608-42cf-b0b7-b1516ab9b7ee) <br /><br />
+
+- 이슈 관리 <br/>
+   ◽ 이슈 리스트 조회 <br />
+     ![이슈내역조회](https://github.com/crong9105/git-pr/assets/151510160/1f50449b-ef80-4fc7-8529-83b55ec378b5) <br /><br />
+   ◽ 이슈 생성 <br />
+     ![이슈 생성](https://github.com/crong9105/git-pr/assets/151510160/203016c4-ff66-4997-8e22-ace2e863db0e) <br /><br />
 
 <br/>
 
