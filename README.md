@@ -52,6 +52,7 @@
    - 프로젝트 캘린더
    - 마이 PR
    - 줌 회의
+   - 알람
 <br/><br/>
 
 # ⚙ 개발환경
@@ -65,12 +66,10 @@
 
 <br/>
 
-# 💡 사용한 API
-- REST API
-- 
-- 
-- 
-- 
+# 💡 사용한 REST API
+- 깃허브 API
+- 줌 API
+- gitignore.io API
 
 <br/><br/>
 
