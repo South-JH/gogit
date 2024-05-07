@@ -24,10 +24,10 @@
 # 🌱 구성원 및 역할
 
 💗 조장 : 김초롱
-   - ㅇㅇㅇㅇ
-   - 레파지
-   - 
-   - 
+   - Repository 관리
+   - issue 관리
+   - Commit List
+   - Branch
 <br/>
 
 💛 조원 : 박지민
@@ -83,14 +83,12 @@ ERD Cloud :
 
 ### 💗 조장 : 김초롱
 
-- 레파지 <br/>
-여기다 사진넣으셈
+- 레파지토리 관리 <br/>
 
-   ◽ 파생기능 <br />
-     여기다 사진넣으셈 <br />
-   ◽ 기능 <br />
-      ▪ 기능 <br />
-      여기다 사진넣으셈 <br />
+   ◽ 레파지토리 리스트 조회 <br />
+     ![레파지토리리스트조회](https://github.com/crong9105/git-pr/assets/151510160/f3b4ff8d-b1fb-42f8-abae-e49fe9e3a127) <br />
+   ◽ 레파지토리 생성 <br />
+     ![레파지토리생성](https://github.com/crong9105/git-pr/assets/151510160/d14bdb42-4284-4e70-8250-4585299216ac) <br />
       ▪ 기능 <br />
       여기다 사진 넣으셈<br />
 
