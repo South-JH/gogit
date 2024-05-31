@@ -121,6 +121,7 @@ ERD Cloud :
 ![레파지토리검색](https://github.com/hijimin/puppyFriends/assets/147786615/f2476f28-0c83-42c2-bdba-2ae41922b5ed)
 <br />
 
+<br /><br />
 ### 🤎 조원 : 양동건
 
 - 캘린더 <br/>
@@ -170,7 +171,7 @@ ERD Cloud :
 ![고깃줌](https://github.com/crong9105/gogit/assets/151509533/b352cfc5-2e95-4411-9f85-98af52c2a6f3)
 ### 줌 회의 생성
 
-
+<br /><br /><br /><br />
 ### 💗 조장 : 김초롱
 
 - 레파지토리 관리 <br/>
