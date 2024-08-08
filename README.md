@@ -207,7 +207,9 @@ ERD Cloud :
 
 ### 💙 조원 : 남지혜
 
-- 풀리퀘스트 <br/>
+- 로그인(GITHUB 연동) <br/>
+
+![로그인](https://github.com/user-attachments/assets/f895c790-5f74-4a4b-b54e-01324e544646)
 
 <br/>
 
