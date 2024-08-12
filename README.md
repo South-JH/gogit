@@ -207,9 +207,15 @@ ERD Cloud :
 
 ### 💙 조원 : 남지혜
 
-- 로그인(GITHUB 연동) <br/>
+#### 로그인 <br/>
+- GitHub 계정으로 로그인하는 기능
+![로그인](https://github.com/user-attachments/assets/f895c790-5f74-4a4b-b54e-01324e544646) <br/>
+#### Pull Request <br/>
 
-![로그인](https://github.com/user-attachments/assets/f895c790-5f74-4a4b-b54e-01324e544646)
+#### 팔로우 <br/>
+- GitHub 사용자의 계정을 Follow/Unfollow 하는 기능 (GitHub API를 사용하여 GitHub에 연동되는 Follow 기능) <br/>
+![Follow](https://github.com/user-attachments/assets/79f9a054-f9af-46ff-b479-821a6d515988) <br/>
+
 
 <br/>
 
