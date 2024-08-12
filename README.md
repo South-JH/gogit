@@ -215,13 +215,23 @@ ERD Cloud :
 - Pull Request 목록 조회 <br/>
 ![PullRequest목록조회](https://github.com/user-attachments/assets/879848e1-abba-4e09-ad73-29fdd5a0d0eb) <br/>
 
-- Pull Request 생성 <br/>
-
 - Pull Request Title, Comment 수정 <br/>
 ![PullRequest수정](https://github.com/user-attachments/assets/e897ba8e-eec3-4d38-9441-c196159fd041) <br/>
 
 - Reviewer, Assignees 추가 및 삭제 <br/>
 ![Reviewer,Assignees추가및삭제](https://github.com/user-attachments/assets/68422e83-dcb0-4311-a3c1-02e3243e2f31) <br/>
+
+- Review 등록 <br/>
+![Review등록](https://github.com/user-attachments/assets/171266d3-2815-4218-82af-25a4fab1c0c2) <br/>
+
+- Pull Request 상태 수정 (Open/Close) <br/>
+![PullRequest상태변경](https://github.com/user-attachments/assets/d57159d5-66ce-411e-abdb-8150793a92af) <br/>
+
+- Pull Request 생성 <br/>
+![PullRequest생성](https://github.com/user-attachments/assets/7cf49aa0-1ebd-4397-b933-2a3cb74faaea) <br/>
+
+- Pull Request Merge <br/>
+![Merge](https://github.com/user-attachments/assets/a6b53c9f-f40d-4b52-a7a8-0b337b582d86) <br/>
 
 #### 팔로우 <br/>
 - GitHub 사용자의 계정을 Follow/Unfollow 하는 기능 (GitHub API를 사용하여 GitHub에 연동되는 Follow 기능) <br/>
