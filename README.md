@@ -36,8 +36,10 @@
    - 깃허브 전체검색
 <br/>
 
-💙 조원 : 남지혜
-   - 풀리퀘스트 관리
+💙 **조원 : 남지혜** <br/>
+   - **GitHub 로그인** <br/>
+   - **Pull Request 관리** <br/>
+   - **GitHub 사용자 Follow/Unfollow** <br/>
 <br/>
 
 💜 조원 : 신동재
@@ -239,12 +241,8 @@ ERD Cloud :
 
 <br/>
 
-
 <br/><br/>
 
-
-
-    
 <br/><br/>
 
 # 📚 최종보고서
