@@ -83,94 +83,63 @@ ERD Cloud :
 
 - 프로젝트(모집자) <br/>
    ◽ 프로젝트 모집글 작성 <br />
-     ![모집글작성](https://github.com/hijimin/puppyFriends/assets/147786615/28e02f2e-cbe0-4ef8-87c8-e9bedbbfccb2) <br /><br />
    ◽ 프로젝트 모집글 수정 <br />
-     ![모집글수정](https://github.com/hijimin/puppyFriends/assets/147786615/810b1dab-2e12-4def-b949-d2558a78e859) <br /><br />
    ◽ 프로젝트 모집글 삭제 <br />
-     ![모집글삭제](https://github.com/hijimin/puppyFriends/assets/147786615/3710a695-9567-424a-ba30-90cf9c5911f2) <br /><br />
    ◽ 프로젝트 모집마감 <br />
-     ![모집마감](https://github.com/hijimin/puppyFriends/assets/147786615/61d21da1-87ec-49ed-945f-760e7aeae38c) <br /><br />
 
 - 프로젝트(신청자) <br/>
    ◽ 프로젝트 신청 <br />
-     ![프로젝트신청중복불가](https://github.com/hijimin/puppyFriends/assets/147786615/f1aaeb2b-b34d-4f04-8a4d-f1067eac8b7f) <br /><br />
    ◽ 프로젝트 신청해제 <br />
-     ![프로젝트신청해제](https://github.com/hijimin/puppyFriends/assets/147786615/b599a2e9-c483-430f-bb76-65bc24ce6e09) <br /><br />
    ◽ 프로젝트 거절 당했을 시 <br />
-     ![모집자에게거절](https://github.com/hijimin/puppyFriends/assets/147786615/5c35408e-e6ee-4704-bb8d-f1d848cb9a41) <br /><br />
    ◽ 프로젝트 모집자가 수락 했을 시 <br />
-     ![모집자수락](https://github.com/hijimin/puppyFriends/assets/147786615/362640fb-1f6a-46b8-acde-2abc2fb24123) <br /><br />
      
 - 프로젝트 댓글 <br/>
-![댓글](https://github.com/hijimin/puppyFriends/assets/147786615/808ba3e7-3916-43a8-b01e-a11b46402eeb)
 - 프로젝트 모집중 & 모집완료 조회 <br/>
-![모집중모집완료](https://github.com/hijimin/puppyFriends/assets/147786615/403c1f90-6037-49fb-bec2-10956485108e)
 <br />
 
 - 프로젝트 키워드 검색 <br/>
-![키워드조회](https://github.com/hijimin/puppyFriends/assets/147786615/670e6891-8c40-4f34-9e1e-8ee8a251a138)
 <br />
 
 - 커밋 내역 조회 캘린더 <br/>
-![커밋캘린더](https://github.com/hijimin/puppyFriends/assets/147786615/dba8afce-2dfe-4f77-9088-44a417329857)
 <br />
 
 - 깃허브 전체 USER 검색 <br/>
-![유저검색](https://github.com/hijimin/puppyFriends/assets/147786615/c62ed1a8-4773-4dc8-bbce-6705c149b064)
 <br />
 
 - 깃허브 전체 REPOSITORY 검색 <br/>
-![레파지토리검색](https://github.com/hijimin/puppyFriends/assets/147786615/f2476f28-0c83-42c2-bdba-2ae41922b5ed)
 <br />
 
 <br /><br />
 ### 🤎 조원 : 양동건
 
 - 캘린더 <br/>
-![고깃메인일정등록](https://github.com/crong9105/gogit/assets/151509533/2345ca91-e4b1-4ffe-a9b0-502c25aae05a)
 ### 캘린더 일정 등록
 <br/><br/>
 
-
-![고깃메인일정수정](https://github.com/crong9105/gogit/assets/151509533/609170a3-a5aa-4924-a910-1a78c4171b32)
 ### 캘린더 일정 수정
 <br/><br/>
 
-
-![고깃메인일정삭제](https://github.com/crong9105/gogit/assets/151509533/1d39404c-dcbd-44d4-b8bc-6232f907023e)
 ### 캘린더 일정 삭제
 <br/><br/>
 
-
-![고깃메인피알탑](https://github.com/crong9105/gogit/assets/151509533/04038ebe-eaa0-42b3-af64-6a46c256cf8e)
 ### 메인화면 PR TOP 5
 <br/><br/>
 
-![고깃피알검색](https://github.com/crong9105/gogit/assets/151509533/29f244ff-ec35-47fe-af6f-fd9a07952d7a)
 ### PR 검색
 <br/><br/>
 
-![고깃피알댓글](https://github.com/crong9105/gogit/assets/151509533/b9cc2a9a-58d3-49bc-9834-62e5d6aa0ea4)
 ### PR 댓글
 <br/><br/>
 
-
-![고깃피알등록](https://github.com/crong9105/gogit/assets/151509533/1d9ccbb4-633e-4a95-86ba-f95971d4a5cd)
 ### PR 등록
 <br/><br/>
 
-
-![고깃피알수정](https://github.com/crong9105/gogit/assets/151509533/16c01155-fed0-4a97-8e45-8e205e05a677)
 ### PR 수정
 <br/><br/>
 
-
-![고깃피알삭제](https://github.com/crong9105/gogit/assets/151509533/4ecb22da-8362-4f1b-8819-fa4a1cccc14a)
 ### PR 삭제
 <br/><br/>
 
-
-![고깃줌](https://github.com/crong9105/gogit/assets/151509533/b352cfc5-2e95-4411-9f85-98af52c2a6f3)
 ### 줌 회의 생성
 
 <br /><br /><br /><br />
@@ -179,33 +148,19 @@ ERD Cloud :
 - 레파지토리 관리 <br/>
 
    ◽ 레파지토리 리스트 조회 <br />
-     ![레파지토리리스트조회](https://github.com/crong9105/git-pr/assets/151510160/f3b4ff8d-b1fb-42f8-abae-e49fe9e3a127) <br /><br />
    ◽ 레파지토리 생성 <br />
-     ![레파지토리생성](https://github.com/crong9105/git-pr/assets/151510160/d14bdb42-4284-4e70-8250-4585299216ac) <br /><br />
    ◽ 레파지토리 사용자 초대 <br />
-     ![레파지토리초대](https://github.com/crong9105/git-pr/assets/151510160/b4659d85-d04d-4ad6-9733-27c1e414c2c6) <br /><br />
    ◽ 레파지토리 수정 <br />
-     ![레파지토리수정](https://github.com/crong9105/git-pr/assets/151510160/0ee2faa7-408b-4e39-af21-5da986d87189) <br /><br />
    ◽ 레파지토리 삭제 <br />
-     ![레파지토리삭제](https://github.com/crong9105/git-pr/assets/151510160/982068b9-9810-4efa-824f-ab8372a3e2dc) <br /><br />
    ◽ 레파지토리 컨텐츠 조회 <br />
-     ![레파지토리컨텐츠조회](https://github.com/crong9105/git-pr/assets/151510160/fc5d63df-2396-4a16-a14c-5ed70da152d4) <br /><br />
    ◽ 브랜치별 커밋 리스트 조회 <br />
-     ![브랜치별 커밋리스트 조회](https://github.com/crong9105/git-pr/assets/151510160/37e897f8-6608-42cf-b0b7-b1516ab9b7ee) <br /><br />
 
 - 이슈 관리 <br/>
 
    ◽ 이슈 리스트 조회 <br />
-     ![이슈내역조회](https://github.com/crong9105/git-pr/assets/151510160/1f50449b-ef80-4fc7-8529-83b55ec378b5) <br /><br />
    ◽ 이슈 생성 <br />
-     ![이슈 생성](https://github.com/crong9105/git-pr/assets/151510160/203016c4-ff66-4997-8e22-ace2e863db0e) <br /><br />
 
-<br/>
-
-
-
-
-<br/>
+<br/><br/>
 
 ### 💙 조원 : 남지혜
 
